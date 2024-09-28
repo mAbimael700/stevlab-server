@@ -15,7 +15,7 @@ function parseData(buffer) {
     });
   }
   
-  function parseResults(parsedData) {
+  function parser(parsedData) {
     const results = [];
   
     parsedData.forEach((section) => {
@@ -37,11 +37,13 @@ function parseData(buffer) {
           for (let i = 12; i < line.length; i += 7) {
             if (line[i]) {
              
+             const unidad_medida = line[i + 2].trim().split(" ");
+             
               
               const parametro = {
                 nombre: line[i].trim(),
                 valor: line[i + 2].trim().split(" ")[0],
-                unidad_medida: line[i + 2].trim().split(" ")[1],
+                unidad_medida: line[i + 2].trim().split(" ")[unidad_medida.length - 1],
                 unidad: line[i + 3].trim(),
                 rango_min: line[i + 4].trim(),
                 rango_max: line[i + 5].trim(),
@@ -54,7 +56,7 @@ function parseData(buffer) {
         }
       });
     });
-  
+    
     return results;
   }
   
@@ -62,7 +64,7 @@ function parseData(buffer) {
   
   function parseResultsData(buffer) {
     const parsedData = parseData(buffer)
-    const parsedResults = parseResults(parsedData)
+    const parsedResults = parser(parsedData)
   
     return parsedResults;
   }
