@@ -14,6 +14,7 @@ function initializeWebSocket(expressServer) {
   io.on("connection", (socket) => {
     console.log("Nuevo cliente conectado:", socket.id);
 
+    //Cuando recibe el evento WebSocket del servidor tcp, envía a los clientes el dato parseado
     socket.on("labResultsMessage", (data) => {
       console.log("Mensaje recibido del cliente:", data);
       socket.emit("labResultsMessage", data);  // Enviar datos de vuelta al cliente

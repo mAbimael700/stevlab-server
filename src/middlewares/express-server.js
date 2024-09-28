@@ -7,8 +7,15 @@ const { filesRouter } = require("../api/routes/files.routes");
 const app = express();
 const expressServer = http.createServer(app);
 
+
+//Función para inicializar el servidor express
 function initializeExpressServer(PORT) {
+  //Middleware logger de las peticiones http al servidor
   app.use(morgan('dev'))
+
+  //Rutas de la api
+
+  //Endpoint para consultar los archivos del servidor local
   app.use("/api/files", filesRouter);
   
   expressServer.listen(PORT, () => {
