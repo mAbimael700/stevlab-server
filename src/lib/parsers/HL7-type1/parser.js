@@ -50,12 +50,12 @@ function parser(parsedData) {
                 elemento: nombre.split('-')[0],
               }),
               valor: line[i + 2].trim().split(" ")[0],
-              unidad_medida: line[i + 2].trim().split(" ")[
+              unidad_medida: line[i + 2]?.trim().split(" ")[
                 unidad_medida.length - 1
               ],
-              unidad: line[i + 3].trim(),
-              rango_min: line[i + 4].trim(),
-              rango_max: line[i + 5].trim(),
+              unidad: line[i + 3]?.trim(),
+              rango_min: line[i + 4]?.trim(),
+              rango_max: line[i + 5]?.trim(),
               indicador: line[i + 6]?.trim() || "=",
             };
             result.parametros.push(parametro);
