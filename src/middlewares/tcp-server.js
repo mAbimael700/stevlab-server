@@ -44,6 +44,8 @@ function initializeTcpServer({ PORT, webSocketServer }) {
           const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
           const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
 
+
+          //Guarda el archivo en la ruta especificada con el JSON parseado
           fs.appendFileSync(filePath, jsonResults);
           console.log(`Datos guardados en ${filePath}`);
         } catch (error) {
