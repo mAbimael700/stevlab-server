@@ -61,7 +61,6 @@ function parseData(buffer) {
   }
   
   
-  
   function parseResultsData(buffer) {
     const parsedData = parseData(buffer)
     const parsedResults = parser(parsedData)

@@ -1,0 +1,19 @@
+const {
+  parseResultsData: parserFujifilmNx600,
+} = require("../lib/parsers/HL7-type1/parser");
+const {
+  parseResultsData: parserControlLab,
+} = require("../lib/parsers/HL7-type4/parser");
+
+let equipmentsOnServer = {};
+
+const equipmentParser = {
+  "FUJIFILM_DRI-CHEM_NX600": parserFujifilmNx600,
+  "CONTROL_LAB": parserControlLab,
+};
+
+
+module.exports = {
+    equipmentsOnServer,
+    equipmentParser
+}
