@@ -1,8 +1,8 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const { initializeTcpServer } = require("./src/middlewares/tcp-server");
 
+const { initializeTcpServer } = require("./src/middlewares/tcp-server");
 const { initializeExpressServer } = require("./src/middlewares/express-server");
 const { initializeWebSocket } = require("./src/middlewares/websocket-server");
 const {DATADIR} = require('./src/constants/DATADIR')

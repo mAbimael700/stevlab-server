@@ -1,5 +1,6 @@
 const net = require("node:net");
 const fs = require("node:fs");
+const { exec } = require("node:child_process");
 const path = require("node:path");
 const { parseResultsData } = require("../lib/parsers/HL7-type1/parser");
 const { format } = require("date-fns");
@@ -23,11 +24,28 @@ function initializeTcpServer({ PORT, webSocketServer }) {
           socket.remotePort
       );
 
+      // Paso 2: Ejecutar el comando ARP para obtener la dirección MAC
+      exec(`arp -a ${socket.remoteAddress}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error ejecutando arp: ${error.message}`);
+          return;
+        }
+
+        // Buscar la dirección MAC en la salida del comando arp
+        const macAddressMatch = stdout.match(
+          /([0-9a-f]{2}[:-]){5}([0-9a-f]{2})/i
+        );
+        if (macAddressMatch) {
+          console.log(`Dirección MAC del cliente: ${macAddressMatch[0]}`);
+        } else {
+          console.log("No se encontró la dirección MAC.");
+        }
+      });
+
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
 
       socket.on("data", (data) => {
-        
         // Verifica que exista el equipo registrado
         //const existeEquipo = verifyDevices(currentRemoteAddress);
 
@@ -43,7 +61,6 @@ function initializeTcpServer({ PORT, webSocketServer }) {
           //Formatea la fecha para guardarla en el nombre del archivo json
           const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
           const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
-
 
           //Guarda el archivo en la ruta especificada con el JSON parseado
           fs.appendFileSync(filePath, jsonResults);
