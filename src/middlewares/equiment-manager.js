@@ -5,15 +5,15 @@ const {
   parseResultsData: parserControlLab,
 } = require("../lib/parsers/HL7-type4/parser");
 
-let equipmentsOnServer = {};
+let equipmentsOnServer = [];
 
-const equipmentParser = {
-  "FUJIFILM_DRI-CHEM_NX600": parserFujifilmNx600,
-  "CONTROL_LAB": parserControlLab,
+const equipmentsParsers = {
+  "FUJIFILM_DRICHEM_NX600": parserFujifilmNx600,
+  "CONTROLAB": parserControlLab,
 };
 
 
 module.exports = {
     equipmentsOnServer,
-    equipmentParser
+    equipmentsParsers
 }

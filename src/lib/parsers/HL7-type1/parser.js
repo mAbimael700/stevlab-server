@@ -3,7 +3,7 @@ const {
 } = require("../../../constants/dictionaries/FULJIFILM_NX600");
 const { getElementoKey } = require("../../get-dictionary-element");
 
-function parseData(buffer) {
+function parseData(buffer, separatorSpliter = ",") {
   // Divide el texto en bloques separados por '' y ''(inicio y fin de mensajes)
   // Son carácteres no imprimibles
   let rawData = buffer
@@ -14,7 +14,7 @@ function parseData(buffer) {
   return rawData.map((section) => {
     let records = section.split(""); // Separar por delimitador de registros
     return records.map((record) => {
-      let fields = record.split(","); // Separar cada campo por comas
+      let fields = record.split(separatorSpliter); // Separar cada campo por comas
       return fields;
     });
   });

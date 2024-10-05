@@ -2,8 +2,8 @@ const devicesAreas = {
   HORMONAS: [""],
   INMUNOLOGIA: [
     {
-      id: "FINECARE",
-      name: "FINECARE",
+      id: "FINECARE_PLUS",
+      name: "FINECARE PLUS",
       area: {
         ID: 44,
         Nombre_area: "BIOQUIMICA CLINICA",
@@ -12,8 +12,8 @@ const devicesAreas = {
   ],
   "BIOQUIMICA CLINICA": [
     {
-      id: "FUJIFILM_NX600",
-      name: "FUJIFILM NX600",
+      id: "FUJIFILM_DRICHEM_NX600",
+      name: "FUJIFILM DRI-CHEM NX600",
       area: {
         ID: 44,
         Nombre_area: "BIOQUIMICA CLINICA",
@@ -21,12 +21,20 @@ const devicesAreas = {
     },
     {
       id: "CONTROLAB",
-      name: "CONTROL LAB",
+      name: "CONTROLAB",
       area: {
         ID: 44,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
     },
+    {
+      id: "CM200",
+      name: "CM200",
+      area: {
+        ID: 44,
+        Nombre_area: "BIOQUIMICA CLINICA",
+      },
+    }
   ],
 };
 

@@ -42,14 +42,14 @@ function parseResultsData(hl7Message) {
         break;
       }
 
-      case "MSH": {
+      /* case "MSH": {
         result["MSH"] = {
           message_type: "MSH",
           segment_name: "Message Header",
           ...MSH(fieldsSegment),
         };
         break;
-      }
+      } */
 
       default: {
         console.warn(`Message type '${fieldsSegment.type}' is not recognized`);

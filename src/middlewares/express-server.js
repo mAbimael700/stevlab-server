@@ -14,14 +14,14 @@ const expressServer = http.createServer(app);
 function initializeExpressServer(PORT) {
   //Middleware logger de las peticiones http al servidor
   app.use(morgan("dev"));
-
+  app.use(express.json())
   app.use(cors());
   //Rutas de la api
 
   //Endpoint para consultar los archivos del servidor local
   app.use("/api/files", filesRouter);
   app.use("/api/areas", devicesRouter);
-
+  app.use("/api/devices", devicesRouter)
   expressServer.listen(PORT, () => {
     console.log(`Servidor WebSocket escuchando en el puerto ${PORT}`);
   });

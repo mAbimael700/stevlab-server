@@ -1,11 +1,13 @@
 const net = require("node:net");
 const fs = require("node:fs");
-const { exec } = require("node:child_process");
+
 const path = require("node:path");
 const { parseResultsData } = require("../lib/parsers/HL7-type1/parser");
 const { format } = require("date-fns");
 const { DATADIR } = require("../constants/DATADIR");
 const { verifyDevices } = require("../lib/verify-devices");
+const { getMacAddress } = require("../lib/getMacAddress");
+const { validateParser } = require("../lib/validate-buffer");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
 function initializeTcpServer({ PORT, webSocketServer }) {
@@ -16,40 +18,46 @@ function initializeTcpServer({ PORT, webSocketServer }) {
       keepAliveInitialDelay: 3000,
     },
     (socket) => {
-      const currentRemoteAddress = socket.remoteAddress.split(":")[3];
+      const currentRemoteIpAddress = socket.remoteAddress.split(":")[3];
+      let currentRemoteMacAddress;
+
       console.log(
         "Conexión TCP/IP entrante de: " +
-          currentRemoteAddress +
-          ":" +
-          socket.remotePort
+        currentRemoteIpAddress +
+        ":" +
+        socket.remotePort
       );
 
-      // Paso 2: Ejecutar el comando ARP para obtener la dirección MAC
-      exec(`arp -a ${socket.remoteAddress}`, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Error ejecutando arp: ${error.message}`);
-          return;
-        }
 
-        // Buscar la dirección MAC en la salida del comando arp
-        const macAddressMatch = stdout.match(
-          /([0-9a-f]{2}[:-]){5}([0-9a-f]{2})/i
-        );
-        if (macAddressMatch) {
-          console.log(`Dirección MAC del cliente: ${macAddressMatch[0]}`);
-        } else {
-          console.log("No se encontró la dirección MAC.");
-        }
-      });
 
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
 
-      socket.on("data", (data) => {
+      socket.on("data", async (data) => {
         // Verifica que exista el equipo registrado
-        //const existeEquipo = verifyDevices(currentRemoteAddress);
+
+
+
 
         try {
+
+          currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress)
+          const existeEquipo = verifyDevices(currentRemoteMacAddress);
+
+
+          if (!existeEquipo) {
+            return
+          }
+
+          const parseResultsData = validateParser(
+            { id_device: existeEquipo.id }
+          )
+
+          console.log(existeEquipo);
+          
+          console.log(parseResultsData);
+          
+
           // Guarda los datos en un archivo
           const results = parseResultsData(data.toString());
           const jsonResults = JSON.stringify(results);
@@ -68,6 +76,11 @@ function initializeTcpServer({ PORT, webSocketServer }) {
         } catch (error) {
           console.error("Error al procesar datos:", error);
         }
+
+
+
+
+
       });
 
       socket.on("end", () => {
@@ -78,7 +91,7 @@ function initializeTcpServer({ PORT, webSocketServer }) {
       socket.on("error", (err) => {
         if (err.code === "ECONNRESET") {
           console.warn(
-            `Conexión reseteada por el cliente ${currentRemoteAddress}:${socket.remotePort}`
+            `Conexión reseteada por el cliente ${currentRemoteIpAddress}:${socket.remotePort}`
           );
         } else {
           console.error("Error en la conexión:", err);
@@ -93,8 +106,9 @@ function initializeTcpServer({ PORT, webSocketServer }) {
     }
   );
 
+
   function reconnect() {
-    setTimeout(createConnection, 5000); // Intentar reconectar después de 5 segundos
+    setTimeout(initializeTcpServer, 5000); // Intentar reconectar después de 5 segundos
   }
 
   tcpServer.listen(PORT, () => {
