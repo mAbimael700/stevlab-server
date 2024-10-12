@@ -9,10 +9,15 @@ const { CONFIG_DIR } = require("./src/constants/CONFIG_DIR");
 const {
   configurationManager,
 } = require("./src/middlewares/configuration-manager");
+const { LOG_DIR } = require("./src/constants/LOG_DIR");
+const { ErrorHandler } = require("./src/middlewares/error-handler");
 
 // Definición de los puertos de cada servidor
 const TPC_PORT = process.env.PORT || 3000;
 const SOCKET_PORT = process.env.SOCKET_PORT || 4000;
+
+//Manejador de errores no esperados
+ErrorHandler();
 
 // Asegura de que la carpeta de data exista dónde se ejecuta el programa
 if (!fs.existsSync(DATADIR)) {
@@ -25,6 +30,11 @@ if (!fs.existsSync(CONFIG_DIR)) {
     `La carpeta de configuración no existe: ${CONFIG_DIR}. Creando la carpeta...`
   );
   fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
+}
+
+// Verifica si el directorio de logs existe, si no, lo crea
+if (!fs.existsSync(LOG_DIR)) {
+  fs.mkdirSync(LOG_DIR, { recursive: true });
 }
 
 // Configuración de equipos

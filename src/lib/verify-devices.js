@@ -8,6 +8,8 @@ function formatMacAddressWithSeparators(mac) {
     .toUpperCase();
 }
 
+
+//Función que valida los equipos registrados en el sistema
 function verifyDevices(currentRemoteMacAddress) {
   try {
     const equipmentsOnServer = getEquipments();

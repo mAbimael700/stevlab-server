@@ -12,6 +12,8 @@ const { validateResponse } = require("../lib/parsers/response-model");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
 function initializeTcpServer({ PORT, webSocketServer }) {
+  const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
+
   const tcpServer = net.createServer(
     {
       allowHalfOpen: true, // Permite conexiones a medias en caso de ser necesario
@@ -27,9 +29,9 @@ function initializeTcpServer({ PORT, webSocketServer }) {
 
       console.log(
         "Conexión TCP/IP entrante de: " +
-          currentRemoteIpAddress +
-          ":" +
-          socket.remotePort
+        currentRemoteIpAddress +
+        ":" +
+        socket.remotePort
       );
 
       // Establece un timeout más largo para la conexión
@@ -39,6 +41,12 @@ function initializeTcpServer({ PORT, webSocketServer }) {
         // Verifica que exista el equipo registrado
 
         try {
+
+          if (data.length > MAX_DATA_SIZE) {
+            console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
+            socket.destroy(); // Cierra la conexión si los datos son demasiado grandes
+            return;
+          }
           //Obtenemos la dirección MAC del equipo conectado
           currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);
           if (!currentRemoteMacAddress) {
@@ -67,13 +75,14 @@ function initializeTcpServer({ PORT, webSocketServer }) {
           // Valida que el mensaje parseado sea correcto          
           const result = validateResponse(results);
 
-          
+
+          //Formatea la fecha para guardarla en el nombre del archivo json
+          const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
+          const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
+
           //En caso de que el mensaje parseado sea válido lo guarda en un JSON
           if (result.success && result.data.length > 0) {
             const jsonResults = JSON.stringify(results, null, 2);
-            //Formatea la fecha para guardarla en el nombre del archivo json
-            const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
-            const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
 
             //Guarda el archivo en la ruta especificada con el JSON parseado
             fs.appendFileSync(filePath, jsonResults);
@@ -111,11 +120,15 @@ function initializeTcpServer({ PORT, webSocketServer }) {
   );
 
   function reconnect() {
-    console.log("Intentando reconectar...");
-    tcpServer.close(() => {
-      console.log("Servidor cerrado. Intentando reiniciar...");
-      setTimeout(initializeTcpServer, 5000); // Intentar reconectar después de 5 segundos
-    });
+    if (!tcpServer.listening) {
+      console.log("Intentando reconectar el servidor TCP/IP..."); setTimeout(() => {
+        tcpServer.listen(PORT, () => {
+          console.log(`Servidor TCP/IP reiniciado en el puerto ${PORT}`);
+        });
+      }, 5000); // Reintentar después de 5 segundos
+    }
+
+
   }
 
   tcpServer.listen(PORT, () => {
