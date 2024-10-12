@@ -15,7 +15,7 @@ const devicesAreas = {
       id: "FUJIFILM_DRICHEM_NX600",
       name: "FUJIFILM DRI-CHEM NX600",
       area: {
-        ID: 44,
+        ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
     },
@@ -23,7 +23,7 @@ const devicesAreas = {
       id: "CONTROLAB",
       name: "CONTROLAB",
       area: {
-        ID: 44,
+        ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
     },
@@ -31,7 +31,7 @@ const devicesAreas = {
       id: "CM200",
       name: "CM200",
       area: {
-        ID: 44,
+        ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
     }
