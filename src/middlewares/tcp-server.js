@@ -39,7 +39,7 @@ function initializeTcpServer({ PORT, webSocketServer }) {
 
       socket.on("data", async (data) => {
 
-        console.log("Mensaje entrante...");
+        console.log("Mensaje entrante de: " + currentRemoteIpAddress + "...");
         
         // Verifica que exista el equipo registrado
         try {
