@@ -23,6 +23,7 @@ function getMacAddress(remoteIpAddress) {
             } else {
                 console.log("No se encontró la dirección MAC.");
                 reject(new Error("No se encontró la dirección MAC."));
+            
             }
         });
     });

@@ -10,6 +10,13 @@
     "dev": "nodemon index.js",
     "git:update": "git pull && npm i"
   },
+  "pkg": {
+    "assets": [
+      "dist/**/*",
+      "src/**/*"
+    ],
+    "outputPath": "build"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,6 +27,7 @@
     "express": "^4.21.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.7",
-    "socket.io": "^4.8.0"
+    "socket.io": "^4.8.0",
+    "zod": "^3.23.8"
   }
 }

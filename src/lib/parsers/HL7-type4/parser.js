@@ -7,6 +7,7 @@ const {
   getFieldsSegment,
   getSegments,
 } = require("./messageSpliterFn.js");
+const PID = require("./models/PID.js");
 
 function parseResultsData(hl7Message) {
   //Divide el mensaje en sus segmentos
@@ -25,14 +26,14 @@ function parseResultsData(hl7Message) {
 
     switch (fieldsSegment.type) {
       //Por cada tipo de segmento, se llama una función parecida a un constructor de su modelo de tipo de mensaje HL7
-      case "OBR": {
+      /* case "OBR": {
         result["OBR"] = {
           message_type: fieldsSegment.type,
           segment_name: "Order observation Request Information",
           ...OBR(fieldsSegment),
         };
         break;
-      }
+      } */
 
       case "OBX": {
         if (!result.parametros) {
@@ -42,6 +43,13 @@ function parseResultsData(hl7Message) {
         break;
       }
 
+      case "PID": {
+        result = {
+          ...result,
+          ...PID(fieldsSegment),
+        };
+        break;
+      }
       /* case "MSH": {
         result["MSH"] = {
           message_type: "MSH",
@@ -58,7 +66,7 @@ function parseResultsData(hl7Message) {
   });
 
   //Devuelve el objeto con el mensaje HL7 parseado
-  return result;
+  return [result].flat();
 }
 
 module.exports = {

@@ -22,32 +22,50 @@ class FilesController {
       );
 
       // Leer el contenido de los archivos JSON
-
       const jsonPromises = jsonFiles.map((jsonFile) => {
         const basenameSplited = path.basename(jsonFile).split("-");
+        const day = parseInt(basenameSplited[1].substring(0, 2));
+        const month = parseInt(basenameSplited[1].substring(2, 4)) - 1; // Meses en Date comienzan desde 0
+        const year = parseInt(basenameSplited[1].substring(4));
 
-        console.log(basenameSplited[1]);
+        const hour = parseInt(basenameSplited[2].substring(0, 2));
+        const minutes = parseInt(basenameSplited[2].substring(2, 4));
+        const seconds = parseInt(basenameSplited[2].substring(4));
 
-        const day = basenameSplited[1].substring(0, 2);
-        const month = basenameSplited[1].substring(2, 4);
-        const year = basenameSplited[1].substring(4, basenameSplited[1].length);
-
-        console.log(`${year}-${month}-${day}`);
-
-        return readFile(jsonFile, "utf-8").then((data) => ({
-          fecha_transferencia: new Date(year, month - 1, day),
-          resultados: JSON.parse(data),
-        }));
+        return readFile(jsonFile, "utf-8")
+          .then((data) => ({
+            fecha_transferencia: new Date(
+              year,
+              month,
+              day,
+              hour,
+              minutes,
+              seconds
+            ),
+            resultados: JSON.parse(data),
+          }))
+          .catch((error) => {
+            console.error(
+              `Error parsing JSON in file ${jsonFile}:`,
+              error.message
+            );
+            return null; // Si falla el parseo, retornamos null
+          });
       });
 
       // Esperar a que todas las promesas de lectura se resuelvan
       const jsonData = await Promise.all(jsonPromises);
 
+      // Filtrar los resultados nulos (errores en el parseo)
+      const validData = jsonData.filter((data) => data !== null);
+
       // Enviar la respuesta con los datos leídos
-      return res.status(200).json(jsonData);
+      return res.status(200).json({ status: 200, data: validData });
     } catch (err) {
       console.error("Error:", err);
-      return res.status(500).json({ error: "Error reading JSON files" });
+      return res
+        .status(500)
+        .json({ status: 500, error: "Error reading JSON files" });
     }
   }
 }

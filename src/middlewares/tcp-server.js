@@ -8,6 +8,7 @@ const { DATADIR } = require("../constants/DATADIR");
 const { verifyDevices } = require("../lib/verify-devices");
 const { getMacAddress } = require("../lib/getMacAddress");
 const { validateParser } = require("../lib/validate-buffer");
+const { validateResponse } = require("../lib/parsers/response-model");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
 function initializeTcpServer({ PORT, webSocketServer }) {
@@ -18,17 +19,18 @@ function initializeTcpServer({ PORT, webSocketServer }) {
       keepAliveInitialDelay: 3000,
     },
     (socket) => {
+      // Obtenemos la ip del socket (equipo) en la conexión
       const currentRemoteIpAddress = socket.remoteAddress.split(":")[3];
+
+      // Instanciamos la referencia de la dirección MAC del equipo
       let currentRemoteMacAddress;
 
       console.log(
         "Conexión TCP/IP entrante de: " +
-        currentRemoteIpAddress +
-        ":" +
-        socket.remotePort
+          currentRemoteIpAddress +
+          ":" +
+          socket.remotePort
       );
-
-
 
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
@@ -36,55 +38,57 @@ function initializeTcpServer({ PORT, webSocketServer }) {
       socket.on("data", async (data) => {
         // Verifica que exista el equipo registrado
 
-
-
-
         try {
-
-          currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress)
-          const existeEquipo = verifyDevices(currentRemoteMacAddress);
-
-
-          if (!existeEquipo) {
-            return
+          //Obtenemos la dirección MAC del equipo conectado
+          currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);
+          if (!currentRemoteMacAddress) {
+            console.log(
+              "No se encontró la dirección MAC, no se puede verificar el equipo."
+            );
+            return;
           }
 
-          const parseResultsData = validateParser(
-            { id_device: existeEquipo.id }
-          )
+          //Valida si existe el equipo registrado en las configuraciones del sistema
+          const existeEquipo = verifyDevices(currentRemoteMacAddress);
 
-          console.log(existeEquipo);
-          
-          console.log(parseResultsData);
-          
+          //Si el equipo en la conexión no está registrado termina el evento
+          if (!existeEquipo) {
+            return;
+          }
 
-          // Guarda los datos en un archivo
+          // Devuelve la función parser que le corresponde al equipo
+          const parseResultsData = validateParser({
+            id_device: existeEquipo.id,
+          });
+
+          //Parsea los datos en un objeto
           const results = parseResultsData(data.toString());
-          const jsonResults = JSON.stringify(results);
 
-          // Emite a través de Socket.io
-          webSocketServer.emit("labResultsMessage", { data: jsonResults });
-          console.log("Evento 'labResultsMessage' emitido con datos");
+          // Valida que el mensaje parseado sea correcto          
+          const result = validateResponse(results);
 
-          //Formatea la fecha para guardarla en el nombre del archivo json
-          const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
-          const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
+          
+          //En caso de que el mensaje parseado sea válido lo guarda en un JSON
+          if (result.success && result.data.length > 0) {
+            const jsonResults = JSON.stringify(results, null, 2);
+            //Formatea la fecha para guardarla en el nombre del archivo json
+            const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
+            const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
 
-          //Guarda el archivo en la ruta especificada con el JSON parseado
-          fs.appendFileSync(filePath, jsonResults);
-          console.log(`Datos guardados en ${filePath}`);
+            //Guarda el archivo en la ruta especificada con el JSON parseado
+            fs.appendFileSync(filePath, jsonResults);
+            console.log(`Datos guardados en la ruta: ${filePath}`);
+
+            // Emite a través de Socket.io
+            webSocketServer.emit("labResultsMessage", { data: jsonResults });
+          }
         } catch (error) {
           console.error("Error al procesar datos:", error);
         }
-
-
-
-
-
       });
 
       socket.on("end", () => {
-        console.log("Conexión cerrada");
+        console.log(`Conexión cerrada por ${currentRemoteIpAddress}`);
       });
 
       // Manejador de errores
@@ -106,9 +110,12 @@ function initializeTcpServer({ PORT, webSocketServer }) {
     }
   );
 
-
   function reconnect() {
-    setTimeout(initializeTcpServer, 5000); // Intentar reconectar después de 5 segundos
+    console.log("Intentando reconectar...");
+    tcpServer.close(() => {
+      console.log("Servidor cerrado. Intentando reiniciar...");
+      setTimeout(initializeTcpServer, 5000); // Intentar reconectar después de 5 segundos
+    });
   }
 
   tcpServer.listen(PORT, () => {
