@@ -38,8 +38,10 @@ function initializeTcpServer({ PORT, webSocketServer }) {
       socket.setTimeout(60000); // 60 segundos
 
       socket.on("data", async (data) => {
-        // Verifica que exista el equipo registrado
 
+        console.log("Mensaje entrante...");
+        
+        // Verifica que exista el equipo registrado
         try {
 
           if (data.length > MAX_DATA_SIZE) {
@@ -47,6 +49,7 @@ function initializeTcpServer({ PORT, webSocketServer }) {
             socket.destroy(); // Cierra la conexión si los datos son demasiado grandes
             return;
           }
+          
           //Obtenemos la dirección MAC del equipo conectado
           currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);
           if (!currentRemoteMacAddress) {
