@@ -39,10 +39,18 @@ function initializeTcpServer({ PORT, webSocketServer }) {
 
       socket.on("data", async (data) => {
 
+
+        //Formatea la fecha para guardarla en el nombre del archivo json
+        const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
+        const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
+        const filePath2 = path.join(DATADIR, `resultados-${timestamp}.txt`)
+
         console.log("Mensaje entrante de: " + currentRemoteIpAddress + "...");
         
         // Verifica que exista el equipo registrado
         try {
+          fs.appendFileSync(filePath2, data.toString());
+          console.log(`Datos crudos guardados en la ruta: ${filePath}`);
 
           if (data.length > MAX_DATA_SIZE) {
             console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
@@ -79,9 +87,7 @@ function initializeTcpServer({ PORT, webSocketServer }) {
           const result = validateResponse(results);
 
 
-          //Formatea la fecha para guardarla en el nombre del archivo json
-          const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
-          const filePath = path.join(DATADIR, `resultados-${timestamp}.json`);
+          
 
           //En caso de que el mensaje parseado sea válido lo guarda en un JSON
           if (result.success && result.data.length > 0) {
@@ -89,7 +95,7 @@ function initializeTcpServer({ PORT, webSocketServer }) {
 
             //Guarda el archivo en la ruta especificada con el JSON parseado
             fs.appendFileSync(filePath, jsonResults);
-            console.log(`Datos guardados en la ruta: ${filePath}`);
+            console.log(`Datos parseados guardados en la ruta: ${filePath}`);
 
             // Emite a través de Socket.io
             webSocketServer.emit("labResultsMessage", { data: jsonResults });
