@@ -1,9 +1,9 @@
 const net = require("node:net");
 const bl = require("bl");
-const { dataEvent } = require("../tcp-ip/events/data");
+const { dataEvent } = require("../TPCServer/events/data");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
-function initializeTcpServer({ PORT, webSocketServer }) {
+function initializeTcpServer({ PORT }) {
   const tcpServer = net.createServer(
     {
       allowHalfOpen: true, // Permite conexiones a medias en caso de ser necesario
@@ -28,7 +28,7 @@ function initializeTcpServer({ PORT, webSocketServer }) {
 
       const bufferList = bl();
       socket.on("data", async (data) =>
-        dataEvent(data, currentRemoteIpAddress, webSocketServer, bufferList)
+        dataEvent(data, currentRemoteIpAddress, bufferList)
       );
 
       socket.on("end", () => {

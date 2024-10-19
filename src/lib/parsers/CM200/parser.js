@@ -1,5 +1,8 @@
+const { CM200 } = require("../../../constants/dictionaries/CM200");
+const { getElementoKey } = require("../../get-dictionary-element");
+
 function parseMessage(message) {
-  // Limpiamos los delimitadores ###
+  // Limpiamos los delimitadores
   const cleanMessage = message.trim();
 
   // Dividimos el mensaje por el carácter ";"
@@ -25,6 +28,10 @@ function parseMessage(message) {
         nombre: fields[i].trim(), // Nombre del parámetro
         valor: fields[i + 1].trim(), // Valor del parámetro
         unidad_medida: fields[i + 2].trim(), // Unidad del parámetro
+        clave_sistema: getElementoKey({
+          diccionario: CM200, elemento: fields[i].trim()
+        })
+
       });
     }
   }
@@ -35,5 +42,5 @@ function parseMessage(message) {
 
 
 module.exports = {
-    parseMessage
+  parseMessage
 }

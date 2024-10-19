@@ -40,7 +40,7 @@ function parser(parsedData) {
         // Extrae los parámetros de laboratorio y sus resultados
         for (let i = 12; i < line.length; i += 7) {
           if (line[i]) {
-            const unidad_medida = line[i + 2].trim().split(" ");
+            const unidad_medida = line[i + 2]?.trim().split(" ");
             const nombre = line[i].trim();
 
             const parametro = {
@@ -49,7 +49,7 @@ function parser(parsedData) {
                 diccionario: FULLJIFILM_NX600_DICTIONARIO,
                 elemento: nombre.split("-")[0],
               }),
-              valor: line[i + 2].trim().split(" ")[0],
+              valor: line[i + 2]?.trim().split(" ")[0],
               unidad_medida: line[i + 2]?.trim().split(" ")[
                 unidad_medida.length - 1
               ],

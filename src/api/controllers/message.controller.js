@@ -1,9 +1,14 @@
+
 const { validateParser } = require("../../lib/validate-buffer");
-const { getIO } = require("../../middlewares/websocket-server");
+const { saveResultsToLocalData } = require("../../lib/save-results-data");
+const { emitResultsToWebSocket } = require("../../lib/emit-results-websocket");
+const { validateResponse } = require("../../lib/parsers/response-schema");
+
 
 class MessageController {
   static saveMessage(req, res) {
-    const io = getIO();
+
+
     try {
       if (!req.files) {
         return res
@@ -11,23 +16,26 @@ class MessageController {
           .json({ status: 400, message: "No se ha subido ningún archivo." });
       }
 
-      try {
-        Array.from(req.files).forEach((file) => {
-          const { parser } = validateParser({ id_device: req.body.device });
 
-          const fileBuffer = file.buffer;
-          const fileName = file.originalname;
+      Array.from(req.files).forEach((file) => {
+        const { parser } = validateParser({ id_device: req.body.device });
 
-          const fileContent = fileBuffer.toString();
-          const parsedContent = parser(fileContent);
+        const fileBuffer = file.buffer;
 
-          console.log("Resultados enviados...");
-          if (io) {
-            
-            io.emit("labResultsMessage", { data: JSON.stringify(parsedContent) });
-          }
-        });
-      } catch (error) {}
+        const fileContent = fileBuffer.toString();
+        const parsedContent = parser(fileContent);
+
+
+        console.log("Resultados enviados...");
+
+        const validatedResponse = validateResponse(parsedContent)
+
+        if (validatedResponse) {
+          saveResultsToLocalData(parsedContent);
+          emitResultsToWebSocket(parsedContent)
+        }
+      });
+
       res
         .status(200)
         .json({ status: 200, message: "Archivo recibido exitosamente." });

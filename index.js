@@ -32,12 +32,6 @@ if (!fs.existsSync(CONFIG_DIR)) {
   fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
 }
 
-if (!fs.existsSync(FILE_UPLOADS_DIR)) {
-  console.error(
-    `La carpeta de configuración no existe: ${FILE_UPLOADS_DIR}. Creando la carpeta...`
-  );
-  fs.mkdirSync(FILE_UPLOADS_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
-}
 
 // Verifica si el directorio de logs existe, si no, lo crea
 if (!fs.existsSync(LOG_DIR)) {

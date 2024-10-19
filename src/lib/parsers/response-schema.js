@@ -25,8 +25,14 @@ const responseSchema = z.array(
   })
 );
 
-function validateResponse(response) {
-  return responseSchema.safeParse(response);
+function validateResponse(parsedResult) {
+  const result = responseSchema.safeParse(parsedResult);
+
+  if (result.success) {
+    return true
+  }
+
+  return false
 }
 
 module.exports = {
