@@ -5,7 +5,7 @@ const { initializeTcpServer } = require("./src/middlewares/tcp-server");
 const { initializeExpressServer } = require("./src/middlewares/express-server");
 const { initializeWebSocket } = require("./src/middlewares/websocket-server");
 const { DATADIR } = require("./src/constants/DATADIR");
-const { CONFIG_DIR } = require("./src/constants/CONFIG_DIR");
+const { CONFIG_DIR, FILE_UPLOADS_DIR } = require("./src/constants/CONFIG_DIR");
 const {
   configurationManager,
 } = require("./src/middlewares/configuration-manager");
@@ -32,6 +32,13 @@ if (!fs.existsSync(CONFIG_DIR)) {
   fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
 }
 
+if (!fs.existsSync(FILE_UPLOADS_DIR)) {
+  console.error(
+    `La carpeta de configuración no existe: ${FILE_UPLOADS_DIR}. Creando la carpeta...`
+  );
+  fs.mkdirSync(FILE_UPLOADS_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
+}
+
 // Verifica si el directorio de logs existe, si no, lo crea
 if (!fs.existsSync(LOG_DIR)) {
   fs.mkdirSync(LOG_DIR, { recursive: true });
@@ -44,3 +51,7 @@ configurationManager();
 const expressServer = initializeExpressServer(SOCKET_PORT);
 const io = initializeWebSocket(expressServer);
 const tpcServer = initializeTcpServer({ PORT: TPC_PORT, webSocketServer: io });
+
+module.exports = {
+  webSocket: io,
+};

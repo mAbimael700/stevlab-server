@@ -69,6 +69,11 @@ function parseResultsData(hl7Message) {
   return [result].flat();
 }
 
+const parser = {
+  parser: parseResultsData,
+  CHAR_DELIMITER: "\x1C"
+};
+
 module.exports = {
-  parseResultsData,
+  parser,
 };

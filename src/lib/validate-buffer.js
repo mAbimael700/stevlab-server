@@ -5,7 +5,7 @@ const { equipmentsParsers } = require("../middlewares/equiment-manager");
 function validateParser({ id_device }) {
 
     //Selecciona la función que parsea ese equipo con el ID del equipo
-    const currentParser = equipmentsParsers[id_device]
+    const currentParser = equipmentsParsers[id_device]    
     if (currentParser) {
         return currentParser
     }

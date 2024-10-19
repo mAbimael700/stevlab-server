@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const { filesRouter } = require("../api/routes/files.routes");
 const { devicesRouter } = require("../api/routes/devices.routes");
+const { messageRouter } = require("../api/routes/messages.routes");
 
 // Se inicializa el servidor Express (http) para conexiones WebSocket
 const app = express();
@@ -23,6 +24,7 @@ function initializeExpressServer(PORT) {
   app.use("/api/files", filesRouter);
   app.use("/api/areas", devicesRouter);
   app.use("/api/devices", devicesRouter);
+  app.use("/api/message", messageRouter);
 
   // Sirve los archivos estáticos desde la carpeta build
   app.use(express.static(path.join(process.cwd(), "dist")));

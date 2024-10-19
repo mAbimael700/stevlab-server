@@ -1,9 +1,16 @@
 // src/middlewares/websocket-server.js
 const { Server } = require("socket.io");
 
+let io;
+
 function initializeWebSocket(expressServer) {
+  // Si ya existe una instancia de io, devuelve esa instancia
+  if (io) {
+    return io;
+  }
+
   // Inicializa el servidor WebSocket con Socket.IO
-  const io = new Server(expressServer, {
+  io = new Server(expressServer, {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],
@@ -14,10 +21,10 @@ function initializeWebSocket(expressServer) {
   io.on("connection", (socket) => {
     console.log("Nuevo cliente conectado:", socket.id);
 
-    //Cuando recibe el evento WebSocket del servidor tcp, envía a los clientes el dato parseado
+    // Cuando recibe el evento WebSocket del servidor tcp, envía a los clientes el dato parseado
     socket.on("labResultsMessage", (data) => {
       console.log("Mensaje recibido del cliente:", data);
-      socket.emit("labResultsMessage", data);  // Enviar datos de vuelta al cliente
+      socket.emit("labResultsMessage", data); // Enviar datos de vuelta al cliente
     });
 
     socket.on("disconnect", () => {
@@ -28,4 +35,5 @@ function initializeWebSocket(expressServer) {
   return io;
 }
 
-module.exports = { initializeWebSocket };
+// Exportamos tanto la función para inicializar como la instancia io
+module.exports = { initializeWebSocket, getIO: () => io };

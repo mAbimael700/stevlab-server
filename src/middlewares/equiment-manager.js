@@ -1,12 +1,10 @@
 const fs = require("node:fs");
 
-const {
-  parseResultsData: parserFujifilmNx600,
-} = require("../lib/parsers/HL7-type1/parser");
-const {
-  parseResultsData: parserControlab,
-} = require("../lib/parsers/HL7-type4/parser");
+const { parseResultsData: type1 } = require("../lib/parsers/HL7-type1/parser");
+const { parser: type4 } = require("../lib/parsers/HL7-type4/parser");
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
+
+const { parseMessage: cm200Parser } = require("../lib/parsers/CM200/parser");
 
 let equipmentsOnServer = [];
 
@@ -20,7 +18,7 @@ function loadEquipments() {
       );
       fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
     }
-    
+
     // Verifica si el archivo existe
     if (!fs.existsSync(DEVICES_DIR)) {
       console.error(
@@ -83,8 +81,9 @@ function deleteEquipmentOnServer(mac_address) {
 }
 
 const equipmentsParsers = {
-  FUJIFILM_DRICHEM_NX600: parserFujifilmNx600,
-  CONTROLAB: parserControlab,
+  FUJIFILM_DRICHEM_NX600: type1,
+  CONTROLAB: type4,
+  CM200: { parser: cm200Parser, CHAR_DELIMITER: "\n" },
 };
 
 module.exports = {
