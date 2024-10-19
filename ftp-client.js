@@ -1,36 +1,67 @@
-const { Client } = require("basic-ftp")
-const fs = require("fs")
-// ESM: import { Client } from "basic-ftp"
+const ftp = require("basic-ftp");
+const fs = require("fs");
 
-example()
+const config = {
+    host: "tu-servidor-ftp.com",
+    user: "tu-usuario",
+    password: "tu-password",
+    secure: false
+};
 
-async function example() {
-    const client = new Client()
-    client.ftp.verbose = true
+let client;
+const previousStateFile = "./previous-state.json";
+
+async function connectToFtp() {
+    client = new ftp.Client();
     try {
-        await client.access({
-            host: "192.168.1.164",
-            user: "android",
-            password: "android",
-            // secure: true,
-            port: 2221
-        })
-
-        //console.log(await client.list())
-        await client.ensureDir("/Download").then(async () => {
-            const data = await client.list("/Download")
-            await client.downloadToDir(process.cwd(), "/Download")
-
-            console.log(data, "Data info");
-
-        })
-
-
-        //await client.uploadFrom("README.md", "README_FTP.md")
-        //await client.downloadTo("README_COPY.md", "README_FTP.md")
+        await client.access(config);
+        console.log("Conexión FTP establecida");
+    } catch (err) {
+        console.error("Error al conectar al servidor FTP:", err);
     }
-    catch (err) {
-        console.log(err)
-    }
-    client.close()
 }
+
+async function listRemoteFiles() {
+    try {
+        return await client.list("/ruta/remota/");
+    } catch (err) {
+        console.error("Error al listar archivos:", err);
+        return [];
+    }
+}
+
+async function detectChanges() {
+    const currentFiles = (await listRemoteFiles()).map(file => file.name);
+    let previousFiles = [];
+
+    // Cargar estado anterior si existe
+    if (fs.existsSync(previousStateFile)) {
+        previousFiles = JSON.parse(fs.readFileSync(previousStateFile));
+    }
+
+    // Detectar archivos añadidos
+    const addedFiles = currentFiles.filter(file => !previousFiles.includes(file));
+    // Detectar archivos eliminados
+    const removedFiles = previousFiles.filter(file => !currentFiles.includes(file));
+
+    if (addedFiles.length > 0) {
+        console.log("Archivos añadidos:", addedFiles);
+    }
+    if (removedFiles.length > 0) {
+        console.log("Archivos eliminados:", removedFiles);
+    }
+
+    // Guardar el estado actual
+    fs.writeFileSync(previousStateFile, JSON.stringify(currentFiles));
+}
+
+async function startMonitoring() {
+    await connectToFtp();  // Establecer la conexión al inicio
+
+    setInterval(async () => {
+        await detectChanges();
+    }, 1000); // Monitorear cada 1 segundo
+}
+
+// Iniciar monitoreo
+startMonitoring();
