@@ -4,7 +4,7 @@ const responseSchema = z.array(
   z.object({
     tipo: z.enum("R").optional(),
     id: z.string().min(1),
-    folio: z.string().min(1), // Marcar como optional
+    folio: z.string(), // Marcar como optional
     nombre_paciente: z.string().optional(),
     sexo: z.enum(["O", "F", "M"]).optional(),
     hora: z.string().optional(),
@@ -28,6 +28,8 @@ const responseSchema = z.array(
 function validateResponse(parsedResult) {
   const result = responseSchema.safeParse(parsedResult);
 
+  console.log(result.error);
+  
   if (result.success) {
     return true
   }

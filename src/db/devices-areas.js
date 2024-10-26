@@ -34,7 +34,16 @@ const devicesAreas = {
         ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
-    }
+      require_ftp: true,
+    },
+    {
+      id: "A15",
+      name: "A15",
+      area: {
+        ID: 49,
+        Nombre_area: "BIOQUIMICA CLINICA",
+      },
+    },
   ],
 };
 

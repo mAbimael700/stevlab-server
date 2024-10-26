@@ -5,8 +5,14 @@ const { parser: type4 } = require("../lib/parsers/HL7-type4/parser");
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
 
 const { parseMessage: cm200Parser } = require("../lib/parsers/CM200/parser");
+const { CONTROLAB } = require("../constants/dictionaries/CONTROLAB");
+const { closeFTP, connectFTP } = require("../lib/ftp-devices");
+const {
+  formatMacAddressWithSeparators,
+} = require("../utils/formatMacAddressWithSeparators");
 
 let equipmentsOnServer = [];
+let previousEquipments = []; // Equipos previos (historial)
 
 // Función para cargar equipos desde el archivo
 function loadEquipments() {
@@ -43,11 +49,62 @@ function loadEquipments() {
 // Inicializa la carga de equipos
 loadEquipments();
 
-// Observa cambios en el archivo de dispositivos
-fs.watch(DEVICES_DIR, (eventType, filename) => {
-  if (eventType === "change" || eventType === "rename") {
-    console.log(`El archivo ${filename} ha cambiado. Actualizando equipos...`);
-    loadEquipments(); // Recarga los equipos
+// Usamos fs.watchFile para observar cambios en el archivo con un intervalo
+fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
+  if (curr.mtime !== prev.mtime) {
+    // Verifica si la última modificación cambió
+    console.log(
+      `El archivo ${DEVICES_DIR} ha cambiado. Actualizando equipos...`
+    );
+
+    // Cargar la nueva lista de equipos
+    const oldEquipments = [...previousEquipments]; // Usa la copia del estado anterior
+
+    loadEquipments(); // Recargar equipos actualizados
+    previousEquipments = [...equipmentsOnServer];
+
+    // Detectar equipos eliminados
+    oldEquipments.forEach(async (oldEquipment) => {
+      const deletedDevice = !equipmentsOnServer.find(
+        (newEquipment) => newEquipment.mac_address === oldEquipment.mac_address
+      );
+
+      if (deletedDevice) {
+        console.log(`Equipo ${oldEquipment.id} ha sido eliminado.`);
+        await closeFTP(oldEquipment.mac_address); // Cierra la conexión FTP
+      }
+    });
+
+    // Detectar equipos agregados o modificados
+    equipmentsOnServer.forEach(async (newEquipment) => {
+      const oldEquipment = oldEquipments.find(
+        (equip) => equip.mac_address === newEquipment.mac_address
+      );
+
+      if (!oldEquipment) {
+        console.log(
+          `Nuevo equipo detectado: ${
+            newEquipment.id
+          } con dirección MAC ${formatMacAddressWithSeparators(
+            newEquipment.mac_address
+          )} ha sido agregado`
+        );
+
+        if (newEquipment.id === "CM200" || newEquipment.id === "A15") {
+          await connectFTP(newEquipment); // Inicia una nueva conexión FTP
+        }
+      } else if (
+        oldEquipment.ip_address !== newEquipment.ip_address ||
+        oldEquipment.port !== newEquipment.port
+      ) {
+        console.log(`Equipo modificado: ${newEquipment.id}`);
+        await closeFTP(oldEquipment.mac_address); // Cierra la conexión antigua
+        await connectFTP(newEquipment); // Establece la nueva conexión FTP
+      }
+    });
+
+    // Actualiza la variable de estado previo después de procesar los cambios
+    previousEquipments = [...equipmentsOnServer]; // Guarda la nueva lista de equipos como estado previo
   }
 });
 
@@ -64,6 +121,7 @@ function writeAndRefreshEquipments(newEquipments) {
       JSON.stringify({ devices: newEquipments }, null, 2)
     );
     equipmentsOnServer = newEquipments; // Actualiza la lista en memoria
+    // previousEquipments = [...newEquipments]; // Actualiza el estado previo cuando se escribe en el archivo
   } catch (error) {
     console.error("Error al escribir en el archivo de dispositivos:", error);
   }
@@ -82,7 +140,12 @@ function deleteEquipmentOnServer(mac_address) {
 
 const equipmentsParsers = {
   FUJIFILM_DRICHEM_NX600: type1,
-  CONTROLAB: type4,
+  CONTROLAB: {
+    parser: (hl7Message) => {
+      return type4(hl7Message, CONTROLAB);
+    },
+    CHAR_DELIMITER: "\x1C",
+  },
   CM200: { parser: cm200Parser, CHAR_DELIMITER: "\n" },
 };
 

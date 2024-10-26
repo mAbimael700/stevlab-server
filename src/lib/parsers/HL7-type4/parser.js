@@ -9,7 +9,8 @@ const {
 } = require("./messageSpliterFn.js");
 const PID = require("./models/PID.js");
 
-function parseResultsData(hl7Message) {
+function parseResultsData(hl7Message, dictionary) {
+  console.log("Dictionary in parseResultsData: ", dictionary);
   //Divide el mensaje en sus segmentos
   const segments = getSegments(hl7Message);
   const separator = getFieldSeparator(hl7Message);
@@ -26,20 +27,16 @@ function parseResultsData(hl7Message) {
 
     switch (fieldsSegment.type) {
       //Por cada tipo de segmento, se llama una función parecida a un constructor de su modelo de tipo de mensaje HL7
-      /* case "OBR": {
-        result["OBR"] = {
-          message_type: fieldsSegment.type,
-          segment_name: "Order observation Request Information",
-          ...OBR(fieldsSegment),
-        };
+      case "OBR": {
+        result = { ...result, ...OBR(fieldsSegment) };
         break;
-      } */
+      }
 
       case "OBX": {
         if (!result.parametros) {
           result.parametros = [];
         }
-        result.parametros.push(OBX(fieldsSegment));
+        result.parametros.push(OBX(fieldsSegment, dictionary));
         break;
       }
 
@@ -69,11 +66,7 @@ function parseResultsData(hl7Message) {
   return [result].flat();
 }
 
-const parser = {
-  parser: parseResultsData,
-  CHAR_DELIMITER: "\x1C"
-};
 
 module.exports = {
-  parser,
+  parser: parseResultsData,
 };

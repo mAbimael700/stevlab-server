@@ -1,15 +1,15 @@
-function OBR(segment){
-    
-    if(segment.type !== "OBR"){
-        throw new Error('El segmento no corresponde a este modelo.')
-    }
+function OBR(segment) {
+  if (segment.type !== "OBR") {
+    throw new Error("El segmento no corresponde a este modelo.");
+  }
 
-    const fields = segment.fields;
+  const fields = segment.fields;
 
-    return {
-        clave: fields[6] ?? undefined,
-    }
-
+  return {
+    //clave: fields[6] ?? undefined,
+    id: fields[3],
+    folio: fields[2],
+  };
 }
 
 module.exports = OBR;

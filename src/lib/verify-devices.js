@@ -1,13 +1,7 @@
 const { getEquipments } = require("../middlewares/equiment-manager");
-
-function formatMacAddressWithSeparators(mac) {
-  // Dividir la cadena en grupos de 2 caracteres y unirlos con ':'
-  return mac
-    .match(/.{1,2}/g)
-    .join(":")
-    .toUpperCase();
-}
-
+const {
+  formatMacAddressWithSeparators,
+} = require("../utils/formatMacAddressWithSeparators");
 
 //Función que valida los equipos registrados en el sistema
 function verifyDevices(currentRemoteMacAddress) {
@@ -19,7 +13,6 @@ function verifyDevices(currentRemoteMacAddress) {
       console.log(
         "Por favor, registra los equipos de laboratorio conectados al servidor."
       );
-      
     }
     const foundEquipment = equipmentsOnServer.find(
       (equipment) => equipment.mac_address === currentRemoteMacAddress
@@ -44,5 +37,4 @@ function verifyDevices(currentRemoteMacAddress) {
 
 module.exports = {
   verifyDevices,
-  formatMacAddressWithSeparators
 };
