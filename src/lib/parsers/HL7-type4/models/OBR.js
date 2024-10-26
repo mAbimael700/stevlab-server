@@ -8,7 +8,7 @@ function OBR(segment) {
   return {
     //clave: fields[6] ?? undefined,
     id: fields[3],
-    folio: fields[2],
+    folio: fields[3],
   };
 }
 

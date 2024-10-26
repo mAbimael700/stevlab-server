@@ -43,8 +43,35 @@ const devicesAreas = {
         ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
+      require_ftp: true,
     },
   ],
+  "HEMATOLOGIA": [
+    {
+      id: "MINDRAY_BC20S",
+      name: "MINDRAY BC-20S",
+      area: {
+        ID: 4,
+        Nombre_area: "HEMATOLOGIA",
+      }
+    },
+    {
+      id: "SWELAB",
+      name: "SWELAB",
+      area: {
+        ID: 4,
+        Nombre_area: "HEMATOLOGIA",
+      }
+    },
+    {
+      id: "DYMIND",
+      name: "DYMIND",
+      area: {
+        ID: 4,
+        Nombre_area: "HEMATOLOGIA",
+      }
+    }
+  ]
 };
 
 module.exports = {

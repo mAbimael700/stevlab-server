@@ -1,4 +1,4 @@
-const { equipmentsParsers } = require("../middlewares/equiment-manager");
+const { equipmentsParsers } = require("../constants/parser-models/EQUIPMENT_PARSERS");
 
 
 // Función que decide el parser correspondiente del equipo

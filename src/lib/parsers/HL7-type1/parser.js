@@ -32,7 +32,7 @@ function parser(parsedData) {
           estado: line[1].trim(),
           fecha: line[2].trim(),
           hora: line[3].trim(),
-          folio: line[4].trim(),
+          folio: line[5].trim(),
           id: line[5].trim(),
           parametros: [],
         };

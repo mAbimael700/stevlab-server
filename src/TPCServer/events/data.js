@@ -4,11 +4,12 @@ const { format } = require("date-fns");
 const { verifyDevices } = require("../../lib/verify-devices");
 const { getMacAddress } = require("../../lib/getMacAddress");
 const { validateParser } = require("../../lib/validate-buffer");
-const { validateResponse } = require("../../lib/parsers/response-schema");
+const { validateResponse } = require("../../schemas/response-schema");
 const { emitResultsToWebSocket } = require("../../lib/emit-results-websocket");
 const { saveResultsToLocalData } = require("../../lib/save-results-data");
 const { readFile } = require("../../lib/read-file");
 const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
+const { parser } = require("../../lib/parsers/HL7-type4/parser");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
 
@@ -17,16 +18,20 @@ async function dataEvent(data, ip_address, bufferList) {
   bufferList.append(data);
 
   //Formatea la fecha para guardarla en el nombre del archivo json
-  
+
   const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
   const filePath = path.join(FILE_UPLOADS_DIR, `resultados-${timestamp}.txt`);
-    
+
   console.log("Mensaje entrante de: " + ip_address);
 
   try {
     fs.appendFileSync(filePath, data.toString());
     console.log(`Datos crudos guardados en la ruta: ${filePath}`);
-    
+
+    console.log(JSON.stringify
+      (parser(data.toString()), null, 2))
+
+    /* 
     if (data.length > MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
       return;
@@ -85,7 +90,7 @@ async function dataEvent(data, ip_address, bufferList) {
         saveResultsToLocalData(results);
       }
 
-    }
+    } */
   } catch (error) {
     console.error("Error al procesar datos:", error);
   }

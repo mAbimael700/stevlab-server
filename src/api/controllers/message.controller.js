@@ -2,7 +2,7 @@
 const { validateParser } = require("../../lib/validate-buffer");
 const { saveResultsToLocalData } = require("../../lib/save-results-data");
 const { emitResultsToWebSocket } = require("../../lib/emit-results-websocket");
-const { validateResponse } = require("../../lib/parsers/response-schema");
+const { validateResponse } = require("../../schemas/response-schema");
 
 
 class MessageController {

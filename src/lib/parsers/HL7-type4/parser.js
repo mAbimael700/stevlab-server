@@ -36,7 +36,9 @@ function parseResultsData(hl7Message, dictionary) {
         if (!result.parametros) {
           result.parametros = [];
         }
-        result.parametros.push(OBX(fieldsSegment, dictionary));
+
+        const parametro = OBX(fieldsSegment, dictionary)
+        parametro && result.parametros.push(parametro);
         break;
       }
 

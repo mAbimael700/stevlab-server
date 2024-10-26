@@ -1,11 +1,8 @@
 const fs = require("node:fs");
 
-const { parseResultsData: type1 } = require("../lib/parsers/HL7-type1/parser");
-const { parser: type4 } = require("../lib/parsers/HL7-type4/parser");
+
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
 
-const { parseMessage: cm200Parser } = require("../lib/parsers/CM200/parser");
-const { CONTROLAB } = require("../constants/dictionaries/CONTROLAB");
 const { closeFTP, connectFTP } = require("../lib/ftp-devices");
 const {
   formatMacAddressWithSeparators,
@@ -138,20 +135,10 @@ function deleteEquipmentOnServer(mac_address) {
   writeAndRefreshEquipments(updatedEquipments);
 }
 
-const equipmentsParsers = {
-  FUJIFILM_DRICHEM_NX600: type1,
-  CONTROLAB: {
-    parser: (hl7Message) => {
-      return type4(hl7Message, CONTROLAB);
-    },
-    CHAR_DELIMITER: "\x1C",
-  },
-  CM200: { parser: cm200Parser, CHAR_DELIMITER: "\n" },
-};
+
 
 module.exports = {
   equipmentsOnServer,
-  equipmentsParsers,
   loadEquipments,
   writeEquipmentOnServer,
   deleteEquipmentOnServer,
