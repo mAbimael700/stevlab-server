@@ -1,9 +1,12 @@
 const fs = require("node:fs");
 
-
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
 
-const { closeFTP, connectFTP } = require("../lib/ftp-devices");
+const {
+  closeFTP,
+  connectFTP,
+  ftpConnections,
+} = require("../lib/ftp-connection");
 const {
   formatMacAddressWithSeparators,
 } = require("../utils/formatMacAddressWithSeparators");
@@ -33,6 +36,7 @@ function loadEquipments() {
     const data = fs.readFileSync(DEVICES_DIR).toString();
     const parsedData = JSON.parse(data);
     equipmentsOnServer = parsedData?.devices ?? [];
+    connectToFtp();
     console.log("Equipos cargados:", equipmentsOnServer);
   } catch (error) {
     // Manejo de errores
@@ -66,8 +70,9 @@ fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
         (newEquipment) => newEquipment.mac_address === oldEquipment.mac_address
       );
 
-      if (deletedDevice) {
-        console.log(`Equipo ${oldEquipment.id} ha sido eliminado.`);
+      console.log(`Equipo ${oldEquipment.id} ha sido eliminado.`);
+
+      if (deletedDevice && oldEquipment.require_ftp_conn) {
         await closeFTP(oldEquipment.mac_address); // Cierra la conexión FTP
       }
     });
@@ -87,7 +92,7 @@ fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
           )} ha sido agregado`
         );
 
-        if (newEquipment.id === "CM200" || newEquipment.id === "A15") {
+        if (newEquipment.require_ftp_conn) {
           await connectFTP(newEquipment); // Inicia una nueva conexión FTP
         }
       } else if (
@@ -104,6 +109,18 @@ fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
     previousEquipments = [...equipmentsOnServer]; // Guarda la nueva lista de equipos como estado previo
   }
 });
+
+function connectToFtp() {
+  const devicesRequireFTPConn = equipmentsOnServer.filter(
+    (equipment) => equipment.require_ftp_conn
+  );
+
+  devicesRequireFTPConn.forEach((device) => {
+    if (!ftpConnections[device.mac_address]) {
+      connectFTP(device);
+    }
+  });
+}
 
 // Getter para acceder a equipmentsOnServer
 function getEquipments() {
@@ -134,8 +151,6 @@ function deleteEquipmentOnServer(mac_address) {
   );
   writeAndRefreshEquipments(updatedEquipments);
 }
-
-
 
 module.exports = {
   equipmentsOnServer,

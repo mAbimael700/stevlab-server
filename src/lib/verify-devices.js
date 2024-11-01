@@ -35,6 +35,4 @@ function verifyDevices(currentRemoteMacAddress) {
   }
 }
 
-module.exports = {
-  verifyDevices,
-};
+module.exports.verifyDevices = verifyDevices; // Exportación al final

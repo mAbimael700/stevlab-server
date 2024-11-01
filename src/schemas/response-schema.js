@@ -27,13 +27,9 @@ const responseSchema = z.array(
 
 function validateResponse(parsedResult) {
   const result = responseSchema.safeParse(parsedResult);
-
-  console.log(result.error);
-  
   if (result.success) {
     return true
   }
-
   return false
 }
 

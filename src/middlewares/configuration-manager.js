@@ -4,6 +4,7 @@ const {
   CONFIG_DIR,
   DEVICES_DIR,
   FILE_UPLOADS_DIR,
+  STATES,
 } = require("../constants/CONFIG_DIR");
 const { DATADIR } = require("../constants/DATADIR");
 const { LOG_DIR } = require("../constants/LOG_DIR");
@@ -32,6 +33,10 @@ function configurationManager() {
   // Verifica si el directorio de logs existe, si no, lo crea
   if (!fs.existsSync(LOG_DIR)) {
     fs.mkdirSync(LOG_DIR, { recursive: true });
+  }
+
+  if (!fs.existsSync(STATES)) {
+    fs.mkdirSync(STATES, { recursive: true });
   }
 
 

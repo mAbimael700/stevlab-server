@@ -5,6 +5,7 @@ const {
   deleteEquipmentOnServer,
   writeEquipmentOnServer,
 } = require("../../middlewares/equiment-manager");
+const { validateDevice } = require("../../schemas/device-schema");
 
 class DevicesController {
   static getDevicesByArea(req, res) {
@@ -53,22 +54,36 @@ class DevicesController {
   static setDeviceToStorage(req, res) {
     const { data } = req.body;
     const equipmentsOnServer = getEquipments();
-    if (
-      equipmentsOnServer.some(
-        (equiptment) => equiptment.mac_address === data.mac_address
-      )
-    ) {
+
+    const result = validateDevice(data);
+    const existDevice = equipmentsOnServer.some(
+      (equiptment) => equiptment.mac_address === result.data.mac_address
+    );
+
+
+    console.log(result?.error);
+    
+
+    if (!result.success) {
       return res.status(400).json({
         status: 400,
-        message: "El equipo de laboratorio ya está registrado",
+        error: result.error.errors,
       });
     }
 
-    writeEquipmentOnServer(data);
+    if (existDevice) {
+      return res.status(400).json({
+        status: 400,
+        error: "El equipo de laboratorio ya está registrado",
+      });
+    }
+
+    writeEquipmentOnServer(result.data);
 
     return res.status(201).json({
       status: 201,
       message: "El equipo de laboratorio se ha registrado con éxito.",
+      body: result.data,
     });
   }
 

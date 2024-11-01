@@ -8,10 +8,10 @@ async function readFile(filePath) {
     // Leemos el contenido del archivo
     const fileContent = await fs.readFile(filePath);
 
-    console.log(
+    /* console.log(
       "Información del contenido en el archivo de la ruta: " + filePath
     );
-    console.log(fileContent.toString("utf8"));
+    console.log(fileContent.toString("utf8")); */
 
     return fileContent.toString("utf8");
   } catch (error) {

@@ -27,11 +27,7 @@ async function dataEvent(data, ip_address, bufferList) {
   try {
     fs.appendFileSync(filePath, data.toString());
     console.log(`Datos crudos guardados en la ruta: ${filePath}`);
-
-    console.log(JSON.stringify
-      (parser(data.toString()), null, 2))
-
-    /* 
+    
     if (data.length > MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
       return;
@@ -90,7 +86,7 @@ async function dataEvent(data, ip_address, bufferList) {
         saveResultsToLocalData(results);
       }
 
-    } */
+    } 
   } catch (error) {
     console.error("Error al procesar datos:", error);
   }
