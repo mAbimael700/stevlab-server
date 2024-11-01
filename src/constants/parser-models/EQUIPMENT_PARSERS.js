@@ -20,7 +20,7 @@ function type4Fn(dictionary, CHAR_DELIMITER = "\x1C") {
 const equipmentsParsers = {
   FUJIFILM_DRICHEM_NX600: type1,
   CONTROLAB: type4Fn(CONTROLAB),
-  CM200: { parser: cm200Parser, CHAR_DELIMITER: "\n" },
+  CM200: { parser: cm200Parser, CHAR_DELIMITER: "" },
   A15: { parser: A15Parser, CHAR_DELIMITER: "" },
   MINDRAY_BC20S: type4Fn(),
   SWELAB: type4Fn(),

@@ -8,23 +8,29 @@ function saveResultsToLocalData(parsedData) {
   const timestamp = format(new Date(), "ddMMyyyy-HHmmss");
   const filePath = path.join(DATADIR, `resultados-${timestamp}`);
 
-  const jsonResults = JSON.stringify(parsedData, null, 2);
+
+  parsedData.forEach(element => {
+
+    console.log(element);
+    
+    const jsonResults = JSON.stringify([element], null, 2);
+
+    //Guarda el archivo en la ruta especificada con el JSON parseado
+    if (element) {
+      fs.appendFileSync(
+        filePath.concat(`-${element.folio}.json`),
+        jsonResults
+      );
+
+      console.log(
+        `Datos parseados guardados en la ruta: ${filePath.concat(
+          `-${element.folio}.json`
+        )}`
+      );
+    }
+  });
 
 
-
-  //Guarda el archivo en la ruta especificada con el JSON parseado
-  if (parsedData[0]) {
-    fs.appendFileSync(
-      filePath.concat(`-${parsedData[0].folio}.json`),
-      jsonResults
-    );
-
-    console.log(
-      `Datos parseados guardados en la ruta: ${filePath.concat(
-        `-${parsedData[0].folio}.json`
-      )}`
-    );
-  }
 }
 
 module.exports = {

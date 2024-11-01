@@ -33,7 +33,7 @@ async function connectFTP(equipment, retryCount = 0) {
     await client.access({
       host: equipment.ip_address,
       port: equipment.port,
-      user: "appnode", // reemplaza con tu usuario
+      user: "stevlabserver", // reemplaza con tu usuario
       password: "annon", // reemplaza con tu contraseña
       secure: true, // TLS explícito
       secureOptions: { rejectUnauthorized: false }, // Permitir certificados autofirmados
@@ -197,7 +197,7 @@ async function reconnectFTP(equipment) {
       await client.access({
         host: equipment.ip_address,
         port: equipment.port,
-        user: "appnode",
+        user: "stevlabserver",
         password: "annon",
         secure: true, // TLS explícito
         secureOptions: { rejectUnauthorized: false }, // Permitir certificados autofirmados
