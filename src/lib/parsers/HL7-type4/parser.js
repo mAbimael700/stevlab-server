@@ -10,7 +10,7 @@ const {
 const PID = require("./models/PID.js");
 
 function parseResultsData(hl7Message, dictionary) {
-  console.log("Dictionary in parseResultsData: ", dictionary);
+  
   //Divide el mensaje en sus segmentos
   const segments = getSegments(hl7Message);
   const separator = getFieldSeparator(hl7Message);
@@ -59,12 +59,13 @@ function parseResultsData(hl7Message, dictionary) {
       } */
 
       default: {
-        console.warn(`Message type '${fieldsSegment.type}' is not recognized`);
+        //console.warn(`Message type '${fieldsSegment.type}' is not recognized`);
       }
     }
   });
 
   //Devuelve el objeto con el mensaje HL7 parseado
+  
   return [result].flat();
 }
 

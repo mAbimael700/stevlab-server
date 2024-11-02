@@ -27,12 +27,12 @@ async function dataEvent(data, ip_address, bufferList) {
   try {
     fs.appendFileSync(filePath, data.toString());
     console.log(`Datos crudos guardados en la ruta: ${filePath}`);
-    
+
     if (data.length > MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
       return;
     }
-    
+
     //Obtenemos la dirección MAC del equipo conectado
     currentRemoteMacAddress = await getMacAddress(ip_address);
     if (!currentRemoteMacAddress) {
@@ -41,7 +41,7 @@ async function dataEvent(data, ip_address, bufferList) {
       );
       return;
     }
-    
+
     //Valida si existe el equipo registrado en las configuraciones del sistema
     const existeEquipo = verifyDevices(currentRemoteMacAddress);
 
@@ -58,10 +58,29 @@ async function dataEvent(data, ip_address, bufferList) {
 
     // Comprueba que exista el parser y el carácter delimitador en ese equipo
     if (parser && CHAR_DELIMITER) {
-      
+
       //Instanciamos la variable dónde guardará los resultados
       let results = {};
-      
+
+
+
+      if (existeEquipo.id === "CONTROLAB") {
+        const fileContent = await readFile(filePath);
+        results = parser(fileContent);
+
+        // Valida que el mensaje parseado sea correcto
+        const resultValidated = validateResponse(results);
+
+        //En caso de que el mensaje parseado sea válido lo guarda en un JSON
+        if (resultValidated) {
+          // Emite a través de Socket.io
+          emitResultsToWebSocket(results);
+          saveResultsToLocalData(results);
+          return
+        }
+      }
+
+
       let index;
       // Buscar el índice del carácter delimitador
       while ((index = bufferList.indexOf(CHAR_DELIMITER)) !== -1) {
@@ -69,24 +88,24 @@ async function dataEvent(data, ip_address, bufferList) {
         const message = bufferList.slice(0, index + 1).toString();
         bufferList.consume(index + 1); // Consume el mensaje del buffer acumulado
         results = parser(message);
+
+
+        // Valida que el mensaje parseado sea correcto
+        const resultValidated = validateResponse(results);
+
+        //En caso de que el mensaje parseado sea válido lo guarda en un JSON
+        if (resultValidated) {
+          // Emite a través de Socket.io
+          emitResultsToWebSocket(results);
+          saveResultsToLocalData(results);
+        }
       }
 
-      if (existeEquipo.id === "CONTROLAB") {
-        const fileContent = await readFile(filePath);
-        results = parser(fileContent);
-      }
+      
 
-      // Valida que el mensaje parseado sea correcto
-      const resultValidated = validateResponse(results);
 
-      //En caso de que el mensaje parseado sea válido lo guarda en un JSON
-      if (resultValidated) {
-        // Emite a través de Socket.io
-        emitResultsToWebSocket(results);
-        saveResultsToLocalData(results);
-      }
 
-    } 
+    }
   } catch (error) {
     console.error("Error al procesar datos:", error);
   }
