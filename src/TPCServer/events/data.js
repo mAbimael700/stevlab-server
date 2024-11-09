@@ -9,9 +9,8 @@ const { validateParser } = require("../../lib/validate-buffer");
 const { validateResponse } = require("../../schemas/response-schema");
 const { emitResultsToWebSocket } = require("../../lib/emit-results-websocket");
 const { saveResultsToLocalData } = require("../../lib/save-results-data");
-const { readFile } = require("../../lib/read-file");
 const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
-const { parser } = require("../../lib/parsers/HL7-type4/parser");
+
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
 
@@ -26,9 +25,6 @@ async function dataEvent(data, ip_address, bufferList) {
   console.log("Mensaje entrante de: " + ip_address);
 
   try {
-    /* fs.appendFileSync(filePath, data.toString());
-    console.log(`Datos crudos guardados en la ruta: ${filePath}`); */
-
     if (data.length > MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
       return;
@@ -73,6 +69,8 @@ async function dataEvent(data, ip_address, bufferList) {
           try {
             console.log("Mensaje completo recibido:");
             console.log(completeMessage); // Mostrar el mensaje completo con sus saltos de línea
+            fs.appendFileSync(filePath, completeMessage);
+            console.log(`Datos crudos guardados en la ruta: ${filePath}`);
 
             // Procesa el mensaje con el parser
             const results = parser(completeMessage);
@@ -91,7 +89,7 @@ async function dataEvent(data, ip_address, bufferList) {
               console.warn("Parser devolvió resultados inválidos");
             }
           } catch (error) {
-            console.error("Error al procesar el mensaje:", error);
+            console.error("Error al procesar el mensaje:", error.message);
           }
 
           // Limpia el buffer eliminando los datos procesados hasta el delimitador
