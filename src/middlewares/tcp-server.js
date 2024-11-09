@@ -2,6 +2,21 @@ const net = require("node:net");
 const bl = require("bl");
 const { dataEvent } = require("../TPCServer/events/data");
 
+const fs = require("node:fs");
+const path = require("node:path");
+const crypto = require("node:crypto");
+
+const { validateParser } = require("../lib/validate-buffer");
+const { verifyDevices } = require("../lib/verify-devices");
+const { FILE_UPLOADS_DIR } = require("../constants/CONFIG_DIR");
+const { validateResponse } = require("../schemas/response-schema");
+const { emitResultsToWebSocket } = require("../lib/emit-results-websocket");
+const { saveResultsToLocalData } = require("../lib/save-results-data");
+const { format } = require("date-fns");
+const { getMacAddress } = require("../lib/getMacAddress");
+
+const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
+
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
 function initializeTcpServer({ PORT }) {
   const tcpServer = net.createServer(
@@ -10,11 +25,15 @@ function initializeTcpServer({ PORT }) {
       keepAlive: true, // Envia paquetes keep-alive cada 30 segundos
       keepAliveInitialDelay: 3000,
     },
-    (socket) => {
+    async (socket) => {
       // Obtenemos la ip del socket (equipo) en la conexión
-      const currentRemoteIpAddress = socket.remoteAddress.split(":")[3];
+      let currentRemoteIpAddress = socket.remoteAddress.split(":")[3];
+      let currentRemoteMacAddress = "";
+      let existeEquipo = false;
+      let parser = () => {};
+      let CHAR_DELIMITER = "";
 
-      // Instanciamos la referencia de la dirección MAC del equipo
+      
 
       console.log(
         "Conexión TCP/IP entrante de: " +
@@ -22,14 +41,22 @@ function initializeTcpServer({ PORT }) {
           ":" +
           socket.remotePort
       );
+    
+      // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
+      const deviceParsing = validateParser({
+        id_device: existeEquipo.id,
+      });
+
+      parser = deviceParsing.parser;
+      CHAR_DELIMITER = deviceParsing.CHAR_DELIMITER;
 
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
 
-      const bufferList = bl();
-      socket.on("data", async (data) =>
-        dataEvent(data, currentRemoteIpAddress, bufferList)
-      );
+      const bufferList = new bl();
+      socket.on("data", async (data) => {
+        await dataEvent(data, currentRemoteIpAddress ?? '127.0.0.1', bufferList);
+      });
 
       socket.on("end", () => {
         console.log(`Conexión cerrada por ${currentRemoteIpAddress}`);
@@ -39,7 +66,7 @@ function initializeTcpServer({ PORT }) {
       socket.on("error", (err) => {
         if (err.code === "ECONNRESET") {
           console.warn(
-            `Conexión reseteada por el cliente ${currentRemoteIpAddress}:${socket.remotePort}`
+            ` Conexión reseteada por el cliente ${currentRemoteIpAddress}:${socket.remotePort}`
           );
         } else {
           console.error("Error en la conexión:", err);

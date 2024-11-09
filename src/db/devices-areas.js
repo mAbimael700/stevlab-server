@@ -12,6 +12,14 @@ const devicesAreas = {
   ],
   "BIOQUIMICA CLINICA": [
     {
+      id: "MINDRAY_BS120",
+      name: "MINDRAY BS-120",
+      area: {
+        ID: 49,
+        Nombre_area: "BIOQUIMICA CLINICA",
+      },
+    },
+    {
       id: "FUJIFILM_DRICHEM_NX600",
       name: "FUJIFILM DRI-CHEM NX600",
       area: {
@@ -46,14 +54,14 @@ const devicesAreas = {
       require_ftp: true,
     },
   ],
-  "HEMATOLOGIA": [
+  HEMATOLOGIA: [
     {
       id: "MINDRAY_BC20S",
       name: "MINDRAY BC-20S",
       area: {
         ID: 4,
         Nombre_area: "HEMATOLOGIA",
-      }
+      },
     },
     {
       id: "SWELAB",
@@ -61,7 +69,7 @@ const devicesAreas = {
       area: {
         ID: 4,
         Nombre_area: "HEMATOLOGIA",
-      }
+      },
     },
     {
       id: "DYMIND",
@@ -69,9 +77,9 @@ const devicesAreas = {
       area: {
         ID: 4,
         Nombre_area: "HEMATOLOGIA",
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 
 module.exports = {

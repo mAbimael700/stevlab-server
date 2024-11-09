@@ -26,13 +26,15 @@ const responseSchema = z.array(
 );
 
 function validateResponse(parsedResult) {
+
+  
   const result = responseSchema.safeParse(parsedResult);
 
   if (result.error) {
+    console.log("Result Data en validación: "+result.data);
+    
     console.log(result.error.errors);
   }
-
-  
   if (result.success) {
     return true
   }

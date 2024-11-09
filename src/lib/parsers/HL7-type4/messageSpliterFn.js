@@ -1,12 +1,12 @@
 function getSegments(hl7Message) {
   //Divide el mensaje hl7 por renglones por saltos de línea
   //Retorna un array de segmentos por cada tipo de mensaje
-  return hl7Message.trim().split(/\r?\n/);
+  return hl7Message.trim().split(/(?=MSH|PID|PV1|OBR|OBX)/);
 }
 
 function getFieldsSegment(fieldSeparator, segment) {
   //Divide un segmento por sus datos dependiendo del separador definido
-  const fields = segment.split(fieldSeparator);
+  let fields = segment.split(fieldSeparator);
 
   //Devuelve un objeto con el nombre del segmento y ssu fields
   return { type: fields[0], fields };

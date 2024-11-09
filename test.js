@@ -1,74 +1,64 @@
-const MSH = require("./src/lib/parsers/HL7-type4/models/MSH.js");
-const OBR = require("./src/lib/parsers/HL7-type4/models/OBR.js");
-const OBX = require("./src/lib/parsers/HL7-type4/models/OBX.js");
+const net = require("net");
+const bl = require("bl");
+const fs = require("fs");
+const path = require("path");
+const parser = require("./src/lib/parsers/HL7-type4/parser");
 
-const {
-  getFieldSeparator,
-  getFieldsSegment,
-  getSegments,
-} = require("./src/lib/parsers/HL7-type4/messageSpliterFn.js");
-const PID = require("./src/lib/parsers/HL7-type4/models/PID.js");
+const CHAR_DELIMITER = "\x1C";
+const PORT = 1234; // Cambia el puerto según sea necesario
 
-function parseResultsData(hl7Message) {
-  //console.log("Dictionary in parseResultsData: ", dictionary);
-  
-  
-  //Divide el mensaje en sus segmentos
-  const segments = getSegments(hl7Message);
-  const separator = getFieldSeparator(hl7Message);
+const tcpServer = net.createServer((socket) => {
+  const bufferList = new bl();
 
-  //Creamos un objeto para retornarlo como resultado
-  let result = {};
+  console.log("Cliente conectado desde:", socket.remoteAddress);
 
-  //El arreglo de segmentos se recorre por cada uno de ellos, 
-  //dependiento del tipo de mensaje se agrega a un atributo distinto del objeto resultado *
+  socket.on("data", (data) => {
+    // Agrega el chunk al buffer acumulador
+    bufferList.append(data);
 
-//   segments.forEach((segment) => {
-//     //Devuelve un objeto con su tipo de mensaje y una lista de los datos por cada renglon (segmento)
-//     const fieldsSegment = getFieldsSegment(separator, segment);
+    // Convierte el buffer acumulado a string con encoding utf-8 sin perder formato
+    const accumulatedData = bufferList.toString("utf-8");
 
-//     switch (fieldsSegment.type) {
-//       //Por cada tipo de segmento, se llama una función parecida a un constructor de su modelo de tipo de mensaje HL7
-//       case "OBR": {
-//         result = { ...result, ...OBR(fieldsSegment) };
-//         break;
-//       }
+    // Verifica si el acumulador contiene el delimitador
+    const delimiterIndex = accumulatedData.indexOf(CHAR_DELIMITER);
 
-//       case "OBX": {
-//         if (!result.parametros) {
-//           result.parametros = [];
-//         }
+    if (delimiterIndex !== -1) {
+      // Extraemos el mensaje completo hasta el delimitador, respetando el formato de saltos de línea
+      const completeMessage = accumulatedData.slice(0, delimiterIndex + 1);
 
-//         const parametro = OBX(fieldsSegment, dictionary)
-//         parametro && result.parametros.push(parametro);
-//         break;
-//       }
+      try {
+        console.log("Mensaje completo recibido:");
+        console.log(completeMessage); // Mostrar el mensaje completo con sus saltos de línea
 
-//       case "PID": {
-//         result = {
-//           ...result,
-//           ...PID(fieldsSegment),
-//         };
-//         break;
-//       }
-//       /* case "MSH": {
-//         result["MSH"] = {
-//           message_type: "MSH",
-//           segment_name: "Message Header",
-//           ...MSH(fieldsSegment),
-//         };
-//         break;
-//       } */
+        // Procesa el mensaje con el parser
+        const results = parser.parser(completeMessage);
 
-//       default: {
-//         console.warn(`Message type '${fieldsSegment.type}' is not recognized`);
-//       }
-//     }
-//   });
+        if (results) {
+          console.log("Resultados del parser:", results);
+          // Aquí podrías guardar o emitir resultados según sea necesario
+        } else {
+          console.warn("Parser devolvió resultados inválidos");
+        }
 
-  //Devuelve el objeto con el mensaje HL7 parseado
-  return [result].flat();
-}
+      } catch (error) {
+        console.error("Error al procesar el mensaje:", error);
+      }
 
+      // Limpia el buffer eliminando los datos procesados hasta el delimitador
+      bufferList.consume(Buffer.byteLength(completeMessage, "utf-8"));
+    }
+  });
 
+  socket.on("end", () => {
+    console.log("Cliente desconectado:", socket.remoteAddress);
+  });
 
+  socket.on("error", (error) => {
+    console.error("Error en la conexión:", error);
+    socket.destroy();
+  });
+});
+
+tcpServer.listen(PORT, () => {
+  console.log(`Servidor TCP escuchando en el puerto ${PORT}`);
+});
