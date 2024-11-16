@@ -8,23 +8,24 @@ const FULLJIFILM_NX600_DICTIONARIO = {
   AMYL: "AMI0", // Amilasa
   CHE: "COL2", // Colinesterasa
   GGT: "GGT0", // Gamma-Glutamil Transferasa
-  "GOT/AST": "RTGOTGP", // Aspartato Aminotransferasa
-  "GPT/ALT": "PFHCAN6", // Alanina Aminotransferasa
+  "GOT/AST": "QSTGO", // Aspartato Aminotransferasa
+  "GPT/ALT": "QSTGP", // Alanina Aminotransferasa
   LDH: "DHL0", // Lactato Deshidrogenasa
   LIP: "LIPA", // Lipasa
   ALB: "ALB1", // Albúmina
   BUN: "NURE", // Nitrógeno Ureico en Sangre
-  CRE: "CREA", // Creatinina
+  CRE: "QSCRENZ", // Creatinina
   DBIL: "BILD", // Bilirrubina Directa
-  GLU: "GLUC", // Glucosa
+  GLU: "QSGLU", // Glucosa
   "HDL-C": "RELCH", // Colesterol HDL
   IP: "FOOR", // Fósforo Inorgánico
   TBIL: "BILT", // Bilirrubina Total
-  TCHO: "COLE", // Colesterol Total
+  TCHO: "QSCOLE", // Colesterol Total
   TCO2: "BIC1", // Bicarbonato Total
   TG: "TRIG", // Triglicéridos
   TP: "PRO01", // Proteínas Totales
-  UA: "AU00", // Ácido Úrico
+  UA: "QSAU", // Ácido Úrico
+  UREA: "QSURE"
 };
 
 module.exports = {

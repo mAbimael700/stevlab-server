@@ -60,10 +60,6 @@ class DevicesController {
       (equiptment) => equiptment.mac_address === result.data.mac_address
     );
 
-
-    console.log(result?.error);
-    
-
     if (!result.success) {
       return res.status(400).json({
         status: 400,

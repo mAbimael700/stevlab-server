@@ -7,6 +7,7 @@ const CONTROLAB = {
   "Creatinine (Sarcosine Oxidase Method)": "QSCRENZ",
   "TGO(AST)": "QSTGO",
   "TGP (ALT)": "QSTGP",
+  "Uric Acid": "QSAU"
 };
 
 module.exports = {

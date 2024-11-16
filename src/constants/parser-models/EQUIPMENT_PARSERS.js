@@ -33,7 +33,12 @@ const equipmentsParsers = {
   },
   CM200: { parser: cm200Parser, CHAR_DELIMITER: "" },
   A15: { parser: A15Parser, CHAR_DELIMITER: "" },
-  //MINDRAY_BC20S: type4Fn(),
+  MINDRAY_BC20S: {
+    parser: (hl7Message) => {
+      return type4(hl7Message);
+    },
+    CHAR_DELIMITER,
+  },
   SWELAB: {
     parser: (hl7Message) => {
       return type4(hl7Message, DYMIND);

@@ -1,148 +1,98 @@
 const fs = require("node:fs");
-
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
-
-const {
-  closeFTP,
-  connectFTP,
-  ftpConnections,
-} = require("../lib/ftp-connection");
-const {
-  formatMacAddressWithSeparators,
-} = require("../utils/formatMacAddressWithSeparators");
+const equipmentEmitter = require("./equipment-events");
+const { setEquipments } = require("./equipment-helpers");
 
 let equipmentsOnServer = [];
-let previousEquipments = []; // Equipos previos (historial)
+let previousEquipments = [];
 
-// Función para cargar equipos desde el archivo
-function loadEquipments() {
+// Función para leer equipos desde el archivo
+function readDevicesFromFile() {
   try {
-    // Verifica si la carpeta de configuración existe, si no, créala
     if (!fs.existsSync(CONFIG_DIR)) {
-      console.error(
-        `La carpeta de configuración no existe: ${CONFIG_DIR}. Creando la carpeta...`
-      );
-      fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
+      console.warn(`La carpeta de configuración no existe: ${CONFIG_DIR}`);
+      fs.mkdirSync(CONFIG_DIR, { recursive: true });
     }
 
-    // Verifica si el archivo existe
     if (!fs.existsSync(DEVICES_DIR)) {
-      console.error(
-        `El archivo ${DEVICES_DIR} no existe. Creando un archivo nuevo...`
+      console.warn(
+        `El archivo ${DEVICES_DIR} no existe. Creando archivo nuevo...`
       );
       fs.writeFileSync(DEVICES_DIR, JSON.stringify({ devices: [] }, null, 2));
     }
 
-    const data = fs.readFileSync(DEVICES_DIR).toString();
-    const parsedData = JSON.parse(data);
-    equipmentsOnServer = parsedData?.devices ?? [];
-    connectToFtp();
+    const data = fs.readFileSync(DEVICES_DIR, "utf8");
+    const devices = JSON.parse(data)?.devices ?? [];
+    setEquipments(devices); // Actualiza la lista en equipment-helpers
     console.log("Equipos cargados:", equipmentsOnServer);
   } catch (error) {
-    // Manejo de errores
-    console.error(
-      "Error al leer o parsear el archivo de dispositivos:",
-      error.message
-    );
+    console.error("Error al leer el archivo de dispositivos:", error.message);
   }
 }
 
-// Inicializa la carga de equipos
-loadEquipments();
-
-// Usamos fs.watchFile para observar cambios en el archivo con un intervalo
-fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
-  if (curr.mtime !== prev.mtime) {
-    // Verifica si la última modificación cambió
-    console.log(
-      `El archivo ${DEVICES_DIR} ha cambiado. Actualizando equipos...`
+// Función para detectar cambios y emitir eventos
+function detectChangesAndEmitEvents() {
+  const oldEquipments = [...previousEquipments];
+  
+  equipmentsOnServer.forEach((newEquipment) => {
+    const oldEquipment = oldEquipments.find(
+      (equip) => equip.mac_address === newEquipment.mac_address
     );
 
-    // Cargar la nueva lista de equipos
-    const oldEquipments = [...previousEquipments]; // Usa la copia del estado anterior
+    if (!oldEquipment) {
+      equipmentEmitter.emit("deviceAdded", newEquipment);
+    } else if (
+      oldEquipment.ip_address !== newEquipment.ip_address ||
+      oldEquipment.port !== newEquipment.port
+    ) {
+      equipmentEmitter.emit("deviceModified", oldEquipment, newEquipment);
+    }
+  });
 
-    loadEquipments(); // Recargar equipos actualizados
-    previousEquipments = [...equipmentsOnServer];
+  oldEquipments.forEach((oldEquipment) => {
+    const deletedDevice = !equipmentsOnServer.find(
+      (newEquipment) => newEquipment.mac_address === oldEquipment.mac_address
+    );
+    if (deletedDevice) {
+      equipmentEmitter.emit("deviceRemoved", oldEquipment);
+    }
+  });
 
-    // Detectar equipos eliminados
-    oldEquipments.forEach(async (oldEquipment) => {
-      const deletedDevice = !equipmentsOnServer.find(
-        (newEquipment) => newEquipment.mac_address === oldEquipment.mac_address
-      );
+  previousEquipments = [...equipmentsOnServer];
+}
 
-      console.log(`Equipo ${oldEquipment.id} ha sido eliminado.`);
+// Inicialización: lectura inicial de equipos y detección de cambios
+function initializeEquipmentManager() {
+  readDevicesFromFile();
+  detectChangesAndEmitEvents();
 
-      if (deletedDevice && oldEquipment.require_ftp_conn) {
-        await closeFTP(oldEquipment.mac_address); // Cierra la conexión FTP
-      }
-    });
-
-    // Detectar equipos agregados o modificados
-    equipmentsOnServer.forEach(async (newEquipment) => {
-      const oldEquipment = oldEquipments.find(
-        (equip) => equip.mac_address === newEquipment.mac_address
-      );
-
-      if (!oldEquipment) {
-        console.log(
-          `Nuevo equipo detectado: ${
-            newEquipment.id
-          } con dirección MAC ${formatMacAddressWithSeparators(
-            newEquipment.mac_address
-          )} ha sido agregado`
-        );
-
-        if (newEquipment.require_ftp_conn) {
-          await connectFTP(newEquipment); // Inicia una nueva conexión FTP
-        }
-      } else if (
-        oldEquipment.ip_address !== newEquipment.ip_address ||
-        oldEquipment.port !== newEquipment.port
-      ) {
-        console.log(`Equipo modificado: ${newEquipment.id}`);
-        await closeFTP(oldEquipment.mac_address); // Cierra la conexión antigua
-        await connectFTP(newEquipment); // Establece la nueva conexión FTP
-      }
-    });
-
-    // Actualiza la variable de estado previo después de procesar los cambios
-    previousEquipments = [...equipmentsOnServer]; // Guarda la nueva lista de equipos como estado previo
-  }
-});
-
-function connectToFtp() {
-  const devicesRequireFTPConn = equipmentsOnServer.filter(
-    (equipment) => equipment.require_ftp_conn
-  );
-
-  devicesRequireFTPConn.forEach((device) => {
-    if (!ftpConnections[device.mac_address]) {
-      connectFTP(device);
+  fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
+    if (curr.mtime !== prev.mtime) {
+      console.log(`El archivo ${DEVICES_DIR} ha cambiado. Procesando...`);
+      readDevicesFromFile();
+      detectChangesAndEmitEvents();
     }
   });
 }
 
-// Getter para acceder a equipmentsOnServer
-function getEquipments() {
-  return equipmentsOnServer;
-}
-
-// Función auxiliar para escribir en el archivo y actualizar la lista en memoria
+// Función para escribir en el archivo y actualizar la memoria
 function writeAndRefreshEquipments(newEquipments) {
   try {
     fs.writeFileSync(
       DEVICES_DIR,
       JSON.stringify({ devices: newEquipments }, null, 2)
     );
-    equipmentsOnServer = newEquipments; // Actualiza la lista en memoria
-    // previousEquipments = [...newEquipments]; // Actualiza el estado previo cuando se escribe en el archivo
+    equipmentsOnServer = newEquipments;
   } catch (error) {
-    console.error("Error al escribir en el archivo de dispositivos:", error);
+    console.error(
+      "Error al escribir en el archivo de dispositivos:",
+      error.message
+    );
   }
 }
 
-function writeEquipmentOnServer(equiment) {
-  writeAndRefreshEquipments([...equipmentsOnServer, equiment]);
+function writeEquipmentOnServer(equipment) {
+  writeAndRefreshEquipments([...equipmentsOnServer, equipment]);
 }
 
 function deleteEquipmentOnServer(mac_address) {
@@ -152,9 +102,12 @@ function deleteEquipmentOnServer(mac_address) {
   writeAndRefreshEquipments(updatedEquipments);
 }
 
+function getEquipments() {
+  return equipmentsOnServer;
+}
+
 module.exports = {
-  equipmentsOnServer,
-  loadEquipments,
+  initializeEquipmentManager,
   writeEquipmentOnServer,
   deleteEquipmentOnServer,
   getEquipments,

@@ -62,6 +62,7 @@ const devicesAreas = {
         ID: 4,
         Nombre_area: "HEMATOLOGIA",
       },
+      is_tpc_server: true,
     },
     {
       id: "SWELAB",

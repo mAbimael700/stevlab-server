@@ -45,7 +45,7 @@ function getLocalMacAddress() {
       if (
         iface.family === "IPv4" &&
         !iface.internal &&
-        interfaceName.includes("Wi-Fi")
+        interfaceName.includes("Ethernet")
       ) {
         // Retornar la dirección MAC en formato sin ":", en mayúsculas
         return iface.mac.toUpperCase().split(":").join("");

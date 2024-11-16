@@ -3,15 +3,13 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 
 const { format } = require("date-fns");
-const { verifyDevices } = require("../../lib/verify-devices");
 const { getMacAddress } = require("../../lib/getMacAddress");
 const { validateParser } = require("../../lib/validate-buffer");
 const { validateResponse } = require("../../schemas/response-schema");
 const { emitResultsToWebSocket } = require("../../lib/emit-results-websocket");
 const { saveResultsToLocalData } = require("../../lib/save-results-data");
-const { readFile } = require("../../lib/read-file");
 const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
-const { parser } = require("../../lib/parsers/HL7-type4/parser");
+const { verifyDevices } = require("../../middlewares/equipment-helpers");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
 

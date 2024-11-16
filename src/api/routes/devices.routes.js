@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const devicesRouter = Router();
 
-const { DevicesController } = require("../controllers/devices.controller,");
+const { DevicesController } = require("../controllers/devices.controller");
 
 devicesRouter.get("/", DevicesController.getDevicesOnServer);
 devicesRouter.get("/:area", DevicesController.getDevicesByArea);
