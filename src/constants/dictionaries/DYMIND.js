@@ -13,12 +13,12 @@ const DYMIND = {
   MCH: "BHHCM", // HCM
   MCHC: "BHCMB", // CMHB
   PLT: "BHPLT", // PLAQUETAS
-  RDW: "", // RDW
-  MPV: "", // MPV
-  PDW: "", // PDW
-  PCT: "", // PCT
-  LCR: "", // LCR
-  LN: "", // LN
+  RDW: "BHRDW", // RDW
+  MPV: "BHMPV", // MPV
+  PDW: "BHPDW", // PDW
+  PCT: "BHPCT", // PCT
+  LCR: undefined, // LCR
+  LN: undefined, // LN
 };
 
 module.exports = {

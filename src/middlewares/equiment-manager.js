@@ -1,9 +1,9 @@
 const fs = require("node:fs");
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
 const equipmentEmitter = require("./equipment-events");
-const { setEquipments } = require("./equipment-helpers");
+const { setEquipments, getEquipments } = require("./equipment-helpers");
 
-let equipmentsOnServer = [];
+
 let previousEquipments = [];
 
 // Función para leer equipos desde el archivo
@@ -22,9 +22,11 @@ function readDevicesFromFile() {
     }
 
     const data = fs.readFileSync(DEVICES_DIR, "utf8");
+    console.log(JSON.parse(data));
+
     const devices = JSON.parse(data)?.devices ?? [];
     setEquipments(devices); // Actualiza la lista en equipment-helpers
-    console.log("Equipos cargados:", equipmentsOnServer);
+    console.log("Equipos cargados:", getEquipments());
   } catch (error) {
     console.error("Error al leer el archivo de dispositivos:", error.message);
   }
@@ -33,7 +35,9 @@ function readDevicesFromFile() {
 // Función para detectar cambios y emitir eventos
 function detectChangesAndEmitEvents() {
   const oldEquipments = [...previousEquipments];
-  
+
+  const equipmentsOnServer = getEquipments()
+
   equipmentsOnServer.forEach((newEquipment) => {
     const oldEquipment = oldEquipments.find(
       (equip) => equip.mac_address === newEquipment.mac_address
@@ -102,9 +106,9 @@ function deleteEquipmentOnServer(mac_address) {
   writeAndRefreshEquipments(updatedEquipments);
 }
 
-function getEquipments() {
+/* function getEquipments() {
   return equipmentsOnServer;
-}
+} */
 
 module.exports = {
   initializeEquipmentManager,

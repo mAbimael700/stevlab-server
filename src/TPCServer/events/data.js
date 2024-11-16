@@ -24,8 +24,7 @@ async function dataEvent(data, ip_address, bufferList) {
   console.log("Mensaje entrante de: " + ip_address);
 
   try {
-    /* fs.appendFileSync(filePath, data.toString());
-    console.log(`Datos crudos guardados en la ruta: ${filePath}`); */
+
 
     if (data.length > MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
@@ -69,16 +68,14 @@ async function dataEvent(data, ip_address, bufferList) {
           const completeMessage = accumulatedData.slice(0, delimiterIndex + 1);
 
           try {
-            console.log("Mensaje completo recibido:");
-            console.log(completeMessage); // Mostrar el mensaje completo con sus saltos de línea
+            console.log("Mensaje completo recibido!");
+            //console.log(completeMessage); // Mostrar el mensaje completo con sus saltos de línea
 
             // Procesa el mensaje con el parser
             const results = parser(completeMessage);
 
             if (results) {
-              console.log("Resultados del parser:", results);
               // Aquí podrías guardar o emitir resultados según sea necesario
-
               const isValidated = validateResponse(results);
 
               if (isValidated) {

@@ -59,6 +59,36 @@ const tcpServer = net.createServer((socket) => {
   });
 });
 
-tcpServer.listen(PORT, () => {
+/* tcpServer.listen(PORT, () => {
   console.log(`Servidor TCP escuchando en el puerto ${PORT}`);
-});
+}); */
+
+function createTCPConnection(port, host) {
+  // Configuration ===================================
+ 
+  const client = new net.Socket();
+
+  client.connect(port, host, () => {
+    console.log(
+      `Servidor LIS conectado al equipo ${host} en el puerto: ${port}`
+    );
+  });
+
+  const bufferList = new bl();
+  client.on("data", async (data) => {
+    console.log(data);
+    
+  });
+
+  client.on("close", () => {
+    console.log("Conexión cerrada");
+  });
+
+  client.on("error", (err) => {
+    console.error("Error de conexión:", err);
+  });
+
+
+}
+
+createTCPConnection(8080, "192.168.1.164")

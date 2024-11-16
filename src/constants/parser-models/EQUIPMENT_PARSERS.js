@@ -35,7 +35,7 @@ const equipmentsParsers = {
   A15: { parser: A15Parser, CHAR_DELIMITER: "" },
   MINDRAY_BC20S: {
     parser: (hl7Message) => {
-      return type4(hl7Message);
+      return type4(hl7Message, DYMIND);
     },
     CHAR_DELIMITER,
   },

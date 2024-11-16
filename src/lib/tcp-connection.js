@@ -4,33 +4,63 @@ const { dataEvent } = require("../TPCServer/events/data");
 
 let tcpConnections = {};
 
-function createTCPConnection(device) {
-  // Configuration ===================================
-  const port = device.port;
-  const host = device.ip_address;
-  const client = new net.Socket();
+function createTCPConnection(device, maxRetries = 5, retryDelayMs = 30000) {
+  let attempt = 0;
 
-  client.connect(port, host, () => {
-    console.log(
-      `Servidor LIS conectado al equipo ${device.name} en el puerto: ${port}`
-    );
-  });
+  const connect = () => {
+    const port = device.port;
+    const host = device.ip_address;
+    const client = new net.Socket();
 
-  const bufferList = new bl();
-  client.on("data", async (data) => {
-    await dataEvent(data, device.ip_address, bufferList);
-  });
+    client.connect(port, host, () => {
+      console.log(
+        `Servidor LIS conectado al equipo ${device.name} en el puerto: ${port}`
+      );
 
-  client.on("close", () => {
-    console.log("Conexión cerrada");
-  });
+      // Save the connection and reset the retry attempt counter
+      tcpConnections[device.mac_address] = client;
+      attempt = 0;
+    });
 
-  client.on("error", (err) => {
-    console.error("Error de conexión:", err.message);
-  });
+    const bufferList = new bl();
+    client.on("data", async (data) => {
+      await dataEvent(data, device.ip_address, bufferList);
+    });
 
-  tcpConnections[device.mac_address] = client;
+    client.on("close", () => {
+      console.log(`Conexión cerrada para el equipo ${device.name}`);
+      scheduleReconnect();
+    });
+
+    client.on("error", (err) => {
+      console.error(`Error de conexión para ${device.name}:`, err.message);
+      scheduleReconnect();
+    });
+  };
+
+  const scheduleReconnect = () => {
+    if (attempt < maxRetries) {
+      attempt++;
+      console.log(
+        `Intento de reconexión ${attempt}/${maxRetries} para el equipo ${device.name}...`
+      );
+      setTimeout(connect, 1000); // Retry after 1 second
+    } else {
+      console.log(
+        `Max intentos alcanzados. Reintentando en ${retryDelayMs / 1000} segundos para el equipo ${device.name}`
+      );
+      setTimeout(() => {
+        attempt = 0;
+        connect();
+      }, retryDelayMs);
+    }
+  };
+
+  connect();
 }
+
+
+
 
 function closeTCP(mac_address) {
   const client = tcpConnections[mac_address];
@@ -45,7 +75,7 @@ function closeTCP(mac_address) {
 
 async function connectTCP(device) {
   // Si ya existe una conexión, ciérrala antes de intentar una nueva conexión
-  const currentConnection = tcpConnections[equipment.mac_address];
+  const currentConnection = tcpConnections[device.mac_address];
 
   try {
     if (currentConnection) {
