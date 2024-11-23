@@ -1,6 +1,9 @@
 const { initializeTcpServer } = require("./src/middlewares/tcp-server");
 const { initializeExpressServer } = require("./src/middlewares/express-server");
 const { initializeWebSocket } = require("./src/middlewares/websocket-server");
+// Importar el archivo que registra los eventos
+require('./src/middlewares/equipment-handler.js');
+
 const {
   configurationManager,
 } = require("./src/middlewares/configuration-manager");

@@ -1,3 +1,5 @@
+const { formatMacAddressWithSeparators } = require("../utils/formatMacAddressWithSeparators");
+
 let equipmentsOnServer = [];
 
 function setEquipments(newEquipments) {
@@ -8,7 +10,7 @@ function getEquipments() {
   return equipmentsOnServer;
 }
 
-function verifyDevices(currentRemoteMacAddress) {
+function verifyDevices(macAddress) {
   const devices = getEquipments();
   if (!devices.length) {
     console.log("No hay equipos registrados.");
@@ -16,12 +18,12 @@ function verifyDevices(currentRemoteMacAddress) {
   }
 
   const foundEquipment = devices.find(
-    (equipment) => equipment.mac_address === currentRemoteMacAddress
+    (equipment) => equipment.mac_address === macAddress
   );
 
   if (!foundEquipment) {
     console.log(
-      `El equipo con dirección MAC ${currentRemoteMacAddress} no está registrado.`
+      `El equipo con dirección MAC (${formatMacAddressWithSeparators(macAddress)}) no está registrado.`
     );
     return false;
   }

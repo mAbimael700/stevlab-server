@@ -14,7 +14,7 @@ function createTCPConnection(device, maxRetries = 5, retryDelayMs = 30000) {
 
     client.connect(port, host, () => {
       console.log(
-        `Servidor LIS conectado al equipo ${device.name} en el puerto: ${port}`
+        `Servidor LIS conectado al equipo ${device.name} en el dirección IP ${host}:${port} exitosamente`
       );
 
       // Save the connection and reset the retry attempt counter

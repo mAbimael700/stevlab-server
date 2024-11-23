@@ -18,6 +18,7 @@ function initializeExpressServer(PORT) {
   app.use(morgan("dev"));
   app.use(express.json());
   app.use(cors());
+  app.disable('x-powered-by');
   //Rutas de la api
 
   //Endpoint para consultar los archivos del servidor local

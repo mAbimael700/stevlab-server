@@ -1,9 +1,7 @@
-const { LOG_DIR } = require('../constants/LOG_DIR');
+
 const logger = require('../lib/error-handler/logger');
 
 function ErrorHandler() {
-
-
 
     process.on("uncaughtException", (err) => {
         logger.error('Se produjo una excepción no controlada:', { message: err.message, stack: err.stack, });
@@ -15,7 +13,7 @@ function ErrorHandler() {
 
     // Manejo global de promesas no gestionadas
     process.on('unhandledRejection', (reason, promise) => {
-        console.error('Promesa no gestionada:', promise, 'Razón:', reason);
+        console.error('Promesa no gestionada:', promise, 'Razón:', reason, "");
         console.log("");
         // Si no llamas a process.exit(), la aplicación sigue ejecutándose.
         logger.error('Promesa no gestionada: %s', reason.stack || reason);

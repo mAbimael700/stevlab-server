@@ -1,6 +1,6 @@
 const fs = require("node:fs");
 const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
-const equipmentEmitter = require("./equipment-events");
+const { getEquipmetEmitter } = require("./equipment-events");
 const { setEquipments, getEquipments } = require("./equipment-helpers");
 
 let previousEquipments = [];
@@ -19,10 +19,7 @@ function readDevicesFromFile() {
       );
       fs.writeFileSync(DEVICES_DIR, JSON.stringify({ devices: [] }, null, 2));
     }
-
     const data = fs.readFileSync(DEVICES_DIR, "utf8");
-    console.log(JSON.parse(data));
-
     const devices = JSON.parse(data)?.devices ?? [];
     setEquipments(devices); // Actualiza la lista en equipment-helpers
     console.log("Equipos cargados:", getEquipments());
@@ -36,6 +33,7 @@ function detectChangesAndEmitEvents() {
   const oldEquipments = [...previousEquipments];
 
   const equipmentsOnServer = getEquipments();
+  const equipmentEmitter = getEquipmetEmitter()
 
   equipmentsOnServer.forEach((newEquipment) => {
     const oldEquipment = oldEquipments.find(
@@ -106,10 +104,6 @@ function deleteEquipmentOnServer(mac_address) {
   );
   writeAndRefreshEquipments(updatedEquipments);
 }
-
-/* function getEquipments() {
-  return equipmentsOnServer;
-} */
 
 module.exports = {
   initializeEquipmentManager,

@@ -1,9 +1,12 @@
-const equipmentEmitter = require("./equipment-events");
+const { getEquipmetEmitter } = require("./equipment-events");
 const { connectFTP, closeFTP } = require("../lib/ftp-connection");
 const { connectTCP, closeTCP } = require("../lib/tcp-connection");
 const { formatMacAddressWithSeparators } = require("../utils/formatMacAddressWithSeparators");
 
+
+const equipmentEmitter = getEquipmetEmitter()
 // Manejar equipos agregados
+
 equipmentEmitter.on("deviceAdded", async (newEquipment) => {
   console.log(
     `Nuevo equipo detectado: ${newEquipment.id} (${formatMacAddressWithSeparators(

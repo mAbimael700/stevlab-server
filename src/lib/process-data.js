@@ -1,3 +1,4 @@
+const { verifyDevices } = require("../middlewares/equipment-helpers");
 const { validateResponse } = require("../schemas/response-schema");
 const { emitResultsToWebSocket } = require("./emit-results-websocket");
 const { getMacAddress } = require("./getMacAddress");
@@ -16,6 +17,14 @@ async function processData(device, message) {
       return;
     }
 
+    /*const existeEquipo = verifyDevices(device.mac_address)
+
+    // Si el equipo en la conexión no está registrado termina el evento
+     if (!existeEquipo) {
+      console.warn(`El equipo con dirección IP ${device.ip_address} no registrado. Conexión cerrada`);
+      return;
+    } */
+
     // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
     const { parser } = validateParser({
       id_device: device.id,
@@ -24,8 +33,6 @@ async function processData(device, message) {
     if (parser) {
       const results = parser(message);
 
-      
-      
       // Valida que el mensaje parseado sea correcto
       const resultValidated = validateResponse(results);
 
