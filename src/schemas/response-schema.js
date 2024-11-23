@@ -6,7 +6,7 @@ const responseSchema = z.array(
     id: z.string().min(1),
     folio: z.string(), // Marcar como optional
     nombre_paciente: z.string().optional(),
-    sexo: z.enum(["O", "F", "M"]).optional(),
+    sexo: z.enum(["O", "F", "M", '']).optional().default("O"),
     hora: z.string().optional(),
     fecha: z.string().optional(),
     parametros: z.array(
@@ -26,8 +26,6 @@ const responseSchema = z.array(
 );
 
 function validateResponse(parsedResult) {
-
-
   const result = responseSchema.safeParse(parsedResult);
 
   if (result.error) {
@@ -35,7 +33,7 @@ function validateResponse(parsedResult) {
     console.log(result.error.errors);
   }
 
-  return result.success
+  return result.success;
 }
 
 module.exports = {

@@ -25,7 +25,10 @@ const FULLJIFILM_NX600_DICTIONARIO = {
   TG: "TRIG", // Triglicéridos
   TP: "PRO01", // Proteínas Totales
   UA: "QSAU", // Ácido Úrico
-  UREA: "QSURE"
+  UREA: "QSURE", // Urea
+  "NH3": "QSAMON",
+  "GOT": "QSTGO",
+  "GPT": "QSTGO"
 };
 
 module.exports = {
