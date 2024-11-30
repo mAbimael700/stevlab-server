@@ -167,6 +167,8 @@ async function startMonitoringDirectory(equipment) {
   // Función para detectar cambios en el directorio
   async function detectChanges() {
     const connection = ftpConnections[equipment.mac_address];
+    console.log(connection);
+    
 
     if (isChecking) return; // Evita ejecuciones concurrentes
     isChecking = true; // Marca el inicio de la verificación

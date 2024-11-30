@@ -62,9 +62,23 @@ function parseResultsData(hl7Message, dictionary) {
     }
   });
 
+  // Asegura que `parametros` sea un arreglo
+  result.parametros = Array.isArray(result.parametros) ? result.parametros : [];
   //Devuelve el objeto con el mensaje HL7 parseado
 
-  return [result].flat();
+  // Asegura que `parametros` siempre sea un arreglo
+  if (!Array.isArray(result.parametros)) {
+    console.error("Parámetros no es un arreglo válido:", result.parametros);
+    result.parametros = []; // Reemplaza con un arreglo vacío si no es válido
+  }
+
+  // Validación adicional para el resultado
+  if (!result.folio || !result.parametros.length) {
+    console.error("El resultado no contiene datos válidos:", result);
+    return []; // Devuelve un arreglo vacío si los datos no son válidos
+  }
+  
+  return [result]; // Retorna un arreglo con el resultado
 }
 
 module.exports = {

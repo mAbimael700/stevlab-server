@@ -1,4 +1,4 @@
-const { initializeTcpServer } = require("./src/middlewares/tcp-server");
+const { initializeTcpServer } = require("./src/middlewares/servers/tcp-server");
 const { initializeExpressServer } = require("./src/middlewares/express-server");
 const { initializeWebSocket } = require("./src/middlewares/websocket-server");
 // Importar el archivo que registra los eventos

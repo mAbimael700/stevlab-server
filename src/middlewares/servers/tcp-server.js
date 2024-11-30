@@ -1,19 +1,16 @@
 const net = require("node:net");
 const bl = require("bl");
-const { dataEvent } = require("../TPCServer/events/data");
+const { dataEvent } = require("../../TPCServer/events/data");
 
 const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
 
-const { validateParser } = require("../lib/validate-buffer");
-const { verifyDevices } = require("../lib/verify-devices");
-const { FILE_UPLOADS_DIR } = require("../constants/CONFIG_DIR");
-const { validateResponse } = require("../schemas/response-schema");
-const { emitResultsToWebSocket } = require("../lib/emit-results-websocket");
-const { saveResultsToLocalData } = require("../lib/save-results-data");
+const { validateParser } = require("../../lib/validate-buffer");
+const { verifyDevices } = require("../../lib/verify-devices");
+const { validateResponse } = require("../../schemas/response-schema");
 const { format } = require("date-fns");
-const { getMacAddress } = require("../lib/getMacAddress");
+const { getMacAddress } = require("../../lib/getMacAddress");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
 
@@ -33,15 +30,13 @@ function initializeTcpServer({ PORT }) {
       let parser = () => {};
       let CHAR_DELIMITER = "";
 
-      
-
       console.log(
         "Conexión TCP/IP entrante de: " +
           currentRemoteIpAddress +
           ":" +
           socket.remotePort
       );
-    
+
       // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
       const deviceParsing = validateParser({
         id_device: existeEquipo.id,
@@ -50,12 +45,29 @@ function initializeTcpServer({ PORT }) {
       parser = deviceParsing.parser;
       CHAR_DELIMITER = deviceParsing.CHAR_DELIMITER;
 
+      //Obtenemos la dirección MAC del equipo conectado
+      currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);
+      if (!currentRemoteMacAddress) {
+        console.log(
+          "No se encontró la dirección MAC, no se puede verificar el equipo."
+        );
+        socket.destroy();
+      }
+
+      verifyDevices(currentRemoteMacAddress);
+
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
 
+      const resultsToSave = {};
       const bufferList = new bl();
       socket.on("data", async (data) => {
-        await dataEvent(data, currentRemoteIpAddress ?? '127.0.0.1', bufferList);
+        await dataEvent(
+          data,
+          currentRemoteIpAddress ?? "127.0.0.1",
+          bufferList,
+          resultsToSave
+        );
       });
 
       socket.on("end", () => {

@@ -29,7 +29,7 @@ function validateResponse(parsedResult) {
   const result = responseSchema.safeParse(parsedResult);
 
   if (result.error) {
-    console.log("Datos que llegaron" + result.data);
+    console.log("Datos que llegaron " + result.data);
     console.log(result.error.errors);
   }
 

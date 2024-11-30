@@ -10,14 +10,7 @@ const { CONTROLAB } = require("../dictionaries/CONTROLAB");
 const { DYMIND } = require("../dictionaries/DYMIND");
 const { MINDRAY_BS120 } = require("../dictionaries/MINDRAY_BS120");
 
-function type4Fn(dictionary, CHAR_DELIMITER = "\x1C") {
-  return {
-    parser: (hl7Message) => {
-      return type4(hl7Message, dictionary);
-    },
-    CHAR_DELIMITER,
-  };
-}
+
 
 // Diccionario de funciones por modelo del equipo
 
@@ -56,6 +49,7 @@ const equipmentsParsers = {
       return type4(hl7Message, MINDRAY_BS120);
     },
     CHAR_DELIMITER,
+    sendsBySingleParameter: true,
   },
 };
 

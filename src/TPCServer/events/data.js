@@ -12,6 +12,12 @@ const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
 const { verifyDevices } = require("../../middlewares/equipment-helpers");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
+// Variables de control para manejar la lógica de espera
+let lastFolio = null;
+let resultsToSave = { parametros: [] };
+let processTimeout = null;
+const PROCESS_DELAY_MS = 20000; // 20 segundos
+let lastMessageTime = null; // Momento en que llegó el último mensaje
 
 async function dataEvent(data, ip_address, bufferList) {
   let currentRemoteMacAddress;
@@ -24,7 +30,8 @@ async function dataEvent(data, ip_address, bufferList) {
   console.log("Mensaje entrante de: " + ip_address);
 
   try {
-
+    const now = Date.now();
+    lastMessageTime = now;
 
     if (data.length > MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
@@ -50,7 +57,7 @@ async function dataEvent(data, ip_address, bufferList) {
     }
 
     // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
-    const { parser, CHAR_DELIMITER } = validateParser({
+    const { parser, CHAR_DELIMITER, sendsBySingleParameter } = validateParser({
       id_device: existeEquipo.id,
     });
 
@@ -69,7 +76,7 @@ async function dataEvent(data, ip_address, bufferList) {
 
           try {
             console.log("Mensaje completo recibido!");
-            //console.log(completeMessage); // Mostrar el mensaje completo con sus saltos de línea
+            console.log(completeMessage); // Mostrar el mensaje completo con sus saltos de línea
 
             // Procesa el mensaje con el parser
             const results = parser(completeMessage);
@@ -77,10 +84,28 @@ async function dataEvent(data, ip_address, bufferList) {
             if (results) {
               // Aquí podrías guardar o emitir resultados según sea necesario
               const isValidated = validateResponse(results);
+              const { folio, parametros } = results[0];
 
               if (isValidated) {
-                saveResultsToLocalData(results);
-                emitResultsToWebSocket(results);
+                if (sendsBySingleParameter) {
+                  // Acumula los parámetros uno por uno y usa un temporizador
+                  if (folio !== lastFolio) {
+                    lastFolio = folio;
+                    resultsToSave = {
+                      ...results[0],
+                      parametros: [...parametros],
+                    };
+                  } else {
+                    resultsToSave.parametros.push(...parametros);
+                  }
+
+                  console.log(resultsToSave);
+                } else {
+                  // Procesa todo el mensaje directamente
+                  saveResultsToLocalData(results);
+                  emitResultsToWebSocket(results);
+                  console.log("Folio procesado directamente:", folio);
+                }
               }
             } else {
               console.warn("Parser devolvió resultados inválidos");
@@ -96,6 +121,24 @@ async function dataEvent(data, ip_address, bufferList) {
           break;
         }
       }
+
+      // Si no llegan más mensajes después de cierto tiempo, procesar lo acumulado
+      setTimeout(() => {
+        if (
+          lastMessageTime &&
+          Date.now() - lastMessageTime > PROCESS_DELAY_MS
+        ) {
+          if (resultsToSave.parametros.length > 0) {
+            saveResultsToLocalData([resultsToSave]);
+            emitResultsToWebSocket([resultsToSave]);
+            console.log(
+              "Procesando resultados acumulados después de inactividad:"
+            );
+            console.log([resultsToSave]);
+            resultsToSave = { parametros: [] };
+          }
+        }
+      }, PROCESS_DELAY_MS);
     }
   } catch (error) {
     console.error("Error al procesar datos:", error);
