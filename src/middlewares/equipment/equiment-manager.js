@@ -1,5 +1,5 @@
 const fs = require("node:fs");
-const { DEVICES_DIR, CONFIG_DIR } = require("../constants/CONFIG_DIR");
+const { DEVICES_DIR, CONFIG_DIR } = require("../../constants/CONFIG_DIR");
 const { getEquipmetEmitter } = require("./equipment-events");
 const { setEquipments, getEquipments } = require("./equipment-helpers");
 

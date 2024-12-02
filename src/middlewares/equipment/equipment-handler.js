@@ -1,7 +1,7 @@
 const { getEquipmetEmitter } = require("./equipment-events");
-const { connectFTP, closeFTP } = require("./connections/ftp/ftp-connection");
-const { connectTCP, closeTCP } = require("../lib/tcp-connection");
-const { formatMacAddressWithSeparators } = require("../utils/formatMacAddressWithSeparators");
+const { connectFTP, closeFTP } = require("../connections/ftp/ftp-connection");
+const { connectTCP, closeTCP } = require("../connections/tcp-ip/tcp-connection");
+const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
 
 
 const equipmentEmitter = getEquipmetEmitter()

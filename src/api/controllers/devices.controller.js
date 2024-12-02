@@ -4,7 +4,7 @@ const {
   getEquipments,
   deleteEquipmentOnServer,
   writeEquipmentOnServer,
-} = require("../../middlewares/equiment-manager");
+} = require("../../middlewares/equipment/equiment-manager");
 const { validateDevice } = require("../../schemas/device-schema");
 
 class DevicesController {

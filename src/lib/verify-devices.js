@@ -1,4 +1,4 @@
-const { getEquipments } = require("../middlewares/equiment-manager");
+const { getEquipments } = require("../middlewares/equipment/equiment-manager");
 const {
   formatMacAddressWithSeparators,
 } = require("../utils/formatMacAddressWithSeparators");

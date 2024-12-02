@@ -2,13 +2,13 @@ const { initializeTcpServer } = require("./src/middlewares/servers/tcp-server");
 const { initializeExpressServer } = require("./src/middlewares/servers/express-server");
 const { initializeWebSocket } = require("./src/middlewares/servers/websocket-server.js");
 // Importar el archivo que registra los eventos
-require('./src/middlewares/equipment-handler.js');
+require('./src/middlewares/equipment/equipment-handler.js');
 
 const {
   configurationManager,
 } = require("./src/middlewares/configuration/configuration-manager.js");
 const { ErrorHandler } = require("./src/middlewares/error-handler");
-const { initializeEquipmentManager } = require("./src/middlewares/equiment-manager");
+const { initializeEquipmentManager } = require("./src/middlewares/equipment/equiment-manager.js");
 
 // Definición de los puertos de cada servidor
 const TPC_PORT = process.env.PORT || 3000;

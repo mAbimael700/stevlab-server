@@ -2,7 +2,7 @@ const net = require("net");
 const bl = require("bl");
 const fs = require("fs");
 const path = require("path");
-const parser = require("./src/lib/parsers/HL7-type4/parser");
+const parser = require("../src/lib/parsers/HL7-type4/parser");
 
 const CHAR_DELIMITER = "\x1C";
 const PORT = 1234; // Cambia el puerto según sea necesario

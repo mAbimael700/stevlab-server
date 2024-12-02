@@ -1,4 +1,4 @@
-const { formatMacAddressWithSeparators } = require("../utils/formatMacAddressWithSeparators");
+const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
 
 let equipmentsOnServer = [];
 
