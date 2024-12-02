@@ -56,6 +56,7 @@ function initializeTcpServer({ PORT }) {
       const bufferList = new bl();
       socket.on("data", async (data) => {
         await dataEvent(data, currentRemoteIpAddress ?? '127.0.0.1', bufferList);
+        socket.write("OK")
       });
 
       socket.on("end", () => {
