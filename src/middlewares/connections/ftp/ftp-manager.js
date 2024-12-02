@@ -4,7 +4,6 @@ const { STATES, FILE_UPLOADS_DIR } = require("../../../constants/CONFIG_DIR");
 const { getFtpConnections, updateFtpConnection, reconnectFTP } = require("./ftp-helpers");
 const { processData } = require("../../../lib/process-data");
 
-
 // Función para monitorear cambios en el directorio remoto
 async function startMonitoringDirectory(equipment) {
     const previousStateFile = path.join(
@@ -21,103 +20,131 @@ async function startMonitoringDirectory(equipment) {
     }
 
     let isChecking = false; // Bandera para evitar ejecuciones concurrentes
+    let reconnectAttempts = 0; // Contador de intentos de reconexión
 
-    // Función para detectar cambios en el directorio
     async function detectChanges() {
+        if (isChecking) return; // Evita ejecuciones concurrentes
+        isChecking = true; // Marca el inicio de la verificación
 
         const ftpConnections = getFtpConnections();
         const connection = ftpConnections[equipment.mac_address];
 
-        if (isChecking) return; // Evita ejecuciones concurrentes
-        isChecking = true; // Marca el inicio de la verificación
-
+        console.log(connection.client.closed);
+        
         try {
-            if (!connection.client.closed) {
-                {
-                    const currentFiles = (await connection.client.list("/")).map(
-                        (file) => file.name
-                    );
-                    const addedFiles = currentFiles.filter(
-                        (file) => !previousFiles.includes(file)
-                    );
-                    const removedFiles = previousFiles.filter(
-                        (file) => !currentFiles.includes(file)
-                    );
+            if (!connection) {
+                console.error(`Conexión no encontrada para ${equipment.mac_address}`);
+                return;
+            }
 
-                    // Procesa archivos añadidos y eliminados
-                    if (addedFiles.length > 0) {
-                        console.log(`Archivos añadidos en el equipo ${equipment.name} con host en ${equipment.ip_address}:${equipment.port} `, addedFiles);
-                        for (const addedFile of addedFiles) {
-                            try {
-                                const localPathToDownload = path.join(
-                                    FILE_UPLOADS_DIR,
-                                    addedFile
-                                );
-
-                                const remotePathToDownload = path.join(addedFile);
-
-                                await connection.client.downloadTo(
-                                    localPathToDownload,
-                                    remotePathToDownload
-                                );
-
-                                const message = await readFile(localPathToDownload);
-                                processData(equipment, message);
-
-                                console.log("Mensaje procesado con éxito");
-                            } catch (error) {
-                                console.log(`Error al descargar ${addedFile}:`, error.message);
-                            }
-                        }
+            if (connection.client.closed) {
+                // Intentar reconexión si la conexión está cerrada
+                if (!connection.reconnecting) {
+                    if (reconnectAttempts >= 5) { // Limitar los intentos de reconexión
+                        console.error(`Máximo de intentos de reconexión alcanzado para ${equipment.name}`);
+                        return;
                     }
-                    if (removedFiles.length > 0) {
-                        console.log(
-                            `Archivos eliminados en ${equipment.id}:`,
-                            removedFiles
+
+                    console.log(
+                        `Reconectando con el equipo ${equipment.name} (${equipment.mac_address})...`
+                    );
+                    updateFtpConnection(equipment.mac_address, { reconnecting: true });
+                    reconnectAttempts++;
+
+                    await reconnectFTP(equipment);
+
+                    updateFtpConnection(equipment.mac_address, { reconnecting: false });
+                    reconnectAttempts = 0; // Reiniciar contador después de una reconexión exitosa
+                }
+                return;
+            }
+
+            // Listar archivos actuales
+            const currentFiles = await timeoutPromise(connection.client.list("/"), 5000);
+            const addedFiles = currentFiles.map((file) => file.name).filter(
+                (file) => !previousFiles.includes(file)
+            );
+            const removedFiles = previousFiles.filter(
+                (file) => !currentFiles.map((file) => file.name).includes(file)
+            );
+
+            if (addedFiles.length > 0) {
+                console.log(
+                    `Archivos añadidos en el equipo ${equipment.name}:`,
+                    addedFiles
+                );
+                for (const addedFile of addedFiles) {
+                    try {
+                        const localPathToDownload = path.join(FILE_UPLOADS_DIR, addedFile);
+                        await timeoutPromise(
+                            connection.client.downloadTo(localPathToDownload, `/${addedFile}`),
+                            10000
+                        );
+                        const message = fs.readFileSync(localPathToDownload, "utf8");
+                        processData(equipment, message);
+                        console.log(`Archivo procesado: ${addedFile}`);
+                    } catch (error) {
+                        console.error(
+                            `Error al descargar o procesar ${addedFile}:`,
+                            error.message
                         );
                     }
-
-                    // Actualiza el estado actual
-                    fs.writeFileSync(previousStateFile, JSON.stringify(currentFiles));
-                    previousFiles = currentFiles; // Actualiza el estado en memoria
                 }
-            } else if (!connection.reconnecting) {
-                console.log(`Reconectando con el equipo ${equipment.name} con host ${equipment.ip_address}:${equipment.port}...`);
-                updateFtpConnection(equipment.mac_address, { reconnecting: true })  // Marca reconexión en proceso
-
-                await reconnectFTP(equipment);
-                updateFtpConnection(equipment.mac_address, { reconnecting: false }) // Reconexión terminada
             }
+
+            if (removedFiles.length > 0) {
+                console.log(
+                    `Archivos eliminados en ${equipment.name}:`,
+                    removedFiles
+                );
+            }
+
+            // Actualizar estado actual
+            fs.writeFileSync(
+                previousStateFile,
+                JSON.stringify(currentFiles.map((file) => file.name))
+            );
+            previousFiles = currentFiles.map((file) => file.name);
         } catch (error) {
-            if (
-                error.code === "ECONNRESET" ||
-                error.code === 421 ||
-                error.code === 503 ||
-                error.code === 530
-            ) {
+            if (["ECONNRESET", 421, 503, 530].includes(error.code)) {
                 console.error(
-                    `Error de conexión, intentando reconectar con el equipo ${equipment.name} con host ${equipment.ip_address}:${equipment.port}...`
+                    `Error de conexión con ${equipment.name}, intentando reconectar...`, 
+                    error.message
                 );
 
                 if (!connection.reconnecting) {
-                    updateFtpConnection(equipment.mac_address, { reconnecting: true })  // Marca reconexión en proceso
+                    if (reconnectAttempts >= 5) { // Limitar los intentos de reconexión
+                        console.error(`Máximo de intentos de reconexión alcanzado para ${equipment.name}`);
+                        return;
+                    }
+
+                    updateFtpConnection(equipment.mac_address, { reconnecting: true });
+                    reconnectAttempts++;
+
                     await reconnectFTP(equipment);
-                    updateFtpConnection(equipment.mac_address, { reconnecting: false }) // Reconexión terminada
+
+                    updateFtpConnection(equipment.mac_address, { reconnecting: false });
+                    reconnectAttempts = 0; // Reiniciar contador después de una reconexión exitosa
                 }
             } else {
-                console.error(`Error al detectar cambios en el directorio:`, error);
+                console.error("Error al detectar cambios en el directorio:", error.message);
             }
         } finally {
-            isChecking = false; // Marca el final de la verificación
-        }
-
-        // Reinicia el intervalo si la conexión es estable
-        if (!connection.reconnecting) {
-            setTimeout(() => detectChanges(equipment), 1000);
+            isChecking = false; // Liberar bandera al finalizar
+            setTimeout(detectChanges, 1000); // Continuar monitoreo
         }
     }
-    // Ejecutar la primera detección
-    detectChanges();
+
+    detectChanges(); // Inicia la detección inicial
 }
 
-module.exports = { startMonitoringDirectory }
+
+// Helper para manejar tiempos de espera
+function timeoutPromise(promise, ms) {
+    const timeout = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Timeout alcanzado")), ms)
+    );
+    return Promise.race([promise, timeout]);
+}
+
+module.exports = { startMonitoringDirectory };

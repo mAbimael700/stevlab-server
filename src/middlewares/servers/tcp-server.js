@@ -1,15 +1,8 @@
 const net = require("node:net");
 const bl = require("bl");
-const { dataEvent } = require("../../TPCServer/events/data");
-
-const fs = require("node:fs");
-const path = require("node:path");
-const crypto = require("node:crypto");
-
+const { dataEvent } = require("../../TPCServer/events/data/data-event");
 const { validateParser } = require("../../lib/validate-buffer");
 const { verifyDevices } = require("../../lib/verify-devices");
-const { validateResponse } = require("../../schemas/response-schema");
-const { format } = require("date-fns");
 const { getMacAddress } = require("../../lib/getMacAddress");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
@@ -26,9 +19,6 @@ function initializeTcpServer({ PORT }) {
       // Obtenemos la ip del socket (equipo) en la conexión
       let currentRemoteIpAddress = socket.remoteAddress.split(":")[3];
       let currentRemoteMacAddress = "";
-      let existeEquipo = false;
-      let parser = () => {};
-      let CHAR_DELIMITER = "";
 
       console.log(
         "Conexión TCP/IP entrante de: " +
@@ -37,41 +27,50 @@ function initializeTcpServer({ PORT }) {
           socket.remotePort
       );
 
-      // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
-      const deviceParsing = validateParser({
-        id_device: existeEquipo.id,
-      });
-
-      parser = deviceParsing.parser;
-      CHAR_DELIMITER = deviceParsing.CHAR_DELIMITER;
-
       //Obtenemos la dirección MAC del equipo conectado
       currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);
       if (!currentRemoteMacAddress) {
-        console.log(
+        console.warn(
           "No se encontró la dirección MAC, no se puede verificar el equipo."
         );
         socket.destroy();
       }
 
-      verifyDevices(currentRemoteMacAddress);
+      const device = verifyDevices(currentRemoteMacAddress);
+
+      // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
+      const deviceParsing = validateParser({
+        id_device: device.id,
+      });
+
+      //Valida si existe el equipo registrado en las configuraciones del sistema
+      const existeEquipo = verifyDevices(currentRemoteMacAddress);
+
+      //Si el equipo en la conexión no está registrado termina el evento
+      if (!existeEquipo) {
+        console.warn("Equipo no registrado. Conexión cerrada.");
+        socket.destroy();
+      }
 
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
 
-      const resultsToSave = {};
       const bufferList = new bl();
+
       socket.on("data", async (data) => {
         await dataEvent(
           data,
           currentRemoteIpAddress ?? "127.0.0.1",
           bufferList,
-          resultsToSave
+          deviceParsing
         );
+        socket.write("OK");
       });
 
       socket.on("end", () => {
-        console.log(`Conexión cerrada por ${currentRemoteIpAddress}`);
+        console.log(
+          `Conexión cerrada por el equipo con la IP: ${currentRemoteIpAddress}`
+        );
       });
 
       // Manejador de errores
@@ -87,7 +86,7 @@ function initializeTcpServer({ PORT }) {
       });
 
       socket.on("close", () => {
-        console.log("Conexión cerrada, intentando reconectar...");
+        console.log("Conexión cerrada");
         reconnect();
       });
     }

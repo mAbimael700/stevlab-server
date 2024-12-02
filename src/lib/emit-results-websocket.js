@@ -1,4 +1,4 @@
-const { getIO } = require("../middlewares/websocket-server");
+const { getIO } = require("../middlewares/servers/websocket-server");
 
 
 function emitResultsToWebSocket(parsedContent) {

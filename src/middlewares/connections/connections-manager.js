@@ -1,5 +1,5 @@
-const { connectFTP } = require("../lib/ftp-connection");
-const { connectTCP } = require("../lib/tcp-connection");
+const { connectFTP } = require("./ftp/ftp-connection");
+const { connectTCP } = require("../../lib/tcp-connection");
 
 function connectToFtp(equipments) {
   const devicesRequireFTPConn = equipments.filter(
@@ -25,7 +25,8 @@ function connectTcpServers(equipments) {
   });
 }
 
-module.exports = {
+/* module.exports = {
   connectToFtp,
   connectTcpServers,
 };
+ */

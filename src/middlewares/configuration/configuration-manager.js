@@ -5,9 +5,9 @@ const {
   DEVICES_DIR,
   FILE_UPLOADS_DIR,
   STATES,
-} = require("../constants/CONFIG_DIR");
-const { DATADIR } = require("../constants/DATADIR");
-const { LOG_DIR } = require("../constants/LOG_DIR");
+} = require("../../constants/CONFIG_DIR");
+const { DATADIR } = require("../../constants/DATADIR");
+const { LOG_DIR } = require("../../constants/LOG_DIR");
 
 // Asegura de que la carpeta de config exista dónde se ejecuta el programa
 

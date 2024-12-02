@@ -3,9 +3,9 @@ const path = require("node:path");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const { filesRouter } = require("../api/routes/files.routes");
-const { devicesRouter } = require("../api/routes/devices.routes");
-const { messageRouter } = require("../api/routes/messages.routes");
+const { filesRouter } = require("../../api/routes/files.routes");
+const { devicesRouter } = require("../../api/routes/devices.routes");
+const { messageRouter } = require("../../api/routes/messages.routes");
 
 // Se inicializa el servidor Express (http) para conexiones WebSocket
 const app = express();
