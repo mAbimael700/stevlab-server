@@ -1,11 +1,10 @@
 const { validateResponse } = require("../../../schemas/response-schema");
 const { saveResultsToLocalData } = require("../../../lib/save-results-data");
-const {
-  emitResultsToWebSocket,
-} = require("../../../lib/emit-results-websocket");
+const { emitResultsToWebSocket } = require("../../../lib/emit-results-websocket");
 
 let lastFolio = null;
 let resultsToSave = { parametros: [] };
+
 /**
  * Maneja los resultados procesados por el parser.
  * @param {Object[]} results - Resultados procesados.
@@ -20,14 +19,20 @@ function handleResults(results, sendsBySingleParameter = false) {
 
   const { folio, parametros } = results[0];
 
+  if (!folio) {
+    console.warn("Resultados ignorados porque no tienen un folio válido");
+    return;
+  }
+
   if (sendsBySingleParameter) {
     // Manejo para equipos que envían un parámetro a la vez
     if (folio !== lastFolio) {
       finalizeResults(); // Finaliza y guarda los resultados acumulados
       lastFolio = folio;
-      resultsToSave = { ...results[0], parametros: [...parametros] };
+      resultsToSave = { ...results[0], parametros: [...filterDuplicateParams(parametros)] };
     } else {
-      resultsToSave.parametros.push(...parametros);
+      const newParams = filterDuplicateParams(parametros, resultsToSave.parametros);
+      resultsToSave.parametros.push(...newParams);
     }
   } else {
     // Manejo para mensajes completos
@@ -38,14 +43,34 @@ function handleResults(results, sendsBySingleParameter = false) {
 }
 
 /**
+ * Filtra los parámetros duplicados.
+ * @param {Array} newParams - Parámetros nuevos a agregar.
+ * @param {Array} [existingParams=[]] - Parámetros existentes ya guardados.
+ * @returns {Array} Parámetros únicos.
+ */
+function filterDuplicateParams(newParams, existingParams = []) {
+  const existingSet = new Set(existingParams.map((p) => JSON.stringify(p)));
+  return newParams.filter((param) => {
+    const paramKey = JSON.stringify(param);
+    if (!existingSet.has(paramKey)) {
+      existingSet.add(paramKey);
+      return true;
+    }
+    return false;
+  });
+}
+
+/**
  * Finaliza y guarda los resultados acumulados.
  */
 function finalizeResults() {
-  if (resultsToSave.parametros.length > 0) {
+  if (resultsToSave.folio && resultsToSave.parametros.length > 0) {
     saveResultsToLocalData([resultsToSave]);
     emitResultsToWebSocket([resultsToSave]);
     console.log("Resultados procesados y guardados:", resultsToSave);
     resultsToSave = { parametros: [] }; // Limpia la acumulación
+  } else {
+    console.warn("No se guardaron resultados porque no tienen un folio o están vacíos.");
   }
 }
 

@@ -9,7 +9,9 @@ const {
 } = require("./messageSpliterFn.js");
 const PID = require("./models/PID.js");
 
-function parseResultsData(hl7Message, dictionary) {
+function parseResultsData(hl7Message, dictionary, options = {}) {
+  const { positions = {} } = options; // Desestructura con un valor predeterminado
+
   // Divide el mensaje en sus segmentos
   const segments = getSegments(hl7Message);
   const separator = getFieldSeparator(hl7Message);
@@ -26,7 +28,7 @@ function parseResultsData(hl7Message, dictionary) {
     // Por cada tipo de segmento, se llama una función parecida a un constructor de su modelo de tipo de mensaje HL7
     switch (fieldsSegment.type) {
       case "OBR": {
-        result = { ...result, ...OBR(fieldsSegment) };
+        result = { ...result, ...OBR(fieldsSegment, positions["OBR"]) };
         break;
       }
 
@@ -77,7 +79,7 @@ function parseResultsData(hl7Message, dictionary) {
     console.error("El resultado no contiene datos válidos:", result);
     return []; // Devuelve un arreglo vacío si los datos no son válidos
   }
-  
+
   return [result]; // Retorna un arreglo con el resultado
 }
 

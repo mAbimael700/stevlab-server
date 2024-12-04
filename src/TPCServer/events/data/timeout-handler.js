@@ -1,6 +1,6 @@
 let timeoutHandler = null;
 
-function setupTimeout(lastMessageTime, callback, delay = 20000) {
+function setupTimeout(lastMessageTime, callback, delay = 22000) {
   if (timeoutHandler) clearTimeout(timeoutHandler);
 
   timeoutHandler = setTimeout(() => {

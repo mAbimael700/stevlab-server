@@ -1,4 +1,6 @@
-function OBR(segment) {
+function OBR(segment, positions) {
+  const folio = positions?.folio ?? 3; // Usa el operador opcional y un valor predeterminado.
+  
   if (segment.type !== "OBR") {
     throw new Error("El segmento no corresponde a este modelo.");
   }
@@ -6,9 +8,9 @@ function OBR(segment) {
   const fields = segment.fields;
 
   return {
-    //clave: fields[6] ?? undefined,
+    // clave: fields[6] ?? undefined,
     id: fields[3],
-    folio: fields[3],
+    folio: fields[folio],
   };
 }
 
