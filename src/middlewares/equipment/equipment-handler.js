@@ -9,7 +9,7 @@ const equipmentEmitter = getEquipmetEmitter()
 
 equipmentEmitter.on("deviceAdded", async (newEquipment) => {
   console.log(
-    `Nuevo equipo detectado: ${newEquipment.id} (${formatMacAddressWithSeparators(
+    `Nuevo equipo detectado: ${newEquipment.name} (${formatMacAddressWithSeparators(
       newEquipment.mac_address
     )})`
   );
@@ -18,20 +18,20 @@ equipmentEmitter.on("deviceAdded", async (newEquipment) => {
     await connectFTP(newEquipment);
   }
 
-  if (newEquipment.is_tpc_server) {
+  if (newEquipment.require_tcp_conn) {
     await connectTCP(newEquipment);
   }
 });
 
 // Manejar equipos eliminados
 equipmentEmitter.on("deviceRemoved", async (oldEquipment) => {
-  console.log(`Equipo eliminado: ${oldEquipment.id}`);
+  console.log(`Equipo eliminado: ${oldEquipment.name}`);
 
   if (oldEquipment.require_ftp_conn) {
     await closeFTP(oldEquipment.mac_address);
   }
 
-  if (oldEquipment.is_tpc_server) {
+  if (oldEquipment.require_tcp_conn) {
     closeTCP(oldEquipment.mac_address);
   }
 });
@@ -49,7 +49,7 @@ equipmentEmitter.on("deviceModified", async (oldEquipment, newEquipment) => {
     await connectFTP(newEquipment);
   }
 
-  if (newEquipment.is_tpc_server) {
+  if (newEquipment.require_tcp_conn) {
     closeTCP(oldEquipment.mac_address);
     await connectTCP(newEquipment);
   }

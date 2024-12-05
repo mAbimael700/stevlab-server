@@ -1,12 +1,12 @@
-const bl = require("bl");
-const { dataEvent } = require("../../../TPCServer/events/data");
+
+const { dataEvent } = require("../../../TPCServer/events/data/data-event");
 const { setTCPConnection, removeTCPConnection } = require("./tcp-manager");
 const { setReconnectInterval, removeReconnectInterval } = require("./tcp-reconnect-manager");
 
-function handleDataEvent(client, data, device, deviceData) {
-    const bufferList = new bl();
+
+function handleDataEvent(socket, data, device, deviceData, bufferList) {
     dataEvent(data, device.ip_address, bufferList, deviceData);
-    client.write("OK")
+    socket.write("OK")
 }
 
 function handleCloseEvent(client, macAddress, scheduleReconnect) {

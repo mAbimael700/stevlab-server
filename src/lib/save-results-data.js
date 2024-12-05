@@ -13,8 +13,6 @@ function saveResultsToLocalData(parsedData) {
   const filePath = path.join(DATADIR, `resultados-${timestamp}-${uniqueId}`);
 
   parsedData.forEach((element) => {
-    console.log(element);
-
     const jsonResults = JSON.stringify([element], null, 2);
 
     //Guarda el archivo en la ruta especificada con el JSON parseado

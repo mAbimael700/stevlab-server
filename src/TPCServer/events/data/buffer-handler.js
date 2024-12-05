@@ -19,22 +19,21 @@ function handleBuffer(data, parsingData) {
   }
 
   const delimiterIndex = data.indexOf(CHAR_DELIMITER);
-  if (delimiterIndex === -1) {
-    return null; // No hay un mensaje completo
+  if (delimiterIndex !== -1) {
+    const completeMessage = data.slice(0, delimiterIndex + 1);
+    const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
+
+    fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
+    console.log("Mensaje completo recibido: \n", completeMessage);
+
+    const results = parser(completeMessage);
+    if (!results) {
+      throw new Error("El parser devolvió resultados inválidos");
+    }
+
+    return { results, consumedBytes };
   }
 
-  const completeMessage = data.slice(0, delimiterIndex + 1);
-  const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
-
-  fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
-  console.log("Mensaje completo recibido: \n", completeMessage);
-
-  const results = parser(completeMessage);
-  if (!results) {
-    throw new Error("El parser devolvió resultados inválidos");
-  }
-
-  return { results, consumedBytes };
 }
 
 function clearProcessedBuffer(bufferList, consumedBytes) {

@@ -59,7 +59,7 @@ function parseResultsData(hl7Message, dictionary, options = {}) {
       } */
 
       default: {
-        console.warn(`Message type '${fieldsSegment.type}' is not recognized`);
+        console.warn(`Message type '${fieldsSegment.type}' is not recognized or declared`);
       }
     }
   });
@@ -76,7 +76,11 @@ function parseResultsData(hl7Message, dictionary, options = {}) {
 
   // Validación adicional para el resultado
   if (!result.folio || !result.parametros.length) {
-    console.error("El resultado no contiene datos válidos:", result);
+    console.error("El resultado no contiene datos válidos");
+
+    if (!result.folio) console.error("El resultado recibido no tiene asignado un folio");
+    if (!result.parametros?.length) console.error("El resultado recibido envió ningún parámetro");
+
     return []; // Devuelve un arreglo vacío si los datos no son válidos
   }
 

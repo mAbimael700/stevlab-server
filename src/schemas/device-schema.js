@@ -15,7 +15,7 @@ const deviceSchema = z
     port: z.string().optional(),
     remote_dir: z.string().optional(),
     require_ftp_conn: z.boolean().default(false).optional(),
-    is_tpc_server: z.boolean().default(false).optional(),
+    require_tcp_conn: z.boolean().default(false).optional(),
     area: z
       .object({
         ID: z.number().int().positive(), // ID debe ser un número entero positivo
@@ -29,7 +29,7 @@ const deviceSchema = z
     }
 
     if (DEVICES_REQUIRE_CONN_TCP_CLIENT.some((device) => obj.id === device)) {
-      obj.is_tpc_server = true;
+      obj.require_tcp_conn = true;
     }
 
     return obj;

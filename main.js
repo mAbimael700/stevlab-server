@@ -2,7 +2,6 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const lisServerApplication = require("./src/app");
 
-
 let mainWindow;
 
 // Configura el envío de logs
@@ -30,17 +29,21 @@ const createWindow = () => {
     },
   });
 
-   mainWindow.loadURL("http://localhost:4000"); // Puerto del servidor Vite
-  //mainWindow.loadFile(path.join(__dirname, "index.html"));
+  mainWindow.loadURL("http://localhost:4000"); // Puerto del servidor Vite
+
+  // Espera a que la ventana esté lista para mostrar
+  mainWindow.once("ready-to-show", () => {
+    console.log("Ventana lista. Iniciando servidor...");
+    lisServerApplication(); // Inicia el servidor después de que la ventana está lista
+  });
 };
 
-lisServerApplication()
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
-

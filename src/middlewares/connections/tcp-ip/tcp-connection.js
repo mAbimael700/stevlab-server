@@ -1,4 +1,5 @@
 const net = require("node:net");
+const bl = require("bl");
 const {
     setTCPConnection,
     getTCPConnection,
@@ -14,9 +15,7 @@ const {
     handleCloseEvent,
     handleErrorEvent
 } = require("./tcp-events-handler");
-const { getMacAddress } = require("../../../lib/getMacAddress");
-const { verifyDevices } = require("../../equipment/equipment-helpers");
-const { validateParser } = require("../../../lib/validate-buffer");
+const { deviceValidation } = require("./tcp-device-validation");
 
 async function createTCPConnection(device) {
     const port = device.port;
@@ -32,48 +31,30 @@ async function createTCPConnection(device) {
 
     const connect = () => {
         console.log(`Intentando conectar al equipo ${device.name} en ${host}:${port}...`);
-        client.connect(port, host, async () => {
-            console.log(`Conexión exitosa con ${device.name} en ${host}:${port}.`);
-            setTCPConnection(macAddress, client);
-            removeReconnectInterval(macAddress);
 
-            // Validar dirección MAC y verificar dispositivo
-            const currentRemoteIpAddress = client.remoteAddress.split(":").pop();
-            const currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);
+        try {
+            client.connect(port, host, async () => {
+                console.log(`Conexión exitosa con ${device.name} en ${host}:${port}.`);
+                setTCPConnection(macAddress, client);
+                removeReconnectInterval(macAddress);
 
-            if (!currentRemoteMacAddress) {
-                console.warn(
-                    `No se encontró la dirección MAC para ${device.name}. Cerrando conexión.`
+                const device = await deviceValidation(client)
+                const bufferList = new bl();
+                // Configurar eventos
+                client.on("data", (data) =>
+                    handleDataEvent(client, data, device.data, device.parsingData, bufferList)
                 );
-                client.destroy();
-                return;
-            }
-
-            const registeredDevice = verifyDevices(currentRemoteMacAddress);
-            if (!registeredDevice) {
-                console.warn("Equipo no registrado. Conexión cerrada.");
-                client.destroy();
-                return;
-            }
-
-            // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
-            const deviceData = validateParser({
-                id_device: registeredDevice.id,
+                client.on("close", () =>
+                    handleCloseEvent(client, macAddress, scheduleReconnect)
+                );
+                client.on("error", (err) =>
+                    handleErrorEvent(client, macAddress, err, scheduleReconnect)
+                );
             });
+        } catch (error) {
+            console.error(error.message)
+        }
 
-            console.log(deviceData);
-
-            // Configurar eventos
-            client.on("data", (data) =>
-                handleDataEvent(client, data, registeredDevice, deviceData)
-            );
-            client.on("close", () =>
-                handleCloseEvent(client, macAddress, scheduleReconnect)
-            );
-            client.on("error", (err) =>
-                handleErrorEvent(client, macAddress, err, scheduleReconnect)
-            );
-        });
     };
 
     const scheduleReconnect = () => {
@@ -90,7 +71,9 @@ async function createTCPConnection(device) {
         }
     };
 
+
     connect();
+
 }
 
 function closeTCP(macAddress) {

@@ -17,28 +17,28 @@ function handleResults(results, sendsBySingleParameter = false) {
     return;
   }
 
-  const { folio, parametros } = results[0];
+  /* const { folio, parametros } = results[0]; */
 
-  if (!folio) {
+  if (!results[0]?.folio || results[0]?.folio === "") {
     console.warn("Resultados ignorados porque no tienen un folio válido");
     return;
   }
 
+
   if (sendsBySingleParameter) {
     // Manejo para equipos que envían un parámetro a la vez
-    if (folio !== lastFolio) {
+    if (results[0]?.folio !== lastFolio) {
       finalizeResults(); // Finaliza y guarda los resultados acumulados
-      lastFolio = folio;
-      resultsToSave = { ...results[0], parametros: [...filterDuplicateParams(parametros)] };
+      lastFolio = results[0]?.folio;
+      resultsToSave = { ...results[0], parametros: [...filterDuplicateParams(results[0]?.parametros)] };
     } else {
-      const newParams = filterDuplicateParams(parametros, resultsToSave.parametros);
+      const newParams = filterDuplicateParams(results[0]?.parametros, resultsToSave.parametros);
       resultsToSave.parametros.push(...newParams);
     }
   } else {
     // Manejo para mensajes completos
     saveResultsToLocalData(results);
     emitResultsToWebSocket(results);
-    console.log("Resultados procesados directamente:", results);
   }
 }
 

@@ -1,12 +1,7 @@
 const net = require("net");
 
 const pidSegment = `PID|1||||^Isidra\n`;
-const obrSegment = `OBR|1||N002|01001^Automated Count^99MRC||20241024124650|20241024124711|||||||20241024124650||||||||||HM||||||||admin\n`;
-
-
-
-
-
+const obrSegment = `OBR|1|1234567|N002|01001^Automated Count^99MRC||20241024124650|20241024124711|||||||20241024124650||||||||||HM||||||||admin\n`;
 
 const parameters = [
   `OBX|10|NM|32155-4^MID%^LN||7,1|%|3,0-9,0|~N|||F`,
@@ -18,38 +13,36 @@ const parameters = [
 
 const client2 = new net.Socket();
 
-client2.connect(3000, "127.0.0.1", () => {
+client2.connect(3000, "127.0.0.1", async () => {
   console.log("Cliente 2 conectado");
 
-  parameters.forEach((param, index) => {
+  for (const [index, param] of parameters.entries()) {
     const message = pidSegment + obrSegment + param;
 
+    // Dividir mensaje en chunks
     const chunks = [
       message.slice(0, Math.ceil(message.length / 2)),
       message.slice(Math.ceil(message.length / 2)),
     ];
 
-    setTimeout(() => {
-      console.log(`Cliente 2 enviando mensaje ${index + 1} (${param.split("|")[3] || "Parámetro desconocido"})`);
-      
-      chunks.forEach((chunk, chunkIndex) => {
-        setTimeout(() => {
-          client2.write(chunk);
-          console.log(`Cliente 2 envió chunk ${chunkIndex + 1} del mensaje ${index + 1}`);
-          if (chunkIndex === chunks.length - 1) {
-            client2.write("\n"); // Enviar separador final
-          }
-        }, chunkIndex * 100); // Retraso entre los chunks
-      });
+    console.log(`Cliente 2 enviando mensaje ${index + 1} (${param.split("|")[3] || "Parámetro desconocido"})`);
 
-      if (index === parameters.length - 1) {
-        setTimeout(() => {
-          console.log("Cliente 2 terminó de enviar todos los parámetros");
-          //client2.end();
-        }, 200);
-      }
-    }, index * 18000); // Retraso de 20 segundos entre mensajes
-  });
+    // Enviar los chunks con retraso
+    for (const [chunkIndex, chunk] of chunks.entries()) {
+      client2.write(chunk);
+      console.log(`Cliente 2 envió chunk ${chunkIndex + 1} del mensaje ${index + 1}`);
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Retraso entre chunks
+    }
+
+    // Enviar separador final
+    client2.write("\n");
+
+    // Retraso entre mensajes
+    await new Promise((resolve) => setTimeout(resolve, 18000));
+  }
+
+  console.log("Cliente 2 terminó de enviar todos los parámetros");
+  client2.end();
 });
 
 client2.on("close", () => {
