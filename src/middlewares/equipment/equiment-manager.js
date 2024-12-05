@@ -15,14 +15,14 @@ function readDevicesFromFile() {
 
     if (!fs.existsSync(DEVICES_DIR)) {
       console.warn(
-        `El archivo ${DEVICES_DIR} no existe. Creando archivo nuevo...`
+        `El archivo de configuración de los equipos no existe. Creando el archivo ${DEVICES_DIR}`
       );
       fs.writeFileSync(DEVICES_DIR, JSON.stringify({ devices: [] }, null, 2));
     }
     const data = fs.readFileSync(DEVICES_DIR, "utf8");
     const devices = JSON.parse(data)?.devices ?? [];
     setEquipments(devices); // Actualiza la lista en equipment-helpers
-    console.log("Equipos cargados:", getEquipments());
+    console.log("Equipos cargados:", JSON.stringify(getEquipments(), null, 2));
   } catch (error) {
     console.error("Error al leer el archivo de dispositivos:", error.message);
   }
@@ -33,7 +33,7 @@ function detectChangesAndEmitEvents() {
   const oldEquipments = [...previousEquipments];
 
   const equipmentsOnServer = getEquipments();
-  const equipmentEmitter = getEquipmetEmitter()
+  const equipmentEmitter = getEquipmetEmitter();
 
   equipmentsOnServer.forEach((newEquipment) => {
     const oldEquipment = oldEquipments.find(
@@ -69,7 +69,9 @@ function initializeEquipmentManager() {
 
   fs.watchFile(DEVICES_DIR, { interval: 500 }, (curr, prev) => {
     if (curr.mtime !== prev.mtime) {
-      console.log(`El archivo ${DEVICES_DIR} ha cambiado. Procesando...`);
+      console.log(
+        `La configuraciones de los equipos han cambiado. Procesando...`
+      );
       readDevicesFromFile();
       detectChangesAndEmitEvents();
     }
