@@ -24,7 +24,10 @@ class ServerFactory {
   static create(mode) {
     switch (mode) {
       case "electron":
-        return () => initializeTcpServer({ PORT: TPC_PORT });
+        return () => {
+          initializeTcpServer({ PORT: TPC_PORT });
+          initializeWebSocket(5000)
+        }
       case "local":
         return () => {
           const expressServer = initializeExpressServer(SOCKET_PORT);

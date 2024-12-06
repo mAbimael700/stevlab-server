@@ -3,14 +3,14 @@ const { Server } = require("socket.io");
 
 let io;
 
-function initializeWebSocket(expressServer) {
+function initializeWebSocket(server) {
   // Si ya existe una instancia de io, devuelve esa instancia
   if (io) {
     return io;
   }
 
   // Inicializa el servidor WebSocket con Socket.IO
-  io = new Server(expressServer, {
+  io = new Server(server, {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],
