@@ -17,7 +17,7 @@ function initializeTcpServer({ PORT }) {
       const device = await deviceValidation(socket);
 
       console.log(
-        `Conexión TCP/IP entrante del equipo : ${device.data.name} con la dirección IP : ${device.ipAddress}: ${socket.remotePort}`
+        `Conexión TCP/IP entrante del equipo ${device.data.name} con la dirección IPv4: ${device.ipAddress}:${socket.remotePort}`
       );
 
       // Establece un timeout más largo para la conexión

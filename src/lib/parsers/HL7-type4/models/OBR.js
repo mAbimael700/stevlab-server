@@ -8,7 +8,6 @@ function OBR(segment, positions) {
   const fields = segment.fields;
 
   return {
-    // clave: fields[6] ?? undefined,
     id: fields[3],
     folio: fields[folio],
   };
