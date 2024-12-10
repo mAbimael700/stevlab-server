@@ -1,7 +1,10 @@
 const net = require("node:net");
 const bl = require("bl");
 const { handleDataEvent } = require("../connections/tcp-ip/tcp-events-handler");
-const { deviceValidation } = require("../connections/tcp-ip/tcp-device-validation");
+const {
+  deviceValidation,
+} = require("../connections/tcp-ip/tcp-device-validation");
+const { emitStatusDevice } = require("../../lib/websocket/emit-device-status");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
 function initializeTcpServer({ PORT }) {
@@ -20,17 +23,40 @@ function initializeTcpServer({ PORT }) {
         `Conexión TCP/IP entrante del equipo ${device.data.name} con la dirección IPv4: ${device.ipAddress}:${socket.remotePort}`
       );
 
+      emitStatusDevice(
+        {
+          ip_address: device.ipAddress,
+          port: socket.remotePort.toString(),
+          connection_status: "connected",
+        },
+        device.data
+      );
+
       // Establece un timeout más largo para la conexión
       socket.setTimeout(60000); // 60 segundos
 
       const bufferList = new bl();
       socket.on("data", async (data) => {
-        handleDataEvent(socket, data, device.data, device.parsingData, bufferList)
+        handleDataEvent(
+          socket,
+          data,
+          device.data,
+          device.parsingData,
+          bufferList
+        );
       });
 
       socket.on("end", () => {
         console.log(
-          `Conexión cerrada por el equipo con la IP: ${device.ipAddress}`
+          `Conexión cerrada por el equipo ${device.data.name} con IPv4: ${device.ipAddress}:${socket.remotePort}`
+        );
+
+        emitStatusDevice(
+          {
+            last_connection: new Date(),
+            connection_status: "disconnected",
+          },
+          device.data
         );
       });
 
@@ -41,6 +67,15 @@ function initializeTcpServer({ PORT }) {
             ` Conexión reseteada por el cliente ${currentRemoteIpAddress}:${socket.remotePort}`
           );
         } else {
+          emitStatusDevice(
+            {
+              last_connection: new Date(),
+              connection_status: "disconnected",
+            },
+            device.data,
+            `Error en la conexión: ${err.message}`,
+            true
+          );
           console.error("Error en la conexión:", err);
           socket.destroy(); // Cerrar la conexión en caso de error
         }

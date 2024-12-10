@@ -16,7 +16,7 @@ async function deviceValidation(socket) {
         return;
     }
 
-    const registeredDevice = verifyDevices(currentRemoteMacAddress);
+    let registeredDevice = verifyDevices(currentRemoteMacAddress);
     if (!registeredDevice) {
         console.warn("Equipo no registrado. Conexión cerrada.");
         socket.destroy();
@@ -24,6 +24,7 @@ async function deviceValidation(socket) {
     }
 
     registeredDevice.ip_address = currentRemoteIpAddress
+    registeredDevice.port = socket.remotePort
 
     // Devuelve la función parser que le corresponde al equipo y el carácter delimitador
     const deviceParsingData = validateParser({

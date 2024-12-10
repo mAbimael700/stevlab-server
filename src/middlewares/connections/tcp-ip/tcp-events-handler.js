@@ -5,7 +5,7 @@ const { setReconnectInterval, removeReconnectInterval } = require("./tcp-reconne
 
 
 function handleDataEvent(socket, data, device, deviceData, bufferList) {
-    dataEvent(data, device.ip_address, bufferList, deviceData);
+    dataEvent(data, device, bufferList, deviceData);
     socket.write("OK")
 }
 

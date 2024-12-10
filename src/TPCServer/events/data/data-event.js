@@ -1,3 +1,6 @@
+const {
+  emitStatusDevice,
+} = require("../../../lib/websocket/emit-device-status");
 const { handleBuffer, clearProcessedBuffer } = require("./buffer-handler");
 const {
   handleResults,
@@ -8,8 +11,16 @@ const { setupTimeout } = require("./timeout-handler");
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
 let lastMessageTime = null;
 
-async function dataEvent(data, ip_address, bufferList, parsingData) {
-  console.log("Mensaje entrante de: " + ip_address ?? "127.0.0.1");
+async function dataEvent(data, device, bufferList, parsingData) {
+  console.log(
+    `Mensaje entrante del equipo con ${device.name} con IPv4: ${device.ip_address}:${device.port}`
+  );
+  emitStatusDevice(
+    {
+      last_connection: new Date(),
+    },
+    device
+  );
 
   // Verifica el tamaño del paquete
   if (data.length > MAX_DATA_SIZE) {
@@ -24,7 +35,7 @@ async function dataEvent(data, ip_address, bufferList, parsingData) {
 
   try {
     while (true) {
-      const accumulatedData = bufferList.toString("utf-8");  
+      const accumulatedData = bufferList.toString("utf-8");
       const bufferResults = handleBuffer(accumulatedData, parsingData);
 
       if (bufferResults) {
