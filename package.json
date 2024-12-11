@@ -1,11 +1,12 @@
 {
-  "name": "listeningserver",
+  "name": "stevlablisserver",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "bin": "./src/app/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app/app.js",
     "start:local": "cross-env PRODUCTION_MODE=local node ./src/app/app.js",
     "dev:local": "cross-env PRODUCTION_MODE=local nodemon ./src/app/app.js",
     "start:electron": "cross-env PRODUCTION_MODE=electron electron ./main.js",
@@ -17,13 +18,14 @@
   "pkg": {
     "assets": [
       "dist/**/*",
-      "src/**/*"
+      "src/**/*",
+      ".env"
     ],
     "outputPath": "build"
   },
   "build": {
-    "appId": "com.stevlab.lisserverapp",
-    "productName": "LisServerApp",
+    "appId": "com.stevlab.stevlablisserver",
+    "productName": "Stevlab Lis Server",
     "directories": {
       "output": "dist2"
     },
@@ -41,27 +43,29 @@
     }
   },
   "keywords": [],
-  "author": "",
+  "author": "Abimael Alexander Méndez Landero",
   "license": "ISC",
   "dependencies": {
-    "basic-ftp": "^5.0.5",
-    "bl": "^6.0.16",
-    "cors": "^2.8.5",
-    "date-fns": "^4.1.0",
-    "express": "^4.21.0",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "nodemon": "^3.1.7",
-    "serialport": "^12.0.0",
-    "socket.io": "^4.8.0",
+    "@dotenvx/dotenvx": "1.29.0",
+    "basic-ftp": "5.0.5",
+    "bl": "6.0.16",
+    "cors": "2.8.5",
+    "date-fns": "4.1.0",
+    "express": "4.21.0",
+    "morgan": "1.10.0",
+    "multer": "1.4.5-lts.1",
+    "nodemon": "3.1.7",
+    "serialport": "12.0.0",
+    "socket.io": "4.8.0",
     "winston": "3.15.0",
-    "winston-daily-rotate-file": "^5.0.0",
-    "zod": "^3.23.8"
+    "winston-daily-rotate-file": "5.0.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "electron": "^33.2.1",
-    "electron-builder": "^25.1.8",
-    "electron-packager": "^17.1.2"
+    "cross-env": "7.0.3",
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8",
+    "electron-packager": "17.1.2",
+    "pkg": "5.8.1"
   }
 }

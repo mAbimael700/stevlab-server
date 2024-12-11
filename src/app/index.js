@@ -1,3 +1,4 @@
+const dotenvx = require('@dotenvx/dotenvx');
 const { initializeTcpServer } = require("../middlewares/servers/tcp-server.js");
 const {
   initializeExpressServer,
@@ -40,7 +41,10 @@ class ServerFactory {
   }
 }
 
+
+// Carga las variables del archivo .env
 function lisServerApplication() {
+  dotenvx.config();
   ErrorHandler();
   configurationManager();
 
