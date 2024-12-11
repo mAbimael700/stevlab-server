@@ -37,8 +37,10 @@ function initializeExpressServer(PORT) {
 
   expressServer.listen(PORT, () => {
     console.log(
-      `Servidor WebSocket escuchando en el puerto http://localhost:${PORT}/`
+      `Servidor Web Socket escuchando en el puerto ${PORT}`,
+      `Servidor HTTP accessible http://localhost:${PORT}/`
     );
+
   });
 
   return expressServer;

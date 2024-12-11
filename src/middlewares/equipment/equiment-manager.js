@@ -2,6 +2,8 @@ const fs = require("node:fs");
 const { DEVICES_DIR, CONFIG_DIR } = require("../../constants/CONFIG_DIR");
 const { getEquipmetEmitter } = require("./equipment-events");
 const { setEquipments, getEquipments } = require("./equipment-helpers");
+const { printTable } = require('console-table-printer');
+const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
 
 let previousEquipments = [];
 
@@ -22,7 +24,18 @@ function readDevicesFromFile() {
     const data = fs.readFileSync(DEVICES_DIR, "utf8");
     const devices = JSON.parse(data)?.devices ?? [];
     setEquipments(devices); // Actualiza la lista en equipment-helpers
-    console.log("Equipos cargados:", JSON.stringify(getEquipments(), null, 2));
+
+    const equipments = getEquipments()
+
+    const equipmentsOnServer = equipments.map(e => ({
+      "Nombre": e.name,
+      "Dirección MAC": formatMacAddressWithSeparators(e.mac_address),
+      "Área": e.area.Nombre_area
+    }))
+
+
+    console.log("Equipos cargados");
+    printTable(equipmentsOnServer)
   } catch (error) {
     console.error("Error al leer el archivo de dispositivos:", error.message);
   }

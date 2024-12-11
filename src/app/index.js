@@ -16,7 +16,7 @@ const { ErrorHandler } = require("../middlewares/error-handler.js");
 const {
   initializeEquipmentManager,
 } = require("../middlewares/equipment/equiment-manager.js");
-const { consoleManager } = require('../middlewares/configuration/console-manager.js');
+const { consoleManager } = require('../middlewares/configuration/console/console-manager.js');
 
 // Definición de los puertos de cada servidor
 const TPC_PORT = process.env.PORT || 3000;
@@ -46,6 +46,7 @@ class ServerFactory {
 // Carga las variables del archivo .env
 function lisServerApplication() {
   consoleManager()
+
   dotenvx.config();
   ErrorHandler();
   configurationManager();
