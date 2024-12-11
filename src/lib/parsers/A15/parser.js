@@ -1,3 +1,5 @@
+const { A15 } = require("../../../constants/dictionaries/A15");
+
 const rawData = `
 24030101000334 GLUCOSE SER 142 mg/dL 01/03/2024 14:15:29
 24030101000334 UREA UV SER 29.6 mg/dL 01/03/2024 14:09:14
@@ -48,8 +50,6 @@ function parseData(data) {
     const nombre = [];
     let i = 1;
 
-    console.log(segments);
-
     // Obtener el nombre del parámetro hasta encontrar "SER"
     while (segments[i] && segments[i] !== "SER") {
       nombre.push(segments[i]);
@@ -57,6 +57,7 @@ function parseData(data) {
     }
 
     const parametroNombre = nombre.join(" ");
+    const clave_sistema = A15[parametroNombre];
     const valor = segments[i + 1];
     const unidad_medida = segments[i + 2];
     const fecha = segments[i + 3];
@@ -93,6 +94,7 @@ function parseData(data) {
     currentEntry.parametros.push({
       clave,
       nombre: parametroNombre,
+      clave_sistema,
       valor,
       unidad_medida,
     });
