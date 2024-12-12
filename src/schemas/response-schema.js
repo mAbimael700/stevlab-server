@@ -22,6 +22,12 @@ const responseSchema = z.array(
         indicador: z.string().optional(),
       })
     ),
+    chart: z.array(
+      z.object({
+        nombre: z.string(),
+        valor: z.string(),
+      })
+    )
   })
 );
 
@@ -30,6 +36,8 @@ function validateResponse(parsedResult) {
 
   if (result.error) {
     console.log("Datos que llegaron " + result.data);
+    console.log(parsedResult);
+    
     console.log(result.error.errors);
   }
 

@@ -37,8 +37,15 @@ function parseResultsData(hl7Message, dictionary, options = {}) {
           result.parametros = [];
         }
 
+        if (!result.chart) {
+          result.chart = [];
+        }
+
         const parametro = OBX(fieldsSegment, dictionary);
-        parametro && result.parametros.push(parametro);
+        if (parametro) {
+          parametro.isChart ? result.chart.push(parametro) : result.parametros.push(parametro);
+        }
+
         break;
       }
 

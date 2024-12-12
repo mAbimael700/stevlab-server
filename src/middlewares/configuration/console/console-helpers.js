@@ -1,10 +1,19 @@
 const ref = require('ref-napi');
 const SysTray = require('systray').default;
 
+// Ejemplo de icono base64 (reemplaza <base64_image>)
+const fs = require('node:fs');
+const path = require('node:path')
+
+const iconBase64 = fs.readFileSync(path.join(process.cwd(), 'icon.ico'))
+    .toString('base64');
+
+
 function disableQuickEditModenWin(kernel) {
-    const STD_INPUT_HANDLE = -10; // Identificador del modo de entrada estándar
+    const STD_INPUT_HANDLE = -10; // Manejador de entrada estándar
     const ENABLE_QUICK_EDIT_MODE = 0x0040; // Modo de edición rápida
-    const ENABLE_EXTENDED_FLAGS = 0x0080; // Extender los flags para SetConsoleMode
+    const ENABLE_EXTENDED_FLAGS = 0x0080; // Flags extendidos
+
 
     // Obtener el identificador de la consola
     const handle = kernel.GetStdHandle(STD_INPUT_HANDLE);
@@ -24,7 +33,7 @@ function disableQuickEditModenWin(kernel) {
     }
 }
 
-function emulateConsole() {
+function emulateConsole(kernel, user) {
     // Detectar plataforma
     if (process.platform === 'win32') {
         // Usar API moderna para deshabilitar Quick Edit en la consola
@@ -44,7 +53,8 @@ function emulateConsole() {
     process.stdin.on('data', data => {
         if (data.toString() === '\u0003') { // Ctrl+C
             console.log('Cerrando el servidor LIS...');
-            process.exit();
+            //process.exit();
+            setConsoleVisibility(kernel,user,false);
         }
     });
 }
@@ -52,6 +62,10 @@ function emulateConsole() {
 
 // Función para mostrar u ocultar la consola
 function setConsoleVisibility(kernel, user, visible) {
+
+    const SW_HIDE = 0; // Ocultar ventana
+    const SW_SHOW = 5; // Mostrar ventana
+
     const consoleWindow = kernel.GetConsoleWindow();
     if (!consoleWindow.isNull()) {
         user.ShowWindow(consoleWindow, visible ? SW_SHOW : SW_HIDE);
@@ -59,10 +73,25 @@ function setConsoleVisibility(kernel, user, visible) {
 }
 
 
+
+function handleSignals(kernel, user) {
+    process.on('SIGINT', () => {
+        /* console.log('Consola cerrada, pero la aplicación sigue ejecutándose en segundo plano.'); */
+        setConsoleVisibility(kernel, user, false);
+    });
+
+    process.on('SIGHUP', () => {
+        console.log('Ocultando la consola...');
+        setConsoleVisibility(kernel, user, false);
+    });
+}
+
+
+
 function systrayManager(kernel, user) {
     const systray = new SysTray({
         menu: {
-            icon: '<base64 image string>', // Reemplaza con el icono en formato base64
+            icon: iconBase64,
             title: 'Stevlab Lis Server',
             tooltip: 'Servidor corriendo',
             items: [
@@ -83,7 +112,7 @@ function systrayManager(kernel, user) {
                     tooltip: 'Cierra la aplicación',
                     checked: false,
                     enabled: true,
-                },
+                }
             ],
         },
         debug: false,
@@ -108,5 +137,6 @@ function systrayManager(kernel, user) {
 module.exports = {
     systrayManager,
     disableQuickEditModenWin,
+    handleSignals,
     emulateConsole
 }

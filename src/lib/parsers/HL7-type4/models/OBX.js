@@ -20,12 +20,17 @@ function OBX(segment, dictionary) {
   // Si valor del segmento es un número y su nombre no es parte de los analítos lo devuelve
   if (!isNaN(valor) && !wordsNotAdmitted.some(word => nombre.includes(word))) {
     return {
-      clave: fields[14],
       clave_sistema: dictionary?.[nombre], // Este el diccionario del equipo en cuestión 
       nombre: nombre ?? "",
       valor,
       unidad_medida: fields[6] ?? "",
     };
+  } else if (!isNaN(valor) && wordsNotAdmitted.some(word => nombre.includes(word))) {
+    return {
+      isChart: true,
+      nombre: nombre,
+      valor
+    }
   }
 
 }
