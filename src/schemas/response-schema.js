@@ -25,7 +25,11 @@ const responseSchema = z.array(
     chart: z.array(
       z.object({
         nombre: z.string(),
-        valor: z.string(),
+        valor: z.number().refine((s) => !isNaN(s), {
+          message: "El valor no es un número",
+          path: "chart"
+        }).transform((s) => parseInt(s)),
+
       })
     )
   })
@@ -37,7 +41,7 @@ function validateResponse(parsedResult) {
   if (result.error) {
     console.log("Datos que llegaron " + result.data);
     console.log(parsedResult);
-    
+
     console.log(result.error.errors);
   }
 

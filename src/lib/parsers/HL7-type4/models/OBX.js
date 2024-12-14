@@ -15,14 +15,14 @@ function OBX(segment, dictionary) {
   const nombre = formatName(fields[4] || fields[3]);
 
   // Formateamos el valor en caso de que esté en formato separados por comas
-  const valor = parseFloat(fields[5].replace(",", ".")).toFixed(2);
+  const valor = parseFloat(fields[5].replace(",", "."));
 
   // Si valor del segmento es un número y su nombre no es parte de los analítos lo devuelve
   if (!isNaN(valor) && !wordsNotAdmitted.some(word => nombre.includes(word))) {
     return {
       clave_sistema: dictionary?.[nombre], // Este el diccionario del equipo en cuestión 
       nombre: nombre ?? "",
-      valor,
+      valor: valor.toFixed(2),
       unidad_medida: fields[6] ?? "",
     };
   } else if (!isNaN(valor) && wordsNotAdmitted.some(word => nombre.includes(word))) {
