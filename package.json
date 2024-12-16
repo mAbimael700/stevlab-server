@@ -49,6 +49,7 @@
   "license": "ISC",
   "dependencies": {
     "@dotenvx/dotenvx": "1.29.0",
+    "axios": "^1.7.9",
     "basic-ftp": "5.0.5",
     "bl": "6.0.16",
     "console-table-printer": "2.12.1",

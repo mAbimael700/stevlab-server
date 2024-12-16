@@ -10,14 +10,16 @@ let resultsToSave = { parametros: [] };
  * @param {Object[]} results - Resultados procesados.
  * @param {boolean} sendsBySingleParameter - Indica si el equipo envía un solo parámetro a la vez.
  */
-function handleResults(results, sendsBySingleParameter = false) {
-  const isValidated = validateResponse(results);
+async function handleResults(results, sendsBySingleParameter = false) {
+
+  const response = await validateResponse(results)
+  
+  const isValidated = response.success;
   if (!isValidated) {
     console.warn("Resultados no válidos");
     return;
   }
 
-  /* const { folio, parametros } = results[0]; */
 
   if (!results[0]?.folio || results[0]?.folio === "") {
     console.warn("Resultados ignorados porque no tienen un folio válido");
@@ -27,18 +29,18 @@ function handleResults(results, sendsBySingleParameter = false) {
 
   if (sendsBySingleParameter) {
     // Manejo para equipos que envían un parámetro a la vez
-    if (results[0]?.folio !== lastFolio) {
+    if (response.data[0]?.folio !== lastFolio) {
       finalizeResults(); // Finaliza y guarda los resultados acumulados
-      lastFolio = results[0]?.folio;
-      resultsToSave = { ...results[0], parametros: [...filterDuplicateParams(results[0]?.parametros)] };
+      lastFolio = response.data[0]?.folio;
+      resultsToSave = { ...response.data[0], parametros: [...filterDuplicateParams(response.data[0]?.parametros)] };
     } else {
-      const newParams = filterDuplicateParams(results[0]?.parametros, resultsToSave.parametros);
+      const newParams = filterDuplicateParams(response.data[0]?.parametros, resultsToSave.parametros);
       resultsToSave.parametros.push(...newParams);
     }
   } else {
     // Manejo para mensajes completos
-    saveResultsToLocalData(results);
-    emitResultsToWebSocket(results);
+    saveResultsToLocalData(response.data);
+    emitResultsToWebSocket(response.data);
   }
 }
 
