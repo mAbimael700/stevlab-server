@@ -25,7 +25,7 @@ class ServerFactory {
 
   static create(mode) {
     const TPC_PORT = process.env.PORT ?? 3000;
-    const SOCKET_PORT = process.env.SOCKET_PORT ?? 4000;
+    const SOCKET_PORT = process.env.SOCKET_PORT ?? 5000;
 
     switch (mode) {
       case "electron":

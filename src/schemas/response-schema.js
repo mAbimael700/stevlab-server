@@ -85,7 +85,14 @@ async function transformData(obj) {
     throw new Error("No se pudieron transformar los datos por falta de información");
   }
 
-  const { recepcion, paciente, areas, estudios, analitos } = data;
+  const { recepcion, paciente: p, areas: a, estudios: e, analitos } = data;
+
+  console.log(data);
+
+  const [paciente] = p
+  const [areas] = a
+  const [estudios] = e
+
 
   return {
     ...obj,
@@ -101,7 +108,7 @@ async function transformData(obj) {
       descripcion: estudios.descripcion,
     },
     parametros: obj.parametros.map((param) => {
-      const analito = analitos.find((a) => a.clave === param.clave);
+      const analito = analitos.find((a) => a.clave === param.nombre);
       return {
         ...param,
         descripcion: analito ? analito.descripcion : param.descripcion,

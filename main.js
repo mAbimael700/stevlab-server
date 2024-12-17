@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const lisServerApplication = require("./src/app");
+const { cwd } = require("process");
 
 let mainWindow;
 
@@ -29,17 +30,25 @@ const createWindow = () => {
     },
   });
 
-  mainWindow.loadURL("http://localhost:4000"); // Puerto del servidor Vite
+  mainWindow.loadFile(
+    path.join(__dirname, "dist", "index.html")
+  ); // Puerto del servidor Vite
 
   // Espera a que la ventana esté lista para mostrar
   mainWindow.once("ready-to-show", () => {
     console.log("Ventana lista. Iniciando servidor...");
     lisServerApplication(); // Inicia el servidor después de que la ventana está lista
-  });
+  }); 
 };
+
 
 app.whenReady().then(() => {
   createWindow();
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
 });
 
 app.on("window-all-closed", () => {
