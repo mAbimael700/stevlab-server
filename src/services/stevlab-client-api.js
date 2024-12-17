@@ -1,20 +1,25 @@
-const axios = require('axios');
-
 const getDomain = () => {
     return "test.stevlabsoftware.com";
 };
 
-const stevlabApiClient = axios.create({
-    baseURL: `https://${getDomain()}/api/`,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    timeout: 10000,
-});
+const baseURL = `https://${getDomain()}/api/`;
 
-stevlabApiClient.interceptors.response.use(
-    response => response,
-    error => Promise.reject(error)
-);
+const fetchApiClient = async (url, options = {}) => {
+    const response = await fetch(baseURL + url, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+        },
+    });
 
-module.exports = { stevlabApiClient };
+    if (!response.ok) {
+        const error = await response.json();
+        return Promise.reject(error);
+    }
+
+    return response.json();
+};
+
+
+module.exports = { fetchApiClient };

@@ -1,4 +1,3 @@
-const dotenvx = require('@dotenvx/dotenvx');
 const { initializeTcpServer } = require("../middlewares/servers/tcp-server.js");
 const {
   initializeExpressServer,
@@ -16,19 +15,24 @@ const { ErrorHandler } = require("../middlewares/error-handler.js");
 const {
   initializeEquipmentManager,
 } = require("../middlewares/equipment/equiment-manager.js");
-const { consoleManager } = require('../middlewares/configuration/console/console-manager.js');
 
 // Definición de los puertos de cada servidor
-const TPC_PORT = process.env.PORT || 3000;
-const SOCKET_PORT = process.env.SOCKET_PORT || 5000;
+
 
 class ServerFactory {
+
+
+
   static create(mode) {
+    const TPC_PORT = process.env.PORT ?? 3000;
+    const SOCKET_PORT = process.env.SOCKET_PORT ?? 4000;
+
     switch (mode) {
       case "electron":
         return () => {
+          const expressServer = initializeExpressServer(SOCKET_PORT);
+          initializeWebSocket(expressServer);
           initializeTcpServer({ PORT: TPC_PORT });
-          initializeWebSocket(5000)
         }
       case "local":
         return () => {
@@ -45,9 +49,8 @@ class ServerFactory {
 
 // Carga las variables del archivo .env
 function lisServerApplication() {
-  consoleManager()
 
-  dotenvx.config();
+  process.loadEnvFile();
   ErrorHandler();
   configurationManager();
 
