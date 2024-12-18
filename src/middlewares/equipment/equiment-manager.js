@@ -34,8 +34,14 @@ function readDevicesFromFile() {
     }))
 
 
-    console.log("Equipos cargados");
-    printTable(equipmentsOnServer)
+    console.log("----------Equipos cargados-----------------");
+    // Convertimos el array a un objeto
+    const equipmentsAsObject = Object.fromEntries(
+      equipmentsOnServer.map((equipment, index) => [`Equipo ${index + 1}`, equipment])
+    );
+
+    // Usamos console.table con el objeto
+    console.table(equipmentsAsObject);
   } catch (error) {
     console.error("Error al leer el archivo de dispositivos:", error.message);
   }

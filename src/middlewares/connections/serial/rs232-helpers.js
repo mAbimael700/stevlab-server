@@ -14,7 +14,7 @@ function addSerialConn(device) {
   });
 
   // Agregar un parser para leer datos de forma más fácil (opcional)
-  const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
+  const parser = port.pipe(new ReadlineParser({ delimiter: device.delimiter }));
 
   // Manejo de errores
   port.on("error", (err) => {
@@ -42,6 +42,7 @@ function addSerialConn(device) {
   // Leer datos recibidos del equipo
   parser.on("data", (data) => {
     console.log("Datos recibidos:", data);
+
   });
 
   // Evento para detectar cierre del puerto
