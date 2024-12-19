@@ -1,16 +1,7 @@
-const { parse } = require("date-fns");
 
 function parseMessages(data) {
     const regex = /!000a[\s\S]*?(?=!000a|$)/g; // Divide por bloques empezando por !000a
     return data.split(regex);
-}
-
-function dividirResultados(input) {
-    // Expresión regular para detectar los bloques que inician con !000a y terminan con !XXXh
-    const regex = /!000a[\s\S]*?!\d{3}h[^\n\r]*/g;
-    // Extraer coincidencias en un array
-    const resultados = input.match(regex);
-    return resultados || [];
 }
 
 function dividirMensajes(input) {
@@ -25,15 +16,11 @@ function parseMessage(message) {
 
     const parametroRegex = /!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/;
     const lines = message.split("\n").filter((line) => line.trim() !== "");
-    const results = [];
     let currentResult = null;
 
     for (const line of lines) {
         if (line.startsWith("!000a")) {
             // Parse header line
-
-
-            // Dividir la línea en partes, eliminar los vacíos y hacer un trim
             const header = line.split(" ").filter(e => e.trim() !== '');
             // Desglosamos la cadena
             const hourMinuteSecond = header[1].slice(0, 6);  // '165313' -> hora, minutos y segundos
@@ -42,10 +29,6 @@ function parseMessage(message) {
             const folio = id
             // Formateamos y construimos la fecha
             const timestamp = new Date()
-
-
-
-            if (currentResult) results.push(currentResult);
 
             currentResult = {
                 tipo: "R",
@@ -69,25 +52,16 @@ function parseMessage(message) {
                     nombre: clave,
                     valor,
                     unidad_medida,
-                    // unidad: null,
-                    // rango_min: null,
-                    // rango_max: null,
-                    // indicador: null,
-                    // tipo_resultado: null,
-                    // descripcion: null,
                 });
             }
         } else if (line.startsWith("!001c")) {
             // Parse patient info
             const nameParts = line.match(/!001c([A-Za-z\s]+)/);
             if (nameParts) {
-                currentResult.nombre_paciente = nameParts[1].trim();
-                currentResult.sexo = "O"; // Default value
+                const pacientInfo = nameParts[1].trim().split(" ").filter(e => e.trim() !== '');
+                currentResult.nombre_paciente = pacientInfo.join(" ")
+                currentResult.sexo = pacientInfo[-1]; // Default value
             }
-        } else if (line.startsWith("!003h")) {
-            // End of message
-            if (currentResult) results.push(currentResult);
-            currentResult = null;
         }
     }
 
@@ -146,15 +120,11 @@ const input = `
 !009fTBIL     .5 mg/dL   00E1
 !010fLDH   299.  U/L     2236
 !011h0007E2
-`; // Inserta aquí los datos proporcionados
-/* const messages = parseMessages(input);
-console.log(messages); */
+`;
 const resultados = dividirMensajes(input);
 
 
 resultados.forEach(resultado => {
-
     console.log(JSON.stringify(parseMessage(resultado), null, 2));
-
 
 });
