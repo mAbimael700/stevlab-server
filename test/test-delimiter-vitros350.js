@@ -44,7 +44,7 @@ function parseMessage(message) {
                 .match(/!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/);
             if (parts) {
                 const clave = parts[2];
-                const valor = parts[3];
+                const valor = parseFloat(parts[3]).toFixed(2);
                 const unidad_medida = parts[4];
                 currentResult.parametros.push({
                     clave,
