@@ -4,11 +4,12 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 const { format } = require("date-fns");
 
+
 function handleBuffer(data, parsingData) {
   const { parser, CHAR_DELIMITER } = parsingData;
 
   const timestamp = format(new Date(), "ddMMyyyy-HHmmss-SSS");
-  const uniqueId = crypto.randomBytes(3).toString("hex"); // Crea un identificador único de 3 bytes (6 caracteres hexadecimales)
+  const uniqueId = crypto.randomBytes(3).toString("hex");
   const filePath = path.join(
     FILE_UPLOADS_DIR,
     `resultados-${timestamp}-${uniqueId}`
@@ -18,9 +19,16 @@ function handleBuffer(data, parsingData) {
     throw new Error("Parser o delimitador no definidos para el equipo");
   }
 
-  const delimiterIndex = data.indexOf(CHAR_DELIMITER);
+  // Crear la expresión regular
+  const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
+
+  // Buscar el índice del delimitador
+  const delimiterIndex = data.search(delimiterRegex);
   if (delimiterIndex !== -1) {
-    const completeMessage = data.slice(0, delimiterIndex + 1);
+    const match = data.match(delimiterRegex);
+    const matchLength = match ? match[0].length : 0;
+
+    const completeMessage = data.slice(0, delimiterIndex + matchLength);
     const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
 
     fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
@@ -32,9 +40,11 @@ function handleBuffer(data, parsingData) {
     }
 
     return { results, consumedBytes };
+  } else {
+    console.log("No se encontró el delimitador en los datos.");
   }
-
 }
+
 
 function clearProcessedBuffer(bufferList, consumedBytes) {
   bufferList.consume(consumedBytes);

@@ -53,4 +53,8 @@ equipmentEmitter.on("deviceModified", async (oldEquipment, newEquipment) => {
     closeTCP(oldEquipment.mac_address);
     await connectTCP(newEquipment);
   }
+
+  if (newEquipment.require_serial_conn){
+    
+  }
 });

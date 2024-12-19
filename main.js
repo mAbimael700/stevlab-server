@@ -1,10 +1,9 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 const lisServerApplication = require("./src/app");
-const { cwd } = require("process");
 
 let mainWindow;
-
+let tray = null
 // Configura el envío de logs
 const log = (message) => {
   if (mainWindow && mainWindow.webContents) {
@@ -34,11 +33,37 @@ const createWindow = () => {
     path.join(__dirname, "dist", "index.html")
   ); // Puerto del servidor Vite
 
+  tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
+
+  // Crear un menú contextual para la bandeja
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Mostrar ventana',
+      click: () => {
+        mainWindow.show();
+      },
+    },
+    {
+      label: 'Salir',
+      click: () => {
+        app.quit();
+      },
+    },
+  ]);
+
+  tray.setToolTip('Stevlab - Interfaz LIS ');
+  tray.setContextMenu(contextMenu);
+
+  // Evento al hacer clic en el ícono de la bandeja
+  tray.on('click', () => {
+    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+  });
+
   // Espera a que la ventana esté lista para mostrar
   mainWindow.once("ready-to-show", () => {
     console.log("Ventana lista. Iniciando servidor...");
     lisServerApplication(); // Inicia el servidor después de que la ventana está lista
-  }); 
+  });
 };
 
 
@@ -49,10 +74,30 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+
+
+  // Interceptar el cierre de la ventana
+  mainWindow.on('close', (event) => {
+    if (!app.isQuitting) {
+      event.preventDefault(); // Evitar el cierre
+      mainWindow.hide(); // Ocultar la ventana
+    }
+  });
+
 });
+
+
+
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+
+
+// Cerrar la aplicación correctamente cuando el usuario elige "Salir"
+app.on('before-quit', () => {
+  app.isQuitting = true;
 });

@@ -13,7 +13,7 @@ let lastMessageTime = null;
 
 async function dataEvent(data, device, bufferList, parsingData) {
   console.log(
-    `Mensaje entrante del equipo con ${device.name} con IPv4: ${device.ip_address}:${device.port}`
+    `Mensaje entrante del equipo ${device.name}  ${device.ip_address && `con IPv4: ${device.ip_address}`} en el puerto ${device.port}`
   );
   emitStatusDevice(
     {
