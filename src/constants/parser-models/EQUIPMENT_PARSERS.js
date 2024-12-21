@@ -1,7 +1,12 @@
-const { parseResultsData: type1 } = require("../../lib/parsers/HL7-type1/parser");
+const {
+  parseResultsData: type1,
+} = require("../../lib/parsers/HL7-type1/parser");
 const { parser: type4 } = require("../../lib/parsers/HL7-type4/parser");
 const { parseMessage: cm200Parser } = require("../../lib/parsers/CM200/parser");
 const { parseData: A15Parser } = require("../../lib/parsers/A15/parser");
+const {
+  parser: VITROS350Parser,
+} = require("../../lib/parsers/Vitros350/parser");
 const { CONTROLAB } = require("../dictionaries/CONTROLAB");
 const { DYMIND } = require("../dictionaries/DYMIND");
 const { MINDRAY_BS120 } = require("../dictionaries/MINDRAY_BS120");
@@ -9,8 +14,10 @@ const { MINDRAY_BS120 } = require("../dictionaries/MINDRAY_BS120");
 const CHAR_DELIMITER = "\\x1C";
 
 // Función genérica para parsers que usan type4
-const createType4Parser = (dictionary, options = {}) => (hl7Message) =>
-  type4(hl7Message, dictionary, options);
+const createType4Parser =
+  (dictionary, options = {}) =>
+  (hl7Message) =>
+    type4(hl7Message, dictionary, options);
 
 // Configuración centralizada de parsers
 const equipmentsParsers = {
@@ -30,9 +37,13 @@ const equipmentsParsers = {
   },
 
   VITROS_350: {
-    parser: ()=>{},
-    CHAR_DELIMITER: "!\\d{3}h[^\\n\\r]*"
-  }
+    parser: VITROS350Parser,
+    CHAR_DELIMITER: "!\\d{3}h[^\\n\\r]*",
+  },
+  SWELAB_PLUS: {
+    parser: () => {},
+    CHAR_DELIMITER: "<!--:End:(Msg|Chksum):\\d+(:\\d+)*:-->",
+  },
 };
 
 module.exports = { equipmentsParsers };

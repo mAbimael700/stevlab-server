@@ -42,7 +42,7 @@ const devicesAreas = {
         ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
-      require_ftp: true,
+      require_ftp_conn: true,
     },
     {
       id: "A15",
@@ -51,7 +51,16 @@ const devicesAreas = {
         ID: 49,
         Nombre_area: "BIOQUIMICA CLINICA",
       },
-      require_ftp: true,
+      require_ftp_conn: true,
+    },
+    {
+      id: "VITROS_350",
+      name: "VITROS 350",
+      area: {
+        ID: 49,
+        Nombre_area: "BIOQUIMICA CLINICA",
+      },
+      require_serial_conn: true,
     },
   ],
   HEMATOLOGIA: [
@@ -62,11 +71,20 @@ const devicesAreas = {
         ID: 4,
         Nombre_area: "HEMATOLOGIA",
       },
-      is_tpc_server: true,
+      require_tcp_server_conn: true,
     },
     {
-      id: "SWELAB",
-      name: "SWELAB",
+      id: "SWELAB_ALFA",
+      name: "SWELAB ALFA",
+      area: {
+        ID: 4,
+        Nombre_area: "HEMATOLOGIA",
+      },
+      require_serial_conn: true,
+    },
+    {
+      id: "SWELAB_LUMI",
+      name: "SWELAB LUMI",
       area: {
         ID: 4,
         Nombre_area: "HEMATOLOGIA",

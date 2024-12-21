@@ -32,30 +32,50 @@ function getMacAddress(remoteIpAddress) {
   });
 }
 
+
 function getLocalMacAddress() {
   // Obtener las interfaces de red
   const networkInterfaces = os.networkInterfaces();
+  let macAddress = null;
 
-  // Buscar la dirección MAC de la interfaz Wi-Fi
+  // Buscar la dirección MAC de Ethernet primero
   for (const interfaceName in networkInterfaces) {
     const interfaces = networkInterfaces[interfaceName];
 
     for (const iface of interfaces) {
-      // Filtrar solo la dirección IPv4 y que no sea interna
       if (
         iface.family === "IPv4" &&
         !iface.internal &&
-        interfaceName.includes("Ethernet")
+        interfaceName.toLowerCase().includes("ethernet")
       ) {
-        // Retornar la dirección MAC en formato sin ":", en mayúsculas
-        return iface.mac.toUpperCase().split(":").join("");
+        macAddress = iface.mac.toUpperCase().split(":").join("");
+        return macAddress; // Retorna inmediatamente si encuentra Ethernet
       }
     }
   }
 
-  console.log("No se encontró la interfaz Wi-Fi o no tiene dirección MAC.");
-  return null; // Retornar null si no se encuentra la dirección MAC
+  // Si no encuentra Ethernet, busca Wi-Fi
+  for (const interfaceName in networkInterfaces) {
+    const interfaces = networkInterfaces[interfaceName];
+
+    for (const iface of interfaces) {
+      if (
+        iface.family === "IPv4" &&
+        !iface.internal &&
+        interfaceName.toLowerCase().includes("wi-fi")
+      ) {
+        macAddress = iface.mac.toUpperCase().split(":").join("");
+        return macAddress; // Retorna inmediatamente si encuentra Wi-Fi
+      }
+    }
+  }
+
+  console.log("No se encontró la interfaz Ethernet o Wi-Fi con dirección MAC.");
+  return macAddress; // Retorna null si no encuentra ninguna
 }
+
+console.log(getLocalMacAddress());
+
 
 module.exports = {
   getMacAddress,

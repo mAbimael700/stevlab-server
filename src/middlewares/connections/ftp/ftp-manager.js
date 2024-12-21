@@ -39,12 +39,12 @@ async function handleReconnection(
   reconnectAttempts,
   maxRetries = 8
 ) {
-  if (reconnectAttempts >= maxRetries) {
+  /* if (reconnectAttempts >= maxRetries) {
     console.error(
       `Máximo de intentos de reconexión alcanzado para ${equipment.name}`
     );
     return null;
-  }
+  } */
 
   console.log(
     `Intentando reconectar con ${

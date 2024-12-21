@@ -1,5 +1,8 @@
 const { devicesAreas } = require("../../db/devices-areas");
 const {
+  getAvailableCOMPorts,
+} = require("../../middlewares/connections/serial/serial-helpers");
+const {
   equipmentsOnServer,
   getEquipments,
   deleteEquipmentOnServer,
@@ -103,6 +106,34 @@ class DevicesController {
         message: "El equipo de laboratorio especificado no existe.",
       });
     }
+  }
+
+  static getSerialCOMPorts(req, res) {
+    // Uso de la función
+    getAvailableCOMPorts()
+      .then((ports) => {
+        if (ports.length === 0) {
+          return res.status(400).json({
+            status: 400,
+            message: "No se encontraron puertos COM disponibles",
+          });
+        } else {
+          return res.status(200).json({
+            status: 200,
+            body: {
+              data: ports,
+            },
+          });
+        }
+      })
+      .catch((err) =>
+        res.status(400).json({
+          status: 400,
+          error:
+            "Hubo un error al consultar los puertos COM del equipo: " +
+            err.message,
+        })
+      );
   }
 }
 

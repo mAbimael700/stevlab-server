@@ -1,71 +1,145 @@
-
 function parseMessages(data) {
-    const regex = /!000a[\s\S]*?(?=!000a|$)/g; // Divide por bloques empezando por !000a
-    return data.split(regex);
+  const regex = /!000a[\s\S]*?(?=!000a|$)/g; // Divide por bloques empezando por !000a
+  return data.split(regex);
 }
 
 function dividirMensajes(input) {
-    // Expresión regular para capturar cada mensaje completo
-    const regex = /!000a[\s\S]*?!\d{3}h[^\n\r]*/g;
-    // Extraer coincidencias en un array
-    const mensajes = input.match(regex);
-    return mensajes || [];
+  // Expresión regular para capturar cada mensaje completo
+  const regex = /!000a[\s\S]*?!\d{3}h[^\n\r]*/g;
+  // Extraer coincidencias en un array
+  const mensajes = input.match(regex);
+  return mensajes || [];
 }
 
 function parseMessage(message) {
+  const parametroRegex =
+    /!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/;
+  const lines = message.split("\n").filter((line) => line.trim() !== "");
+  let currentResult = null;
 
-    const parametroRegex = /!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/;
-    const lines = message.split("\n").filter((line) => line.trim() !== "");
-    let currentResult = null;
+  for (const line of lines) {
+    if (line.startsWith("!000a")) {
+      // Parse header line
+      const header = line.split(" ").filter((e) => e.trim() !== "");
+      // Desglosamos la cadena
+      const hourMinuteSecond = header[1].slice(0, 6); // '165313' -> hora, minutos y segundos
+      const yearMonthDay = header[1].slice(6); // '241218' -> año, mes y día
+      const id = header[1].slice(12);
+      const folio = id;
+      // Formateamos y construimos la fecha
+      const timestamp = new Date();
 
-    for (const line of lines) {
-        if (line.startsWith("!000a")) {
-            // Parse header line
-            const header = line.split(" ").filter(e => e.trim() !== '');
-            // Desglosamos la cadena
-            const hourMinuteSecond = header[1].slice(0, 6);  // '165313' -> hora, minutos y segundos
-            const yearMonthDay = header[1].slice(6);  // '241218' -> año, mes y día
-            const id = header[1].slice(12)
-            const folio = id
-            // Formateamos y construimos la fecha
-            const timestamp = new Date()
-
-            currentResult = {
-                tipo: "R",
-                id,
-                folio,
-                fecha: timestamp,
-                parametros: [],
-                chart: [],
-            };
-        } else if (parametroRegex.test(line)) {
-            // Parse parameter lines
-            const parts = line
-                .match(/!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/);
-            if (parts) {
-                const clave = parts[2];
-                const valor = parseFloat(parts[3]).toFixed(2);
-                const unidad_medida = parts[4];
-                currentResult.parametros.push({
-                    clave,
-                    clave_sistema: null,
-                    nombre: clave,
-                    valor,
-                    unidad_medida,
-                });
-            }
-        } else if (line.startsWith("!001c")) {
-            // Parse patient info
-            const nameParts = line.match(/!001c([A-Za-z\s]+)/);
-            if (nameParts) {
-                const pacientInfo = nameParts[1].trim().split(" ").filter(e => e.trim() !== '');
-                currentResult.nombre_paciente = pacientInfo.join(" ")
-                currentResult.sexo = pacientInfo[-1]; // Default value
-            }
-        }
+      currentResult = {
+        tipo: "R",
+        id,
+        folio,
+        fecha: timestamp,
+        parametros: [],
+        chart: [],
+      };
+    } else if (parametroRegex.test(line)) {
+      // Parse parameter lines
+      const parts = line.match(
+        /!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/
+      );
+      if (parts) {
+        const clave = parts[2];
+        const valor = parseFloat(parts[3]).toFixed(2);
+        const unidad_medida = parts[4];
+        currentResult.parametros.push({
+          clave,
+          clave_sistema: null,
+          nombre: clave,
+          valor,
+          unidad_medida,
+        });
+      }
+    } else if (line.startsWith("!001c")) {
+      // Parse patient info
+      const nameParts = line.match(/!001c([A-Za-z\s]+)/);
+      if (nameParts) {
+        const pacientInfo = nameParts[1]
+          .trim()
+          .split(" ")
+          .filter((e) => e.trim() !== "");
+        currentResult.nombre_paciente = pacientInfo.join(" ");
+        currentResult.sexo = pacientInfo[-1]; // Default value
+      }
     }
+  }
 
-    return currentResult
+  return currentResult;
+}
+
+function parseMessage2(message) {
+  const parametroRegex =
+    /!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/;
+  const lineRegex = /!(\d{3}[afhc])[^!]+/g;
+  const lines = message.match(lineRegex) || [];
+  let currentResult = null;
+
+  lines.forEach((line) => {
+    if (line.startsWith("!000a")) {
+      parseHeader(line);
+    } else if (parametroRegex.test(line)) {
+      parseParameter(line);
+    } else if (line.startsWith("!001c")) {
+      parsePatientInfo(line);
+    }
+  });
+
+  return currentResult;
+
+  function parseHeader(line) {
+    const header = line.split(" ").filter((e) => e.trim() !== "");
+
+    const hour = header[1].slice(0,2); // Hora
+    const minute = header[1].slice(2,4); // Minutos
+    const second = header[1].slice(4,6); // Segundos
+    const yearShort = header[1].slice(6,8); // Últimos dos dígitos del año
+    const month = header[1].slice(8,10) - 1; // Mes (diciembre, base 0)
+    const day = header[1].slice(10,12); // Día
+
+    // Convertir el año a un formato completo (asumimos que años < 50 son del siglo 21 y >= 50 son del siglo 20)
+    const year = yearShort < 50 ? 2000 + parseInt(yearShort) : 1900 + parseInt(yearShort);
+
+    // Crear la fecha
+    const date = new Date(year, month, day, hour, minute, second);
+
+    currentResult = {
+      tipo: "R",
+      id: header[1].slice(12),
+      folio: header[1].slice(12),
+      fecha: date,
+      parametros: [],
+    };
+  }
+
+  function parseParameter(line) {
+    const parts = line.match(parametroRegex);
+    if (parts) {
+      const [_, clave, nombre, valorRaw, unidad_medida] = parts;
+      currentResult.parametros.push({
+        clave: nombre,
+        clave_sistema: null,
+        nombre,
+        valor: parseFloat(valorRaw).toFixed(2),
+        unidad_medida,
+      });
+    }
+  }
+
+  function parsePatientInfo(line) {
+    const nameParts = line.match(/!001c([A-Za-z\s]+)/);
+    if (nameParts) {
+      const pacientInfo = nameParts[1]
+        .trim()
+        .split(" ")
+        .filter((e) => e.trim() !== "");
+      currentResult.nombre_paciente = pacientInfo.join(" ");
+      currentResult.sexo = pacientInfo.at(-1) || "N/A"; // Use `at` for last element
+    }
+  }
 }
 
 const input = `
@@ -123,8 +197,7 @@ const input = `
 `;
 const resultados = dividirMensajes(input);
 
-
-resultados.forEach(resultado => {
-    console.log(JSON.stringify(parseMessage(resultado), null, 2));
-
+resultados.forEach((resultado) => {
+  console.log(JSON.stringify(parseMessage2(resultado), null, 2));
+  console.log("-------------");
 });
