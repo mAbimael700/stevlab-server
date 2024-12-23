@@ -1,22 +1,36 @@
 const { SerialPort } = require("serialport");
+const { createSerialConnection } = require("./serial-connection");
 
-let rs232Connections = {};
+let serialConnections = {};
 
-function getRs232Connections() {
-  return rs232Connections;
+function getSerialConnections() {
+  return serialConnections;
 }
 
 function addSerialConn(device) {
   // Configuración del puerto serie
+  const currConections = getSerialConnections()
+  const comPortAvailable = Object.values(currConections)
+    .some(p => p.path !== device.port)
 
-  rs232Connections[device.id] = port;
+  if (comPortAvailable) {
+    const port = createSerialConnection(device)
+    serialConnections[device.id_device] = port;
+    return console.log("Conexión serial establecida en el puerto " + port.path);
+  }
+
+  console.log(`El puerto ${device.port} ya está utilizado por otro equipo.`);
+
 }
 
 function closeSerialConn(device) {
-  const port = rs232Connections[device.id];
+  const port = serialConnections[device.id_device];
 
-  port.close();
-  delete rs232Connections[device.id];
+  if (!port.closing) {
+    port.close();
+    delete serialConnections[device.id_device];
+  }
+  
 }
 
 async function getAvailableCOMPorts() {
@@ -39,6 +53,6 @@ async function getAvailableCOMPorts() {
 module.exports = {
   addSerialConn,
   closeSerialConn,
-  getRs232Connections,
+  getSerialConnections,
   getAvailableCOMPorts
 };

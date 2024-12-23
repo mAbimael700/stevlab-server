@@ -111,7 +111,7 @@ async function startMonitoringDirectory(equipment) {
 
       const currentFiles = (
         await timeoutPromise(connection.client.list("/"), 5000)
-      ).map((file) => file.name);
+      ).map((file) => file);
       const addedFiles = getAddedFiles(currentFiles, previousFiles);
       const removedFiles = getRemovedFiles(currentFiles, previousFiles);
 

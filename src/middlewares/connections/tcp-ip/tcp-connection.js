@@ -16,6 +16,7 @@ const {
     handleErrorEvent
 } = require("./tcp-events-handler");
 const { deviceValidation } = require("./tcp-device-validation");
+const { emitStatusDevice } = require("../../../lib/websocket/emit-device-status");
 
 async function createTCPConnection(device) {
     const port = device.port;
@@ -31,10 +32,20 @@ async function createTCPConnection(device) {
 
     const connect = () => {
         console.log(`Intentando conectar al equipo ${device.name} en ${host}:${port}...`);
+        emitStatusDevice(
+            { connection_status: "connecting" },
+            device,
+            `Intentando conectar al equipo ${device.name} en ${host}:${port}...`
+        )
 
         try {
             client.connect(port, host, async () => {
                 console.log(`Conexión exitosa con ${device.name} en ${host}:${port}.`);
+                emitStatusDevice(
+                    { connection_status: "connected" },
+                    device,
+                    `Conexión exitosa con ${device.name} en ${host}:${port}.`
+                )
                 setTCPConnection(macAddress, client);
                 removeReconnectInterval(macAddress);
 
@@ -53,6 +64,12 @@ async function createTCPConnection(device) {
             });
         } catch (error) {
             console.error(error.message)
+            emitStatusDevice(
+                { connection_status: undefined },
+                device,
+                `Conexión fallida con el equipo ${device.name} en ${host}:${port}: ${error.message}`,
+                true
+            )
         }
 
     };
@@ -60,6 +77,11 @@ async function createTCPConnection(device) {
     const scheduleReconnect = () => {
         if (!getReconnectInterval(macAddress)) {
             console.log(`Programando reconexión para ${device.name} en 5 segundos.`);
+            emitStatusDevice(
+                { connection_status: "reconnecting", last_connection: new Date(), },
+                device,
+                `Programando reconexión para ${device.name} en ${host}:${port} en 5 segundos...`
+            )
             setReconnectInterval(
                 macAddress,
                 setInterval(() => {
@@ -83,6 +105,11 @@ function closeTCP(macAddress) {
         client.destroy();
         removeTCPConnection(macAddress);
         removeReconnectInterval(macAddress);
+        emitStatusDevice(
+            { connection_status: "disconnected", last_connection: new Date(), },
+            device,
+            `Cerrando conexión TCP`
+        )
     } else {
         console.log(`No se encontró una conexión TCP activa para ${macAddress}`);
     }
@@ -94,6 +121,11 @@ async function connectTCP(device) {
     try {
         if (getTCPConnection(macAddress)) {
             console.log(`Cerrando conexión existente para ${device.name}.`);
+            emitStatusDevice(
+                { connection_status: "disconnected", last_connection: new Date(), },
+                device,
+                `Cerrando conexión existente para ${device.name} en ${host}:${port}.`
+            )
             closeTCP(macAddress);
         }
 
@@ -102,6 +134,12 @@ async function connectTCP(device) {
         console.error(
             `Error al conectar TCP con ${device.name} (${device.ip_address}): ${error.message}`
         );
+        emitStatusDevice(
+            { connection_status: undefined },
+            device,
+            `Error al conectar TCP con ${device.name} (${device.ip_address}): ${error.message}`,
+            true
+        )
     }
 }
 

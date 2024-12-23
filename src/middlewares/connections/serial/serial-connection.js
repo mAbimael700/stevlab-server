@@ -50,4 +50,10 @@ function createSerialConnection(device) {
   port.on("close", () => {
     console.log("Puerto serial cerrado");
   });
+
+  return port
+}
+
+module.exports = {
+  createSerialConnection
 }

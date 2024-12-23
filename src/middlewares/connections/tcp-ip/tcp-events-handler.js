@@ -1,12 +1,11 @@
 
 const { dataEvent } = require("../../../TPCServer/events/data/data-event");
-const { setTCPConnection, removeTCPConnection } = require("./tcp-manager");
-const { setReconnectInterval, removeReconnectInterval } = require("./tcp-reconnect-manager");
+const { removeTCPConnection } = require("./tcp-manager");
 
 
 function handleDataEvent(socket, data, device, deviceData, bufferList) {
     dataEvent(data, device, bufferList, deviceData);
-    socket.write("OK")
+    socket.write(data.toString())
 }
 
 function handleCloseEvent(client, macAddress, scheduleReconnect) {

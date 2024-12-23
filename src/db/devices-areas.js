@@ -101,6 +101,12 @@ const devicesAreas = {
   ],
 };
 
+
+function getDevicesAreas() {
+  return Object.values(devicesAreas).flat()
+}
+
 module.exports = {
   devicesAreas,
+  getDevicesAreas
 };

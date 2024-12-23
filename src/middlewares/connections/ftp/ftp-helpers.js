@@ -139,6 +139,9 @@ async function addFtpConnection(equipment, retryCount = 0) {
       console.log("Conexión abierta y activa");
       emitOpenedDevice(equipment);
     }
+
+
+    (await client.list("/")).map(file => file.modifiedAt)
   } catch (error) {
     console.error(
       `Error al conectar FTP con el equipo ${
@@ -162,22 +165,13 @@ async function addFtpConnection(equipment, retryCount = 0) {
     );
 
     // Si hay un error y no se ha alcanzado el máximo de intentos, realizar reconexión con retardo
-    //if (retryCount < MAX_RETRIES) {
       const delay = INITIAL_DELAY * 2 ** retryCount; // Incrementa el tiempo de espera exponencialmente
       console.log(`Reintentando conexión en ${delay / 1000} segundos...`);
 
       // Esperar el tiempo de retardo antes de reconectar
       await new Promise((resolve) => setTimeout(resolve, delay));
       return addFtpConnection(equipment, retryCount + 1); // Intento de reconexión
-     /*} else {
-      console.error(
-        `Máximo de intentos de reconexión alcanzado para el equipo ${
-          equipment.name
-        } (${formatMacAddressWithSeparators(
-          equipment.mac_address
-        )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`
-      );
-    } */
+
   }
 }
 
