@@ -10,8 +10,8 @@ const FULLJIFILM_NX600_DICTIONARIO = {
   GGT: "QSGGT", // Gamma-Glutamil Transferasa
   "GOT/AST": "QSTGO", // Aspartato Aminotransferasa
   "GPT/ALT": "QSTGP", // Alanina Aminotransferasa
-  LDH: "QSDHL", // Lactato Deshidrogenasa
-  LIP: "QSLIPA", // Lipasa
+  LDH: "QSDHL", // Lactato Deshidrogenasa /*/*
+  LIP: "QSLIPA", // Lipasa /*/*/
   ALB: "QSALB", // Albúmina
   BUN: "QSNURE", // Nitrógeno Ureico en Sangre
   CRE: "QSCREA", // Creatinina

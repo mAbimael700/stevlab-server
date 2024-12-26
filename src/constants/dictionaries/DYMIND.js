@@ -18,7 +18,7 @@ const DYMIND = {
   PDW: "BHPDW", // PDW
   PCT: "BHPCT", // PCT
   LCR: undefined, // LCR
-  LN: undefined, // LN
+  LN: undefined, // LN 
 };
 
 module.exports = {

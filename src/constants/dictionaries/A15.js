@@ -34,7 +34,7 @@ const A15 = {
   "INDIRECT BILIRUBIN DPD": "QSBLIIN",// Bilirrubina indirecta (DPD, suero) 
   "LIPASE DGGR": "QSLIPA",// Lipasa (DGGR, suero)
   CK: "QSCK", // Creatina quinasa (suero)
-  "B. DIRECTA ELI": "",
+  /* "B. DIRECTA ELI": "",
   "CHOL LDL DIRECT": "",
   "BIL TOT DPD": "",
   "BIL DIR DPD": "",
@@ -42,7 +42,7 @@ const A15 = {
   "GLUCOSA ELI": "",
   "ALP ELI": "",
   "CREATININA ELI": "",
-  "A.URICO ELI": ""
+  "A.URICO ELI": "" */
 };
 
 module.exports = { A15 };

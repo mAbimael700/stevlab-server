@@ -15,13 +15,14 @@ const { ErrorHandler } = require("../middlewares/error-handler.js");
 const {
   initializeEquipmentManager,
 } = require("../middlewares/equipment/equiment-manager.js");
+const { run } = require("../db/db-connection.js");
+const { ENV_DEPLOY } = require("../constants/CONFIG_DIR.js");
+const { PRODUCTION_MODE } = require("../constants/CONSTANTS.js");
 
 // Definición de los puertos de cada servidor
 
 
 class ServerFactory {
-
-
 
   static create(mode) {
     const TPC_PORT = process.env.PORT ?? 3000;
@@ -50,14 +51,13 @@ class ServerFactory {
 // Carga las variables del archivo .env
 function lisServerApplication() {
 
-  process.loadEnvFile();
   ErrorHandler();
   configurationManager();
-
-  const serverInitializer = ServerFactory.create(process.env.PRODUCTION_MODE ?? "local");
+  const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
   serverInitializer();
 
   initializeEquipmentManager();
+  run().catch(console.dir)
 }
 
 module.exports = lisServerApplication;

@@ -3,7 +3,6 @@ const {
   getAvailableCOMPorts,
 } = require("../../middlewares/connections/serial/serial-helpers");
 const {
-  equipmentsOnServer,
   getEquipments,
   deleteEquipmentOnServer,
   writeEquipmentOnServer,

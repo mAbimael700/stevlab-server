@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const { DEVICES_DIR, CONFIG_DIR } = require("../../constants/CONFIG_DIR");
 const { getEquipmetEmitter } = require("./equipment-events");
 const { setEquipments, getEquipments } = require("./equipment-helpers");
-const { printTable } = require('console-table-printer');
+const crypto = require("node:crypto")
 const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
 
 let previousEquipments = [];
@@ -115,6 +115,8 @@ function writeAndRefreshEquipments(newEquipments) {
 
 function writeEquipmentOnServer(equipment) {
   const equipmentsOnServer = getEquipments();
+  const uniqueId = crypto.randomBytes(3).toString("hex");
+  equipment.id_device = uniqueId
   writeAndRefreshEquipments([...equipmentsOnServer, equipment]);
 }
 
