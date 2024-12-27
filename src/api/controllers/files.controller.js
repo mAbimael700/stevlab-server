@@ -13,7 +13,7 @@ class FilesController {
       const filePaths = files.map((file) => path.join(DATADIR, file));
       const jsonFiles = filePaths.filter((file) => path.extname(file) === ".json");
   
-      const jsonPromises = jsonFiles.map((jsonFile) => {
+      const jsonPromises = jsonFiles.map(async (jsonFile) => {
         const basenameSplited = path.basename(jsonFile).split("-");
         const day = parseInt(basenameSplited[1].substring(0, 2));
         const month = parseInt(basenameSplited[1].substring(2, 4)) - 1;
@@ -23,15 +23,16 @@ class FilesController {
         const minutes = parseInt(basenameSplited[2].substring(2, 4));
         const seconds = parseInt(basenameSplited[2].substring(4));
   
-        return readFile(jsonFile, "utf-8")
-          .then((data) => ({
+        try {
+          const data = await readFile(jsonFile, "utf-8");
+          return ({
             fecha_transferencia: new Date(year, month, day, hour, minutes, seconds),
             resultados: JSON.parse(data),
-          }))
-          .catch((error) => {
-            console.error(`Error parsing JSON in file ${jsonFile}:`, error.message);
-            return null;
           });
+        } catch (error) {
+          console.error(`Error parsing JSON in file ${jsonFile}:`, error.message);
+          return null;
+        }
       });
   
       const jsonData = await Promise.all(jsonPromises);

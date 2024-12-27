@@ -4,7 +4,7 @@ const CONTROLAB = {
   "Total Cholesterol": "QSCOLE",
   "Glucose (GOD-POD Method)": "QSGLU",
   "LACTATO DESHIDROGENASA": "QSDES",
-  "Creatinine (Sarcosine Oxidase Method)": "QSCRENA", /**QSCRENZ */
+  "Creatinine (Sarcosine Oxidase Method)": "QSCREA", /**QSCRENZ */
   "TGO(AST)": "QSTGO",
   "TGP (ALT)": "QSTGP",
   "Uric Acid": "QSAU"

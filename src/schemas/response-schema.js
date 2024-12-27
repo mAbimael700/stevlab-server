@@ -9,7 +9,7 @@ const responseSchema = z.array(
     nombre_paciente: z.string().optional(),
     sexo: z.enum(["O", "F", "M", '']).optional().default("O"),
     hora: z.string().optional(),
-    fecha: z.date().optional(),
+    fecha: z.date().optional().default(new Date()),
     parametros: z.array(
       // Añadir z.object a la definición del array
       z.object({
@@ -37,7 +37,7 @@ const responseSchema = z.array(
         }).transform((s) => parseInt(s)),
 
       })
-    ),
+    ).optional(),
     paciente: z.object(
       {
         nombre: z.string(),

@@ -140,8 +140,6 @@ async function addFtpConnection(equipment, retryCount = 0) {
       emitOpenedDevice(equipment);
     }
 
-
-    (await client.list("/")).map(file => file.modifiedAt)
   } catch (error) {
     console.error(
       `Error al conectar FTP con el equipo ${

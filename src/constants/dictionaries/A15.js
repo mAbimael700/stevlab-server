@@ -34,15 +34,15 @@ const A15 = {
   "INDIRECT BILIRUBIN DPD": "QSBLIIN",// Bilirrubina indirecta (DPD, suero) 
   "LIPASE DGGR": "QSLIPA",// Lipasa (DGGR, suero)
   CK: "QSCK", // Creatina quinasa (suero)
-  /* "B. DIRECTA ELI": "",
-  "CHOL LDL DIRECT": "",
-  "BIL TOT DPD": "",
-  "BIL DIR DPD": "",
-  "UREA ELI": "",
-  "GLUCOSA ELI": "",
-  "ALP ELI": "",
-  "CREATININA ELI": "",
-  "A.URICO ELI": "" */
+  "B. DIRECTA ELI": "QSBIEL", //Billirubina Eli
+  "CHOL LDL DIRECT": "QSLDIR", //Colesterol LDL directo 
+  "BIL TOT DPD": "QSBITDP",// Bilirrubina total (DPD, suero)
+  "BIL DIR DPD": "QSBIDIR",//Bilirrubina directa (DPD, suero) 
+  "UREA ELI": "QSURELI", //Urea REACTIVO Eli
+  "GLUCOSA ELI": "QSGLUELI", //Glucosa Eli
+  "ALP ELI": "QSALPEL", //ALP Eli
+  "CREATININA ELI": "QSCREALI", //Creatinina Eli
+  "A.URICO ELI": "QSAUELI" //Acido urico Eli
 };
 
 module.exports = { A15 };

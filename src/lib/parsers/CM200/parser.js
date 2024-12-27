@@ -1,3 +1,4 @@
+const { parse } = require("date-fns");
 const { CM200 } = require("../../../constants/dictionaries/CM200");
 const { getElementoKey } = require("../../get-dictionary-element");
 
@@ -16,11 +17,13 @@ function parseMessage(rawMessage) {
     const fields = cleanMessage.split(";");
 
     // Creamos la estructura base del resultado
+    const formatString = 'dd/MM/yyyy HH:mm:ss';
+
     const result = {
       tipo: "R",
       estado: fields[8] === "OK" ? "NORMAL" : "ANORMAL", // Se interpreta OK como "NORMAL"
-      fecha: fields[6], // Fecha del mensaje
-      hora: fields[7], // Hora del mensaje
+      fecha: parse(`${fields[6]} ${fields[7]}`, formatString, new Date()), // Fecha del mensaje
+      //hora: `${fields[6]} ${fields[7]}`, // Hora del mensaje
       folio: fields[0].trim(), // Folio
       id: fields[9], // ID
       parametros: [],

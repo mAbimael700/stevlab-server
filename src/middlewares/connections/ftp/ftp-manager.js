@@ -26,13 +26,32 @@ function saveCurrentState(filePath, currentFiles) {
 
 // Helpers para detectar cambios
 function getAddedFiles(currentFiles, previousFiles) {
-  return currentFiles.filter((file) => !previousFiles.includes(file));
+  return currentFiles.filter((file) => (!previousFiles.includes(file)));
 }
 
-function getRemovedFiles(currentFiles, previousFiles) {
+
+function getAddedOrUpdatedFiles(currentFiles, previousFiles) {
+  return currentFiles.filter((currentFile) => {
+    // Buscar un archivo con el mismo nombre en los archivos anteriores
+    const previousFile = previousFiles.find(
+      (prevFile) => prevFile.name === currentFile.name
+    );
+    // Si no existe en los archivos anteriores o si la fecha de modificación es distinta
+    return !previousFile || previousFile.rawModifiedAt !== currentFile.rawModifiedAt;
+  });
+}
+
+
+/* function getRemovedFiles(currentFiles, previousFiles) {
   return previousFiles.filter((file) => !currentFiles.includes(file));
+} */
+function getRemovedFiles(currentFiles, previousFiles) {
+  return previousFiles.filter(
+    (prevFile) => !currentFiles.some(
+      (currentFile) => currentFile.name === prevFile.name
+    )
+  );
 }
-
 // Manejo de reconexión
 async function handleReconnection(
   equipment,
@@ -47,8 +66,7 @@ async function handleReconnection(
   } */
 
   console.log(
-    `Intentando reconectar con ${
-      equipment.name
+    `Intentando reconectar con ${equipment.name
     } (${formatMacAddressWithSeparators(equipment.mac_address)})...`
   );
   updateFtpConnection(equipment.mac_address, { reconnecting: true });
@@ -72,14 +90,14 @@ async function handleReconnection(
 async function processNewFiles(connection, equipment, addedFiles) {
   for (const addedFile of addedFiles) {
     try {
-      const localPathToDownload = path.join(FILE_UPLOADS_DIR, addedFile);
+      const localPathToDownload = path.join(FILE_UPLOADS_DIR, addedFile.name);
       await timeoutPromise(
-        connection.client.downloadTo(localPathToDownload, `/${addedFile}`),
+        connection.client.downloadTo(localPathToDownload, `/${addedFile.name}`),
         10000
       );
       const message = fs.readFileSync(localPathToDownload, "utf8");
       processData(equipment, message);
-      console.log(`Archivo procesado: ${addedFile}`);
+      console.log(`Archivo procesado: ${addedFile.name}`);
     } catch (error) {
       console.error(`Error al descargar/procesar ${addedFile}:`, error.message);
     }
@@ -112,7 +130,7 @@ async function startMonitoringDirectory(equipment) {
       const currentFiles = (
         await timeoutPromise(connection.client.list("/"), 5000)
       ).map((file) => file);
-      const addedFiles = getAddedFiles(currentFiles, previousFiles);
+      const addedFiles = getAddedOrUpdatedFiles(currentFiles, previousFiles);
       const removedFiles = getRemovedFiles(currentFiles, previousFiles);
 
       if (addedFiles.length > 0) {

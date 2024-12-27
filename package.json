@@ -9,7 +9,7 @@
     "start": "node ./src/app/app.js",
     "start:local": "cross-env PRODUCTION_MODE=local node ./src/app/app.js",
     "dev:local": "cross-env PRODUCTION_MODE=local nodemon ./src/app/app.js",
-    "start:electron": "cross-env PRODUCTION_MODE=electron electron ./main.js",
+    "start:electron": "cross-env PRODUCTION_MODE=local electron ./main.js",
     "build:electron": "npx electron-builder",
     "build:pkg": "pkg . --targets node18-win-x64 --output build/app",
     "git:update": "git pull && npm i",
@@ -29,7 +29,7 @@
     "appId": "com.stevlab.stevlablisserver",
     "productName": "Stevlab Lis Server",
     "directories": {
-      "output": "dist2"
+      "output": "dist3"
     },
     "files": [
       "**/*"
