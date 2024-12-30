@@ -24,7 +24,7 @@ function initializeExpressServer(PORT) {
   //Endpoint para consultar los archivos del servidor local
   app.use("/api/files", filesRouter);
   app.use("/api/areas", devicesRouter);
-  app.use("/api/devices", devicesRouter);
+  app.use("/api/communication/devices", devicesRouter);
   app.use("/api/message", messageRouter);
 
   // Sirve los archivos estáticos desde la carpeta build

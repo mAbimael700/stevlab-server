@@ -29,7 +29,7 @@
     "appId": "com.stevlab.stevlablisserver",
     "productName": "Stevlab Lis Server",
     "directories": {
-      "output": "dist3"
+      "output": "dist2"
     },
     "files": [
       "**/*"

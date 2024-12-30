@@ -4,14 +4,8 @@ async function readFile(filePath) {
   try {
     // Verificamos si el archivo existe
     await fs.access(filePath);
-
     // Leemos el contenido del archivo
     const fileContent = await fs.readFile(filePath);
-
-    /* console.log(
-      "Información del contenido en el archivo de la ruta: " + filePath
-    );
-    console.log(fileContent.toString("utf8")); */
 
     return fileContent.toString("utf8");
   } catch (error) {

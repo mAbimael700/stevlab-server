@@ -1,4 +1,5 @@
 const { XMLParser } = require('fast-xml-parser');
+const { DYMIND } = require('../src/constants/dictionaries/DYMIND');
 
 const msg = `
 <!--:Begin:Chksum:1:-->
@@ -569,7 +570,62 @@ const msg = `
 <!--:End:Msg:3:0:-->
 <!--:End:Chksum:1:187:68:-->
 `
+const regex = /<sample>.*?<\/sample>/gs;
+const messages = msg.match(regex);
 
-const parser = new XMLParser();
-const result = parser.parse(msg);
-console.log(result);
+const messageParser = messages.map(r => {
+    const parser = new XMLParser();
+    const resultParsed = parser.parse(r);
+
+    let result = {}
+    const { sample } = resultParsed
+
+    let fecha
+    let id
+    let nombre_paciente
+    let parametros
+
+    Object.entries(sample).forEach(([key, value]) => {
+        const { p: values } = value
+
+
+
+        switch (key) {
+            case "smpinfo":
+
+                fecha = values.find(p => p.n === "DATE").v
+                id = values.find(p => p.n === "ID").v
+                nombre_paciente = values.find(p => p.n === "ID2").v
+
+                break;
+
+            case "smpresults":
+                parametros = values.map(p => ({
+                    clave_sistema: DYMIND[p.n],
+                    nombre: p.n,
+                    valor: p.v,
+                    rango_min: p.l,
+                    rango_max: p.h
+                }))
+                break;
+
+            default:
+                break;
+        }
+    })
+
+    result = {
+        id,
+        folio: id,
+        fecha: new Date(fecha),
+        nombre_paciente,
+        parametros
+    }
+
+    return result
+
+})
+
+/*    */
+
+console.log(JSON.stringify(messageParser, null, 2));

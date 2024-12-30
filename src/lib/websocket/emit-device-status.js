@@ -1,4 +1,4 @@
-const { getIO } = require("../../middlewares/servers/websocket-server");
+const { emitMessage } = require("./emit-message-to-websocket");
 
 function emitStatusDevice(
   data,
@@ -6,10 +6,8 @@ function emitStatusDevice(
   message = "El estado de conexión de los equipos ha sido actualizado",
   error = false
 ) {
-  const io = getIO();
-  if (io) {
-    io.emit("device-status", JSON.stringify({ data, device, message, error }));
-  }
+
+  emitMessage({ data, device, message, error }, null, "device-status")
 }
 
 module.exports = {

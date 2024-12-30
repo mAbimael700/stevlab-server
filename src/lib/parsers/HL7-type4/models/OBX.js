@@ -17,6 +17,10 @@ function OBX(segment, dictionary) {
   // Formateamos el valor en caso de que esté en formato separados por comas
   const valor = parseFloat(fields[5].replace(",", "."));
 
+  const rangos = fields[7]?.split("-") ?? [];
+  const rango_min = rangos[0] || undefined;
+  const rango_max = rangos[1] || undefined;
+
   // Si valor del segmento es un número y su nombre no es parte de los analítos lo devuelve
   if (!isNaN(valor) && !wordsNotAdmitted.some(word => nombre.includes(word))) {
     return {
@@ -24,6 +28,8 @@ function OBX(segment, dictionary) {
       nombre: nombre ?? "",
       valor: valor.toFixed(2),
       unidad_medida: fields[6] ?? "",
+      rango_min: rango_min && parseFloat(rango_min?.replace(",", ".")),
+      rango_max: rango_max && parseFloat(rango_max?.replace(",", "."))
     };
   } else if (!isNaN(valor) && wordsNotAdmitted.some(word => nombre.includes(word))) {
     return {

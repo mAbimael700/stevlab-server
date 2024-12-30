@@ -57,7 +57,6 @@ function lisServerApplication() {
   serverInitializer();
 
   initializeEquipmentManager();
-  run().catch(console.dir)
 }
 
 module.exports = lisServerApplication;

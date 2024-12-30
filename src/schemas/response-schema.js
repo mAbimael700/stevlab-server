@@ -19,8 +19,8 @@ const responseSchema = z.array(
         valor: z.string(),
         unidad_medida: z.string(),
         unidad: z.string().optional(),
-        rango_min: z.string().optional(),
-        rango_max: z.string().optional(),
+        rango_min: z.number().optional(),
+        rango_max: z.number().optional(),
         indicador: z.string().optional(),
 
         //Estos datos vienen de la API
@@ -124,7 +124,7 @@ async function validateResponse(parsedResult) {
 
   if (!validation.success) {
     console.log("Datos que llegaron ");
-    console.log(parsedResult);
+    console.log(JSON.stringify(parsedResult, null, 2));
     console.error("Errores de validación:", validation.error.errors);
     return { success: false, errors: validation.error.errors };
   }
