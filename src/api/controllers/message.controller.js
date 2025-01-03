@@ -1,7 +1,7 @@
 
-const { validateParser } = require("../../lib/validate-buffer");
+const { validateParser } = require("../../lib/validate-parser");
 const { saveResultsToLocalData } = require("../../lib/save-results-data");
-const { emitResultsToWebSocket } = require("../../lib/emit-results-websocket");
+const { emitResultsToWebSocket } = require("../../lib/websocket/emit-message-to-websocket");
 const { validateResponse } = require("../../schemas/response-schema");
 
 

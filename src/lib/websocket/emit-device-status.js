@@ -8,6 +8,7 @@ function emitStatusDevice(
 ) {
 
   emitMessage({ data, device, message, error }, null, "device-status")
+  
 }
 
 module.exports = {

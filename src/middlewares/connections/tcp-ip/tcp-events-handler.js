@@ -1,5 +1,5 @@
 
-const { dataEvent } = require("../../../TPCServer/events/data/data-event");
+const { dataEvent } = require("../../../lib/data-handler/data-event");
 const { removeTCPConnection } = require("./tcp-manager");
 
 

@@ -74,9 +74,6 @@ function getLocalMacAddress() {
   return macAddress; // Retorna null si no encuentra ninguna
 }
 
-console.log(getLocalMacAddress());
-
-
 module.exports = {
   getMacAddress,
 };

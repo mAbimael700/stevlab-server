@@ -1,8 +1,8 @@
 const { validateResponse } = require("../schemas/response-schema");
-const { emitResultsToWebSocket } = require("./emit-results-websocket");
+const { emitResultsToWebSocket } = require("./websocket/emit-results-websocket");
 const { getMacAddress } = require("./getMacAddress");
 const { saveResultsToLocalData } = require("./save-results-data");
-const { validateParser } = require("./validate-buffer");
+const { validateParser } = require("./validate-parser");
 
 async function processData(device, message) {
   //Obtenemos la dirección MAC del equipo conectado

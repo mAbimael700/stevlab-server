@@ -1,8 +1,8 @@
 const fs = require("node:fs");
-const { FILE_UPLOADS_DIR } = require("../../../constants/CONFIG_DIR");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { format } = require("date-fns");
+const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
 
 
 function handleBuffer(data, parsingData) {

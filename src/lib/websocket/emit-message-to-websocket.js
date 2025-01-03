@@ -8,7 +8,7 @@ function generateUniqueId() {
     return crypto.randomUUID(); // Genera un UUID seguro 
 }
 
-function emitMessage(body, channel, event = "message") {
+function emitMessage(body, channel, event) {
     const io = getIO();
 
     if (!io) {
@@ -17,15 +17,16 @@ function emitMessage(body, channel, event = "message") {
     }
 
     const messageId = generateUniqueId();
-    const result = { id: messageId, channel, ...body };
+    const message = { id: messageId, channel, ...body };
 
-    io.emit(event, JSON.stringify(result));
+    console.log("Evento que se está emitiendo:", event); // <-- Log para depuración
+    io.emit(event, JSON.stringify(message));
 
     const pendingMsg = getPendingMessages();
     setTimeout(() => {
         if (!pendingMsg.find(m => m.id === messageId)) {
             console.log(`No se confirmó el mensaje ${messageId}, se agrega al stack de mensajes no enviados`);
-            pendingMsg.push(result);
+            pendingMsg.push(message);
         }
     }, 5000);
 }

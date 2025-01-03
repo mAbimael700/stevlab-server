@@ -1,6 +1,6 @@
 const {
   emitStatusDevice,
-} = require("../../../lib/websocket/emit-device-status");
+} = require("../websocket/emit-device-status");
 const { handleBuffer, clearProcessedBuffer } = require("./buffer-handler");
 const {
   handleResults,
@@ -16,7 +16,7 @@ async function dataEvent(data, device, bufferList, parsingData) {
     `Mensaje entrante del equipo ${device.name}  ${device.ip_address && `con IPv4: ${device.ip_address}`} en el puerto ${device.port}`
   );
   emitStatusDevice(
-    {
+  {
       last_connection: new Date(),
     },
     device

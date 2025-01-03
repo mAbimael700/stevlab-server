@@ -1,3 +1,4 @@
+const { parse } = require('date-fns');
 const { A15 } = require("../../../constants/dictionaries/A15");
 
 const rawData = `
@@ -60,19 +61,16 @@ function parseData(data) {
     const clave_sistema = A15[parametroNombre];
     const valor = segments[i + 1];
     const unidad_medida = segments[i + 2];
-    const fecha = segments[i + 3];
-    const hora = segments[i + 4];
-    const clave = `${fecha.split("/").reverse().join("")}${hora.replace(
-      /:/g,
-      ""
-    )}`;
+    const fecha = segments[i + 3]?.trim();
+    const hora = segments[i + 4]?.trim();
+
+
+    const dateString = fecha + hora;
+    const format = "dd/MM/yyyyHH:mm:ss";
+    const date = parse(dateString, format, new Date());
 
     // Verificar si es un nuevo folio o la primera entrada
     if (folio !== currentFolio) {
-      console.log(folio !== currentFolio);
-      console.log("Folio: ", folio);
-      console.log("Current Folio: ", currentFolio);
-
       // Guardar la entrada actual si existe
       if (currentEntry) parsedResults.push(currentEntry);
 
@@ -81,8 +79,8 @@ function parseData(data) {
         tipo: "R",
         id: folio,
         folio: folio,
-        nombre_paciente: "",
         sexo: "O",
+        fecha: new Date(),
         parametros: [],
       };
 
@@ -90,16 +88,37 @@ function parseData(data) {
       currentFolio = folio;
     }
 
-    // Añadir el parámetro a la entrada actual
-    currentEntry.parametros.push({
-      clave,
-      nombre: parametroNombre,
-      clave_sistema,
-      valor,
-      unidad_medida,
-    });
+    if (currentEntry.parametros.some(p => p.nombre === parametroNombre)) {
+
+      const presentParametro = currentEntry.parametros.find(p => p.nombre === parametroNombre)
+
+      if (presentParametro.fecha < date) {
+        currentEntry.parametros = currentEntry.parametros.filter(p => p.nombre !== parametroNombre)
+        currentEntry.parametros.push(
+          {
+            nombre: parametroNombre,
+            clave_sistema,
+            valor,
+            unidad_medida,
+            fecha: date
+          }
+        );
+      }
+
+    } else {
+      currentEntry.parametros.push(
+        {
+          nombre: parametroNombre,
+          clave_sistema,
+          valor,
+          unidad_medida,
+          fecha: date
+        }
+      );
+    }
   });
 
+  
   // Añadir la última entrada si existe
   if (currentEntry) parsedResults.push(currentEntry);
 
