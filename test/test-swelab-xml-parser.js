@@ -573,7 +573,7 @@ const msg = `
 const regex = /<sample>.*?<\/sample>/gs;
 const messages = msg.match(regex);
 
-const messageParser = messages.map(r => {
+const messageParser = messages.map( r => {
     const parser = new XMLParser();
     const resultParsed = parser.parse(r);
 
