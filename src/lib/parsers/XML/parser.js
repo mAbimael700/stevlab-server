@@ -1,5 +1,5 @@
 const { XMLParser } = require('fast-xml-parser');
-const { DYMIND } = require('../../../src/constants/dictionaries/DYMIND')
+const { DYMIND } = require('../../../constants/dictionaries/DYMIND')
 
 const parser = (message, dictionary = DYMIND) => {
     const parser = new XMLParser();
