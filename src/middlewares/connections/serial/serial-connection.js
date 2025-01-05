@@ -1,7 +1,7 @@
 const { SerialPort, ReadlineParser } = require("serialport");
 const bl = require("bl");
-const { dataEvent } = require("../../../TPCServer/events/data/data-event");
-const { validateParser } = require("../../../lib/validate-buffer");
+const { dataEvent } = require("../../../lib/data-handler/data-event");
+const { validateParser } = require("../../../lib/validate-parser");
 
 function createSerialConnection(device) {
   const port = new SerialPort({

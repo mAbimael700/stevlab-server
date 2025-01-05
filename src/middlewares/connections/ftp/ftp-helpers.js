@@ -14,7 +14,7 @@ const INITIAL_DELAY = 1000; // 1 segundo
 
 function emitClosedDevice(
   equipment,
-  error = false,
+  error = true,
   message = "Error en la conexión FTP"
 ) {
   emitStatusDevice(

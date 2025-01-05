@@ -1,4 +1,4 @@
-const {fetchApiClient } = require("./stevlab-client-api")
+const { fetchApiClient } = require("./stevlab-client-api")
 
 const getPacienteByFolioMuestra = async (folio) => {
     const url = `/ts/${folio}`;

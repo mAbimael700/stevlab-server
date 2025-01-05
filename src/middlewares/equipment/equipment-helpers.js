@@ -10,7 +10,12 @@ function getEquipments() {
   return equipmentsOnServer;
 }
 
-function verifyDevices(macAddress) {
+/**
+ * Valida si el equipo está registrado en el servidor LIS.
+ * @param {string} macAddress - La dirección MAC del equipo a verificar.
+ * @returns {object | boolean} Retorna los datos del equipo o falso en caso de no encontrar el equipo
+ */
+function verifyDeviceRegistered(macAddress) {
   const devices = getEquipments();
   if (!devices.length) {
     console.log("No hay equipos registrados.");
@@ -31,4 +36,4 @@ function verifyDevices(macAddress) {
   return foundEquipment;
 }
 
-module.exports = { setEquipments, getEquipments, verifyDevices };
+module.exports = { setEquipments, getEquipments, verifyDeviceRegistered };

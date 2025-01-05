@@ -1,6 +1,6 @@
-const { validateResponse } = require("../../../schemas/response-schema");
-const { saveResultsToLocalData } = require("../../../lib/save-results-data");
-const { emitResultsToWebSocket } = require("../../../lib/emit-results-websocket");
+const { validateResponse } = require("../../schemas/response-schema");
+const { saveResultsToLocalData } = require("../save-results-data");
+const { emitResultsToWebSocket } = require("../websocket/emit-results-websocket");
 
 let lastFolio = null;
 let resultsToSave = { parametros: [] };
