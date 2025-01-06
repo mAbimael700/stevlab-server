@@ -8,9 +8,14 @@ class Server {
     static domain = ""
     static hostname = ""
     static netInterface
-    
+    static tcp = {}
+
     static setStatus(newStatus) {
         this.status = newStatus
+    }
+
+    static setTCPPort(port) {
+        this.tcp.port = port
     }
 
     static async getInitialServerConfiguration() {
@@ -43,10 +48,11 @@ class Server {
             domain: this.domain,
             hostname: this.hostname,
             interface: this.netInterface,
+            tcp: this.tcp
         }
     }
 
-    static setServerData(){}
+    static setServerData() { }
 }
 
 module.exports = { Server }

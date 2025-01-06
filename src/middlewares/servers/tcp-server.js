@@ -104,6 +104,7 @@ function initializeTcpServer({ PORT }) {
   tcpServer.listen(PORT, () => {
     console.log(`Servidor TPC/IP escuchando en el puerto ${PORT}`);
     Server.setStatus("activo")
+    Server.setTCPPort(PORT)
   });
 }
 

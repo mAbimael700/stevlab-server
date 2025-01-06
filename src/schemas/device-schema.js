@@ -15,7 +15,8 @@ const deviceSchema = z
     mac_address: z
       .string()
       .min(12)
-      .transform((address) => address.toUpperCase()),
+      .transform((address) => address.toUpperCase())
+      .optional(),
     ip_address: z.string().optional(),
     port: z.string().optional(),
     remote_dir: z.string().optional(),
@@ -55,7 +56,12 @@ const deviceSchema = z
   });
 
 function validateDevice(device) {
-  return deviceSchema.safeParse(device);
+  const result = deviceSchema.safeParse(device);
+
+  console.log(result.error?.errors);
+
+
+  return result
 }
 
 module.exports = {

@@ -135,8 +135,11 @@ dist
 .pnp.*
 
 build
+build2
+build3
 file_uploads
 config
 dist2/
 dist3/
-scripts/
+electron
+electron2

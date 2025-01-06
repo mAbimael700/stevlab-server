@@ -11,9 +11,7 @@ const equipmentEmitter = getEquipmetEmitter()
 
 equipmentEmitter.on("deviceAdded", async (newEquipment) => {
   console.log(
-    `Nuevo equipo detectado: ${newEquipment.name} (${formatMacAddressWithSeparators(
-      newEquipment.mac_address
-    )})`
+    `Nuevo equipo detectado: ${newEquipment.name}`
   );
 
   if (newEquipment.require_ftp_conn) {
@@ -42,7 +40,7 @@ equipmentEmitter.on("deviceRemoved", async (oldEquipment) => {
   }
 
   if (newEquipment.require_serial_conn) {
-    closeSerialConn(newEquipment)
+    closeSerialConn(oldEquipment)
   }
 });
 

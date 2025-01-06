@@ -59,7 +59,7 @@ class DevicesController {
 
     const result = validateDevice(data);
     const existDevice = equipmentsOnServer.some(
-      (equiptment) => equiptment.mac_address === result.data.mac_address
+      (equiptment) => equiptment.mac_address === result.data?.mac_address
     );
 
     if (!result.success) {
@@ -86,14 +86,14 @@ class DevicesController {
   }
 
   static removeDeviceToStorage(req, res) {
-    const { mac_address } = req.params;
+    const { id_device } = req.params;
     const equipmentsOnServer = getEquipments();
     if (
       equipmentsOnServer.some(
-        (equiptment) => equiptment.mac_address === mac_address
+        (equiptment) => equiptment.id_device === id_device
       )
     ) {
-      deleteEquipmentOnServer(mac_address);
+      deleteEquipmentOnServer(id_device);
 
       return res.status(200).json({
         status: 200,

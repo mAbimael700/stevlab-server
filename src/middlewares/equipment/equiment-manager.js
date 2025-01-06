@@ -120,10 +120,10 @@ function writeEquipmentOnServer(equipment) {
   writeAndRefreshEquipments([...equipmentsOnServer, equipment]);
 }
 
-function deleteEquipmentOnServer(mac_address) {
+function deleteEquipmentOnServer(id_device) {
   const equipmentsOnServer = getEquipments();
   const updatedEquipments = equipmentsOnServer.filter(
-    (equipment) => equipment.mac_address !== mac_address
+    (equipment) => equipment.id_device !== id_device
   );
   writeAndRefreshEquipments(updatedEquipments);
 }
