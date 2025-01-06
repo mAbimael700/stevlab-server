@@ -18,8 +18,6 @@ function emitMessage(body, channel, event) {
 
     const messageId = generateUniqueId();
     const message = { id: messageId, channel, ...body };
-
-    console.log("Evento que se está emitiendo:", event); // <-- Log para depuración
     io.emit(event, JSON.stringify(message));
 
     const pendingMsg = getPendingMessages();

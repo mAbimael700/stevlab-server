@@ -5,68 +5,48 @@ const {
   DEVICES_DIR,
   FILE_UPLOADS_DIR,
   STATES,
+  SERVER,
 } = require("../../constants/CONFIG_DIR");
 const { DATADIR } = require("../../constants/DATADIR");
 const { LOG_DIR } = require("../../constants/LOG_DIR");
 
-// Asegura de que la carpeta de config exista dónde se ejecuta el programa
+
+const directorios = [
+  LOG_DIR,
+  DATADIR,
+  CONFIG_DIR,
+  STATES,
+  DEVICES_DIR,
+  FILE_UPLOADS_DIR,
+  SERVER,
+]
+
+function ensureDirectoryExists(directoryPath) {
+  const absolutePath = path.resolve(directoryPath);
+  if (!fs.existsSync(absolutePath)) {
+    console.info(`Creando directorio: ${absolutePath}`);
+    fs.mkdirSync(absolutePath, { recursive: true });
+  }
+}
+
+function ensureFileExists(filePath, defaultContent = {}) {
+  const absolutePath = path.resolve(filePath);
+  if (!fs.existsSync(absolutePath)) {
+    console.info(`Creando archivo: ${absolutePath}`);
+    fs.writeFileSync(absolutePath, JSON.stringify(defaultContent, null, 2));
+  }
+}
 
 function configurationManager() {
-  // Asegura de que la carpeta de data exista dónde se ejecuta el programa
-  if (!fs.existsSync(FILE_UPLOADS_DIR)) {
-    fs.mkdirSync(FILE_UPLOADS_DIR);
-  }
+  // Crear carpetas necesarias
+  directorios.forEach(ensureDirectoryExists)
 
-  // Asegura de que la carpeta de data exista dónde se ejecuta el programa
-  if (!fs.existsSync(DATADIR)) {
-    fs.mkdirSync(DATADIR);
-  }
-
-  // Verifica si la carpeta de configuración existe, si no, créala
-  if (!fs.existsSync(CONFIG_DIR)) {
-    console.error(
-      `La carpeta de configuración no existe: ${CONFIG_DIR}. Creando la carpeta...`
-    );
-    fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
-  }
-
-  // Verifica si el directorio de logs existe, si no, lo crea
-  if (!fs.existsSync(LOG_DIR)) {
-    fs.mkdirSync(LOG_DIR, { recursive: true });
-  }
-
-  if (!fs.existsSync(STATES)) {
-    fs.mkdirSync(STATES, { recursive: true });
-  }
-
-
-  // Asegura de que las rutas sean absolutas
-  const configPath = path.resolve(CONFIG_DIR);
-  const devicesPath = path.resolve(DEVICES_DIR);
-
-  // Verifica si la carpeta de configuración existe, si no, créala
-  if (!fs.existsSync(CONFIG_DIR)) {
-    console.error(
-      `La carpeta de configuración no existe: ${CONFIG_DIR}. Creando la carpeta...`
-    );
-    fs.mkdirSync(CONFIG_DIR, { recursive: true }); // Crea la carpeta, incluyendo cualquier carpeta padre si es necesario
-  }
-
-  // Verifica si el archivo devices.json existe, si no, créalo con un array vacío
-  if (!fs.existsSync(devicesPath)) {
-    fs.writeFileSync(
-      devicesPath,
-      JSON.stringify(
-        {
-          devices: [],
-        },
-        null,
-        2
-      ) // El tercer argumento es para tener el JSON con formato legible
-    );
-  }
+  // Crear archivo devices.json si no existe
+  ensureFileExists(path.join(CONFIG_DIR, "devices.json"), { devices: [] });
+  ensureFileExists(path.join(CONFIG_DIR, "server.json"), {});
 }
 
 module.exports = {
   configurationManager,
 };
+

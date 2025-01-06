@@ -18,6 +18,7 @@ const {
 const { run } = require("../db/db-connection.js");
 const { ENV_DEPLOY } = require("../constants/CONFIG_DIR.js");
 const { PRODUCTION_MODE } = require("../constants/CONSTANTS.js");
+const { Server } = require("../services/server.js");
 
 // Definición de los puertos de cada servidor
 
@@ -53,6 +54,7 @@ function lisServerApplication() {
 
   ErrorHandler();
   configurationManager();
+  Server.getInitialServerConfiguration()
   const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
   serverInitializer();
 
