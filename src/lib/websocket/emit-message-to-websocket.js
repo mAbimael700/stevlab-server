@@ -14,10 +14,12 @@ function emitMessage(body, channel, event) {
     if (!io) {
         console.error("El servidor WebSocket no está inicializado.");
         return;
+        
     }
-
     const messageId = generateUniqueId();
     const message = { id: messageId, channel, ...body };
+    console.log("emitiendo evento:", event);
+    
     io.emit(event, JSON.stringify(message));
 
     const pendingMsg = getPendingMessages();

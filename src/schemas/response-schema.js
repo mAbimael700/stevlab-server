@@ -17,7 +17,7 @@ const responseSchema = z.array(
         clave_sistema: z.string().optional(),
         nombre: z.string(),
         valor: z.string(),
-        unidad_medida: z.string(),
+        unidad_medida: z.string().optional(),
         unidad: z.string().optional(),
         rango_min: z.number().optional(),
         rango_max: z.number().optional(),

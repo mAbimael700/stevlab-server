@@ -51,7 +51,7 @@ function createSerialConnection(device) {
   }); */
 
   port.on("data", (data) => {
-    console.log("Datos recibidos:", data);
+    console.log("Datos recibidos:", data.toString());
     dataEvent(data, device, bufferList, parsingData);
   })
 

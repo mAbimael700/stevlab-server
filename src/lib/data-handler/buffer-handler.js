@@ -24,6 +24,9 @@ function handleBuffer(data, parsingData) {
 
   // Buscar el índice del delimitador
   const delimiterIndex = data.search(delimiterRegex);
+  console.log(data);
+  console.log(delimiterIndex !== -1);
+  
   if (delimiterIndex !== -1) {
     const match = data.match(delimiterRegex);
     const matchLength = match ? match[0].length : 0;
@@ -35,13 +38,14 @@ function handleBuffer(data, parsingData) {
     console.log("Mensaje completo recibido: \n", completeMessage);
 
     const results = parser(completeMessage);
+  
     if (!results) {
       throw new Error("El parser devolvió resultados inválidos");
     }
 
     return { results, consumedBytes };
   } else {
-    console.log("No se encontró el delimitador en los datos.");
+    //console.log("No se encontró el delimitador en los datos.");
   }
 }
 

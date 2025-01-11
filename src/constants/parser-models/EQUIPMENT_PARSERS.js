@@ -7,6 +7,7 @@ const { parseData: A15Parser } = require("../../lib/parsers/A15/parser");
 const {
   parser: VITROS350Parser,
 } = require("../../lib/parsers/Vitros350/parser");
+const { parser: XMLParser } = require("../../lib/parsers/XML/parser");
 const { CONTROLAB } = require("../dictionaries/CONTROLAB");
 const { DYMIND } = require("../dictionaries/DYMIND");
 const { MINDRAY_BS120 } = require("../dictionaries/MINDRAY_BS120");
@@ -38,10 +39,10 @@ const equipmentsParsers = {
 
   VITROS_350: {
     parser: VITROS350Parser,
-    CHAR_DELIMITER: "!\\d{3}h[^\\n\\r]*",
+    CHAR_DELIMITER: "!\\d{3}h\\d{4}[A-F0-9]{2}",
   },
   SWELAB_PLUS: {
-    parser: () => {},
+    parser: XMLParser,
     CHAR_DELIMITER: "<!--:End:(Msg|Chksum):\\d+(:\\d+)*:-->",
   },
 };

@@ -65,7 +65,7 @@ function initializeTcpServer({ PORT }) {
       socket.on("error", (err) => {
         if (err.code === "ECONNRESET") {
           console.warn(
-            ` Conexión reseteada por el cliente ${currentRemoteIpAddress}:${socket.remotePort}`
+            ` Conexión reseteada por el cliente ${device.ipAddress}:${socket.remotePort}`
           );
         } else {
           emitStatusDevice(

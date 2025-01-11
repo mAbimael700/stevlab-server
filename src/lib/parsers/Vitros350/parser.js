@@ -1,6 +1,6 @@
 function parser(message) {
   const parametroRegex =
-    /!(\d{3}[fh])([A-Za-z+]+)\s+([\d.]+)\s+([\w/%]+)\s+([A-Za-z0-9]+)/;
+    /!(\d{3}[fh])([A-Za-z+]+)\s*(\d+\.?\d*)\s*([a-zA-Z/%]*)\s*([A-Za-z0-9]+)/;
   const lineRegex = /!(\d{3}[afhc])[^!]+/g;
   const lines = message.match(lineRegex) || [];
   let currentResult = null;
@@ -15,7 +15,7 @@ function parser(message) {
     }
   });
 
-  return currentResult;
+  return [currentResult];
 
   function parseHeader(line) {
     const header = line.split(" ").filter((e) => e.trim() !== "");
@@ -27,11 +27,9 @@ function parser(message) {
     const month = header[1].slice(8, 10) - 1; // Mes (diciembre, base 0)
     const day = header[1].slice(10, 12); // Día
 
-    // Convertir el año a un formato completo (asumimos que años < 50 son del siglo 21 y >= 50 son del siglo 20)
     const year =
       yearShort < 50 ? 2000 + parseInt(yearShort) : 1900 + parseInt(yearShort);
 
-    // Crear la fecha
     const date = new Date(year, month, day, hour, minute, second);
 
     currentResult = {
@@ -46,13 +44,25 @@ function parser(message) {
   function parseParameter(line) {
     const parts = line.match(parametroRegex);
     if (parts) {
-      const [_, clave, nombre, valorRaw, unidad_medida] = parts;
+      const [_, clave, nombre, valorRaw, unidadMedida, otroCampo] = parts;
+
+      // Si la unidad de medida está pegada al valor, separarla
+      let valor = parseFloat(valorRaw);
+      let unidad = unidadMedida;
+      if (!unidadMedida) {
+        const match = valorRaw.match(/(\d+\.?\d*)([a-zA-Z/%]+)/);
+        if (match) {
+          valor = parseFloat(match[1]);
+          unidad = match[2];
+        }
+      }
+
       currentResult.parametros.push({
         clave: nombre,
-        clave_sistema: null,
+        clave_sistema: otroCampo,
         nombre,
-        valor: parseFloat(valorRaw).toFixed(2),
-        unidad_medida,
+        valor: valor.toFixed(2),
+        unidad_medida: unidad || "N/A",
       });
     }
   }
@@ -65,7 +75,7 @@ function parser(message) {
         .split(" ")
         .filter((e) => e.trim() !== "");
       currentResult.nombre_paciente = pacientInfo.join(" ");
-      currentResult.sexo = pacientInfo.at(-1) || "N/A"; // Use `at` for last element
+      currentResult.sexo = pacientInfo.at(-1) || "O";
     }
   }
 }
