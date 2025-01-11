@@ -54,7 +54,7 @@ function lisServerApplication() {
 
   ErrorHandler();
   configurationManager();
-  Server.getInitialServerConfiguration()
+  //Server.getInitialServerConfiguration()
   const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
   serverInitializer();
 

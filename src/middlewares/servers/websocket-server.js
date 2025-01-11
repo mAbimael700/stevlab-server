@@ -26,7 +26,8 @@ function initializeWebSocket(server) {
     const pendingMessages = getPendingMessages()
     // Enviar resultados pendientes al nuevo cliente
     pendingMessages.forEach(m => {
-      socket.emit("message", JSON.stringify(m));
+      const { message, event } = m
+      socket.emit(event, JSON.stringify(message));
     });
 
 

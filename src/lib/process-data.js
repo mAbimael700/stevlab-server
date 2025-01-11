@@ -21,7 +21,8 @@ async function processData(device, message) {
     });
 
     if (parser) {
-      const results = parser(message);
+      let results = parser(message);
+      results.equipment = device
 
       // Valida que el mensaje parseado sea correcto
       const resultValidated = validateResponse(results);

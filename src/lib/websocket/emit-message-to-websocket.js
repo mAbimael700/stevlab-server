@@ -18,7 +18,7 @@ function emitMessage(body, channel, event) {
     }
     const messageId = generateUniqueId();
     const message = { id: messageId, channel, ...body };
-    console.log("emitiendo evento:", event);
+    console.log("Emitiendo evento:", event);
     
     io.emit(event, JSON.stringify(message));
 
@@ -26,7 +26,7 @@ function emitMessage(body, channel, event) {
     setTimeout(() => {
         if (!pendingMsg.find(m => m.id === messageId)) {
             console.log(`No se confirmó el mensaje ${messageId}, se agrega al stack de mensajes no enviados`);
-            pendingMsg.push(message);
+            pendingMsg.push({message, event});
         }
     }, 5000);
 }
