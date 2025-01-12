@@ -24,9 +24,7 @@ function handleBuffer(data, parsingData) {
 
   // Buscar el índice del delimitador
   const delimiterIndex = data.search(delimiterRegex);
-  console.log(data);
-  console.log(delimiterIndex !== -1);
-  
+
   if (delimiterIndex !== -1) {
     const match = data.match(delimiterRegex);
     const matchLength = match ? match[0].length : 0;
@@ -35,12 +33,13 @@ function handleBuffer(data, parsingData) {
     const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
 
     fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
-    console.log("Mensaje completo recibido: \n", completeMessage);
+    console.log("Mensaje completo recibido: \n", filePath.concat(`.txt`));
 
     const results = parser(completeMessage);
   
     if (!results) {
-      throw new Error("El parser devolvió resultados inválidos");
+      console.error("El parser devolvió resultados inválidos");
+      return
     }
 
     return { results, consumedBytes };

@@ -7,10 +7,12 @@ const net = require("node:net");
 /**
  * Valida si el equipo está registrado en el servidor LIS.
  * @param {net.Socket} socket - El socket de conexión TCP/IP del equipo.
- * @returns {{data:{},parsingData:{parser:function, CHAR_DELIMITER: string},ipAddress: string,macAddress: string} | null} Retorna los datos del equipo o cierra la conexión en caso de no encontrar el equipo
+ * @returns {Promise<{data:{},parsingData:{parser:function, CHAR_DELIMITER: string},ipAddress: string,macAddress: string}> | null} Retorna los datos del equipo o cierra la conexión en caso de no encontrar el equipo
  */
 async function deviceValidation(socket) {
 
+    console.log("Verficando el dispositivo");
+    
     // Validar dirección MAC y verificar dispositivo
     const currentRemoteIpAddress = socket.remoteAddress.split(":")[3];
     const currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);

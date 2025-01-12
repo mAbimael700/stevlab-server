@@ -15,7 +15,7 @@ function OBX(segment, dictionary) {
   const nombre = formatName(fields[4] || fields[3]);
 
   // Formateamos el valor en caso de que esté en formato separados por comas
-  const valor = parseFloat(fields[5].replace(",", "."));
+  const valor = parseFloat(fields[5]?.replace(",", "."));
 
   const rangos = fields[7]?.split("-") ?? [];
   const rango_min = rangos[0] || undefined;

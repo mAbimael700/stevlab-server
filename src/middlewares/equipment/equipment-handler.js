@@ -39,7 +39,7 @@ equipmentEmitter.on("deviceRemoved", async (oldEquipment) => {
     closeTCP(oldEquipment.mac_address);
   }
 
-  if (newEquipment.require_serial_conn) {
+  if (oldEquipment.require_serial_conn) {
     closeSerialConn(oldEquipment)
   }
 });

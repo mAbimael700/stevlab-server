@@ -17,7 +17,6 @@ function initializeTcpServer({ PORT }) {
     },
     async (socket) => {
       // Obtenemos la ip del socket (equipo) en la conexión
-
       const device = await deviceValidation(socket);
 
       console.log(

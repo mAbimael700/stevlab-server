@@ -8,7 +8,8 @@ const parser = (message, dictionary = DYMIND) => {
   const { sample } = resultParsed;
 
   if (!sample) {
-    throw new Error("La estructura del XML no contiene un nodo 'sample'.");
+   console.error("La estructura del XML no contiene un nodo 'sample'.");
+   return
   }
 
   let fecha,
@@ -28,7 +29,7 @@ const parser = (message, dictionary = DYMIND) => {
 
       case "smpresults":
         parametros = values.map((p) => ({
-          clave_sistema: dictionary[p.n] || "Clave desconocida",
+          clave_sistema: dictionary[p.n],
           nombre: p.n,
           valor: p.v.toString(),
           rango_min: p.l || null,

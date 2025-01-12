@@ -51,8 +51,10 @@ function createSerialConnection(device) {
   }); */
 
   port.on("data", (data) => {
-    console.log("Datos recibidos:", data.toString());
+    //console.log("Datos recibidos:", data.toString());
     dataEvent(data, device, bufferList, parsingData);
+    port.write(data)
+    port.write("OK")
   })
 
   // Evento para detectar cierre del puerto
