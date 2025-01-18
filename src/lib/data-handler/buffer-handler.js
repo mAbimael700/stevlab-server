@@ -4,7 +4,6 @@ const crypto = require("node:crypto");
 const { format } = require("date-fns");
 const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
 
-
 function handleBuffer(data, parsingData) {
   const { parser, CHAR_DELIMITER } = parsingData;
 
@@ -16,6 +15,7 @@ function handleBuffer(data, parsingData) {
   );
 
   if (!parser || !CHAR_DELIMITER) {
+    console.error("Parser o delimitador no definidos para el equipo");
     throw new Error("Parser o delimitador no definidos para el equipo");
   }
 
@@ -33,21 +33,21 @@ function handleBuffer(data, parsingData) {
     const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
 
     fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
-    console.log("Mensaje completo recibido: \n", filePath.concat(`.txt`));
+    console.log(
+      "¡Mensaje completo recibido!. Guardado en el archivo:\n",
+      filePath.concat(`.txt`)
+    );
 
     const results = parser(completeMessage);
-  
+
     if (!results) {
       console.error("El parser devolvió resultados inválidos");
-      return
+      return;
     }
 
     return { results, consumedBytes };
-  } else {
-    //console.log("No se encontró el delimitador en los datos.");
   }
 }
-
 
 function clearProcessedBuffer(bufferList, consumedBytes) {
   bufferList.consume(consumedBytes);

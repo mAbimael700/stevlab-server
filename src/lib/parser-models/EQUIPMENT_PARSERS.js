@@ -1,16 +1,16 @@
 const {
-  parseResultsData: type1,
-} = require("../../lib/parsers/HL7-type1/parser");
-const { parser: type4 } = require("../../lib/parsers/HL7-type4/parser");
-const { parseMessage: cm200Parser } = require("../../lib/parsers/CM200/parser");
-const { parseData: A15Parser } = require("../../lib/parsers/A15/parser");
+  parser: type1
+} = require("../parsers/HL7-type1/parser");
+const { parser: type4 } = require("../parsers/HL7-type4/parser");
+const { parseMessage: cm200Parser } = require("../parsers/CM200/parser");
+const { parseData: A15Parser } = require("../parsers/A15/parser");
 const {
   parser: VITROS350Parser,
-} = require("../../lib/parsers/Vitros350/parser");
-const { parser: XMLParser } = require("../../lib/parsers/XML/parser");
-const { CONTROLAB } = require("../dictionaries/CONTROLAB");
-const { DYMIND } = require("../dictionaries/DYMIND");
-const { MINDRAY_BS120 } = require("../dictionaries/MINDRAY_BS120");
+} = require("../parsers/Vitros350/parser");
+const { parser: XMLParser } = require("../parsers/XML/parser");
+const { CONTROLAB } = require("../../constants/dictionaries/CONTROLAB");
+const { DYMIND } = require("../../constants/dictionaries/DYMIND");
+const { MINDRAY_BS120 } = require("../../constants/dictionaries/MINDRAY_BS120");
 
 const CHAR_DELIMITER = "\\x1C";
 
@@ -22,7 +22,7 @@ const createType4Parser =
 
 // Configuración centralizada de parsers
 const equipmentsParsers = {
-  FUJIFILM_DRICHEM_NX600: { parser: type1, CHAR_DELIMITER: "" },
+  FUJIFILM_DRICHEM_NX600: { parser: type1, CHAR_DELIMITER: "\x03" },
   CONTROLAB: { parser: createType4Parser(CONTROLAB), CHAR_DELIMITER },
   CM200: { parser: cm200Parser, CHAR_DELIMITER: "" },
   A15: { parser: A15Parser, CHAR_DELIMITER: "" },

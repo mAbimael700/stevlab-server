@@ -1,4 +1,4 @@
-const { equipmentsParsers } = require("../constants/parser-models/EQUIPMENT_PARSERS");
+const { equipmentsParsers } = require("../lib/parser-models/EQUIPMENT_PARSERS");
 
 /**
  * Valida si el equipo está registrado en el servidor LIS.

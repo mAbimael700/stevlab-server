@@ -10,16 +10,14 @@ const {
 const { DATADIR } = require("../../constants/DATADIR");
 const { LOG_DIR } = require("../../constants/LOG_DIR");
 
-
 const directorios = [
   LOG_DIR,
   DATADIR,
   CONFIG_DIR,
   STATES,
-  DEVICES_DIR,
   FILE_UPLOADS_DIR,
   SERVER,
-]
+];
 
 function ensureDirectoryExists(directoryPath) {
   const absolutePath = path.resolve(directoryPath);
@@ -39,14 +37,13 @@ function ensureFileExists(filePath, defaultContent = {}) {
 
 function configurationManager() {
   // Crear carpetas necesarias
-  directorios.forEach(ensureDirectoryExists)
+  directorios.forEach(ensureDirectoryExists);
 
   // Crear archivo devices.json si no existe
-  ensureFileExists(path.join(CONFIG_DIR, "devices.json"), { devices: [] });
+  ensureFileExists(DEVICES_DIR, { devices: [] });
   ensureFileExists(path.join(CONFIG_DIR, "server.json"), {});
 }
 
 module.exports = {
   configurationManager,
 };
-

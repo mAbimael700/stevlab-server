@@ -1,21 +1,33 @@
 const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
-const lisServerApplication = require("./src/app");
+const LisServerApplication = require("./src/app/LisServerApplication");
 
 let mainWindow;
-let tray = null
+let tray = null;
+
 // Configura el envío de logs
-const log = (message) => {
+const log = (type, message) => {
   if (mainWindow && mainWindow.webContents) {
-    mainWindow.webContents.send("log", message);
+    // Enviar el log con tipo, mensaje y fecha
+    mainWindow.webContents.send("log", { date: new Date(), type, message });
   }
 };
 
-// Sobrescribe `console.log` para reenviar mensajes a la ventana render
-const originalLog = console.log;
-console.log = (...args) => {
-  originalLog(...args); // Imprime en la consola principal
-  log(args.join(" ")); // Envía al frontend
+// Sobrescribe métodos de consola
+const overrideConsole = () => {
+  const methods = ["log", "warn", "info", "error", "debug"];
+  
+  methods.forEach((method) => {
+    // Sobrescribe cada método de consola
+    const original = console[method];
+    console[method] = (...args) => {
+      // Imprime en la consola principal
+      original(...args);
+
+      // Envía el log al frontend, uniendo los argumentos y formateándolos
+      log(method, args.map(arg => (typeof arg === "object" ? JSON.stringify(arg) : String(arg))).join(" "));
+    };
+  });
 };
 
 const createWindow = () => {
@@ -28,69 +40,58 @@ const createWindow = () => {
       nodeIntegration: false, // Desactivado por seguridad
     },
   });
-
-
-  console.log( path.join(__dirname, "dist", "index.html"));
-  
-  mainWindow.loadFile(
-    path.join(__dirname, "dist", "index.html")
-  ); // Puerto del servidor Vite
-
+  mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Puerto del servidor Vite
   tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
 
   // Crear un menú contextual para la bandeja
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Mostrar ventana',
+      label: "Mostrar ventana",
       click: () => {
         mainWindow.show();
       },
     },
     {
-      label: 'Salir',
+      label: "Salir",
       click: () => {
         app.quit();
       },
     },
   ]);
 
-  tray.setToolTip('Stevlab - Interfaz LIS ');
+  tray.setToolTip("Stevlab - Interfaz LIS ");
   tray.setContextMenu(contextMenu);
 
   // Evento al hacer clic en el ícono de la bandeja
-  tray.on('click', () => {
+  tray.on("click", () => {
     mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
   });
 
   // Espera a que la ventana esté lista para mostrar
   mainWindow.once("ready-to-show", () => {
     console.log("Ventana lista. Iniciando servidor...");
-    lisServerApplication(); // Inicia el servidor después de que la ventana está lista
+    LisServerApplication(); // Inicia el servidor después de que la ventana está lista
   });
 };
 
-
 app.whenReady().then(() => {
+  overrideConsole(); // Sobrescribe los métodos de consola al inicio
   createWindow();
-  app.on('activate', () => {
+
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
 
-
   // Interceptar el cierre de la ventana
-  mainWindow.on('close', (event) => {
+  mainWindow.on("close", (event) => {
     if (!app.isQuitting) {
       event.preventDefault(); // Evitar el cierre
       mainWindow.hide(); // Ocultar la ventana
     }
   });
-
 });
-
-
-
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
@@ -98,9 +99,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-
-
 // Cerrar la aplicación correctamente cuando el usuario elige "Salir"
-app.on('before-quit', () => {
+app.on("before-quit", () => {
   app.isQuitting = true;
 });

@@ -2,7 +2,6 @@ const { SerialPort, ReadlineParser } = require("serialport");
 const bl = require("bl");
 const { dataEvent } = require("../../../lib/data-handler/data-event");
 const { validateParser } = require("../../../lib/validate-parser");
-const { equipmentsParsers } = require("../../../constants/parser-models/EQUIPMENT_PARSERS");
 
 function createSerialConnection(device) {
   const port = new SerialPort({

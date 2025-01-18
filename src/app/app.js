@@ -1,2 +1,2 @@
-const lisServerApplication = require("./index.js")
-lisServerApplication()
+const LisServerApplication = require("./LisServerApplication.js")
+LisServerApplication()

@@ -2,8 +2,10 @@ const fs = require("node:fs");
 const { DEVICES_DIR, CONFIG_DIR } = require("../../constants/CONFIG_DIR");
 const { getEquipmetEmitter } = require("./equipment-events");
 const { setEquipments, getEquipments } = require("./equipment-helpers");
-const crypto = require("node:crypto")
-const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
+const crypto = require("node:crypto");
+const {
+  formatMacAddressWithSeparators,
+} = require("../../utils/formatMacAddressWithSeparators");
 
 let previousEquipments = [];
 
@@ -25,23 +27,29 @@ function readDevicesFromFile() {
     const devices = JSON.parse(data)?.devices ?? [];
     setEquipments(devices); // Actualiza la lista en equipment-helpers
 
-    const equipments = getEquipments()
+    const equipments = getEquipments();
 
-    const equipmentsOnServer = equipments.map(e => ({
-      "Nombre": e.name,
+    const equipmentsOnServer = equipments.map((e) => ({
+      Nombre: e.name,
       "Dirección MAC": formatMacAddressWithSeparators(e.mac_address),
-      "Área": e.area.Nombre_area
-    }))
+      Área: e.area.Nombre_area,
+    }));
 
+    if (equipments.length > 0) {
+      console.log("--------------Equipos cargados-----------------");
+      // Convertimos el array a un objeto
+      const equipmentsAsObject = Object.fromEntries(
+        equipmentsOnServer.map((equipment, index) => [
+          `Equipo ${index + 1}`,
+          equipment,
+        ])
+      );
 
-    console.log("----------Equipos cargados-----------------");
-    // Convertimos el array a un objeto
-    const equipmentsAsObject = Object.fromEntries(
-      equipmentsOnServer.map((equipment, index) => [`Equipo ${index + 1}`, equipment])
-    );
-
-    // Usamos console.table con el objeto
-    console.table(equipmentsAsObject);
+      // Usamos console.table con el objeto
+      console.table(equipmentsAsObject);
+    } else {
+      console.info("No existen equipos registrados en el servidor.");
+    }
   } catch (error) {
     console.error("Error al leer el archivo de dispositivos:", error.message);
   }
@@ -116,7 +124,7 @@ function writeAndRefreshEquipments(newEquipments) {
 function writeEquipmentOnServer(equipment) {
   const equipmentsOnServer = getEquipments();
   const uniqueId = crypto.randomBytes(3).toString("hex");
-  equipment.id_device = uniqueId
+  equipment.id_device = uniqueId;
   writeAndRefreshEquipments([...equipmentsOnServer, equipment]);
 }
 

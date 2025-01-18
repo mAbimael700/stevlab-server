@@ -19,9 +19,13 @@ const FULLJIFILM_NX600_DICTIONARIO = {
   GLU: "QSGLU", // Glucosa
   "HDL-C": "QSHDL", // Colesterol HDL
   IP: "QSFOSF", // Fósforo Inorgánico
+  "GOT": "QSGOT1",
+  "GPT": "QSGPT",
+  "TP": "QSTP",
+  "TBIL": "QSTBILS",
+  "UREA": "QSURE",
 };
 
 module.exports = {
   FULLJIFILM_NX600_DICTIONARIO,
 };
-

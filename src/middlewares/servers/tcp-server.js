@@ -18,6 +18,13 @@ function initializeTcpServer({ PORT }) {
     async (socket) => {
       // Obtenemos la ip del socket (equipo) en la conexión
       const device = await deviceValidation(socket);
+      
+      if (!device) {
+        console.warn(
+          "Conexión cerrada debido a un problema de validación del equipo."
+        );
+        return; // Detener ejecución si el dispositivo no es válido
+      }
 
       console.log(
         `Conexión TCP/IP entrante del equipo ${device.data.name} con la dirección IPv4: ${device.ipAddress}:${socket.remotePort}`
@@ -83,7 +90,7 @@ function initializeTcpServer({ PORT }) {
 
       socket.on("close", () => {
         console.log("Conexión cerrada");
-        Server.setStatus("inactivo")
+        Server.setStatus("inactivo");
         reconnect();
       });
     }
@@ -102,8 +109,8 @@ function initializeTcpServer({ PORT }) {
 
   tcpServer.listen(PORT, () => {
     console.log(`Servidor TPC/IP escuchando en el puerto ${PORT}`);
-    Server.setStatus("activo")
-    Server.setTCPPort(PORT)
+    Server.setStatus("activo");
+    Server.setTCPPort(PORT);
   });
 }
 

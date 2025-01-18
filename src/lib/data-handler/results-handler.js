@@ -1,7 +1,8 @@
 const { validateResponse } = require("../../schemas/response-schema");
 const { saveResultsToLocalData } = require("../save-results-data");
-const { emitResultsToWebSocket } = require("../websocket/emit-results-websocket");
-
+const {
+  emitResultsToWebSocket,
+} = require("../websocket/emit-results-websocket");
 let lastFolio = null;
 let resultsToSave = { parametros: [] };
 
@@ -11,30 +12,33 @@ let resultsToSave = { parametros: [] };
  * @param {boolean} sendsBySingleParameter - Indica si el equipo envía un solo parámetro a la vez.
  */
 async function handleResults(results, sendsBySingleParameter = false) {
+  const response = await validateResponse(results);
 
-  const response = await validateResponse(results)
-  
   const isValidated = response.success;
   if (!isValidated) {
     console.warn("Resultados no válidos");
     return;
   }
 
-
   if (!results[0]?.folio || results[0]?.folio === "") {
     console.warn("Resultados ignorados porque no tienen un folio válido");
     return;
   }
-
 
   if (sendsBySingleParameter) {
     // Manejo para equipos que envían un parámetro a la vez
     if (response.data[0]?.folio !== lastFolio) {
       finalizeResults(); // Finaliza y guarda los resultados acumulados
       lastFolio = response.data[0]?.folio;
-      resultsToSave = { ...response.data[0], parametros: [...filterDuplicateParams(response.data[0]?.parametros)] };
+      resultsToSave = {
+        ...response.data[0],
+        parametros: [...filterDuplicateParams(response.data[0]?.parametros)],
+      };
     } else {
-      const newParams = filterDuplicateParams(response.data[0]?.parametros, resultsToSave.parametros);
+      const newParams = filterDuplicateParams(
+        response.data[0]?.parametros,
+        resultsToSave.parametros
+      );
       resultsToSave.parametros.push(...newParams);
     }
   } else {
@@ -72,7 +76,9 @@ function finalizeResults() {
     console.log("Resultados procesados y guardados:", resultsToSave);
     resultsToSave = { parametros: [] }; // Limpia la acumulación
   } else {
-    console.warn("No se guardaron resultados porque no tienen un folio o están vacíos.");
+    console.warn(
+      "No se guardaron resultados porque no tienen un folio o están vacíos."
+    );
   }
 }
 

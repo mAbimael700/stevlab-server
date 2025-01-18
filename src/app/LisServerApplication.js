@@ -50,7 +50,7 @@ class ServerFactory {
 
 
 // Carga las variables del archivo .env
-function lisServerApplication() {
+function LisServerApplication() {
 
   ErrorHandler();
   configurationManager();
@@ -61,4 +61,4 @@ function lisServerApplication() {
   initializeEquipmentManager();
 }
 
-module.exports = lisServerApplication;
+module.exports = LisServerApplication;
