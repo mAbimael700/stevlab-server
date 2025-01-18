@@ -8,21 +8,26 @@ function handleDataEvent(socket, data, device, deviceData, bufferList) {
     socket.write(data.toString())
 }
 
-function handleCloseEvent(client, macAddress, scheduleReconnect) {
-    console.log(`Conexión cerrada para ${macAddress}.`);
-    removeTCPConnection(macAddress);
+
+/**
+ * Maneja eventos de conexión (cierre o error).
+ * @param {Object} client - Cliente TCP.
+ * @param {Object} equipment - Información del equipo.
+ * @param {String} eventType - Tipo de evento ("close" o "error").
+ * @param {Function} scheduleReconnect - Función para programar reconexión.
+ * @param {Error} [error] - Detalle del error (solo para eventos "error").
+ */
+function handleConnectionEvent(client, equipment, eventType, scheduleReconnect, error) {
+    if (eventType === "close") {
+        console.info(`Conexión cerrada con ${equipment.name}.`);
+    } else if (eventType === "error") {
+        console.error(`Error en la conexión con ${equipment.name}: ${error.message}`);
+    }
+
+    removeTCPConnection(equipment.id_device);
     scheduleReconnect();
-
 }
-
-function handleErrorEvent(client, macAddress, error, scheduleReconnect) {
-    console.error(`Error en la conexión con ${macAddress}: ${error.message}`);
-    removeTCPConnection(macAddress);
-    scheduleReconnect();
-}
-
 module.exports = {
     handleDataEvent,
-    handleCloseEvent,
-    handleErrorEvent,
+    handleConnectionEvent
 };

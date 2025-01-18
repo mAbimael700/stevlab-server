@@ -31,7 +31,7 @@ function readDevicesFromFile() {
 
     const equipmentsOnServer = equipments.map((e) => ({
       Nombre: e.name,
-      "Dirección MAC": formatMacAddressWithSeparators(e.mac_address),
+      "Dirección MAC": e.mac_address && formatMacAddressWithSeparators(e.mac_address),
       Área: e.area.Nombre_area,
     }));
 
@@ -51,7 +51,7 @@ function readDevicesFromFile() {
       console.info("No existen equipos registrados en el servidor.");
     }
   } catch (error) {
-    console.error("Error al leer el archivo de dispositivos:", error.message);
+    console.error("Error al leer el archivo de dispositivos:", error.message);  
   }
 }
 

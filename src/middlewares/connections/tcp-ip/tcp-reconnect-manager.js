@@ -1,17 +1,28 @@
 let reconnectIntervals = {}; // Mapeo de intervalos de reconexión
 
-function setReconnectInterval(macAddress, interval) {
-  reconnectIntervals[macAddress] = interval;
+/**
+ * 
+ * @param {String} idDevice 
+ * @param {NodeJS.Timeout} interval 
+ */
+function setReconnectInterval(idDevice, interval) {
+  reconnectIntervals[idDevice] = interval;
 }
 
-function getReconnectInterval(macAddress) {
-  return reconnectIntervals[macAddress];
+/**
+ * 
+ * @param {String} idDevice 
+ * @returns {NodeJS.Timeout}
+ */
+function getReconnectInterval(idDevice) {
+  return reconnectIntervals[idDevice];
 }
 
-function removeReconnectInterval(macAddress) {
-  if (reconnectIntervals[macAddress]) {
-    clearInterval(reconnectIntervals[macAddress]);
-    delete reconnectIntervals[macAddress];
+
+function removeReconnectInterval(idDevice) {
+  if (reconnectIntervals[idDevice]) {
+    clearInterval(reconnectIntervals[idDevice]);
+    delete reconnectIntervals[idDevice];
   }
 }
 

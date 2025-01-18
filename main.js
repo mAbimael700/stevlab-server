@@ -1,34 +1,11 @@
 const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 const LisServerApplication = require("./src/app/LisServerApplication");
+const { overrideConsole } = require("./src/middlewares/logger/overwrite-logger");
 
 let mainWindow;
 let tray = null;
 
-// Configura el envío de logs
-const log = (type, message) => {
-  if (mainWindow && mainWindow.webContents) {
-    // Enviar el log con tipo, mensaje y fecha
-    mainWindow.webContents.send("log", { date: new Date(), type, message });
-  }
-};
-
-// Sobrescribe métodos de consola
-const overrideConsole = () => {
-  const methods = ["log", "warn", "info", "error", "debug"];
-  
-  methods.forEach((method) => {
-    // Sobrescribe cada método de consola
-    const original = console[method];
-    console[method] = (...args) => {
-      // Imprime en la consola principal
-      original(...args);
-
-      // Envía el log al frontend, uniendo los argumentos y formateándolos
-      log(method, args.map(arg => (typeof arg === "object" ? JSON.stringify(arg) : String(arg))).join(" "));
-    };
-  });
-};
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -40,7 +17,8 @@ const createWindow = () => {
       nodeIntegration: false, // Desactivado por seguridad
     },
   });
-  mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Puerto del servidor Vite
+  //mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
+  mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
   tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
 
   // Crear un menú contextual para la bandeja
@@ -69,29 +47,53 @@ const createWindow = () => {
 
   // Espera a que la ventana esté lista para mostrar
   mainWindow.once("ready-to-show", () => {
-    console.log("Ventana lista. Iniciando servidor...");
-    LisServerApplication(); // Inicia el servidor después de que la ventana está lista
+    console.log("Ventana lista.");
   });
 };
 
-app.whenReady().then(() => {
-  overrideConsole(); // Sobrescribe los métodos de consola al inicio
-  createWindow();
+const gotTheLock = app.requestSingleInstanceLock();
 
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
+if (!gotTheLock) {
+  app.quit(); // Salir si ya hay otra instancia corriendo
+} else {
+  app.on("second-instance", (event, commandLine, workingDirectory) => {
+    // Si otra instancia se inicia, muestra la ventana principal
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.focus();
     }
   });
 
-  // Interceptar el cierre de la ventana
-  mainWindow.on("close", (event) => {
-    if (!app.isQuitting) {
-      event.preventDefault(); // Evitar el cierre
-      mainWindow.hide(); // Ocultar la ventana
+  app.whenReady().then(() => {
+    overrideConsole(mainWindow); // Sobrescribe los métodos de consola al inicio
+    createWindow();
+
+    // Asegúrate de que los servicios solo se inicializan una vez
+    if (!global.servicesInitialized) {
+      global.servicesInitialized = true; // Marca los servicios como inicializados
+      LisServerApplication(); // Inicia los servicios del servidor
     }
+
+    app.on("activate", () => {
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+      }
+    });
+
+    // Interceptar el cierre de la ventana
+
+    if (mainWindow) {
+      mainWindow.on("close", (event) => {
+        if (!app.isQuitting) {
+          event.preventDefault(); // Evitar el cierre
+          mainWindow.hide(); // Ocultar la ventana
+        }
+      });
+    }
+
+
   });
-});
+}
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

@@ -1,6 +1,6 @@
 const { getEquipmetEmitter } = require("./equipment-events");
 const { connectFTP, closeFTP } = require("../connections/ftp/ftp-connection");
-const { connectTCP, closeTCP } = require("../connections/tcp-ip/tcp-connection");
+const { connectTCP, closeTCP } = require("../connections/tcp-ip/tcp-helpers");
 const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
 const { createSerialConnection } = require("../connections/serial/serial-connection");
 const { closeSerialConn } = require("../connections/serial/serial-helpers");
@@ -36,7 +36,7 @@ equipmentEmitter.on("deviceRemoved", async (oldEquipment) => {
   }
 
   if (oldEquipment.require_tcp_conn) {
-    closeTCP(oldEquipment.mac_address);
+    closeTCP(oldEquipment);
   }
 
   if (oldEquipment.require_serial_conn) {
@@ -48,7 +48,7 @@ equipmentEmitter.on("deviceRemoved", async (oldEquipment) => {
 equipmentEmitter.on("deviceModified", async (oldEquipment, newEquipment) => {
   console.log(
     `Equipo modificado: ${oldEquipment.id} -> ${newEquipment.id} (${formatMacAddressWithSeparators(
-      newEquipment.mac_address
+      newEquipment.id_device
     )})`
   );
 
