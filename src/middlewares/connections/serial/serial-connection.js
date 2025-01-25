@@ -10,10 +10,7 @@ function createSerialConnection(device) {
   });
 
   // Agregar un parser para leer datos de forma más fácil (opcional)
-  /* const parser = port.pipe(new ReadlineParser({
-    delimiter:
-      equipmentsParsers[device.id]?.CHAR_DELIMITER
-  })); */
+  const parser = port.pipe(new Readline({ delimiter: "\n" }));
 
   // Manejo de errores
   port.on("error", (err) => {
@@ -44,26 +41,20 @@ function createSerialConnection(device) {
 
   const bufferList = new bl();
   // Leer datos recibidos del equipo
-  /* parser.on("data", (data) => {
-    console.log("Datos recibidos:", data);
-    dataEvent(data, device, bufferList, parsingData);
-  }); */
 
-  port.on("data", (data) => {
+  parser.on("data", (data) => {
     //console.log("Datos recibidos:", data.toString());
-    dataEvent(data, device, bufferList, parsingData);
-    port.write(data)
-    port.write("OK")
-  })
+    dataEvent(data, device, bufferList, parsingData, port);
+  });
 
   // Evento para detectar cierre del puerto
   port.on("close", () => {
     console.log("Puerto serial cerrado");
   });
 
-  return port
+  return port;
 }
 
 module.exports = {
-  createSerialConnection
-}
+  createSerialConnection,
+};

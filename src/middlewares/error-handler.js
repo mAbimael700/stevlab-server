@@ -5,7 +5,7 @@ function ErrorHandler() {
 
     process.on("uncaughtException", (err) => {
         logger.error('Se produjo una excepción no controlada:', { message: err.message, stack: err.stack, });
-        console.log("");
+        console.log(err);
 
         console.error('Se ha producido una excepción no controlada:', err);
         // Aquí puedes reiniciar la aplicación o decidir si continuar

@@ -10,6 +10,8 @@ let resultsToSave = { parametros: [] };
  * Maneja los resultados procesados por el parser.
  * @param {Object[]} results - Resultados procesados.
  * @param {boolean} sendsBySingleParameter - Indica si el equipo envía un solo parámetro a la vez.
+ * 
+ * @returns {Promise<number>} folio 
  */
 async function handleResults(results, sendsBySingleParameter = false) {
   const response = await validateResponse(results);
@@ -46,6 +48,8 @@ async function handleResults(results, sendsBySingleParameter = false) {
     saveResultsToLocalData(response.data);
     emitResultsToWebSocket(response.data);
   }
+
+  return response.data[0].folio;
 }
 
 /**

@@ -1,9 +1,18 @@
-// src/middlewares/websocket-server.js
+const http = require("node:http");
 const { Server } = require("socket.io");
-const { getPendingMessages, deleteMessageById } = require("../../lib/websocket/pending-message.js");
+const {
+  getPendingMessages,
+  deleteMessageById,
+} = require("../../lib/websocket/pending-message.js");
+const { processPendingMessages } = require("../../lib/websocket/handle-unconfirmed-massages.js");
 
 let io;
 
+/**
+ * 
+ * @param {http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>} server 
+ * @returns {Server}
+ */
 function initializeWebSocket(server) {
   // Si ya existe una instancia de io, devuelve esa instancia
   if (io) {
@@ -20,21 +29,18 @@ function initializeWebSocket(server) {
 
   // Configuración de eventos de Socket.IO
   io.on("connection", (socket) => {
-    console.log("Nuevo cliente conectado:", socket.id);
+    console.log("Nuevo cliente Web Socket conectado:", socket.id);
 
-
-    const pendingMessages = getPendingMessages()
-    // Enviar resultados pendientes al nuevo cliente
-    pendingMessages.forEach(m => {
-      const { message, event } = m
-      socket.emit(event, JSON.stringify(message));
+    // Enviar solo los mensajes pendientes específicos para este cliente si se identifica
+    const pendingMessages = getPendingMessages();
+    pendingMessages.forEach((m) => {
+      socket.emit(m.event, JSON.stringify(m.message));
     });
 
-
-    // Escuchar confirmaciones de mensajes
+    // Escuchar confirmaciones
     socket.on("message_confirmation", (messageId) => {
       console.log(`Mensaje confirmado: ${messageId}`);
-      deleteMessageById(messageId) // Eliminar el mensaje del stack
+      deleteMessageById(messageId);
     });
 
     socket.on("disconnect", () => {
@@ -42,8 +48,17 @@ function initializeWebSocket(server) {
     });
   });
 
-  return io;
+
+}
+
+
+/**
+ * 
+ * @returns {Server}
+ */
+function getIO(){
+  return io
 }
 
 // Exportamos tanto la función para inicializar como la instancia io
-module.exports = { initializeWebSocket, getIO: () => io };
+module.exports = { initializeWebSocket, getIO };

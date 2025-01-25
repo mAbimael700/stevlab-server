@@ -1,8 +1,10 @@
 const fs = require("node:fs");
+
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { format } = require("date-fns");
 const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
+const { BufferList } = require("bl/BufferList");
 
 function handleBuffer(data, parsingData) {
   const { parser, CHAR_DELIMITER } = parsingData;
@@ -18,6 +20,8 @@ function handleBuffer(data, parsingData) {
     console.error("Parser o delimitador no definidos para el equipo");
     throw new Error("Parser o delimitador no definidos para el equipo");
   }
+
+  fs.appendFileSync(filePath.concat(`ss.txt`), data);
 
   // Crear la expresión regular
   const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
@@ -48,10 +52,19 @@ function handleBuffer(data, parsingData) {
     return { results, consumedBytes };
   }
 }
-
+/**
+ *
+ * @param {BufferList} bufferList
+ * @param {number} consumedBytes
+ */
 function clearProcessedBuffer(bufferList, consumedBytes) {
-  bufferList.consume(consumedBytes);
+  if (consumedBytes > 0 && consumedBytes <= bufferList.length) {
+    bufferList.consume(consumedBytes);
+  } else {
+    console.error("Error: consumedBytes no válido:", consumedBytes); // Depuración
+  }
 }
+
 
 module.exports = {
   handleBuffer,

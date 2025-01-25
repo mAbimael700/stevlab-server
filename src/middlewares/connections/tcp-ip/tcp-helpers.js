@@ -1,6 +1,7 @@
 const { removeTCPConnection, getTCPConnection } = require("./tcp-manager");
 const { createTCPConnection } = require("./tcp-connection");
 const { removeReconnectInterval } = require("./tcp-reconnect-manager");
+const { emitStatusDevice } = require("../../../lib/websocket/emit-device-status");
 
 /**
  * Cierra y elimina una conexión TCP para un dispositivo específico.

@@ -1,13 +1,9 @@
-
 const { dataEvent } = require("../../../lib/data-handler/data-event");
 const { removeTCPConnection } = require("./tcp-manager");
 
-
 function handleDataEvent(socket, data, device, deviceData, bufferList) {
-    dataEvent(data, device, bufferList, deviceData);
-    socket.write(data.toString())
+  dataEvent(data, device, bufferList, deviceData, socket);
 }
-
 
 /**
  * Maneja eventos de conexión (cierre o error).
@@ -17,17 +13,25 @@ function handleDataEvent(socket, data, device, deviceData, bufferList) {
  * @param {Function} scheduleReconnect - Función para programar reconexión.
  * @param {Error} [error] - Detalle del error (solo para eventos "error").
  */
-function handleConnectionEvent(client, equipment, eventType, scheduleReconnect, error) {
-    if (eventType === "close") {
-        console.info(`Conexión cerrada con ${equipment.name}.`);
-    } else if (eventType === "error") {
-        console.error(`Error en la conexión con ${equipment.name}: ${error.message}`);
-    }
+function handleConnectionEvent(
+  client,
+  equipment,
+  eventType,
+  scheduleReconnect,
+  error
+) {
+  if (eventType === "close") {
+    console.info(`Conexión cerrada con ${equipment.name}.`);
+  } else if (eventType === "error") {
+    console.error(
+      `Error en la conexión con ${equipment.name}: ${error.message}`
+    );
+  }
 
-    removeTCPConnection(equipment.id_device);
-    scheduleReconnect();
+  removeTCPConnection(equipment.id_device);
+  scheduleReconnect();
 }
 module.exports = {
-    handleDataEvent,
-    handleConnectionEvent
+  handleDataEvent,
+  handleConnectionEvent,
 };
