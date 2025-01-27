@@ -19,6 +19,8 @@ const { run } = require("../db/db-connection.js");
 const { ENV_DEPLOY } = require("../constants/CONFIG_DIR.js");
 const { PRODUCTION_MODE } = require("../constants/CONSTANTS.js");
 const { Server } = require("../services/server.js");
+const { startPendingMessageManager } = require("../lib/websocket/emit-message-to-websocket.js");
+const { getIO } = require("../middlewares/servers/Websocket.js");
 
 // Definición de los puertos de cada servidor
 
@@ -28,23 +30,27 @@ class ServerFactory {
   static create(mode) {
     const TPC_PORT = process.env.PORT ?? 3000;
     const SOCKET_PORT = process.env.SOCKET_PORT ?? 4000;
+    const io = getIO();
 
     switch (mode) {
       case "electron":
         return () => {
           const expressServer = initializeExpressServer(SOCKET_PORT);
-          initializeWebSocket(expressServer);
+          initializeWebSocket(expressServer, io);
           initializeTcpServer({ PORT: TPC_PORT });
         }
       case "local":
         return () => {
           const expressServer = initializeExpressServer(SOCKET_PORT);
-          initializeWebSocket(expressServer);
+          initializeWebSocket(expressServer, io);
           initializeTcpServer({ PORT: TPC_PORT });
+
         };
       default:
         throw new Error("Modo de producción no soportado.");
     }
+
+    
   }
 }
 

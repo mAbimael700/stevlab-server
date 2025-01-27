@@ -49,7 +49,7 @@ async function handleResults(results, sendsBySingleParameter = false) {
     emitResultsToWebSocket(response.data);
   }
 
-  return response.data[0].folio;
+  return response.data[0].id;
 }
 
 /**

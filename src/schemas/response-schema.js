@@ -8,8 +8,8 @@ const parameterSchema = z.object({
   valor: z.string(),
   unidad_medida: z.string().optional(),
   unidad: z.string().optional(),
-  rango_min: z.number().optional(),
-  rango_max: z.number().optional(),
+  rango_min: z.number().optional().nullable(),
+  rango_max: z.number().optional().nullable(),
   indicador: z.string().optional(),
   //Estos datos vienen de la API
   tipo_resultado: z.string().optional(),

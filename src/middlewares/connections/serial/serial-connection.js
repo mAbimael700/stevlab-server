@@ -10,7 +10,7 @@ function createSerialConnection(device) {
   });
 
   // Agregar un parser para leer datos de forma más fácil (opcional)
-  const parser = port.pipe(new Readline({ delimiter: "\n" }));
+  const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
   // Manejo de errores
   port.on("error", (err) => {

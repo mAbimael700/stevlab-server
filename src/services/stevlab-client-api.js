@@ -1,5 +1,5 @@
 const getDomain = () => {
-    return "labmicrolab.stevlabsoftware.com";
+    return "biotec.stevlabsoftware.com";
 };
 
 const baseURL = `https://${getDomain()}/api`;

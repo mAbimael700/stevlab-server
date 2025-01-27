@@ -36,6 +36,11 @@ function handleBuffer(data, parsingData) {
     const completeMessage = data.slice(0, delimiterIndex + matchLength);
     const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
 
+    // Extraer el ID del mensaje (MSH-10)
+    const messageId = completeMessage.match(
+      /MSH\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|(.*?)\|/
+    )?.[1];
+
     fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
     console.log(
       "¡Mensaje completo recibido!. Guardado en el archivo:\n",
@@ -49,7 +54,7 @@ function handleBuffer(data, parsingData) {
       return;
     }
 
-    return { results, consumedBytes };
+    return { results, consumedBytes, messageId };
   }
 }
 /**
@@ -64,7 +69,6 @@ function clearProcessedBuffer(bufferList, consumedBytes) {
     console.error("Error: consumedBytes no válido:", consumedBytes); // Depuración
   }
 }
-
 
 module.exports = {
   handleBuffer,

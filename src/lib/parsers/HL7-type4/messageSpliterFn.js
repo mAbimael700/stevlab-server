@@ -33,10 +33,9 @@ function getFieldDataByPosition(message, segment, position) {
 }
 
 // Función para generar un mensaje ACK
-function generateHl7Ack(messageId, status = "AA") {
-  const dateTime = generateAckDate(); // Formato HL7
-  return `MSH|^~\\&|StevlabInterfaz|ReceivingFacility|StevlabServer|Laboratorio|${dateTime}||ACK|${messageId}|P|2.5\rMSA|AA|${messageId}\r
-  MSA|${status}|${messageId}|Resultado procesado correctamente!|`;
+function generateHl7Ack(messageId, status = "AA", ) {
+  const timestamp = generateAckDate(); // Formato HL7
+  return `\x0BMSH|^~\\&|||Mindray|BS-120|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||\rMSA|${status}|${messageId}|Message accepted|||0|\r\x1C\x0D`;
 }
 
 module.exports = {

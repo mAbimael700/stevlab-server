@@ -25,11 +25,6 @@ async function dataEvent(data, device, bufferList, parsingData, socket) {
 
   // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
   if (filteredData.trim()) {
-    console.log(
-      `Mensaje entrante del equipo ${device.name}  ${
-        device.ip_address && `con IPv4: ${device.ip_address}`
-      } en el puerto ${device.port}`
-    );
     emitStatusDevice(
       {
         last_connection: new Date(),
@@ -58,17 +53,11 @@ async function dataEvent(data, device, bufferList, parsingData, socket) {
       const bufferResults = handleBuffer(accumulatedData, parsingData);
 
       if (bufferResults) {
-        const folio = await handleResults(
-          bufferResults.results,
-          sendsBySingleParameter
-        ); // Manejo ajustado
+        await handleResults(bufferResults.results, sendsBySingleParameter); // Manejo ajustado
 
         if (ackMessageFunction) {
-          socket.write(ackMessageFunction(folio));
-          console.log("ACK enviado: ", folio);
-          
+          socket.write(ackMessageFunction(bufferResults.messageId));
         }
-
         clearProcessedBuffer(bufferList, bufferResults.consumedBytes);
       } else {
         // Si no hay más mensajes completos, salir del loop
@@ -82,6 +71,7 @@ async function dataEvent(data, device, bufferList, parsingData, socket) {
         finalizeResultsOnTimeout();
       });
     }
+    
   } catch (error) {
     console.error("Error al procesar datos:", error);
   }

@@ -1,7 +1,9 @@
-const { getIO } = require("../../middlewares/servers/websocket-server");
-
 const crypto = require("node:crypto");
-const { getPendingMessages, addPendingMessage } = require("./pending-message");
+const { addPendingMessage } = require("./pending-message");
+const {
+  getIO,
+  emitMessageToSocket,
+} = require("../../middlewares/servers/Websocket");
 
 // Generar un ID único usando crypto
 function generateUniqueId() {
@@ -9,26 +11,17 @@ function generateUniqueId() {
 }
 
 function emitMessage(body, channel, event) {
-  const io = getIO();
-
-  if (!io) {
-    console.error("El servidor WebSocket no está inicializado.");
-    return;
-  }
   const messageId = generateUniqueId();
   const message = { id: messageId, channel, ...body };
 
-  io.emit(event, JSON.stringify(message));
-  // Agregar mensaje a la lista de pendientes
-  addPendingMessage({ id: messageId, message, event });
-
-  setTimeout(() => {
-    const pendingMsg = getPendingMessages();
-    if (pendingMsg.find((m) => m.id === messageId)) {
-      console.log(`No se confirmó el mensaje ${messageId}, reintentando...`);
-      io.emit(event, JSON.stringify(message));
-    }
-  }, 5000);
+  try {
+    // Emitir el mensaje a través del servicio
+    emitMessageToSocket(event, message);
+    // Agregar mensaje a la lista de pendientes
+    addPendingMessage({ ...message, event });
+  } catch (error) {
+    console.error("Error al emitir el mensaje:", error.message);
+  }
 }
 
 module.exports = {
