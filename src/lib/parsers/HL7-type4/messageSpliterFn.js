@@ -33,9 +33,17 @@ function getFieldDataByPosition(message, segment, position) {
 }
 
 // Función para generar un mensaje ACK
-function generateHl7Ack(messageId, status = "AA", ) {
+function generateHl7Ack(
+  messageId,
+  emisor = "Mindray",
+  receptor = "BS-120",
+  status = "AA",) {
   const timestamp = generateAckDate(); // Formato HL7
-  return `\x0BMSH|^~\\&|||Mindray|BS-120|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||\rMSA|${status}|${messageId}|Message accepted|||0|\r\x1C\x0D`;
+  const mshSegment = `MSH|^~\\&|||${emisor}|${receptor}|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||`
+  const msaSegment = `MSA|${status}|${messageId}|Message accepted|||0|`
+
+  const ackMessage = `\x0B${mshSegment}\r${msaSegment}\r\x1C\x0D`
+  return ackMessage;
 }
 
 module.exports = {

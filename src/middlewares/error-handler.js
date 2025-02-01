@@ -12,9 +12,8 @@ function ErrorHandler() {
     })
 
     // Manejo global de promesas no gestionadas
-    process.on('unhandledRejection', (reason, promise) => {
-        console.error('Promesa no gestionada:', promise, 'Razón:', reason, "");
-        console.log("");
+    process.on('unhandledRejection', async (reason, promise) => {
+        console.error('Promesa no gestionada:', await promise, 'Razón:', await reason);
         // Si no llamas a process.exit(), la aplicación sigue ejecutándose.
         logger.error('Promesa no gestionada: %s', reason.stack || reason);
 

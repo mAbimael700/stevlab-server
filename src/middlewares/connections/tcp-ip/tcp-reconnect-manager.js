@@ -1,4 +1,4 @@
-let reconnectIntervals = {}; // Mapeo de intervalos de reconexión
+let reconnectIntervals = new Map(); // Mapeo de intervalos de reconexión
 
 /**
  * 
@@ -6,7 +6,7 @@ let reconnectIntervals = {}; // Mapeo de intervalos de reconexión
  * @param {NodeJS.Timeout} interval 
  */
 function setReconnectInterval(idDevice, interval) {
-  reconnectIntervals[idDevice] = interval;
+  reconnectIntervals.set(idDevice, interval);
 }
 
 /**
@@ -15,14 +15,18 @@ function setReconnectInterval(idDevice, interval) {
  * @returns {NodeJS.Timeout}
  */
 function getReconnectInterval(idDevice) {
-  return reconnectIntervals[idDevice];
+  return reconnectIntervals.get(idDevice);
 }
 
-
+/**
+ * 
+ * @param {string} idDevice 
+ */
 function removeReconnectInterval(idDevice) {
-  if (reconnectIntervals[idDevice]) {
-    clearInterval(reconnectIntervals[idDevice]);
-    delete reconnectIntervals[idDevice];
+  const interval = reconnectIntervals.get(idDevice);
+  if (interval) {
+    clearInterval(interval);
+    reconnectIntervals.delete(idDevice);
   }
 }
 

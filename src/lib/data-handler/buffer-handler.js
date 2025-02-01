@@ -21,7 +21,7 @@ function handleBuffer(data, parsingData) {
     throw new Error("Parser o delimitador no definidos para el equipo");
   }
 
-  fs.appendFileSync(filePath.concat(`ss.txt`), data);
+  fs.appendFileSync(filePath.concat(`.txt`), data);
 
   // Crear la expresión regular
   const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
@@ -43,7 +43,7 @@ function handleBuffer(data, parsingData) {
 
     fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
     console.log(
-      "¡Mensaje completo recibido!. Guardado en el archivo:\n",
+      "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
       filePath.concat(`.txt`)
     );
 
@@ -67,6 +67,7 @@ function clearProcessedBuffer(bufferList, consumedBytes) {
     bufferList.consume(consumedBytes);
   } else {
     console.error("Error: consumedBytes no válido:", consumedBytes); // Depuración
+    bufferList.consume(bufferList.length)
   }
 }
 

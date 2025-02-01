@@ -21,7 +21,7 @@ const deviceSchema = z
     port: z.string().optional(),
     remote_dir: z.string().optional(),
     require_ftp_conn: z.boolean().default(false).optional(),
-    require_tcp_conn: z.boolean().default(false).optional(),
+    require_tcp_server_conn: z.boolean().default(false).optional(),
     require_serial_conn: z.boolean().default(false).optional(),
     baud_rate: z.number().optional().default(9600),
     area: z
@@ -37,7 +37,7 @@ const deviceSchema = z
     }
 
     if (DEVICES_REQUIRE_CONN_TCP_CLIENT.some((device) => obj.id === device.id)) {
-      obj.require_tcp_conn = true;
+      obj.require_tcp_server_conn = true;
     }
 
     if (DEVICES_REQUIRE_SERIAL_CONN.some(device => obj.id === device.id)) {
@@ -50,7 +50,7 @@ const deviceSchema = z
     message: "A remote direction must have added to listen in FTP Server",
     path: ["remote_dir"],
   }).
-  refine((obj) => !(obj.require_tcp_conn && !obj.ip_address && !obj.port), {
+  refine((obj) => !(obj.require_tcp_server_conn && !obj.ip_address && !obj.port), {
     message: "An ip address and port must have added to listen in TPC/IP Server",
     path: ["ip_address", "port"]
   });

@@ -77,13 +77,6 @@ function testTcpDevice(id_device) {
     // Escuchar eventos de error del socket
     socket.on("error", handlePortError);
     
-   /*  //Estado del socket
-    console.log(socket.destroyed);
-    console.log(socket.closed);
-    console.log(socket.writable) */
-    
-
-
     try {
       // Verifica si el socket está escribible (conectado)
       if (socket.writable || !socket.destroyed) {
