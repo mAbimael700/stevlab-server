@@ -1,5 +1,10 @@
 const { getPendingMessages } = require("./pending-message");
 
+let messagesToSend = 0;
+
+function resetMessagesToSend(n) {
+  messagesToSend = n;
+}
 /**
  *
  * @param {Server} io
@@ -7,23 +12,29 @@ const { getPendingMessages } = require("./pending-message");
 function startPendingMessageManager(io) {
   setInterval(() => {
     const pendingMessages = getPendingMessages();
-    
+
     if (!io) {
-      console.error("El servidor WebSocket no está inicializado c.");
+      console.error("El servidor WebSocket no está inicializado.");
       return;
     }
 
     if (pendingMessages.length > 0) {
+      if (pendingMessages.length > messagesToSend) {
+        console.info(
+          `Hay ${pendingMessages.length} mensajes pendientes por enviar`
+        );
+        messagesToSend = pendingMessages.length;
+      }
       pendingMessages.forEach((pendingMsg) => {
         // Reintentar el envío del mensaje si no ha sido confirmado
-        io.emit(pendingMsg.event, JSON.stringify(pendingMsg.message));
-        console.log(`Reintentando mensaje ${pendingMsg.id}...`);
+        io.emit(pendingMsg.event, JSON.stringify(pendingMsg));
+        //console.log(`Reintentando mensaje ${pendingMsg.id}...`);
       });
     }
-
   }, 5000); // Revisar cada 5 segundos
 }
 
 module.exports = {
   startPendingMessageManager,
+  resetMessagesToSend
 };

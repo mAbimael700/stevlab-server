@@ -1,12 +1,22 @@
 const { devicesAreas } = require("../../db/devices-areas");
 const {
   getAvailableCOMPorts,
+  testSerialDevice,
 } = require("../../middlewares/connections/serial/serial-helpers");
+const {
+  testTcpDevice,
+} = require("../../middlewares/connections/tcp-ip/tcp-helpers");
 const {
   getEquipments,
   deleteEquipmentOnServer,
   writeEquipmentOnServer,
 } = require("../../middlewares/equipment/equiment-manager");
+const {
+  getEquipmetEmitter,
+} = require("../../middlewares/equipment/equipment-events");
+const {
+  getEquipmentById,
+} = require("../../middlewares/equipment/equipment-helpers");
 const { validateDevice } = require("../../schemas/device-schema");
 
 class DevicesController {
@@ -133,6 +143,48 @@ class DevicesController {
             err.message,
         })
       );
+  }
+
+  static async testDeviceOnNetwork(req, res) {
+    const { id_device } = req.params;
+    const deviceFounded = getEquipmentById(id_device);
+    let hasConnection = false;
+
+    try {
+      if (deviceFounded) {
+        const { require_serial_conn, require_ftp_conn } = deviceFounded;
+
+        if (require_serial_conn) {
+          hasConnection = await testSerialDevice(id_device);
+        } else if (require_ftp_conn) {
+        } else {
+          hasConnection = testTcpDevice(id_device);
+        }
+
+        if (hasConnection) {
+          return res.status(200).json({
+            status: 200,
+            body: { message: "El dispositivo tiene conexión con el servidor" },
+          });
+        }
+
+        return res.status(400).json({
+          status: 400,
+          body: { message: "El dispositivo no tiene conexión con el servidor" },
+        });
+      } else {
+        return res.status(404).json({
+          status: 404,
+          error:
+            "El dispositivo proporcionado no está registrado en el servidor.",
+        });
+      }
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
   }
 }
 

@@ -28,14 +28,15 @@ function emitClosedDevice(
   );
 }
 
-function emitOpenedDevice(equipment) {
+function emitOpenedDevice(equipment, message) {
   emitStatusDevice(
     {
       require_ftp_conn: true,
       last_connection: new Date(),
       connection_status: "connected",
     },
-    equipment
+    equipment,
+    message
   );
 }
 
@@ -123,23 +124,23 @@ async function addFtpConnection(equipment, retryCount = 0) {
       }, // Permitir certificados autofirmados
     });
 
-    emitOpenedDevice(equipment);
-    console.log(
-      `Conexión FTP establecida con el equipo ${
-        equipment.name
-      } (${formatMacAddressWithSeparators(
-        equipment.mac_address
-      )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`
-    );
+    const message = `Conexión FTP establecida con el equipo ${
+      equipment.name
+    } (${formatMacAddressWithSeparators(
+      equipment.mac_address
+    )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`;
+
+    emitOpenedDevice(equipment, message);
+
+    console.info(message);
 
     // Verificar el estado de la conexión luego de acceder
     if (client.closed) {
-      console.log("La conexión se cerró inesperadamente");
+      console.warn("La conexión se cerró inesperadamente");
     } else {
-      console.log("Conexión abierta y activa");
-      emitOpenedDevice(equipment);
+      console.info("Conexión abierta y activa");
+      emitOpenedDevice(equipment, message);
     }
-
   } catch (error) {
     console.error(
       `Error al conectar FTP con el equipo ${
@@ -163,13 +164,12 @@ async function addFtpConnection(equipment, retryCount = 0) {
     );
 
     // Si hay un error y no se ha alcanzado el máximo de intentos, realizar reconexión con retardo
-      const delay = INITIAL_DELAY * 2 ** retryCount; // Incrementa el tiempo de espera exponencialmente
-      console.log(`Reintentando conexión en ${delay / 1000} segundos...`);
+    const delay = INITIAL_DELAY * 2 ** retryCount; // Incrementa el tiempo de espera exponencialmente
+    console.log(`Reintentando conexión en ${delay / 1000} segundos...`);
 
-      // Esperar el tiempo de retardo antes de reconectar
-      await new Promise((resolve) => setTimeout(resolve, delay));
-      return addFtpConnection(equipment, retryCount + 1); // Intento de reconexión
-
+    // Esperar el tiempo de retardo antes de reconectar
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    return addFtpConnection(equipment, retryCount + 1); // Intento de reconexión
   }
 }
 

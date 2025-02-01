@@ -1,4 +1,6 @@
-const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
+const {
+  formatMacAddressWithSeparators,
+} = require("../../utils/formatMacAddressWithSeparators");
 
 let equipmentsOnServer = [];
 
@@ -8,6 +10,10 @@ function setEquipments(newEquipments) {
 
 function getEquipments() {
   return equipmentsOnServer;
+}
+
+function getEquipmentById(id) {
+  return equipmentsOnServer.find((e) => e.id_device === id);
 }
 
 /**
@@ -28,7 +34,9 @@ function verifyDeviceRegistered(macAddress) {
 
   if (!foundEquipment) {
     console.log(
-      `El equipo con dirección MAC (${formatMacAddressWithSeparators(macAddress)}) no está registrado.`
+      `El equipo con dirección MAC (${formatMacAddressWithSeparators(
+        macAddress
+      )}) no está registrado.`
     );
     return false;
   }
@@ -36,4 +44,9 @@ function verifyDeviceRegistered(macAddress) {
   return foundEquipment;
 }
 
-module.exports = { setEquipments, getEquipments, verifyDeviceRegistered };
+module.exports = {
+  setEquipments,
+  getEquipments,
+  getEquipmentById,
+  verifyDeviceRegistered,
+};

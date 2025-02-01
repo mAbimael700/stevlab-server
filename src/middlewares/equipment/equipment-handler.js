@@ -2,9 +2,7 @@ const { getEquipmetEmitter } = require("./equipment-events");
 const { connectFTP, closeFTP } = require("../connections/ftp/ftp-connection");
 const { connectTCP, closeTCP } = require("../connections/tcp-ip/tcp-helpers");
 const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
-const { createSerialConnection } = require("../connections/serial/serial-connection");
-const { closeSerialConn } = require("../connections/serial/serial-helpers");
-
+const { closeSerialConn, addSerialConn } = require("../connections/serial/serial-manager");
 
 const equipmentEmitter = getEquipmetEmitter()
 // Manejar equipos agregados
@@ -23,7 +21,7 @@ equipmentEmitter.on("deviceAdded", async (newEquipment) => {
   }
 
   if (newEquipment.require_serial_conn) {
-    createSerialConnection(newEquipment)
+    addSerialConn(newEquipment)
   }
 });
 

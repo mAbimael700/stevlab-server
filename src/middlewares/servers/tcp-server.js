@@ -6,6 +6,7 @@ const {
 } = require("../connections/tcp-ip/tcp-device-validation");
 const { emitStatusDevice } = require("../../lib/websocket/emit-device-status");
 const { Server } = require("../../services/server.js");
+const { setTCPConnection } = require("../connections/tcp-ip/tcp-manager.js");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
 function initializeTcpServer({ PORT }) {
@@ -18,14 +19,15 @@ function initializeTcpServer({ PORT }) {
     async (socket) => {
       // Obtenemos la ip del socket (equipo) en la conexión
       const device = await deviceValidation(socket);
-      
+
       if (!device) {
         console.warn(
           "Conexión cerrada debido a un problema de validación del equipo."
         );
+        socket.destroy();
         return; // Detener ejecución si el dispositivo no es válido
       }
-
+      setTCPConnection(device.data.id_device, socket);
       console.log(
         `Conexión TCP/IP entrante del equipo ${device.data.name} con la dirección IPv4: ${device.ipAddress}:${socket.remotePort}`
       );
@@ -65,6 +67,8 @@ function initializeTcpServer({ PORT }) {
           },
           device.data
         );
+
+        socket.destroy()
       });
 
       // Manejador de errores

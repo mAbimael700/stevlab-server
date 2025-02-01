@@ -6,6 +6,7 @@ const {
 } = require("../../lib/websocket/pending-message.js");
 const {
   startPendingMessageManager,
+  resetMessagesToSend,
 } = require("../../lib/websocket/manage-pending-messages.js");
 const { setIO } = require("./Websocket.js");
 
@@ -42,6 +43,7 @@ function initializeWebSocket(server, io) {
     socket.on("message_confirmation", (messageId) => {
       //console.log(`Mensaje confirmado: ${messageId}`);
       deleteMessageById(messageId);
+      resetMessagesToSend(pendingMessages.length - 1);
     });
 
     socket.on("disconnect", () => {

@@ -8,6 +8,7 @@ devicesRouter.get("/ports/com", DevicesController.getSerialCOMPorts);
 devicesRouter.get("/:area", DevicesController.getDevicesByArea);
 devicesRouter.patch("/", DevicesController.setDeviceToStorage);
 devicesRouter.delete("/:mac_address", DevicesController.removeDeviceToStorage);
+devicesRouter.get("/test/:id_device", DevicesController.testDeviceOnNetwork);
 module.exports = {
   devicesRouter,
 };

@@ -4,6 +4,8 @@ const { dataEvent } = require("../../../lib/data-handler/data-event");
 const { validateParser } = require("../../../lib/validate-parser");
 
 function createSerialConnection(device) {
+
+
   const port = new SerialPort({
     path: device.port, // Cambia al 'COM#' por el puerto donde está conectado el dispositivo
     baudRate: device.baud_rate ?? 9600, // Velocidad de transmisión (ajústalo según las especificaciones del equipo)
@@ -15,6 +17,7 @@ function createSerialConnection(device) {
   // Manejo de errores
   port.on("error", (err) => {
     console.error("Error en el puerto serial:", err.message);
+    //throw new Error("Error en el puerto serial:", err.message);
   });
 
   // Evento cuando el puerto está abierto
@@ -49,7 +52,7 @@ function createSerialConnection(device) {
 
   // Evento para detectar cierre del puerto
   port.on("close", () => {
-    console.log("Puerto serial cerrado");
+    console.info(`El puerto ${device.port} del equipo ${device.name} ha sido cerrado`);
   });
 
   return port;
