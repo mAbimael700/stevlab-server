@@ -1,3 +1,4 @@
+const { Device } = require("../../../domain/Device")
 const net = require("node:net");
 const bl = require("bl");
 const { setTCPConnection, getTCPConnection } = require("./tcp-manager");
@@ -15,6 +16,11 @@ const {
     emitStatusDevice,
 } = require("../../../lib/websocket/emit-device-status");
 
+/**
+ * 
+ * @param {Device} equipment 
+ * @returns 
+ */
 async function createTCPConnection(equipment) {
     const port = equipment.port;
     const host = equipment.ip_address;
@@ -26,111 +32,103 @@ async function createTCPConnection(equipment) {
     }
 
     const client = new net.Socket();
-
-    const connect = () => {
-        console.log(
-            `Intentando conectar al equipo ${equipment.name} en ${host}:${port}...`
-        );
-        emitStatusDevice(
-            { connection_status: "connecting" },
-            equipment,
-            `Intentando conectar al equipo ${equipment.name} en ${host}:${port}...`
-        );
-
-        client.removeAllListeners(); // Limpia cualquier listener anterior
-
-        // Configurar el manejador de errores antes de llamar a connect
-        client.on("error", (err) => {
-            let msg = ``;
-
-            switch (err.code) {
-                case "ECONNREFUSED":
-                    msg = `Conexión rechazada a ${host}:${port}.`;
-                    break;
-                case "ETIMEDOUT":
-                    msg = `Tiempo de espera agotado para ${host}:${port}.`;
-                    break;
-                case "EHOSTUNREACH":
-                    msg = `No se puede alcanzar el host ${host}.`;
-                    break;
-                default:
-                    msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${err.message}`;
-            }
-
-            msg += ` Verifica el equipo ${equipment.name}.`
-
-            console.error(msg);
-            emitStatusDevice(
-                { connection_status: "disconnected", error: err.code },
-                equipment,
-                msg,
-                true
-            );
-
-            scheduleReconnect();
-        });
-
-        client.connect(port, host, async () => {
-            console.log(`Conexión exitosa con ${equipment.name} en ${host}:${port}.`);
-            emitStatusDevice(
-                { connection_status: "connected" },
-                equipment,
-                `Conexión exitosa con ${equipment.name} en ${host}:${port}.`
-            );
-
-            setTCPConnection(idDevice, client);
-            removeReconnectInterval(idDevice);
-
-            const device = await deviceValidation(client);
-            const bufferList = new bl();
-
-            // Configurar eventos
-            client.on("data", (data) => {
-                handleDataEvent(
-                    client,
-                    data,
-                    equipment,
-                    device.parsingData,
-                    bufferList
-                );
-            });
-
-            client.on("close", () =>
-                handleConnectionEvent(client, equipment, "close", scheduleReconnect)
-            );
-        });
-    };
-
-    const scheduleReconnect = () => {
-        const interval = getReconnectInterval(idDevice)
-
-        if (!interval) {
-            const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`
-            console.info(msg);
-            emitStatusDevice(
-                { connection_status: "reconnecting", last_connection: new Date() },
-                equipment,
-                msg
-            );
-
-            setReconnectInterval(
-                idDevice,
-                setInterval(() => {
-                    if (!getTCPConnection(idDevice)) {
-                        console.info(`Reintentando conexión para ${equipment.name}...`);
-                        client.removeAllListeners(); // Limpia eventos antiguos
-                        connect();
-                    }
-                }, 5000)
-            );
-        }
-    };
-
+    setTCPConnection(idDevice, client)
     try {
-        connect();
+        connect(client, equipment);
     } catch (error) {
         console.error(error.message);
     }
 }
+
+/**
+ * 
+ * @param {net.Socket} client 
+ * @param {Device} equipment 
+ */
+
+const connect = (client, equipment) => {
+    const port = equipment.port;
+    const host = equipment.ip_address;
+    const idDevice = equipment.id_device;
+
+    console.log(
+        `Intentando conectar al equipo ${equipment.name} en ${host}:${port}...`
+    );
+    emitStatusDevice(
+        { connection_status: "connecting" },
+        equipment,
+        `Intentando conectar al equipo ${equipment.name} en ${host}:${port}...`
+    );
+
+    client.removeAllListeners(); // Limpia cualquier listener anterior
+
+    // Configurar el manejador de errores antes de llamar a connect
+    client.on("error", (err) => {
+        handleConnectionEvent(client, equipment, "error", scheduleReconnect, err)
+    });
+
+    client.connect(port, host, async () => {
+        console.log(`Conexión exitosa con ${equipment.name} en ${host}:${port}.`);
+        emitStatusDevice(
+            { connection_status: "connected" },
+            equipment,
+            `Conexión exitosa con ${equipment.name} en ${host}:${port}.`
+        );
+        removeReconnectInterval(idDevice);
+
+        const device = await deviceValidation(client);
+        const bufferList = new bl();
+
+        // Configurar eventos
+        client.on("data", (data) => {
+            handleDataEvent(
+                client,
+                data,
+                equipment,
+                device.parsingData,
+                bufferList
+            );
+        });
+
+        client.on("close", () =>
+            handleConnectionEvent(client, equipment, "close", scheduleReconnect)
+        );
+    });
+};
+
+
+/**
+ * 
+ * @param {Device} equipment 
+ */
+const scheduleReconnect = (equipment) => {
+    const idDevice = equipment.id_device
+    const client = getTCPConnection(idDevice)
+    const interval = getReconnectInterval(idDevice)
+
+    if (!interval) {
+        const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`
+        console.info(msg);
+        emitStatusDevice(
+            { connection_status: "reconnecting", last_connection: new Date() },
+            equipment,
+            msg
+        );
+
+        setReconnectInterval(
+            idDevice,
+            setInterval(() => {
+                if (client) {
+                    console.info(`Reintentando conexión para ${equipment.name}...`);
+                    client.removeAllListeners(); // Limpia eventos antiguos
+                    connect(client, equipment);
+                }
+            }, 5000)
+        );
+    }
+};
+
+
+
 
 module.exports = { createTCPConnection };

@@ -1,4 +1,5 @@
 const { Socket } = require("node:net");
+const { Device } = require("../../domain/Device")
 const { SerialPort } = require("serialport");
 const { emitStatusDevice } = require("../websocket/emit-device-status");
 const { handleBuffer, clearProcessedBuffer } = require("./buffer-handler");
@@ -10,16 +11,20 @@ const {
 const { setupTimeout } = require("./timeout-handler");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
+
+/**
+ * @type {number | null}
+ */
 let lastMessageTime = null;
 
 /**
  *
- * @param {*} data
- * @param {*} device
+ * @param {string} data
+ * @param {Device} device
  * @param {BufferList} bufferList
- * @param {*} parsingData
+ * @param {object} parsingData
  * @param {Socket | SerialPort} socket
- * @returns
+ * 
  */
 async function dataEvent(data, device, bufferList, parsingData, socket) {
   const filteredData = data.toString().replace(/\x02/g, "");
@@ -32,7 +37,7 @@ async function dataEvent(data, device, bufferList, parsingData, socket) {
         last_connection: new Date(),
       },
       device,
-      `Mensaje entrante del equipo ${device.name}  ${device.ip_address && `con IPv4: ${device.ip_address}`
+      `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
       } en el puerto ${device.port}`
     );
   }
@@ -59,7 +64,7 @@ async function dataEvent(data, device, bufferList, parsingData, socket) {
         if (ackMessageFunction) {
           socket.write(ackMessageFunction(bufferResults.messageId));
         }
-        
+
         clearProcessedBuffer(bufferList, bufferResults.consumedBytes);
       } else {
         // Si no hay más mensajes completos, salir del loop
@@ -75,8 +80,7 @@ async function dataEvent(data, device, bufferList, parsingData, socket) {
     }
 
   } catch (error) {
-    console.error(error)
-    console.error("Error al procesar datos:", error.message);
+    console.error("Error al procesar datos:", error);
     bufferList.consume(bufferList.length)
   }
 }

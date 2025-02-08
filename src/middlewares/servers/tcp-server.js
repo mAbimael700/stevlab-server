@@ -1,6 +1,6 @@
 const net = require("node:net");
 const bl = require("bl");
-const { handleDataEvent } = require("../connections/tcp-ip/tcp-events-handler");
+const { handleDataEvent, handleConnectionEvent } = require("../connections/tcp-ip/tcp-events-handler");
 const {
   deviceValidation,
 } = require("../connections/tcp-ip/tcp-device-validation");
@@ -72,25 +72,7 @@ function initializeTcpServer({ PORT }) {
       });
 
       // Manejador de errores
-      socket.on("error", (err) => {
-        if (err.code === "ECONNRESET") {
-          console.warn(
-            ` Conexión reseteada por el cliente ${device.ipAddress}:${socket.remotePort}`
-          );
-        } else {
-          emitStatusDevice(
-            {
-              last_connection: new Date(),
-              connection_status: "disconnected",
-            },
-            device.data,
-            `Error en la conexión: ${err.message}`,
-            true
-          );
-          console.error("Error en la conexión:", err);
-          socket.destroy(); // Cerrar la conexión en caso de error
-        }
-      });
+      socket.on("error", (err) => handleConnectionEvent(socket, device, "error", reconnect, err));
 
       socket.on("close", () => {
         console.log("Conexión cerrada");

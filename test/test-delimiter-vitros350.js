@@ -1,3 +1,4 @@
+const { parser} = require("../src/lib/parsers/Vitros350/parser")
 function parseMessages(data) {
   const regex = /!000a[\s\S]*?(?=!000a|$)/g; // Divide por bloques empezando por !000a
   return data.split(regex);
@@ -195,9 +196,18 @@ const input = `
 !010fLDH   299.  U/L     2236
 !011h0007E2
 `;
-const resultados = dividirMensajes(input);
+
+
+const d = `
+!000a0200491552  17205925010601             11 1               FF01.000  33
+!001fGLU 99999.99mg/dL   6056
+!002fUREA99999.99mg/dL   607C
+!003fCREA99999.99mg/dL   606B
+!004h0049EA`
+
+const resultados = dividirMensajes(d);
 
 resultados.forEach((resultado) => {
-  console.log(JSON.stringify(parseMessage2(resultado), null, 2));
+  console.log(JSON.stringify(parser(resultado), null, 2));
   console.log("-------------");
 });

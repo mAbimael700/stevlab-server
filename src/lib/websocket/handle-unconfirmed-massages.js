@@ -16,7 +16,6 @@ function processPendingMessages(io) {
   pendingMessages.forEach((msg) => {
     console.log(`Reintentando envío del mensaje ${msg.id}`);
     io.emit(msg.event, JSON.stringify(msg.message));
-    
   });
 }
 

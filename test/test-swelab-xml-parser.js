@@ -744,18 +744,21 @@ const { exec } = require("node:child_process");
 
 const malformedXml = `
 <sample>
-<instrinfo>
+<smpinfo>
 <p><n>ID</n><v>1159</v></p>
 <p><n>SEQ</n><v>9094</v></p>
 <p><n>DATE</n><v>2024-12-18T15:19:17</v></p>
-</instrinfo>
+</smpinfo>
 <smpresults>
 <p><n>HCT</n><v>64.3</v><l>35.0</l><h>55.0</h></p>
+<p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p>
 <p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p>
 </smpresults>
 </sample>`;
 
-let xml;
+
+console.log(JSON.stringify(parser(malformedXml), null, 2))
+/* let xml;
 exec("tidy -xml -indent -wrap 0 -quiet", (error, stdout, stderr) => {
   if (error) {
     console.error("Error:", stderr);
@@ -765,3 +768,4 @@ exec("tidy -xml -indent -wrap 0 -quiet", (error, stdout, stderr) => {
     console.log(JSON.stringify(parser(xml), null, 2));
   }
 }).stdin.end(malformedXml);
+ */

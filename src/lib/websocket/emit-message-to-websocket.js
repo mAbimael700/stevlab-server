@@ -10,6 +10,14 @@ function generateUniqueId() {
   return crypto.randomUUID(); // Genera un UUID seguro
 }
 
+
+/**
+ * Emite un mensaje al Websocket al evento proporcionado
+ * 
+ * @param {*} body 
+ * @param {string} channel 
+ * @param {"device-status" | "message"} event 
+ */
 function emitMessage(body, channel, event) {
   const messageId = generateUniqueId();
   const message = { id: messageId, channel, ...body };

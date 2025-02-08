@@ -1,3 +1,4 @@
+const { Server } = require("socket.io");
 const { getPendingMessages } = require("./pending-message");
 
 let messagesToSend = 0;
@@ -6,7 +7,7 @@ function resetMessagesToSend(n) {
   messagesToSend = n;
 }
 /**
- *
+ * Inicializa el manejador de envio de mensajes pendientes por enviar al WebSocket
  * @param {Server} io
  */
 function startPendingMessageManager(io) {
@@ -28,7 +29,7 @@ function startPendingMessageManager(io) {
       pendingMessages.forEach((pendingMsg) => {
         // Reintentar el envío del mensaje si no ha sido confirmado
         io.emit(pendingMsg.event, JSON.stringify(pendingMsg));
-        //console.log(`Reintentando mensaje ${pendingMsg.id}...`);
+     
       });
     }
   }, 5000); // Revisar cada 5 segundos

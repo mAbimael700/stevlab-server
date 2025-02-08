@@ -16,7 +16,6 @@ async function deviceValidation(socket) {
   if (currentRemoteIpAddress.startsWith("::ffff:")) {
     currentRemoteIpAddress = currentRemoteIpAddress.split("::ffff:")[1];
   }
-
   
   // Obtener la dirección MAC utilizando la dirección IP remota
   const currentRemoteMacAddress = await getMacAddress(currentRemoteIpAddress);

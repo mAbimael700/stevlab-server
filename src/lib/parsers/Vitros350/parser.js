@@ -59,7 +59,6 @@ function parser(message) {
 
       currentResult.parametros.push({
         clave: nombre,
-        clave_sistema: otroCampo,
         nombre,
         valor: valor.toFixed(2),
         unidad_medida: unidad || "N/A",

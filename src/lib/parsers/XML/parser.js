@@ -2,13 +2,13 @@ const { XMLParser } = require("fast-xml-parser");
 const { DYMIND } = require("../../../constants/dictionaries/DYMIND");
 //const xml2js = require("xml2js");
 
-/* const options = {
+const options = {
   ignoreAttributes: false,
-  allowBooleanAttributes: true,
-  parseTagValue: false, // No parsear valores para evitar errores
+   allowBooleanAttributes: true, 
+  parseTagValue: false,  // No parsear valores para evitar errores
   trimValues: true,
-  stopNodes: ["*.p"], // Ignorar errores dentro de etiquetas <p>
-}; */
+  /* stopNodes: ["*.p"],  */// Ignorar errores dentro de etiquetas <p>
+}; 
 
 /**
  *
@@ -18,8 +18,7 @@ const { DYMIND } = require("../../../constants/dictionaries/DYMIND");
  */
 const parser = (message, dictionary = DYMIND) => {
   //const xmlParser = new xml2js.Parser({ explicitArray: false, trim: true }).parseString;
-  const xmlParser = new XMLParser();
-  //let xmlMsgParsed = parser(message);
+  const xmlParser = new XMLParser(options);
   let xmlMsgParsed;
 
   try {
@@ -56,7 +55,7 @@ const parser = (message, dictionary = DYMIND) => {
 
     switch (key) {
       case "smpinfo":
-        fecha = parameters.find((p) => p.n === "DATE")?.v || null;
+        fecha = parameters.find((p) => p.n === "DATE")?.v ;
         id = parameters.find((p) => p.n === "ID")?.v || null;
         nombre_paciente = parameters.find((p) => p.n === "ID2")?.v || null;
         break;
@@ -66,8 +65,8 @@ const parser = (message, dictionary = DYMIND) => {
           clave_sistema: dictionary[parameter.n],
           nombre: parameter.n,
           valor: parameter.v?.toString(),
-          rango_min: parameter.l || null,
-          rango_max: parameter.h || null,
+          rango_min: parseFloat(parameter.l) || null,
+          rango_max: parseFloat(parameter.h) || null,
         }));
         break;
 

@@ -1,7 +1,7 @@
 let pendingMessages = []; // Stack de resultados pendientes
 
 /**
- * 
+ * Retorna los mensajes Websocket no confirmados por el cliente
  * @returns {{id:string, event: string, body: object}[]}
  */
 function getPendingMessages() {
@@ -9,7 +9,7 @@ function getPendingMessages() {
 }
 
 /**
- * 
+ * Agrega un mensaje al stack de mensajes pendientes por enviar al Websocket
  * @param {{id:string, event: string, body: object}} message 
  */
 function addPendingMessage(message) {
@@ -17,7 +17,7 @@ function addPendingMessage(message) {
 }
 
 /**
- * 
+ * Elimina un mensaje del stack de mensajes pendientes por enviar al Websocket
  * @param {string} id 
  */
 function deleteMessageById(id) {

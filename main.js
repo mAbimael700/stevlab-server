@@ -20,8 +20,8 @@ const createWindow = () => {
 
 
   overrideConsole(mainWindow); // Sobrescribe los métodos de consola al inicio
-  mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
-  //mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
+  //mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
+  mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
   tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
 
   // Crear un menú contextual para la bandeja

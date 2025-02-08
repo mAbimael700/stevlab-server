@@ -1,4 +1,8 @@
-let reconnectIntervals = new Map(); // Mapeo de intervalos de reconexión
+/**
+ * Mapeo de intervalos de reconexión de los clientes TCP
+ *  @type {Map<string, NodeJS.Timeout>}
+ */
+let reconnectIntervals = new Map(); // 
 
 /**
  * 

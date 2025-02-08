@@ -1,7 +1,8 @@
 const { Socket } = require("node:net");
 
 /**
- * Devuelve todos los clientes TCP/IP en memória en el servidor
+ * Clientes TCP/IP almacenados en memória en el servidor
+ * @type {Map<string, Socket>}
  */
 const tcpConnections = new Map(); // Mapeo de conexiones TCP activas
 
@@ -17,7 +18,7 @@ function setTCPConnection(idDevice, connection) {
 /**
  * Devuelve el cliente TCP/IP del equipo
  * @param {String} idDevice - Id del equipo de laboratorio
- * @returns {Socket}
+ * @returns {Socket | undefined}
  */
 function getTCPConnection(idDevice) {
   return tcpConnections.get(idDevice);

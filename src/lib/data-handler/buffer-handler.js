@@ -6,6 +6,12 @@ const { format } = require("date-fns");
 const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
 const { BufferList } = require("bl/BufferList");
 
+/**
+ * 
+ * @param {string} data 
+ * @param {*} parsingData 
+ * @returns 
+ */
 function handleBuffer(data, parsingData) {
   const { parser, CHAR_DELIMITER } = parsingData;
 
