@@ -713,7 +713,7 @@ const nw = `
 <p><n>RBC</n><v>7.03</v><l>3.50</l><h>5.50</h></p>
 <p><n>MCV</n><v>91.5</v><l>75.0</l><h>100.0</h></p>
 <p><n>HCT</n><v>64.3</v><l>35.0</l><h>55.0</h></p>
-<p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p>
+<p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p
 <p><n>MCHC</n><v>32.8</v><l>31.0</l><h>38.0</h></p>
 <p><n>RDWR</n><v>12.1</v><l>11.0</l><h>16.5</h></p>
 <p><n>RDWA</n><v>52.3</v><l>30.0</l><h>150.0</h></p>
@@ -739,4 +739,29 @@ const nw = `
 </sample>
 <!--:End:Msg:1:0:-->
 `;
-console.log(JSON.stringify(parser(nw), null, 2));
+
+const { exec } = require("node:child_process");
+
+const malformedXml = `
+<sample>
+<instrinfo>
+<p><n>ID</n><v>1159</v></p>
+<p><n>SEQ</n><v>9094</v></p>
+<p><n>DATE</n><v>2024-12-18T15:19:17</v></p>
+</instrinfo>
+<smpresults>
+<p><n>HCT</n><v>64.3</v><l>35.0</l><h>55.0</h></p>
+<p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p>
+</smpresults>
+</sample>`;
+
+let xml;
+exec("tidy -xml -indent -wrap 0 -quiet", (error, stdout, stderr) => {
+  if (error) {
+    console.error("Error:", stderr);
+  } else {
+    console.log("Fixed XML:", stdout);
+    xml = stdout;
+    console.log(JSON.stringify(parser(xml), null, 2));
+  }
+}).stdin.end(malformedXml);

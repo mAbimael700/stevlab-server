@@ -1,38 +1,50 @@
 const { XMLParser } = require("fast-xml-parser");
 const { DYMIND } = require("../../../constants/dictionaries/DYMIND");
+//const xml2js = require("xml2js");
+
+/* const options = {
+  ignoreAttributes: false,
+  allowBooleanAttributes: true,
+  parseTagValue: false, // No parsear valores para evitar errores
+  trimValues: true,
+  stopNodes: ["*.p"], // Ignorar errores dentro de etiquetas <p>
+}; */
 
 /**
- * 
- * @param {string} message 
- * @param {Object} dictionary 
- * @returns 
+ *
+ * @param {string} message
+ * @param {Object} dictionary
+ * @returns
  */
 const parser = (message, dictionary = DYMIND) => {
+  //const xmlParser = new xml2js.Parser({ explicitArray: false, trim: true }).parseString;
+  const xmlParser = new XMLParser();
+  //let xmlMsgParsed = parser(message);
+  let xmlMsgParsed;
 
-  const parser = new XMLParser();
-  let xmlMsgParser = parser.parse(message)
-
-  /* try {
-    xmlMsgParser = parser.parse(message);
+  try {
+    xmlMsgParsed = xmlParser.parse(message);
   } catch (error) {
     console.error("Error al parsear el XML dado:", error.message);
     throw new Error(`Error al parsear el XML dado: ${error.message}`);
   }
 
   // Validar que el resultado del parseo no sea nulo o indefinido
-  if (!xmlMsgParser) {
+  if (!xmlMsgParsed) {
     console.error("El XML parseado está vacío o es inválido.");
     throw new Error("El XML parseado está vacío o es inválido.");
   }
 
   // Validar la existencia del nodo 'sample'
-  if (!xmlMsgParser.sample) {
-    console.error("La estructura del XML no contiene un nodo 'sample'. XML recibido:", JSON.stringify(xmlMsgParser, null, 2));
+  if (!xmlMsgParsed.sample) {
+    console.error(
+      "La estructura del XML no contiene un nodo 'sample'. XML recibido:",
+      JSON.stringify(xmlMsgParsed, null, 2)
+    );
     throw new Error("La estructura del XML no contiene un nodo 'sample'.");
-  }  */
+  }
 
-  const { sample } = xmlMsgParser
-
+  const { sample } = xmlMsgParsed;
 
   let fecha,
     id,
@@ -67,8 +79,8 @@ const parser = (message, dictionary = DYMIND) => {
 
   return [
     {
-      id: id.toString(),
-      folio: id.toString(),
+      id: id?.toString(),
+      folio: id?.toString(),
       fecha: fecha ? new Date(fecha) : null,
       nombre_paciente,
       parametros,
