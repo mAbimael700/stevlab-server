@@ -26,8 +26,7 @@ function handleDataEvent(socket, data, device, parsingData, bufferList) {
         {
           last_connection: new Date(),
         },
-        `Mensaje entrante del equipo ${device.name} ${
-          device.ip_address && `con IPv4: ${device.ip_address}`
+        `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
         } en el puerto ${device.port}`
       );
     }
@@ -61,23 +60,23 @@ function handleConnectionEvent(
 
       switch (error.code) {
         case "ECONNREFUSED":
-          msg = `Conexión rechazada a ${host}:${port}.`;
+          msg = `Conexión rechazada a ${equipment.ip_address}:${equipment.port}.`;
           break;
         case "ETIMEDOUT":
-          msg = `Tiempo de espera agotado para ${host}:${port}.`;
+          msg = `Tiempo de espera agotado para ${equipment.ip_address}:${equipment.port}.`;
           break;
         case "EHOSTUNREACH":
-          msg = `No se puede alcanzar el host ${host}.`;
+          msg = `No se puede alcanzar el host ${equipment.ip_address} en el puerto ${equipment.port}.`;
           break;
         default:
-          msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${err.message}`;
+          msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${error.message}`;
       }
 
       msg += ` Verifica el equipo ${equipment.name}.`;
 
       console.error(msg);
       emitStatusDevice(
-        { connection_status: "disconnected", error: err.code },
+        { connection_status: "disconnected", error: error.code },
         equipment,
         msg,
         true
@@ -87,8 +86,7 @@ function handleConnectionEvent(
     default:
       break;
   }
-
-  removeTCPConnection(equipment.id_device);
+  
   scheduleReconnect(equipment);
 }
 module.exports = {

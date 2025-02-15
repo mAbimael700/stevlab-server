@@ -18,7 +18,7 @@ function generateUniqueId() {
  * @param {string} channel 
  * @param {"device-status" | "message"} event 
  */
-function emitMessage(body, channel, event) {
+async function emitMessage(body, channel, event) {
   const messageId = generateUniqueId();
   const message = { id: messageId, channel, ...body };
 

@@ -55,15 +55,24 @@ const deviceSchema = z
     path: ["ip_address", "port"]
   });
 
+
+const deviceConfiguration = z.array(deviceSchema)
+
 function validateDevice(device) {
   const result = deviceSchema.safeParse(device);
-
   console.log(result.error?.errors);
+  return result
+}
 
+function validateDeviceConfiguration(devices) {
+  const result = deviceConfiguration.safeParse(devices);
+
+  if (!result.success) { console.log(result.error?.errors); }
 
   return result
 }
 
 module.exports = {
   validateDevice,
+  validateDeviceConfiguration
 };

@@ -2,6 +2,7 @@ const { SerialPort, ReadlineParser } = require("serialport");
 const bl = require("bl");
 const { dataEvent } = require("../../../lib/data-handler/data-event");
 const { validateParser } = require("../../../lib/validate-parser");
+const { emitStatusDevice } = require("../../../lib/websocket/emit-device-status");
 
 function createSerialConnection(device) {
 
@@ -25,16 +26,28 @@ function createSerialConnection(device) {
     console.log(
       `Puerto serial abierto para el equipo ${device.name} en el puerto ${device.port}`
     );
-
     // Enviar un mensaje al equipo (opcional)
     port.write("Comando de prueba\n", (err) => {
       if (err) {
-        return console.error(
-          `Error al enviar datos al equipo ${device.name} en el puerto ${device.port}:`,
-          err.message
-        );
+        const msg = `Error al enviar datos al equipo ${device.name} en el puerto ${device.port}: ${err.message}`
+
+        emitStatusDevice({
+          connection_status: "disconnected",
+        }, device,
+          msg,
+          true
+        )
+        return console.error(msg);
       }
-      console.log("Comando enviado");
+
+      emitStatusDevice({
+        connection_status: "connected",
+        last_connection: new Date()
+      }, device,
+        `Conexión exitosa con el equipo ${device.name} en el puerto ${device.port}.`
+      )
+
+      console.info(`Conexión exitosa con ${device.name} en el puerto ${device.port}.`);
     });
   });
 
@@ -47,12 +60,18 @@ function createSerialConnection(device) {
 
   parser.on("data", (data) => {
     //console.log("Datos recibidos:", data.toString());
-    dataEvent(data, device, bufferList, parsingData, port);
+    dataEvent(data, bufferList, parsingData, port);
   });
 
   // Evento para detectar cierre del puerto
   port.on("close", () => {
     console.info(`El puerto ${device.port} del equipo ${device.name} ha sido cerrado`);
+    emitStatusDevice({
+      connection_status: "disconnected",
+    }, device,
+      msg,
+      true
+    )
   });
 
   return port;

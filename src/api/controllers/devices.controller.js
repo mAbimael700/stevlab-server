@@ -1,10 +1,12 @@
 const { devicesAreas } = require("../../db/devices-areas");
+const { closeFTP } = require("../../middlewares/connections/ftp/ftp-connection");
 const {
   getAvailableCOMPorts,
   testSerialDevice,
 } = require("../../middlewares/connections/serial/serial-helpers");
 const {
   testTcpDevice,
+  closeTCP,
 } = require("../../middlewares/connections/tcp-ip/tcp-helpers");
 const {
   getEquipments,
@@ -185,6 +187,43 @@ class DevicesController {
         error: error.message,
       });
     }
+  }
+
+  static async closeConnection(req, res) {
+    const { id_device } = req.params;
+
+    const device = getEquipmentById(id_device)
+    if (device) {
+      try {
+        if (device.require_ftp_conn) {
+          closeFTP(device.mac_address)
+        }
+        else if (device.require_serial_conn) {
+
+        } else {
+          closeTCP(device)
+        }
+
+        return res.status(200).json({
+          status: 200,
+          body: { message: "La conexión del dispositivo ha sido cerrada satisfactoriamente del servidor" },
+        })
+
+      } catch (error) {
+        console.log(error);
+
+        return res.status(400).json({
+          status: 400,
+          body: { message: error.message },
+        })
+      }
+    } else {
+      return res.status(404).json({
+        status: 404,
+        body: { message: "No existe el equipo proporcionado" },
+      })
+    }
+
   }
 }
 

@@ -1,30 +1,27 @@
-const {Device} = require("../../domain/Device")
+const { Device } = require("../../domain/Device");
+const { DeviceConnectionStatus } = require("../../domain/DeviceConnectionStatus");
 const { emitMessage } = require("./emit-message-to-websocket");
-/**
- * @type {{
- *  last_connection?: Date,
- *  connection_status: "connected" | "connecting" | "disconnected" | "reconnecting"
- * }}
- */
-let DeviceStatusData
 
 /**
  * Emite al servidor Websocket una actualización de estado de conexión del equipo
  * 
- * @param {DeviceStatusData} data 
+ * @param {DeviceConnectionStatus} status 
  * @param {Device} device 
  * @param {string} message 
  * @param {boolean} error 
  */
 function emitStatusDevice(
-  data,
+  status,
   device,
   message = `El estado de conexión del equipo ${device.name} se actualizó`,
   error = false
 ) {
 
-  emitMessage({ data, device, message, error }, null, "device-status")
-  
+  //if (status.lastConnection) device.status.setLastConnection(status.getconnectionStatus())
+  //if (status.connectionStatus) device.status.setConnectionStatus(status.getconnectionStatus())
+
+  emitMessage({ data: status, device, message, error }, null, "device-status")
+
 }
 
 module.exports = {

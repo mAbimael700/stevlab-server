@@ -1,11 +1,9 @@
 const fs = require("node:fs");
-const { DEVICES_DIR, CONFIG_DIR } = require("../../constants/CONFIG_DIR");
+const { DEVICES_DIR } = require("../../constants/CONFIG_DIR");
 const { getEquipmetEmitter } = require("./equipment-events");
-const { setEquipments, getEquipments } = require("./equipment-helpers");
+const { setEquipments, getEquipments } = require("./equipment-helper copy");
 const crypto = require("node:crypto");
-const {
-  formatMacAddressWithSeparators,
-} = require("../../utils/formatMacAddressWithSeparators");
+const { validateDeviceConfiguration } = require("../../schemas/device-schema");
 
 
 const equipmentEmitter = getEquipmetEmitter();
@@ -14,46 +12,19 @@ let previousEquipments = [];
 // Función para leer equipos desde el archivo
 function readDevicesFromFile() {
   try {
-    if (!fs.existsSync(CONFIG_DIR)) {
-      console.warn(`La carpeta de configuración no existe: ${CONFIG_DIR}`);
-      fs.mkdirSync(CONFIG_DIR, { recursive: true });
-    }
 
-    if (!fs.existsSync(DEVICES_DIR)) {
-      console.warn(
-        `El archivo de configuración de los equipos no existe. Creando el archivo ${DEVICES_DIR}`
-      );
-      fs.writeFileSync(DEVICES_DIR, JSON.stringify({ devices: [] }, null, 2));
-    }
+    //Pendiente: Validar si los directorios de config y el archivo de devices existen
     const data = fs.readFileSync(DEVICES_DIR, "utf8");
-    const devices = JSON.parse(data)?.devices ?? [];
-    setEquipments(devices); // Actualiza la lista en equipment-helpers
+    const devices = JSON.parse(data)?.devices;
+    const result = validateDeviceConfiguration(devices)
 
-    const equipments = getEquipments();
-
-    const equipmentsOnServer = equipments.map((e) => ({
-      Nombre: e.name,
-      "Dirección MAC": e.mac_address && formatMacAddressWithSeparators(e.mac_address),
-      Área: e.area.Nombre_area,
-    }));
-
-    if (equipments.length > 0) {
-      console.log("--------------Equipos cargados-----------------");
-      // Convertimos el array a un objeto
-      const equipmentsAsObject = Object.fromEntries(
-        equipmentsOnServer.map((equipment, index) => [
-          `Equipo ${index + 1}`,
-          equipment,
-        ])
-      );
-
-      // Usamos console.table con el objeto
-      console.table(equipmentsAsObject);
-    } else {
-      console.info("No existen equipos registrados en el servidor.");
+    if (result.success) {
+      setEquipments(result.data); // Actualiza la lista en equipment-helpers
     }
+
+
   } catch (error) {
-    console.error("Error al leer el archivo de dispositivos:", error.message);  
+    console.error("Error al leer el archivo de dispositivos:", error.message);
   }
 }
 
@@ -62,9 +33,11 @@ function detectChangesAndEmitEvents() {
   const oldEquipments = [...previousEquipments];
 
   const equipmentsOnServer = getEquipments();
+
+
   equipmentsOnServer.forEach((newEquipment) => {
     const oldEquipment = oldEquipments.find(
-      (equip) => equip.mac_address === newEquipment.mac_address
+      (equip) => equip.id_device === newEquipment.id_device
     );
 
     if (!oldEquipment) {
@@ -112,6 +85,7 @@ function writeAndRefreshEquipments(newEquipments) {
       DEVICES_DIR,
       JSON.stringify({ devices: newEquipments }, null, 2)
     );
+
     setEquipments(newEquipments);
   } catch (error) {
     console.error(

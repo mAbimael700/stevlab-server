@@ -14,6 +14,11 @@ function getIO() {
   return io;
 }
 
+/**
+ * 
+ * @param {string} event 
+ * @param {*} message 
+ */
 function emitMessageToSocket(event, message) {
   const ioInstance = getIO();
   ioInstance.emit(event, JSON.stringify(message));

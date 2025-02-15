@@ -1,5 +1,6 @@
 const { SerialPort } = require("serialport");
 const { createSerialConnection } = require("./serial-connection");
+const { emitStatusDevice } = require("../../../lib/websocket/emit-device-status");
 let serialConnections = new Map();
 
 /**
@@ -27,6 +28,10 @@ function addSerialConn(device) {
     serialConnections.set(device.id_device, port);
     console.log("Conexión serial establecida en el puerto " + port.path);
 
+
+    /* emitStatusDevice({ connection_status: "connected" }, device,
+      `Conexión exitosa con ${equipment.name} en el puerto ${port}.`
+    ) */
     return;
   }
 

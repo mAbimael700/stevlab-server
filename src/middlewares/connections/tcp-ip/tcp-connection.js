@@ -22,8 +22,6 @@ const {
  * @returns 
  */
 async function createTCPConnection(equipment) {
-    const port = equipment.port;
-    const host = equipment.ip_address;
     const idDevice = equipment.id_device;
 
     if (getTCPConnection(idDevice)) {
@@ -31,9 +29,9 @@ async function createTCPConnection(equipment) {
         return; // Evita crear múltiples clientes para el mismo dispositivo
     }
 
-    const client = new net.Socket();
-    setTCPConnection(idDevice, client)
     try {
+        const client = new net.Socket();
+        setTCPConnection(idDevice, client)
         connect(client, equipment);
     } catch (error) {
         console.error(error.message);
@@ -75,7 +73,7 @@ const connect = (client, equipment) => {
             `Conexión exitosa con ${equipment.name} en ${host}:${port}.`
         );
         removeReconnectInterval(idDevice);
-
+        client.connecting = false
         const device = await deviceValidation(client);
         const bufferList = new bl();
 
@@ -101,13 +99,15 @@ const connect = (client, equipment) => {
  * 
  * @param {Device} equipment 
  */
-const scheduleReconnect = (equipment) => {
-    const idDevice = equipment.id_device
-    const client = getTCPConnection(idDevice)
-    const interval = getReconnectInterval(idDevice)
+const scheduleReconnect = (equipment, maxRetries = 5) => {
+    const idDevice = equipment.id_device;
+    const client = getTCPConnection(idDevice);
+    const interval = getReconnectInterval(idDevice);
 
     if (!interval) {
-        const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`
+        let retryCount = 0; // Contador de intentos de reconexión
+
+        const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`;
         console.info(msg);
         emitStatusDevice(
             { connection_status: "reconnecting", last_connection: new Date() },
@@ -115,16 +115,34 @@ const scheduleReconnect = (equipment) => {
             msg
         );
 
-        setReconnectInterval(
-            idDevice,
-            setInterval(() => {
-                if (client) {
-                    console.info(`Reintentando conexión para ${equipment.name}...`);
-                    client.removeAllListeners(); // Limpia eventos antiguos
-                    connect(client, equipment);
+        client.connecting = true
+
+        if (client) {
+            const reconnectInterval = setInterval(() => {
+                retryCount++; // Incrementar el contador de intentos
+
+                if (retryCount > maxRetries) {
+                    // Si se excede el límite de intentos
+                    clearInterval(reconnectInterval); // Detener el intervalo
+                    setReconnectInterval(idDevice, null); // Limpiar el intervalo almacenado
+
+                    const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${equipment.name}.`;
+                    console.error(errorMsg);
+                    emitStatusDevice(
+                        { connection_status: "disconnected", last_connection: new Date() },
+                        equipment,
+                        errorMsg
+                    );
+                    return;
                 }
-            }, 5000)
-        );
+
+                console.info(`Reintentando conexión para ${equipment.name} (Intento ${retryCount}/${maxRetries})...`);
+                client.removeAllListeners(); // Limpia eventos antiguos
+                connect(client, equipment); // Intentar reconectar
+            }, 5000);
+
+            setReconnectInterval(idDevice, reconnectInterval); // Almacenar el intervalo
+        }
     }
 };
 

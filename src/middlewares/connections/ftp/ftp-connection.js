@@ -1,10 +1,9 @@
 const { addFtpConnection, getFtpConnections, deleteFtpConnection } = require("./ftp-helpers");
-const { startMonitoringDirectory } = require("./ftp-manager");
+const { startMonitoringDirectory } = require("./ftp-directory-manager");
 
 async function connectFTP(equipment) {
     await addFtpConnection(equipment);
     await startMonitoringDirectory(equipment);
-    
 }
 
 // Función para cerrar la conexión FTP
