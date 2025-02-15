@@ -49,6 +49,7 @@ async function deviceValidation(socket) {
     return null;
   }
 
+
   return {
     data: registeredDevice,
     parsingData: deviceParsingData,

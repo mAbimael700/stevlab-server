@@ -1,5 +1,5 @@
 const { z } = require("zod");
-const { getPacienteByFolioMuestra } = require("../services/paciente-api");
+const { transformData } = require("../lib/transform-result/transform-result");
 
 const parameterSchema = z.object({
   clave: z.string().optional(),
@@ -56,75 +56,18 @@ const resultSchema = z.object({
 
 const responseSchema = z.array(resultSchema);
 
-// Función para manejar errores de la API
-async function fetchPacienteData(folio) {
-  try {
-    const { recepcions } = await getPacienteByFolioMuestra(folio);
-
-    if (!recepcions || !recepcions[folio]) {
-      throw new Error(
-        `Datos de recepción no encontrados para el folio ${folio}`
-      );
-    }
-
-    return recepcions[folio];
-  } catch (error) {
-    console.error(`Error al obtener datos del paciente: ${error.message}`);
-    return null; // Devuelve null si falla
-  }
-}
-
-// Función para transformar datos
-async function transformData(obj) {
-  const { folio } = obj;
-  const data = await fetchPacienteData(folio);
-
-  if (!data) {
-    throw new Error(
-      "No se pudieron transformar los datos por falta de información"
-    );
-  }
-
-  const { recepcion, paciente: p, areas: a, estudios: e, analitos } = data;
-
-  const [paciente] = p;
-  const [areas] = a;
-  const [estudios] = e;
-
-  return {
-    ...obj,
-    paciente: {
-      nombre: paciente.paciente,
-      edad: parseInt(paciente.edad),
-      sexo: paciente.sexo,
-      fecha_nacimiento: paciente.nacimiento,
-    },
-    area: areas.descripcion,
-    estudio: {
-      clave: estudios.clave,
-      descripcion: estudios.descripcion,
-    },
-    parametros: obj.parametros.map((param) => {
-      const analito = analitos.find((a) => a.clave === param.nombre);
-      return {
-        ...param,
-        descripcion: analito ? analito.descripcion : param.descripcion,
-      };
-    }),
-  };
-}
 
 /**
  * Valida que el resultado parseado sea el correcto y consulta la información en la API
  * del sistema Stevlab para obtener la información del paciente con el folio dado.
- * @param {*} parsedResult 
- * @returns 
+ * @param {*} parsedResult
+ * @returns
  */
 async function validateResponse(parsedResult) {
   const validation = await responseSchema.safeParseAsync(parsedResult);
 
   if (!validation.success) {
-    console.log("Datos que llegaron ");
+    console.log("Datos parseados recibidos: ");
     console.log(JSON.stringify(parsedResult, null, 2));
     console.error("Errores de validación:", validation.error.errors);
     return { success: false, errors: validation.error.errors };
@@ -136,13 +79,13 @@ async function validateResponse(parsedResult) {
         return await transformData(obj);
       } catch (error) {
         console.warn(
-          `Error transformando el objeto con id ${obj.id}: ${error.message}`
+          `Error transformando el objeto con folio ${obj.folio}: ${error.message}`
         );
         return obj; // Retorna el objeto original si falla la transformación
       }
     })
   );
-
+  
   return { success: true, data: results }; // Siempre retorna success
 }
 

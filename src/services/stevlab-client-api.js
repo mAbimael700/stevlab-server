@@ -5,6 +5,7 @@ const getDomain = () => {
 const baseURL = `https://${getDomain()}/api`;
 
 const fetchApiClient = async (url, options = {}) => {
+    
     const response = await fetch(baseURL + url, {
         ...options,
         headers: {
@@ -12,7 +13,7 @@ const fetchApiClient = async (url, options = {}) => {
             ...options.headers,
         },
     });
-
+    
     if (!response.ok) {
         const error = await response.json();
         return Promise.reject(error);

@@ -1,11 +1,39 @@
-const { Socket } = require("node:net")
-const { Device } = require("../../../domain/Device")
+const { Socket } = require("node:net");
+const { Device } = require("../../../domain/Device");
 const { dataEvent } = require("../../../lib/data-handler/data-event");
 const { removeTCPConnection } = require("./tcp-manager");
-const { emitStatusDevice } = require("../../../lib/websocket/emit-device-status");
+const {
+  emitStatusDevice,
+} = require("../../../lib/websocket/emit-device-status");
+const { SerialPort } = require("serialport");
+const { BufferList } = require("bl/BufferList");
 
+/**
+ *
+ * @param {Socket | SerialPort} socket
+ * @param {Buffer} data
+ * @param {Device} device
+ * @param {*} parsingData
+ * @param {BufferList} bufferList
+ */
 function handleDataEvent(socket, data, device, parsingData, bufferList) {
-  dataEvent(data, device, bufferList, parsingData, socket);
+  if (!socket instanceof SerialPort) {
+    const filteredData = data.toString().replace(/\x02/g, "");
+
+    // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
+    if (filteredData.trim()) {
+      emitStatusDevice(
+        {
+          last_connection: new Date(),
+        },
+        `Mensaje entrante del equipo ${device.name} ${
+          device.ip_address && `con IPv4: ${device.ip_address}`
+        } en el puerto ${device.port}`
+      );
+    }
+  }
+
+  dataEvent(data, bufferList, parsingData, socket);
 }
 
 /**
@@ -45,7 +73,7 @@ function handleConnectionEvent(
           msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${err.message}`;
       }
 
-      msg += ` Verifica el equipo ${equipment.name}.`
+      msg += ` Verifica el equipo ${equipment.name}.`;
 
       console.error(msg);
       emitStatusDevice(

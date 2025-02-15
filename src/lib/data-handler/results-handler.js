@@ -10,8 +10,8 @@ let resultsToSave = { parametros: [] };
  * Maneja los resultados procesados por el parser.
  * @param {Object[]} results - Resultados procesados.
  * @param {boolean} sendsBySingleParameter - Indica si el equipo envía un solo parámetro a la vez.
- * 
- * @returns {Promise<number>} folio 
+ *
+ * @returns {Promise<number>} folio
  */
 async function handleResults(results, sendsBySingleParameter = false) {
   const response = await validateResponse(results);
@@ -77,8 +77,9 @@ function finalizeResults() {
   if (resultsToSave.folio && resultsToSave.parametros.length > 0) {
     saveResultsToLocalData([resultsToSave]);
     emitResultsToWebSocket([resultsToSave]);
-    console.log("Resultados procesados y guardados:", resultsToSave);
+    //console.log("Resultados procesados y guardados:", resultsToSave);
     resultsToSave = { parametros: [] }; // Limpia la acumulación
+    lastFolio = null;
   } else {
     console.warn(
       "No se guardaron resultados porque no tienen un folio o están vacíos."

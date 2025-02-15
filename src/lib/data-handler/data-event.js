@@ -19,29 +19,15 @@ let lastMessageTime = null;
 
 /**
  *
- * @param {string} data
+ * @param {Buffer} data
  * @param {Device} device
  * @param {BufferList} bufferList
  * @param {object} parsingData
  * @param {Socket | SerialPort} socket
  * 
  */
-async function dataEvent(data, device, bufferList, parsingData, socket) {
-  const filteredData = data.toString().replace(/\x02/g, "");
-
-
-  // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
-  if (filteredData.trim()) {
-    emitStatusDevice(
-      {
-        last_connection: new Date(),
-      },
-      device,
-      `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
-      } en el puerto ${device.port}`
-    );
-  }
-
+async function dataEvent(data, bufferList, parsingData, socket) {
+  
   // Verifica el tamaño del paquete
   if (data.length > MAX_DATA_SIZE) {
     console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
