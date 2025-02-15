@@ -5,8 +5,6 @@ const {
 const {
   emitStatusDevice,
 } = require("../../../lib/websocket/emit-device-status");
-// Variable para almacenar las conexiones FTP activas
-let ftpConnections = {};
 
 // Configuración del límite y la frecuencia de reconexión
 const MAX_RETRIES = 5;
@@ -40,64 +38,11 @@ function emitOpenedDevice(equipment, message) {
   );
 }
 
-// Obtiene todas las
-function getFtpConnections() {
-  return ftpConnections;
-}
-
-function setFtpConnections(connections) {
-  return (ftpConnections = connections);
-}
-
-function addClientFtpConnection(macAddress, client) {
-  // Validar que macAddress y client sean válidos
-  if (!macAddress || !client) {
-    throw new Error("macAddress y client son requeridos");
-  }
-
-  // Obtener las conexiones actuales
-  const connections = getFtpConnections();
-
-  // Agregar o actualizar la conexión
-  connections[macAddress] = {
-    client,
-    reconnecting: false,
-  };
-
-  // Actualizar la variable global
-  setFtpConnections(connections);
-}
-
-function updateFtpConnection(macAddress, options) {
-  const connections = getFtpConnections();
-  const ftpConnectionToUpdate = connections[macAddress];
-
-  if (ftpConnectionToUpdate) {
-    // Mezclar el estado anterior con los nuevos atributos
-    const updatedConnection = { ...ftpConnectionToUpdate, ...options };
-    connections[macAddress] = updatedConnection;
-
-    // Actualizar la variable global
-    setFtpConnections(connections);
-
-    return updatedConnection; // Retornar la conexión actualizada para consistencia
-  }
-  console.warn(
-    `Conexión con MAC ${macAddress} no encontrada al intentar actualizar.`
-  );
-  return null;
-}
-
-function deleteFtpConnection(macAddress) {
-  delete ftpConnections[macAddress];
-  console.log("Cliente FTP eliminado");
-}
-
 async function addFtpConnection(equipment, retryCount = 0) {
-  const ftpConnections = getFtpConnections();
 
   // Si ya existe una conexión, ciérrala antes de intentar una nueva conexión
-  const existConnection = ftpConnections[equipment.mac_address];
+  const existConnection = getFtpConnectionById(equipment.id_device);
+  
   if (existConnection && !existConnection.client.closed) {
     await closeFTP(equipment.mac_address);
   }
@@ -124,11 +69,10 @@ async function addFtpConnection(equipment, retryCount = 0) {
       }, // Permitir certificados autofirmados
     });
 
-    const message = `Conexión FTP establecida con el equipo ${
-      equipment.name
-    } (${formatMacAddressWithSeparators(
-      equipment.mac_address
-    )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`;
+    const message = `Conexión FTP establecida con el equipo ${equipment.name
+      } (${formatMacAddressWithSeparators(
+        equipment.mac_address
+      )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`;
 
     emitOpenedDevice(equipment, message);
 
@@ -143,8 +87,7 @@ async function addFtpConnection(equipment, retryCount = 0) {
     }
   } catch (error) {
     console.error(
-      `Error al conectar FTP con el equipo ${
-        equipment.name
+      `Error al conectar FTP con el equipo ${equipment.name
       }: (${formatMacAddressWithSeparators(
         equipment.mac_address
       )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} `,
@@ -154,12 +97,10 @@ async function addFtpConnection(equipment, retryCount = 0) {
     emitClosedDevice(
       equipment,
       true,
-      `Error al conectar FTP con el equipo ${
-        equipment.name
+      `Error al conectar FTP con el equipo ${equipment.name
       }: (${formatMacAddressWithSeparators(
         equipment.mac_address
-      )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} ${
-        error.message
+      )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} ${error.message
       }`
     );
 
@@ -251,18 +192,15 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     emitOpenedDevice(equipment);
   } catch (error) {
     console.error(
-      `Error al reconectar con ${
-        equipment.name
+      `Error al reconectar con ${equipment.name
       } (${formatMacAddressWithSeparators(equipment.mac_address)}):`,
       error.message
     );
     emitClosedDevice(
       equipment,
       true,
-      `Error al reconectar con ${
-        equipment.name
-      } (${formatMacAddressWithSeparators(equipment.mac_address)}): ${
-        error.message
+      `Error al reconectar con ${equipment.name
+      } (${formatMacAddressWithSeparators(equipment.mac_address)}): ${error.message
       }`
     );
 

@@ -6,6 +6,11 @@ const { Client } = require("basic-ftp")
  */
 const ftpConnections = new Map()
 
+
+function getFtpConnectionById(idDevice) {
+    return ftpConnections.get(idDevice)
+}
+
 /**
  * 
  * @param {Device} device 
@@ -46,4 +51,6 @@ function updateFtpConnection(idDevice, options) {
 function deleteFtpConnection(idDevice) {
     ftpConnections.delete(idDevice);
     console.log("Cliente FTP eliminado");
-  }
+}
+
+module.exports = {}
