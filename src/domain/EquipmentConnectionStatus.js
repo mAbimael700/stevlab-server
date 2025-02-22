@@ -1,4 +1,4 @@
-class DeviceConnectionStatus {
+class EquipmentConnectionStatus {
     constructor() {
         this.lastConnection = null
         this.connectionStatus = null
@@ -39,5 +39,5 @@ class DeviceConnectionStatus {
 }
 
 module.exports = {
-    DeviceConnectionStatus
+    EquipmentConnectionStatus
 }

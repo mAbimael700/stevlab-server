@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/app/app.js",
     "start:local": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true node ./src/app/app.js",
+    "start:trace-warning": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true node --trace-warnings ./src/app/app.js",
     "dev:local": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true nodemon ./src/app/app.js",
     "start:electron": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true electron ./main.js",
     "build:electron": "npx electron-builder",

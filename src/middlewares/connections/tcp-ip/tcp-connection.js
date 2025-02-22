@@ -1,4 +1,4 @@
-const { Device } = require("../../../domain/Device")
+const { Equipment } = require("../../../domain/Equipment")
 const net = require("node:net");
 const bl = require("bl");
 const { setTCPConnection, getTCPConnection } = require("./tcp-manager");
@@ -18,7 +18,7 @@ const {
 
 /**
  * 
- * @param {Device} equipment 
+ * @param {Equipment} equipment 
  * @returns 
  */
 async function createTCPConnection(equipment) {
@@ -41,7 +41,7 @@ async function createTCPConnection(equipment) {
 /**
  * 
  * @param {net.Socket} client 
- * @param {Device} equipment 
+ * @param {Equipment} equipment 
  */
 
 const connect = (client, equipment) => {
@@ -97,7 +97,7 @@ const connect = (client, equipment) => {
 
 /**
  * 
- * @param {Device} equipment 
+ * @param {Equipment} equipment 
  */
 const scheduleReconnect = (equipment, maxRetries = 5) => {
     const idDevice = equipment.id_device;
@@ -124,7 +124,7 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
                 if (retryCount > maxRetries) {
                     // Si se excede el límite de intentos
                     clearInterval(reconnectInterval); // Detener el intervalo
-                    setReconnectInterval(idDevice, null); // Limpiar el intervalo almacenado
+                    removeReconnectInterval(idDevice); // Limpiar el intervalo almacenado
 
                     const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${equipment.name}.`;
                     console.error(errorMsg);

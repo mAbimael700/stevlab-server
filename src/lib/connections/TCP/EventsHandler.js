@@ -1,15 +1,14 @@
 const { Socket } = require("node:net");
+const { BufferList } = require("bl/BufferList");
 const { Equipment } = require("../../../domain/Equipment");
-const { dataEvent } = require("../../../lib/data-handler/data-event");
+const { dataEvent } = require("../../data-handler/data-event");
 const {
   emitStatusDevice,
-} = require("../../../lib/websocket/emit-device-status");
-const { SerialPort } = require("serialport");
-const { BufferList } = require("bl/BufferList");
+} = require("../../websocket/emit-device-status");
 
 /**
  *
- * @param {Socket | SerialPort} socket
+ * @param {Socket} socket
  * @param {Buffer} data
  * @param {Equipment} device
  * @param {*} parsingData

@@ -1,26 +1,19 @@
-const { DeviceConnectionStatus } = require("./DeviceConnectionStatus");
+const { EquipmentConfiguration } = require("./EquipmentConfiguration");
+const { EquipmentConnection } = require("./EquipmentConnection");
+const { EquipmentConnectionStatus } = require("./EquipmentConnectionStatus");
 
-class Device {
-    constructor(name, id, connectionType) {
-        this.name = name;
+class Equipment {
+    constructor(name, id, connectionType, brand, configuration) {
         this.id = id;
-        this.connectionType = connectionType;
-        this.brand = null;
-        this.remoteDir = null;
-        this.baudRate = null;
-        this.ipAddress = null;
-        this.port = null;
-        this.macAddress = null;
-        this.area = { ID: null, NombreArea: null };
-        this.status = new DeviceConnectionStatus()
+        this.name = name;
+        this.brand = brand;
+        this.area = new Area();
+        this.status = new EquipmentConnectionStatus()
+        this.configuration = new EquipmentConfiguration(configuration)
+        this.connection = new EquipmentConnection(this, connectionType)
+        this.parsingConfiguration = new EquipmentParsingConfiguration(this.name)
     }
 
-    // Getters
-
-
-    getStatus() {
-        return this.status
-    }
 
     /**
      * 
@@ -41,10 +34,10 @@ class Device {
 
     /**
      * 
-     * @returns {"TCP server" | "RS-232" | "FTP server"}
+     * @returns {"TCP server" | "RS-232" | "FTP server" |"TCP client"}
      */
     getConnectionType() {
-        return this.connectionType;
+        return this.connection.type;
     }
 
     /**
@@ -60,7 +53,7 @@ class Device {
      * @returns {string}
      */
     getRemoteDir() {
-        return this.remoteDir;
+        return this.configuration.remoteDir;
     }
 
     /**
@@ -68,7 +61,7 @@ class Device {
      * @returns {number}
      */
     getBaudRate() {
-        return this.baudRate;
+        return this.configuration.baudRate;
     }
 
     /**
@@ -76,7 +69,7 @@ class Device {
      * @returns {string}
      */
     getIpAddress() {
-        return this.ipAddress;
+        return this.configuration.ipAddress;
     }
 
     /**
@@ -84,39 +77,16 @@ class Device {
      * @returns {string}
      */
     getPort() {
-        return this.port;
+        return this.configuration.port;
     }
 
-    /**
-     * 
-     * @returns 
-     */
-    getRequireTcpServerConn() {
-        return this.requireTcpServerConn;
-    }
-
-    /**
-     * 
-     * @returns 
-     */
-    getRequireFtpConn() {
-        return this.requireFtpConn;
-    }
-
-    /**
-     * 
-     * @returns 
-     */
-    getRequireSerialConn() {
-        return this.requireSerialConn;
-    }
 
     /**
      * 
      * @returns 
      */
     getMacAddress() {
-        return this.macAddress;
+        return this.configuration.macAddress;
     }
 
     /**
@@ -147,7 +117,7 @@ class Device {
 
     /**
      * 
-     * @param {"TCP server" | "RS-232" | "FTP server"} connectionType 
+     * @param {"TCP server" | "RS-232" | "FTP server | "TCP client"} connectionType 
      */
 
     setConnectionType(connectionType) {
@@ -167,7 +137,7 @@ class Device {
      * @param {string} remoteDir 
      */
     setRemoteDir(remoteDir) {
-        this.remoteDir = remoteDir;
+        this.configuration.remoteDir = remoteDir;
     }
 
     /**
@@ -175,7 +145,7 @@ class Device {
      * @param {number} baudRate 
      */
     setBaudRate(baudRate) {
-        this.baudRate = baudRate;
+        this.configuration.baudRate = baudRate;
     }
 
     /**
@@ -183,7 +153,7 @@ class Device {
      * @param {string} ipAddress 
      */
     setIpAddress(ipAddress) {
-        this.ipAddress = ipAddress;
+        this.configuration.ipAddress = ipAddress;
     }
 
 
@@ -192,7 +162,7 @@ class Device {
      * @param {string} port 
      */
     setPort(port) {
-        this.port = port;
+        this.configuration.port = port;
     }
 
     /**
@@ -201,7 +171,7 @@ class Device {
      */
 
     setMacAddress(macAddress) {
-        this.macAddress = macAddress;
+        this.configuration.macAddress = macAddress;
     }
 
 
@@ -210,4 +180,4 @@ class Device {
     }
 }
 
-module.exports = { Device };
+module.exports = { Equipment };

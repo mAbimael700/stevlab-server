@@ -1,12 +1,12 @@
-const { Device } = require("../../domain/Device");
-const { DeviceConnectionStatus } = require("../../domain/DeviceConnectionStatus");
+const { Equipment } = require("../../domain/Equipment");
+const { EquipmentConnectionStatus } = require("../../domain/EquipmentConnectionStatus");
 const { emitMessage } = require("./emit-message-to-websocket");
 
 /**
  * Emite al servidor Websocket una actualización de estado de conexión del equipo
  * 
- * @param {DeviceConnectionStatus} status 
- * @param {Device} device 
+ * @param {EquipmentConnectionStatus} status 
+ * @param {Equipment} device 
  * @param {string} message 
  * @param {boolean} error 
  */

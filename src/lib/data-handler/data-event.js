@@ -1,5 +1,5 @@
 const { Socket } = require("node:net");
-const { Device } = require("../../domain/Device");
+const { Equipment } = require("../../domain/Equipment");
 const { SerialPort } = require("serialport");
 const {
   handleBuffer,
@@ -23,7 +23,7 @@ let lastMessageTime = null;
 /**
  *
  * @param {Buffer} data
- * @param {Device} device
+ * @param {Equipment} device
  * @param {BufferList} bufferList
  * @param {object} parsingData
  * @param {Socket | SerialPort} socket

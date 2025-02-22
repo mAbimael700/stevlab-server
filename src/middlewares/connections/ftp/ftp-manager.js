@@ -1,4 +1,4 @@
-const { Device } = require("../../../domain/Device");
+const { Device } = require("../../../domain/Equipment");
 const { Client } = require("basic-ftp")
 
 /**
