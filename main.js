@@ -1,11 +1,12 @@
 const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 const LisServerApplication = require("./src/app/LisServerApplication");
-const { overrideConsole } = require("./src/middlewares/logger/overwrite-logger");
+const {
+  overrideConsole,
+} = require("./src/middlewares/logger/overwrite-logger");
 
 let mainWindow;
 let tray = null;
-
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -18,10 +19,14 @@ const createWindow = () => {
     },
   });
 
-
   overrideConsole(mainWindow); // Sobrescribe los métodos de consola al inicio
-  //mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
-  mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
+
+  if (process.env.DEVELOPMENT == "true") {
+    mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
+  } else {
+    mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
+  }
+
   tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
 
   // Crear un menú contextual para la bandeja
@@ -69,7 +74,6 @@ if (!gotTheLock) {
 
   app.whenReady().then(() => {
     createWindow();
-    
 
     // Asegúrate de que los servicios solo se inicializan una vez
     if (!global.servicesInitialized) {
@@ -93,8 +97,6 @@ if (!gotTheLock) {
         }
       });
     }
-
-
   });
 }
 

@@ -17,22 +17,21 @@ const { BufferList } = require("bl/BufferList");
  * @param {BufferList} bufferList
  */
 function handleDataEvent(socket, data, device, parsingData, bufferList) {
-  if (!socket instanceof SerialPort) {
-    const filteredData = data.toString().replace(/\x02/g, "");
+  const filteredData = data.toString().replace(/\x02/g, "");
 
-    // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
-    if (filteredData.trim()) {
-      emitStatusDevice(
-        {
-          last_connection: new Date(),
-        },
-        `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
-        } en el puerto ${device.port}`
-      );
-    }
+  // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
+  if (filteredData.trim()) {
+    emitStatusDevice(
+      {
+        last_connection: new Date(),
+      },
+      `Mensaje entrante del equipo ${device.name} ${
+        device.ip_address && `con IPv4: ${device.ip_address}`
+      } en el puerto ${device.port}`
+    );
+
+    dataEvent(data, bufferList, parsingData, socket);
   }
-
-  dataEvent(data, bufferList, parsingData, socket);
 }
 
 /**
@@ -86,7 +85,7 @@ function handleConnectionEvent(
     default:
       break;
   }
-  
+
   scheduleReconnect(equipment);
 }
 module.exports = {

@@ -1,9 +1,12 @@
 const { Socket } = require("node:net");
-const { Device } = require("../../domain/Device")
+const { Device } = require("../../domain/Device");
 const { SerialPort } = require("serialport");
-const { emitStatusDevice } = require("../websocket/emit-device-status");
-const { handleBuffer, clearProcessedBuffer } = require("./buffer-handler");
-const BufferList = require("bl")
+const {
+  handleBuffer,
+  parseMessage,
+  clearProcessedBuffer,
+} = require("./buffer-handler");
+const BufferList = require("bl");
 const {
   handleResults,
   finalizeResultsOnTimeout,
@@ -24,14 +27,13 @@ let lastMessageTime = null;
  * @param {BufferList} bufferList
  * @param {object} parsingData
  * @param {Socket | SerialPort} socket
- * 
+ *
  */
 async function dataEvent(data, bufferList, parsingData, socket) {
-  
   // Verifica el tamaño del paquete
   if (data.length > MAX_DATA_SIZE) {
     console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
-    return;
+    throw new Error(`Paquete demasiado grande recibido: ${data.length} bytes`);
   }
 
   lastMessageTime = Date.now(); // Actualiza el tiempo del último mensaje
@@ -45,7 +47,11 @@ async function dataEvent(data, bufferList, parsingData, socket) {
       const bufferResults = handleBuffer(accumulatedData, parsingData);
 
       if (bufferResults) {
-        await handleResults(bufferResults.results, sendsBySingleParameter); // Manejo ajustado
+        const parsedResults = parseMessage(
+          bufferResults.completeMessage,
+          parsingData
+        );
+        await handleResults(parsedResults, sendsBySingleParameter); // Manejo ajustado
 
         if (ackMessageFunction) {
           socket.write(ackMessageFunction(bufferResults.messageId));
@@ -64,10 +70,11 @@ async function dataEvent(data, bufferList, parsingData, socket) {
         finalizeResultsOnTimeout();
       });
     }
-
   } catch (error) {
-    console.error("Error al procesar datos:", error);
-    bufferList.consume(bufferList.length)
+    console.error("Error al procesar datos:", error.message);
+    console.warn('Datos a eliminar después del consumo: ', bufferList.toString("utf-8"))
+    bufferList.consume(bufferList.length);
+    throw new Error("Error al procesar datos:", error)
   }
 }
 

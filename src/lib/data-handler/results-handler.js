@@ -3,53 +3,66 @@ const { saveResultsToLocalData } = require("../save-results-data");
 const {
   emitResultsToWebSocket,
 } = require("../websocket/emit-results-websocket");
+
 let lastFolio = null;
+let isFinalizing = false; // Bandera para evitar llamadas redundantes
 let resultsToSave = { parametros: [] };
 
 /**
  * Maneja los resultados procesados por el parser.
  * @param {Object[]} results - Resultados procesados.
  * @param {boolean} sendsBySingleParameter - Indica si el equipo envía un solo parámetro a la vez.
- *
- * @returns {Promise<number>} folio
  */
 async function handleResults(results, sendsBySingleParameter = false) {
-  const response = await validateResponse(results);
+  try {
+    const response = await validateResponse(results);
 
-  const isValidated = response.success;
-  if (!isValidated) {
-    console.warn("Resultados no válidos");
-    return;
-  }
-
-  if (!results[0]?.folio || results[0]?.folio === "") {
-    console.warn("Resultados ignorados porque no tienen un folio válido");
-    return;
-  }
-
-  if (sendsBySingleParameter) {
-    // Manejo para equipos que envían un parámetro a la vez
-    if (response.data[0]?.folio !== lastFolio) {
-      finalizeResults(); // Finaliza y guarda los resultados acumulados
-      lastFolio = response.data[0]?.folio;
-      resultsToSave = {
-        ...response.data[0],
-        parametros: [...filterDuplicateParams(response.data[0]?.parametros)],
-      };
-    } else {
-      const newParams = filterDuplicateParams(
-        response.data[0]?.parametros,
-        resultsToSave.parametros
-      );
-      resultsToSave.parametros.push(...newParams);
+    if (!response.success) {
+      throw new Error("La validación de los resultados no fue satisfactoria", {
+        cause: response.errors,
+      });
     }
-  } else {
-    // Manejo para mensajes completos
-    saveResultsToLocalData(response.data);
-    emitResultsToWebSocket(response.data);
-  }
 
-  return response.data[0].id;
+    if (!results[0]?.folio) {
+      throw new Error("Resultados ignorados porque no tienen un folio válido");
+    }
+
+    if (sendsBySingleParameter) {
+      handleSingleParameterResponse(response.data[0]);
+    } else {
+      handleCompleteResponse(response.data);
+    }
+  } catch (e) {
+    console.error(error.message, error.cause || "");
+  }
+}
+
+/**
+ * Maneja los resultados cuando el equipo envía un solo parámetro a la vez.
+ * @param {Object} result - Resultado validado.
+ */
+function handleSingleParameterResponse(result) {
+  if (result.folio !== lastFolio) {
+    finalizeResults(); // Finaliza y guarda los resultados acumulados
+    lastFolio = result.folio;
+    resultsToSave = {
+      ...result,
+      parametros: filterDuplicateParams(result.parametros),
+    };
+  } else {
+    resultsToSave.parametros.push(
+      ...filterDuplicateParams(result.parametros, resultsToSave.parametros)
+    );
+  }
+}
+
+/**
+ * Maneja los resultados cuando el equipo envía mensajes completos.
+ * @param {Object[]} results - Resultados validados.
+ */
+function handleCompleteResponse(results) {
+  saveResultsToLocalData(results);
+  emitResultsToWebSocket(results);
 }
 
 /**
@@ -62,11 +75,7 @@ function filterDuplicateParams(newParams, existingParams = []) {
   const existingSet = new Set(existingParams.map((p) => JSON.stringify(p)));
   return newParams.filter((param) => {
     const paramKey = JSON.stringify(param);
-    if (!existingSet.has(paramKey)) {
-      existingSet.add(paramKey);
-      return true;
-    }
-    return false;
+    return !existingSet.has(paramKey) && existingSet.add(paramKey);
   });
 }
 
@@ -74,16 +83,23 @@ function filterDuplicateParams(newParams, existingParams = []) {
  * Finaliza y guarda los resultados acumulados.
  */
 function finalizeResults() {
-  if (resultsToSave.folio && resultsToSave.parametros.length > 0) {
-    saveResultsToLocalData([resultsToSave]);
-    emitResultsToWebSocket([resultsToSave]);
-    //console.log("Resultados procesados y guardados:", resultsToSave);
-    resultsToSave = { parametros: [] }; // Limpia la acumulación
-    lastFolio = null;
-  } else {
-    console.warn(
-      "No se guardaron resultados porque no tienen un folio o están vacíos."
-    );
+  if (isFinalizing) return; // Si ya se está finalizando, no hacer nada
+  isFinalizing = true; // Marcar que se está finalizando
+
+  try {
+    if (resultsToSave.folio && resultsToSave.parametros.length > 0) {
+      saveResultsToLocalData([resultsToSave]);
+      emitResultsToWebSocket([resultsToSave]);
+      //console.log("Resultados procesados y guardados:", resultsToSave);
+      resultsToSave = { parametros: [] }; // Limpia la acumulación
+      lastFolio = null;
+    } else {
+      console.warn(
+        "No se guardaron resultados porque no tienen un folio o están vacíos."
+      );
+    }
+  } finally {
+    isFinalizing = false; // Restablecer la bandera
   }
 }
 

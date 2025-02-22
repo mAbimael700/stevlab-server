@@ -1,33 +1,19 @@
-const fs = require("node:fs");
-
-const path = require("node:path");
-const crypto = require("node:crypto");
-const { format } = require("date-fns");
-const { FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
 const { BufferList } = require("bl/BufferList");
+const { saveFile } = require("../save-file");
 
 /**
- * 
- * @param {string} data 
- * @param {*} parsingData 
- * @returns 
+ *
+ * @param {string} data
+ * @param {{parser: ()=> object, CHAR_DELIMITER: string}} parsingData
+ * @returns {{completeMessage: string, consumedBytes: number, messageId: string} | null}
  */
 function handleBuffer(data, parsingData) {
-  const { parser, CHAR_DELIMITER } = parsingData;
+  const { CHAR_DELIMITER } = parsingData;
 
-  const timestamp = format(new Date(), "ddMMyyyy-HHmmss-SSS");
-  const uniqueId = crypto.randomBytes(3).toString("hex");
-  const filePath = path.join(
-    FILE_UPLOADS_DIR,
-    `resultados-${timestamp}-${uniqueId}`
-  );
-
-  if (!parser || !CHAR_DELIMITER) {
+  if (!CHAR_DELIMITER) {
     console.error("Parser o delimitador no definidos para el equipo");
     throw new Error("Parser o delimitador no definidos para el equipo");
   }
-
-  fs.appendFileSync(filePath.concat(`.txt`), data);
 
   // Crear la expresión regular
   const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
@@ -47,22 +33,44 @@ function handleBuffer(data, parsingData) {
       /MSH\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|(.*?)\|/
     )?.[1];
 
-    fs.appendFileSync(filePath.concat(`.txt`), completeMessage);
+    const filePath = saveFile(completeMessage);
     console.log(
       "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
-      filePath.concat(`.txt`)
+      filePath
     );
 
-    const results = parser(completeMessage);
+    return { completeMessage, consumedBytes, messageId };
+  }
+
+  return null;
+}
+/**
+ * @param {string} message
+ * @param {{parser: ()=> object, CHAR_DELIMITER: string}} parsingConfig
+ * @returns {Object[]}
+ */
+function parseMessage(message, parsingConfig) {
+  const { parser } = parsingConfig;
+
+  if (!parser) {
+    console.error("Parser no definido para el equipo");
+    throw new Error("Parser no definido para el equipo");
+  }
+
+  try {
+    const results = parser(message);
 
     if (!results) {
       console.error("El parser devolvió resultados inválidos");
-      return;
+      throw new Error("El parser devolvió resultados inválidos");
     }
 
-    return { results, consumedBytes, messageId };
+    return results;
+  } catch (error) {
+    throw new Error(error.message);
   }
 }
+
 /**
  *
  * @param {BufferList} bufferList
@@ -73,11 +81,13 @@ function clearProcessedBuffer(bufferList, consumedBytes) {
     bufferList.consume(consumedBytes);
   } else {
     console.error("Error: consumedBytes no válido:", consumedBytes); // Depuración
-    bufferList.consume(bufferList.length)
+    console.warn('Datos a eliminar después del consumo: ', bufferList.toString("utf-8"))
+    bufferList.consume(bufferList.length);
   }
 }
 
 module.exports = {
   handleBuffer,
+  parseMessage,
   clearProcessedBuffer,
 };

@@ -15,11 +15,7 @@ const { ErrorHandler } = require("../middlewares/error-handler.js");
 const {
   initializeEquipmentManager,
 } = require("../middlewares/equipment/equiment-manager.js");
-const { run } = require("../db/db-connection.js");
-const { ENV_DEPLOY } = require("../constants/CONFIG_DIR.js");
 const { PRODUCTION_MODE } = require("../constants/CONSTANTS.js");
-const { Server } = require("../services/server.js");
-const { startPendingMessageManager } = require("../lib/websocket/emit-message-to-websocket.js");
 const { getIO } = require("../middlewares/servers/Websocket.js");
 
 // Definición de los puertos de cada servidor

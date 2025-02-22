@@ -29,7 +29,7 @@ const chartSchema = z.object({
     .number()
     .refine((s) => !isNaN(s), {
       message: "El valor no es un número",
-      path: "chart",
+      path: ["chart"],
     })
     .transform((s) => parseInt(s)),
 });
@@ -56,7 +56,6 @@ const resultSchema = z.object({
 
 const responseSchema = z.array(resultSchema);
 
-
 /**
  * Valida que el resultado parseado sea el correcto y consulta la información en la API
  * del sistema Stevlab para obtener la información del paciente con el folio dado.
@@ -64,12 +63,13 @@ const responseSchema = z.array(resultSchema);
  * @returns
  */
 async function validateResponse(parsedResult) {
-  const validation = await responseSchema.safeParseAsync(parsedResult);
+  const validation = responseSchema.safeParse(parsedResult);
 
   if (!validation.success) {
-    console.log("Datos parseados recibidos: ");
-    console.log(JSON.stringify(parsedResult, null, 2));
-    console.error("Errores de validación:", validation.error.errors);
+    console.warn(
+      "¡Los datos parseados proporcionados no son validos!: ",
+      JSON.stringify(parsedResult, null, 2)
+    );
     return { success: false, errors: validation.error.errors };
   }
 
@@ -79,13 +79,13 @@ async function validateResponse(parsedResult) {
         return await transformData(obj);
       } catch (error) {
         console.warn(
-          `Error transformando el objeto con folio ${obj.folio}: ${error.message}`
+          `Error transformando el resultado con el folio ${obj.folio}: ${error.message}`
         );
         return obj; // Retorna el objeto original si falla la transformación
       }
     })
   );
-  
+
   return { success: true, data: results }; // Siempre retorna success
 }
 

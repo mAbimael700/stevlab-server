@@ -1,8 +1,11 @@
+const parametroRegex =
+  /!(\d{3}[fh])([A-Za-z+-]+)\s*(\d+\.?\d*)\s*([a-zA-Z/%]*)\s*([A-Za-z0-9]+)/;
+  
 function parser(message) {
-  const parametroRegex =
-    /!(\d{3}[fh])([A-Za-z+]+)\s*(\d+\.?\d*)\s*([a-zA-Z/%]*)\s*([A-Za-z0-9]+)/;
   const lineRegex = /!(\d{3}[afhc])[^!]+/g;
+
   const lines = message.match(lineRegex) || [];
+  console.log(lines);
   let currentResult = null;
 
   lines.forEach((line) => {
@@ -12,6 +15,8 @@ function parser(message) {
       parseParameter(line);
     } else if (line.startsWith("!001c")) {
       parsePatientInfo(line);
+    } else {
+      console.warn("La siguiente linea no válida", line);
     }
   });
 

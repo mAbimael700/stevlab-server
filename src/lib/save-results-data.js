@@ -9,7 +9,8 @@ function saveResultsToLocalData(parsedData) {
 
   // Formatea la fecha para guardarla en el nombre del archivo de texto
   const timestamp = format(new Date(), "ddMMyyyy-HHmmss-SSS");
-  const uniqueId = crypto.randomBytes(3).toString("hex"); // Crea un identificador único de 3 bytes (6 caracteres hexadecimales)
+  // Crea un identificador único de 3 bytes (6 caracteres hexadecimales)
+  const uniqueId = crypto.randomBytes(3).toString("hex");
   const filePath = path.join(DATADIR, `resultados-${timestamp}-${uniqueId}`);
 
   parsedData.forEach((element) => {

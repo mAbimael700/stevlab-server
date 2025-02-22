@@ -1,5 +1,5 @@
 const { NetworkInterface } = require("../../services/NetworkInterface")
-const { Server } = require("../../services/server")
+//const { Server } = require("../../services/server")
 
 class ServerController {
     static getServerInformation(req, res) {
