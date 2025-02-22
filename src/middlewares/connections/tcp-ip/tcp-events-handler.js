@@ -1,5 +1,5 @@
 const { Socket } = require("node:net");
-const { Equipment } = require("../../../domain/Equipment");
+const { Equipment } = require("../../../domain/Equipment/Equipment");
 const { dataEvent } = require("../../../lib/data-handler/data-event");
 const {
   emitStatusDevice,

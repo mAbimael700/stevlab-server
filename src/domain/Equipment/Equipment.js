@@ -1,19 +1,33 @@
-const { EquipmentConfiguration } = require("./EquipmentConfiguration");
-const { EquipmentConnection } = require("./EquipmentConnection");
-const { EquipmentConnectionStatus } = require("./EquipmentConnectionStatus");
+const { ClientConnection } = require("../ClientConnection/ClientConnection.js");
+const { EquipmentConfiguration } = require("./EquipmentConfiguration.js");
+const { EquipmentConnectionStatus } = require("./EquipmentConnectionStatus.js");
+const { EquipmentParsingConfiguration } = require("./EquipmentParsingConfiguration.js");
 
 class Equipment {
-    constructor(name, id, connectionType, brand, configuration) {
-        this.id = id;
-        this.name = name;
-        this.brand = brand;
-        this.area = new Area();
+    constructor(equipment, connectionType, configuration) {
+        if (!equipment || !connectionType || !configuration) {
+            throw new Error("Invalid parameters provided to Equipment constructor");
+        }
+
+        this.id = equipment.id;
+        this.name = equipment.name;
+        this.equipmentID = equipment.equipmentID
+        this.brand = equipment.brand;
+        this.area = new Area(equipment.area);
         this.status = new EquipmentConnectionStatus()
         this.configuration = new EquipmentConfiguration(configuration)
-        this.connection = new EquipmentConnection(this, connectionType)
-        this.parsingConfiguration = new EquipmentParsingConfiguration(this.name)
+        this.parsingConfiguration = new EquipmentParsingConfiguration(this.equipmentID)
+        this.parsingConfiguration.build()
+        this.connection = new ClientConnection(this, connectionType)
+        this.connection.build()
     }
 
+    /**
+     * 
+     */
+    setConnection(connection) {
+        this.connection = connection
+    }
 
     /**
      * 
@@ -31,9 +45,7 @@ class Equipment {
         return this.id;
     }
 
-
     /**
-     * 
      * @returns {"TCP server" | "RS-232" | "FTP server" |"TCP client"}
      */
     getConnectionType() {
@@ -53,7 +65,7 @@ class Equipment {
      * @returns {string}
      */
     getRemoteDir() {
-        return this.configuration.remoteDir;
+        return this.configuration.remoteDirectory;
     }
 
     /**
@@ -137,7 +149,7 @@ class Equipment {
      * @param {string} remoteDir 
      */
     setRemoteDir(remoteDir) {
-        this.configuration.remoteDir = remoteDir;
+        this.configuration.remoteDirectory = remoteDir;
     }
 
     /**

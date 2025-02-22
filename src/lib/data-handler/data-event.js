@@ -1,5 +1,5 @@
 const { Socket } = require("node:net");
-const { Equipment } = require("../../domain/Equipment");
+const { Equipment } = require("../../domain/Equipment/Equipment");
 const { SerialPort } = require("serialport");
 const {
   handleBuffer,
@@ -29,7 +29,7 @@ let lastMessageTime = null;
  * @param {Socket | SerialPort} socket
  *
  */
-async function dataEvent(data, bufferList, parsingData, socket) {
+async function dataEvent(socket, data, parsingData, bufferList) {
   // Verifica el tamaño del paquete
   if (data.length > MAX_DATA_SIZE) {
     console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);

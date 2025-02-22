@@ -1,33 +1,35 @@
 const { Socket } = require("node:net");
 const { BufferList } = require("bl/BufferList");
-const { Equipment } = require("../../../domain/Equipment");
-const { dataEvent } = require("../../data-handler/data-event");
+const { Equipment } = require("../../../domain/Equipment/Equipment");
+const { DataEvent } = require("../../data-handler/DataEvent");
 const {
   emitStatusDevice,
 } = require("../../websocket/emit-device-status");
+const { DataEvent } = require("../../data-handler/DataEvent");
 
 /**
  *
  * @param {Socket} socket
  * @param {Buffer} data
- * @param {Equipment} device
- * @param {*} parsingData
+ * @param {Equipment} equipment
  * @param {BufferList} bufferList
  */
-function handleDataEvent(socket, data, device, parsingData, bufferList) {
+function handleDataEvent(socket, data, equipment, bufferList) {
   const filteredData = data.toString().replace(/\x02/g, "");
+  const dataEvent = new DataEvent()
 
   // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
   if (filteredData.trim()) {
     emitStatusDevice(
       {
-        last_connection: new Date(),
+        lastConnection: new Date(),
       },
-      `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
-      } en el puerto ${device.port}`
+      equipment,
+      `Mensaje entrante del equipo ${equipment.name} ${equipment.getIpAddress() && `con IPv4: ${device.getIpAddress()}`
+      } en el puerto ${equipment.getPort()}`
     );
 
-    dataEvent(data, bufferList, parsingData, socket);
+    dataEvent.process(socket, data, equipment.parsingConfiguration, bufferList);
   }
 }
 
@@ -36,7 +38,7 @@ function handleDataEvent(socket, data, device, parsingData, bufferList) {
  * @param {Socket} client - Cliente TCP.
  * @param {Equipment} equipment - Información del equipo.
  * @param {"close" | "error"} eventType - Tipo de evento ("close" o "error").
- * @param {(equipment: Device) => void} scheduleReconnect - Función para programar reconexión.
+ * @param {(equipment: Equipment) => void} scheduleReconnect - Función para programar reconexión.
  * @param {Error} [error] - Detalle del error (solo para eventos "error").
  */
 function handleConnectionEvent(
@@ -46,9 +48,14 @@ function handleConnectionEvent(
   scheduleReconnect,
   error
 ) {
+
+
+  const { name, getIpAddress, getPort } = equipment
+  const ipAddress = getIpAddress()
+  const port = getPort()
   switch (eventType) {
     case "close":
-      console.info(`Conexión cerrada con ${equipment.name}.`);
+      console.info(`Conexión cerrada por el equipo ${name}.`);
       break;
 
     case "error":
@@ -56,19 +63,19 @@ function handleConnectionEvent(
 
       switch (error.code) {
         case "ECONNREFUSED":
-          msg = `Conexión rechazada a ${equipment.ip_address}:${equipment.port}.`;
+          msg = `Conexión rechazada a ${ipAddress}:${port}.`;
           break;
         case "ETIMEDOUT":
-          msg = `Tiempo de espera agotado para ${equipment.ip_address}:${equipment.port}.`;
+          msg = `Tiempo de espera agotado para ${ipAddress}:${port}.`;
           break;
         case "EHOSTUNREACH":
-          msg = `No se puede alcanzar el host ${equipment.ip_address} en el puerto ${equipment.port}.`;
+          msg = `No se puede alcanzar el host ${ipAddress} en el puerto ${port}.`;
           break;
         default:
-          msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${error.message}`;
+          msg = `Hubo un error en la conexión con el equipo ${name}: ${error.message}`;
       }
 
-      msg += ` Verifica el equipo ${equipment.name}.`;
+      msg += ` Verifica el equipo ${name}.`;
 
       console.error(msg);
       emitStatusDevice(

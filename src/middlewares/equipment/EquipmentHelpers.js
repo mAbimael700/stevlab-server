@@ -1,4 +1,4 @@
-const { Equipment } = require("../../domain/Equipment");
+const { Equipment } = require("../../domain/Equipment/Equipment");
 class EquipmentHelpers {
 
     constructor() {
