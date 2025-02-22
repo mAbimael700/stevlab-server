@@ -1,4 +1,4 @@
-const { setEquipments, getEquipments } = require("./equipment-helper copy");
+const { setEquipments, getEquipments } = require("./EquipmentHelpers");
 const { validateDeviceConfiguration } = require("../../schemas/device-schema");
 
 
