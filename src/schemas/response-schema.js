@@ -91,4 +91,5 @@ async function validateResponse(parsedResult) {
 
 module.exports = {
   validateResponse,
+  parameterSchema
 };

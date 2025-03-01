@@ -20,6 +20,7 @@ class ClientConnection {
       this.closed = false;
       this.closing = false;
       this.destroyed = false;
+      this.reconnecting = false
     }
   
     /**

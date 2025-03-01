@@ -11,18 +11,30 @@ const {
   finalizeResultsOnTimeout,
 } = require("./results-handler");
 const { setupTimeout } = require("./timeout-handler");
-const { EquipmentParsingConfiguration } = require("../../domain/EquipmentParsingConfiguration");
+const { EquipmentParsingConfiguration } = require("../../domain/Equipment/EquipmentParsingConfiguration");
+const { BufferHandler } = require("./BufferHandler");
+const { ResultHandler } = require("./ResultHandler");
 
 
 class DataEvent {
+
+  /**
+    @param {EquipmentParsingConfiguration} configuration 
+   */
   constructor(configuration) {
     /**
      * @type {number | null}
      */
     this.lastMessageTime = null;
+    /**
+     * @type {number}
+     */
     this.MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
     this.bufferList = new BufferList()
     this.configuration = configuration
+    this.bufferHandler = new BufferHandler(configuration)
+    this.bufferParser = new BufferParser(configuration)
+    this.resultHandler = new ResultHandler(configuration)
   }
 
 
@@ -32,6 +44,8 @@ class DataEvent {
   * @param {Buffer} data
   */
   async process(socket, data) {
+
+    this.configuration
     // Verifica el tamaño del paquete
     if (data.length > this.MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
@@ -46,20 +60,20 @@ class DataEvent {
     try {
       while (true) {
         const accumulatedData = this.bufferList.toString("utf-8");
-        const bufferResults = handleBuffer(accumulatedData, parsingData);
+        const bufferResults = this.bufferHandler.handle(accumulatedData);
 
         if (bufferResults) {
-          const parsedResults = parseMessage(
-            bufferResults.completeMessage,
-            parsingData
-          );
-          await handleResults(parsedResults, sendsBySingleParameter); // Manejo ajustado
+          const parsedResults = this.bufferParser
+            .parse(bufferResults.completeMessage);
+
+          await this.resultHandler.handle(parsedResults, sendsBySingleParameter); // Manejo ajustado
 
           if (ackMessageFunction) {
             socket.write(ackMessageFunction(bufferResults.messageId));
           }
 
-          clearProcessedBuffer(this.bufferList, bufferResults.consumedBytes);
+          this.bufferHandler
+            .clearProcessedBuffer(this.bufferList, bufferResults.consumedBytes);
         } else {
           // Si no hay más mensajes completos, salir del loop
           break;
@@ -69,11 +83,12 @@ class DataEvent {
       if (sendsBySingleParameter) {
         // Configura el timeout para procesar inactividad
         setupTimeout(this.lastMessageTime, () => {
-          finalizeResultsOnTimeout();
+          this.resultHandler.finalize();
         });
       }
+
     } catch (error) {
-      console.error("Error al procesar datos:", error.message);
+
       console.warn('Datos a eliminar después del consumo: ', this.bufferList.toString("utf-8"))
       this.bufferList.consume(bufferList.length);
       throw new Error(`Error al procesar datos: ${error.message}`, error)

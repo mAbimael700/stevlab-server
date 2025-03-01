@@ -1,9 +1,7 @@
 const { validateResponse } = require("../../schemas/response-schema");
-const { saveResultsToLocalData } = require("../save-results-data");
 const {
   emitResultsToWebSocket,
 } = require("../websocket/emit-results-websocket");
-
 
 class ResultHandler {
   constructor(configuration) {
@@ -27,9 +25,9 @@ class ResultHandler {
       }
 
       if (this.configuration.sendsBySingleParameter) {
-        this.handleSingleParameterResponse(response.data);
+        this._handleSingleParameterResponse(response.data);
       } else {
-        this.handleCompleteResponse(response.data);
+        this._handleCompleteResponse(response.data);
       }
     } catch (error) {
       console.error(error.message, error.cause || "");
@@ -40,17 +38,17 @@ class ResultHandler {
    * Maneja los resultados cuando el equipo envía un solo parámetro a la vez.
    * @param {Object} result - Resultado validado.
    */
-  handleSingleParameterResponse(result) {
+  _handleSingleParameterResponse(result) {
     if (result.folio !== this.lastFolio) {
       finalizeResults(); // Finaliza y guarda los resultados acumulados
       this.lastFolio = result.folio;
       this.resultsToSave = {
         ...result,
-        parametros: this.filterDuplicateParams(result.parametros),
+        parametros: this._filterDuplicateParams(result.parametros),
       };
     } else {
       this.resultsToSave.parametros.push(
-        ...this.filterDuplicateParams(
+        ...this._filterDuplicateParams(
           result.parametros,
           this.resultsToSave.parametros
         )
@@ -62,7 +60,7 @@ class ResultHandler {
    * Maneja los resultados cuando el equipo envía mensajes completos.
    * @param {Object[]} result - Resultados validados.
    */
-  handleCompleteResponse(result) {
+  _handleCompleteResponse(result) {
     this.resultRepository.save(result)
     emitResultsToWebSocket(result);
   }
@@ -73,7 +71,7 @@ class ResultHandler {
    * @param {Array} [existingParams=[]] - Parámetros existentes ya guardados.
    * @returns {Array} Parámetros únicos.
    */
-  filterDuplicateParams(newParams, existingParams = []) {
+  _filterDuplicateParams(newParams, existingParams = []) {
     const existingSet = new Set(existingParams.map((p) => JSON.stringify(p)));
     return newParams.filter((param) => {
       const paramKey = JSON.stringify(param);
@@ -81,36 +79,29 @@ class ResultHandler {
     });
   }
 
-
-
   /**
  * Finaliza y guarda los resultados acumulados.
  */
- finalizeResults() {
-  if (this.isFinalizing) return; // Si ya se está finalizando, no hacer nada
-  ithis.sFinalizing = true; // Marcar que se está finalizando
+  finalize() {
+    if (this.isFinalizing) return; // Si ya se está finalizando, no hacer nada
+    this.isFinalizing = true; // Marcar que se está finalizando
 
-  try {
-    if (this.resultsToSave.folio && this.resultsToSave.parametros.length > 0) {
-      this.resultRepository.save(this.resultsToSave);
-      emitResultsToWebSocket(this.resultsToSave);
-      //console.log("Resultados procesados y guardados:", resultsToSave);
-      this.resultsToSave = { parametros: [] }; // Limpia la acumulación
-      this.lastFolio = null;
-    } else {
-      console.warn(
-        "No se guardaron resultados porque no tienen un folio o están vacíos."
-      );
+    try {
+      if (this.resultsToSave.folio && this.resultsToSave.parametros.length > 0) {
+        this.resultRepository.save(this.resultsToSave);
+        emitResultsToWebSocket(this.resultsToSave);
+        this.resultsToSave = { parametros: [] }; // Limpia la acumulación
+        this.lastFolio = null;
+      } else {
+        console.warn(
+          "No se guardaron resultados porque no tienen un folio o están vacíos."
+        );
+      }
+    } finally {
+      this.isFinalizing = false; // Restablecer la bandera
     }
-  } finally {
-    this.isFinalizing = false; // Restablecer la bandera
   }
 }
-}
-
-
-
-
 
 module.exports = {
   ResultHandler
