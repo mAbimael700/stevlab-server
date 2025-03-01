@@ -1,13 +1,16 @@
+const { EquipmentRepository } = require("../../../domain/Equipment/EquipmentRepository");
 const { getMacAddress } = require("../../getMacAddress");
 const net = require("node:net");
 
-class ValidateTcpConnection {
+
+class ConnectionValidator {
 
   /**
-   * @param {Object} equipmentRepository - The repository to query equipment data.
+   * @param {EquipmentRepository} equipmentRepository - The repository to query equipment data.
    */
   constructor(equipmentRepository) {
     this.equipmentRepository = equipmentRepository;
+  
   }
 
   /**
@@ -15,7 +18,7 @@ class ValidateTcpConnection {
  * @param {net.Socket} socket - El socket de conexión TCP/IP del equipo.
  * @returns {Promise<string | null>}
  */
-  async validateConnection(socket) {
+  async validate(socket) {
 
     try {
       // Obtener dirección IP remota
@@ -32,27 +35,26 @@ class ValidateTcpConnection {
         console.warn(
           `No se encontró la dirección MAC para el equipo con la dirección IP ${currentRemoteIpAddress}. Cerrando conexión.`
         );
-        socket.destroy();
-        return false;
+       throw new Error(`No se encontró la dirección MAC para el equipo con la dirección IP ${currentRemoteIpAddress}. Cerrando conexión.`);
+       
       }
 
-      let foundEquipment = equipmentRepository.getByMacAddress(currentRemoteMacAddress);
+      let foundEquipment = this.equipmentRepository.findByMacAddress(currentRemoteMacAddress);
 
       if (!foundEquipment) {
         console.warn("Equipo no registrado. Conexión cerrada.");
-        socket.destroy();
-        return false;
+        throw new Error("El equipo que se intenta conectar no se encuentra registrado en la configuración del servidor. Conexión cerrada.")
       }
 
       return true
     } catch (error) {
-      console.error(error.message)
-      throw new Error(error.message)
+      console.error("Hubo un error en la validación de conexión del equipo", error.message)
+      throw new Error(error.message, error)
     }
   }
 }
 
 
 module.exports = {
-  ValidateTcpConnection,
+   ConnectionValidator,
 };

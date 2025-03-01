@@ -34,9 +34,9 @@ class FTPClient {
             await client.access(this.configuration)
 
             const message =
-                `Conexión FTP establecida con el equipo ${equipment.name} en el host ${equipment.ip_address}:${equipment.port}`;
+                `Conexión FTP establecida con el equipo ${this.equipment.name} en el host ${this.equipment.configuration.ipAddress}:${equipment.configuration.port}`;
 
-            emitOpenedDevice(equipment, message);
+            //emitOpenedDevice(equipment, message);
             console.info(message);
 
 
@@ -45,7 +45,7 @@ class FTPClient {
                 console.warn("La conexión se cerró inesperadamente");
             } else {
                 console.info("Conexión abierta y activa");
-                emitOpenedDevice(equipment, message);
+               //emitOpenedDevice(equipment, message);
             }
 
             return client
@@ -56,11 +56,11 @@ class FTPClient {
                 error.message
             );
 
-            emitClosedDevice(
+            /* emitClosedDevice(
                 equipment,
                 true,
                 `Error al conectar FTP con el equipo ${equipment.name} en el host ${equipment.ip_address}:${equipment.port}: ${error.message}`
-            );
+            ); */
 
             if (retryCount < 5) {// Si hay un error y no se ha alcanzado el máximo de intentos, realizar reconexión con retardo
                 const delay = INITIAL_DELAY * 2 ** retryCount; // Incrementa el tiempo de espera exponencialmente

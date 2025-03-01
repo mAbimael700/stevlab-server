@@ -60,7 +60,7 @@ function createSerialConnection(device) {
 
   parser.on("data", (data) => {
     //console.log("Datos recibidos:", data.toString());
-    dataEvent(data, bufferList, parsingData, port);
+    dataEvent(port, data, parsingData, bufferList);
   });
 
   // Evento para detectar cierre del puerto

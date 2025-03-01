@@ -22,11 +22,10 @@ let lastMessageTime = null;
 
 /**
  *
- * @param {Buffer} data
- * @param {Equipment} device
- * @param {BufferList} bufferList
- * @param {object} parsingData
  * @param {Socket | SerialPort} socket
+ * @param {Buffer} data
+ * @param {object} parsingData
+ * @param {BufferList} bufferList
  *
  */
 async function dataEvent(socket, data, parsingData, bufferList) {

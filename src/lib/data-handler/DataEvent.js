@@ -1,11 +1,11 @@
 const { Socket } = require("node:net");
 const { SerialPort } = require("serialport");
+const BufferList = require("bl");
 const {
   handleBuffer,
   parseMessage,
   clearProcessedBuffer,
 } = require("./buffer-handler");
-const BufferList = require("bl");
 const {
   handleResults,
   finalizeResultsOnTimeout,
@@ -15,12 +15,14 @@ const { EquipmentParsingConfiguration } = require("../../domain/EquipmentParsing
 
 
 class DataEvent {
-  constructor() {
+  constructor(configuration) {
     /**
      * @type {number | null}
      */
     this.lastMessageTime = null;
     this.MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
+    this.bufferList = new BufferList()
+    this.configuration = configuration
   }
 
 
@@ -28,11 +30,8 @@ class DataEvent {
   *
   * @param {Socket | SerialPort} socket
   * @param {Buffer} data
-  * @param {EquipmentParsingConfiguration} parsingConfiguration
-  * @param {BufferList} bufferList
-  *
   */
-  async process(socket, data, parsingConfiguration, bufferList) {
+  async process(socket, data) {
     // Verifica el tamaño del paquete
     if (data.length > this.MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
@@ -40,13 +39,13 @@ class DataEvent {
     }
 
     this.lastMessageTime = Date.now(); // Actualiza el tiempo del último mensaje
-    bufferList.append(data); // Acumula los datos recibidos
+    this.bufferList.append(data); // Acumula los datos recibidos
 
-    const { sendsBySingleParameter, ackMessageFunction } = parsingConfiguration;
+    const { sendsBySingleParameter, ackMessageFunction } = this.configuration;
 
     try {
       while (true) {
-        const accumulatedData = bufferList.toString("utf-8");
+        const accumulatedData = this.bufferList.toString("utf-8");
         const bufferResults = handleBuffer(accumulatedData, parsingData);
 
         if (bufferResults) {
@@ -60,7 +59,7 @@ class DataEvent {
             socket.write(ackMessageFunction(bufferResults.messageId));
           }
 
-          clearProcessedBuffer(bufferList, bufferResults.consumedBytes);
+          clearProcessedBuffer(this.bufferList, bufferResults.consumedBytes);
         } else {
           // Si no hay más mensajes completos, salir del loop
           break;
@@ -75,8 +74,8 @@ class DataEvent {
       }
     } catch (error) {
       console.error("Error al procesar datos:", error.message);
-      console.warn('Datos a eliminar después del consumo: ', bufferList.toString("utf-8"))
-      bufferList.consume(bufferList.length);
+      console.warn('Datos a eliminar después del consumo: ', this.bufferList.toString("utf-8"))
+      this.bufferList.consume(bufferList.length);
       throw new Error(`Error al procesar datos: ${error.message}`, error)
     }
   }
