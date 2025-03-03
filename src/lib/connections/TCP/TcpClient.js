@@ -78,8 +78,7 @@ class TCPClient {
         );
       }
 
-      this.equipment.setConnection(client);
-
+      
       // Configurar eventos
       client.on("data", (data) => {
         this.eventHandler.handleDataEvent(client, data);

@@ -14,6 +14,7 @@ const { setupTimeout } = require("./timeout-handler");
 const { EquipmentParsingConfiguration } = require("../../domain/Equipment/EquipmentParsingConfiguration");
 const { BufferHandler } = require("./BufferHandler");
 const { ResultHandler } = require("./ResultHandler");
+const { BufferParser } = require("./BufferParser");
 
 
 class DataEvent {

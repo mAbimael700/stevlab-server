@@ -1,43 +1,61 @@
-//Formatea el nombre
+/**
+ * Formatea el nombre del parametros
+ * @param {string} name
+ * @returns
+ */
 function formatName(name) {
   const newName = name.split("^").at(1);
   return newName ? newName : name.replaceAll("^", " ");
 }
 
-const wordsNotAdmitted = ["Histogram", "Line", "line"];
+/**
+ * Extrae el valor numérico de una cadena en formato "Negativo(0.78)" o "Positivo(0.78)",
+ * si el valor es solo el número solo lo castea a dato tipo numner
+ * @param {string} value
+ * @returns
+ */
+function extractNumericValue(value) {
+  const regex = /(Negativo|Positivo)\(([-+]?\d*\.\d+|\d+)\)/;
+  const match = value?.match(regex);
+  return match ? parseFloat(match[2]) : parseFloat(value?.replace(",", "."));
+}
+
+// Lista de palabras que indican que el valor es un gráfico
+const CHART_KEYWORDS = ["Histogram", "Line", "line"];
 
 function OBX(segment, dictionary) {
   // Obtenemos las celdas
-  const fields = segment.fields;
+  const { fields } = segment;
+
   // Devuelve el nombre está en la celda 4, sino existe devuelve la tercera celda
   const nombre = formatName(fields[4] || fields[3]);
 
   // Formateamos el valor en caso de que esté en formato separados por comas
-  const valor = parseFloat(fields[5]?.replace(",", "."));
+  const valor = extractNumericValue(fields[5]).toFixed(2);
 
-  const rangos = fields[7]?.split("-") ?? [];
-  const rango_min = rangos[0] || undefined;
-  const rango_max = rangos[1] || undefined;
+  const [rango_min, rango_max] =
+    fields[7]
+      ?.split("-")
+      .map((range) =>
+        range ? parseFloat(range.replace(",", ".")) : undefined
+      ) ?? [];
 
-  console.log(nombre, valor, rangos, rango_min, rango_max);
+  // Determina si el segmento es un gráfico
+  const isChart = CHART_KEYWORDS.some((word) => nombre.includes(word));
 
-  // Si valor del segmento es un número y su nombre no es parte de los analítos lo devuelve
-  if (
-    !isNaN(valor) &&
-    !wordsNotAdmitted.some((word) => nombre.includes(word))
-  ) {
+  // Si el valor es numérico y no es un gráfico, devuelve los datos del análisis
+  if (!isNaN(valor) && !isChart) {
     return {
       clave_sistema: dictionary?.[nombre], // Este el diccionario del equipo en cuestión
-      nombre: nombre ?? "",
-      valor: valor.toFixed(2),
-      unidad_medida: fields[6] ?? "",
-      rango_min: rango_min && parseFloat(rango_min?.replace(",", ".")),
-      rango_max: rango_max && parseFloat(rango_max?.replace(",", ".")),
+      nombre: nombre,
+      valor: valor,
+      unidad_medida: fields[6],
+      rango_min: rango_min,
+      rango_max: rango_max,
     };
-  } else if (
-    !isNaN(valor) &&
-    wordsNotAdmitted.some((word) => nombre.includes(word))
-  ) {
+  }
+
+  if (!isNaN(valor) && isChart) {
     return {
       isChart: true,
       nombre: nombre,
