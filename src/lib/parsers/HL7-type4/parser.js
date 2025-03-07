@@ -9,7 +9,7 @@ const {
 } = require("./messageSpliterFn.js");
 const PID = require("./models/PID.js");
 
-function parseResultsData(hl7Message, dictionary, options = {}) {
+function parseResultsData(hl7Message, dictionary, options = {}) {  
   const { positions = {} } = options; // Desestructura con un valor predeterminado
 
   // Divide el mensaje en sus segmentos

@@ -3,7 +3,8 @@ const ftp = require("basic-ftp");
 class FTPClient {
   constructor(equipment) {
     this.equipment = equipment;
-
+    this.maxReconnectAttempts = 5;
+    this.baseDelay = 1000; // Retraso base en milisegundos (1 segundo)
     this.configuration = {
       host: this.equipment.getIpAddress(),
       port: this.equipment.getPort(),

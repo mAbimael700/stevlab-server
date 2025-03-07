@@ -5,7 +5,9 @@ const {
   ReconnectionManager,
 } = require("../../lib/connections/ReconnectionManager");
 const { EquipmentRepository } = require("../Equipment/EquipmentRepository");
-const { RS232Client } = require("../../lib/connections/RS-232/Rs-232Client");
+const { RS232Client } = require("../../lib/connections/RS-232/Rs-232Client.js");
+const { Client } = require("basic-ftp");
+const { SerialPort } = require("serialport");
 
 class ClientConnection {
     /**
@@ -89,14 +91,10 @@ class ClientConnection {
     }
   
     /**
-     * Asigna manualmente un cliente en conexiones TCP.
-     * @param {Socket} client - Cliente TCP.
+     * Asigna manualmente un cliente en conexión.
+     * @param {Socket | Client | SerialPort} client - Cliente de conexión.
      */
     setClient(client) {
-      if (!(client instanceof Socket)) {
-        throw new Error("El cliente proporcionado no es una instancia de net.Socket");
-      }
-  
       this.client = client;
       this.#updateState(client);
     }

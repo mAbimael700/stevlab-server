@@ -1,5 +1,7 @@
 const { validateResponse } = require("../schemas/response-schema");
-const { emitResultsToWebSocket } = require("./websocket/emit-results-websocket");
+const {
+  emitResultsToWebSocket,
+} = require("./websocket/emit-results-websocket");
 const { getMacAddress } = require("./getMacAddress");
 const { saveResultsToLocalData } = require("./save-results-data");
 const { validateParser } = require("./validate-parser");
@@ -22,15 +24,18 @@ async function processData(device, message) {
 
     if (parser) {
       let results = parser(message);
-      results.equipment = device
 
       // Valida que el mensaje parseado sea correcto
       const resultValidated = validateResponse(results);
-
       //En caso de que el mensaje parseado sea válido lo guarda en un JSON
       if (resultValidated) {
         // Emite a través de Socket.io
-        emitResultsToWebSocket(results);
+
+
+        results.forEach((r) => {          
+          emitResultsToWebSocket([r]);
+        });
+
         saveResultsToLocalData(results);
       }
     }

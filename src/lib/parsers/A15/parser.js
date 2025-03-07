@@ -1,4 +1,4 @@
-const { parse } = require('date-fns');
+const { parse } = require("date-fns");
 const { A15 } = require("../../../constants/dictionaries/A15");
 
 const rawData = `
@@ -39,20 +39,24 @@ const rawData = `
 334 MAGNESIUM SER 1.75 mg/dL 01/03/2024 14:53:59
 `;
 
+const RESULT_TYPE_KEYWORDS = ["SER", "URI", "LIQ", "WBL", "SEM"];
+
 function parseData(data) {
-  const lines = data.trim().split("\n");
+  const foliosAnalizados = {};
   const parsedResults = [];
+
+  const lines = data.trim().split("\n");
   let currentEntry = null;
-  let currentFolio = null;
 
   lines.forEach((line) => {
     const segments = line.split(/\s+/);
     const folio = segments[0];
+
     const nombre = [];
     let i = 1;
 
     // Obtener el nombre del parámetro hasta encontrar "SER"
-    while (segments[i] && segments[i] !== "SER") {
+    while (segments[i] && !RESULT_TYPE_KEYWORDS.some((k) => segments[i] == k)) {
       nombre.push(segments[i]);
       i++;
     }
@@ -64,18 +68,14 @@ function parseData(data) {
     const fecha = segments[i + 3]?.trim();
     const hora = segments[i + 4]?.trim();
 
-
     const dateString = fecha + hora;
     const format = "dd/MM/yyyyHH:mm:ss";
     const date = parse(dateString, format, new Date());
 
     // Verificar si es un nuevo folio o la primera entrada
-    if (folio !== currentFolio) {
+    if (!foliosAnalizados[folio]) {
       // Guardar la entrada actual si existe
-      if (currentEntry) parsedResults.push(currentEntry);
-
-      // Crear nueva entrada para el nuevo folio
-      currentEntry = {
+      foliosAnalizados[folio] = {
         tipo: "R",
         id: folio,
         folio: folio,
@@ -83,44 +83,44 @@ function parseData(data) {
         fecha: new Date(),
         parametros: [],
       };
-
-      // Actualizar el folio actual
-      currentFolio = folio;
     }
 
-    if (currentEntry.parametros.some(p => p.nombre === parametroNombre)) {
+    currentEntry = foliosAnalizados[folio];
 
-      const presentParametro = currentEntry.parametros.find(p => p.nombre === parametroNombre)
+    const existingParametro = currentEntry.parametros.find(
+      (p) => p.nombre === parametroNombre
+    );
 
-      if (presentParametro.fecha < date) {
-        currentEntry.parametros = currentEntry.parametros.filter(p => p.nombre !== parametroNombre)
-        currentEntry.parametros.push(
-          {
-            nombre: parametroNombre,
-            clave_sistema,
-            valor,
-            unidad_medida,
-            fecha: date
-          }
+    if (existingParametro) {
+      if (existingParametro.fecha < date) {
+        currentEntry.parametros = currentEntry.parametros.filter(
+          (p) => p.nombre != parametroNombre
         );
       }
 
+      currentEntry.parametros.push({
+        nombre: parametroNombre,
+        clave_sistema,
+        valor,
+        unidad_medida,
+        fecha: date,
+      });
     } else {
-      currentEntry.parametros.push(
-        {
-          nombre: parametroNombre,
-          clave_sistema,
-          valor,
-          unidad_medida,
-          fecha: date
-        }
-      );
+      // Si el parámetro no existe, agregarlo
+      currentEntry.parametros.push({
+        nombre: parametroNombre,
+        clave_sistema,
+        valor,
+        unidad_medida,
+        fecha: date,
+      });
     }
   });
 
-  
-  // Añadir la última entrada si existe
-  if (currentEntry) parsedResults.push(currentEntry);
+  // Convertir el diccionario de folios a un array de resultados
+  for (const folio in foliosAnalizados) {
+    parsedResults.push(foliosAnalizados[folio]);
+  }
 
   return parsedResults;
 }

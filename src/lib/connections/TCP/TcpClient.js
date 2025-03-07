@@ -2,7 +2,6 @@ const net = require("node:net");
 const { ConnectionValidator } = require("./ConnectionValidator");
 const { ReconnectionManager } = require("../ReconnectionManager");
 const TcpEventHandler = require("./TcpEventHandler");
-
 class TCPClient {
   /**
    *
@@ -12,13 +11,14 @@ class TCPClient {
   constructor(equipment, equipmentRepository) {
     this.equipment = equipment;
     this.connectionValidator = new ConnectionValidator(equipmentRepository);
-    this.eventHandler = new TcpEventHandler(equipment);
+    this.eventHandler = null;
     this.reconnectionManager = ReconnectionManager.getInstance();
   }
 
   async build() {
     try {
       const client = new net.Socket();
+      this.eventHandler = new TcpEventHandler(client, equipment);
       this.connect(client);
       return client;
     } catch (error) {
@@ -78,10 +78,9 @@ class TCPClient {
         );
       }
 
-      
       // Configurar eventos
-      client.on("data", (data) => {
-        this.eventHandler.handleDataEvent(client, data);
+      client.on("data", (buffer) => {
+        this.eventHandler.data(buffer);
       });
 
       client.on("close", () =>
@@ -100,9 +99,9 @@ class TCPClient {
    * @param {Equipment} equipment
    */
   scheduleReconnect(equipment, maxRetries = 5) {
-    const idDevice = equipment.id;
-    const client = equipment.connection;
-    const interval = this.reconnectionManager.getReconnectInterval(idDevice);
+    const equipmentId = equipment.id;
+    const client = equipment.connection.client;
+    const interval = this.reconnectionManager.getReconnectInterval(equipmentId);
 
     if (!interval) {
       let retryCount = 0; // Contador de intentos de reconexión
@@ -124,7 +123,7 @@ class TCPClient {
           if (retryCount > maxRetries) {
             // Si se excede el límite de intentos
             clearInterval(reconnectInterval); // Detener el intervalo
-            this.reconnectionManager.removeReconnectInterval(idDevice); // Limpiar el intervalo almacenado
+            this.reconnectionManager.removeReconnectInterval(equipmentId); // Limpiar el intervalo almacenado
 
             const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${equipment.name}.`;
             console.error(errorMsg);
@@ -147,7 +146,7 @@ class TCPClient {
         }, 5000);
 
         this.reconnectionManager.setReconnectInterval(
-          idDevice,
+          equipmentId,
           reconnectInterval
         ); // Almacenar el intervalo
       }

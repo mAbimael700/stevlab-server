@@ -1,8 +1,8 @@
-const { getEquipmetEmitter } = require("./equipment-events");
-const { connectFTP, closeFTP } = require("../connections/ftp/ftp-connection");
-const { connectTCP, closeTCP } = require("../connections/tcp-ip/tcp-helpers");
+const { getEquipmetEmitter } = require("../../middlewares/equipment/equipment-events");
+const { connectFTP, closeFTP } = require("../../middlewares/connections/ftp/ftp-connection");
+const { connectTCP, closeTCP } = require("../../middlewares/connections/tcp-ip/tcp-helpers");
 const { formatMacAddressWithSeparators } = require("../../utils/formatMacAddressWithSeparators");
-const { closeSerialConn, addSerialConn } = require("../connections/serial/serial-manager");
+const { closeSerialConn, addSerialConn } = require("../../middlewares/connections/serial/serial-manager");
 
 const equipmentEmitter = getEquipmetEmitter()
 // Manejar equipos agregados

@@ -1,5 +1,3 @@
-const { Equipment } = require("../../domain/Equipment/Equipment");
-const { EquipmentConnectionStatus } = require("../../domain/Equipment/EquipmentConnectionStatus");
 const { emitMessage } = require("./emit-message-to-websocket");
 
 /**

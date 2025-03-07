@@ -1,9 +1,16 @@
 const Equipment = require("../../models/Equipment");
 
 class EquipmentRepository {
+
+  constructor(){}
+
   async create(data) {
     const equipment = new Equipment(data);
     return await equipment.save();
+  }
+
+  async getAll(){
+    return await Equipment.find()
   }
 
   async findById(id) {

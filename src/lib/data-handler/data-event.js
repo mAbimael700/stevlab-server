@@ -1,5 +1,4 @@
 const { Socket } = require("node:net");
-const { Equipment } = require("../../domain/Equipment/Equipment");
 const { SerialPort } = require("serialport");
 const {
   handleBuffer,
@@ -39,10 +38,11 @@ async function dataEvent(socket, data, parsingData, bufferList) {
   bufferList.append(data); // Acumula los datos recibidos
 
   const { sendsBySingleParameter, ackMessageFunction } = parsingData;
+  
 
   try {
     while (true) {
-      const accumulatedData = bufferList.toString("utf-8");
+      const accumulatedData = bufferList.toString("utf-8");      
       const bufferResults = handleBuffer(accumulatedData, parsingData);
 
       if (bufferResults) {
@@ -50,6 +50,8 @@ async function dataEvent(socket, data, parsingData, bufferList) {
           bufferResults.completeMessage,
           parsingData
         );
+
+        
         await handleResults(parsedResults, sendsBySingleParameter); // Manejo ajustado
 
         if (ackMessageFunction) {
@@ -69,6 +71,7 @@ async function dataEvent(socket, data, parsingData, bufferList) {
         finalizeResultsOnTimeout();
       });
     }
+
   } catch (error) {
     console.error("Error al procesar datos:", error.message);
     console.warn('Datos a eliminar después del consumo: ', bufferList.toString("utf-8"))

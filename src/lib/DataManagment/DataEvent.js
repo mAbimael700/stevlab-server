@@ -1,16 +1,7 @@
 const { Socket } = require("node:net");
 const { SerialPort } = require("serialport");
 const BufferList = require("bl");
-const {
-  handleBuffer,
-  parseMessage,
-  clearProcessedBuffer,
-} = require("./buffer-handler");
-const {
-  handleResults,
-  finalizeResultsOnTimeout,
-} = require("./results-handler");
-const { setupTimeout } = require("./timeout-handler");
+const { setupTimeout } = require("../data-handler/timeout-handler");
 const { EquipmentParsingConfiguration } = require("../../domain/Equipment/EquipmentParsingConfiguration");
 const { BufferHandler } = require("./BufferHandler");
 const { ResultHandler } = require("./ResultHandler");
@@ -45,8 +36,6 @@ class DataEvent {
   * @param {Buffer} data
   */
   async process(socket, data) {
-
-    this.configuration
     // Verifica el tamaño del paquete
     if (data.length > this.MAX_DATA_SIZE) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);

@@ -2,7 +2,7 @@ const { SerialPort, ReadlineParser } = require("serialport");
 const {
   emitStatusDevice,
 } = require("../../../lib/websocket/emit-device-status");
-const { DataEvent } = require("../../data-handler/DataEvent");
+const { DataEvent } = require("../../DataManagment/DataEvent");
 
 class RS232Client {
   constructor(equipment) {

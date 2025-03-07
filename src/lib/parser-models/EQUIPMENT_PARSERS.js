@@ -7,6 +7,7 @@ const { parser: XMLParser } = require("../parsers/XML/parser");
 const { CONTROLAB } = require("../../constants/dictionaries/CONTROLAB");
 const { DYMIND } = require("../../constants/dictionaries/DYMIND");
 const { MINDRAY_BS120 } = require("../../constants/dictionaries/MINDRAY_BS120");
+const FINECARE = {}
 const { generateHl7Ack } = require("../parsers/HL7-type4/messageSpliterFn");
 const { generateAck } = require("../parsers/XML/ack-function");
 
@@ -35,6 +36,7 @@ function parsingDataHL7(
 const equipmentsParsers = {
   FUJIFILM_DRICHEM_NX600: { parser: type1, CHAR_DELIMITER: "\x03" },
   CONTROLAB: parsingDataHL7(CONTROLAB),
+  FINECARE_PLUS: parsingDataHL7(FINECARE),
   CM200: { parser: cm200Parser, CHAR_DELIMITER: "" },
   A15: { parser: A15Parser, CHAR_DELIMITER: "" },
   MINDRAY_BC20S: parsingDataHL7(),

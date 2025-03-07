@@ -1,52 +1,48 @@
 const { Socket } = require("node:net");
-const { Equipment } = require("../../../domain/Equipment/Equipment");
-const { DataEvent } = require("../../data-handler/DataEvent");
-const {
-  emitStatusDevice,
-} = require("../../websocket/emit-device-status");
-const { DataEvent } = require("../../data-handler/DataEvent");
-
+const { DataEvent } = require("../../DataManagment/DataEvent");
+const { emitStatusDevice } = require("../../websocket/emit-device-status");
 
 class TcpEventHandler {
   /**
-   * 
-   * @param {Equipment} equipment 
+   * @param {Socket} socket
+   * @param {Equipment} equipment
    */
-  constructor(equipment) {
-    this.equipment = equipment
+  constructor(socket, equipment) {
+    this.socket = socket;
+    this.equipment = equipment;
     this.dataEvent = new DataEvent(this.equipment);
   }
 
   /**
    * Maneja los datos entrantes del socket.
-   * @param {Socket} socket
    * @param {Buffer} data
    */
-  handleDataEvent(socket, data) {
+  data(data) {
     const filteredData = data.toString().replace(/\x02/g, "");
-    
+
     if (filteredData.trim()) {
       emitStatusDevice(
         { lastConnection: new Date() },
         this.equipment,
-        `Mensaje entrante del equipo ${this.equipment.name} ${this.equipment.getIpAddress() ? `con IPv4: ${this.equipment.getIpAddress()}` : ""
+        `Mensaje entrante del equipo ${this.equipment.name} ${
+          this.equipment.getIpAddress()
+            ? `con IPv4: ${this.equipment.getIpAddress()}`
+            : ""
         } en el puerto ${this.equipment.getPort()}`
       );
 
-      this.dataEvent.process(socket, data);
+      this.dataEvent.process(this.socket, data);
     }
   }
 
   /**
    * Maneja eventos de conexión (cierre o error).
-   * @param {Socket} client - Cliente TCP.
-   * @param {Equipment} equipment - Información del equipo.
    * @param {"close" | "error"} eventType - Tipo de evento ("close" o "error").
    * @param {(equipment: Equipment) => void} scheduleReconnect - Función para programar reconexión.
    * @param {Error} [error] - Detalle del error (solo para eventos "error").
    */
-  handleConnectionEvent(client, equipment, eventType, scheduleReconnect, error) {
-    const { name, getIpAddress, getPort } = equipment;
+  handleConnectionEvent(eventType, scheduleReconnect, error) {
+    const { name, getIpAddress, getPort } = this.equipment;
     const ipAddress = getIpAddress();
     const port = getPort();
 
@@ -85,7 +81,7 @@ class TcpEventHandler {
         break;
     }
 
-    scheduleReconnect(equipment);
+    scheduleReconnect(this.equipment);
   }
 }
 

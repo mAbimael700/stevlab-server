@@ -1,4 +1,3 @@
-const { Equipment } = require("../../../domain/Equipment/Equipment")
 const net = require("node:net");
 const bl = require("bl");
 const { setTCPConnection, getTCPConnection } = require("./tcp-manager");

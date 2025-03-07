@@ -33,7 +33,10 @@
       "output": "electron"
     },
     "files": [
-      "**/*"
+      "**/*",
+      "!src/domain/**/*",
+      "!src/lib/DataManagment/**/*",
+      "!src/lib/connections/**/*"
     ],
     "win": {
       "target": "nsis"

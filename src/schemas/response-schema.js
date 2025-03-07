@@ -76,6 +76,7 @@ async function validateResponse(parsedResult) {
   const results = await Promise.all(
     validation.data.map(async (obj) => {
       try {
+        return obj
         return await transformData(obj);
       } catch (error) {
         console.warn(

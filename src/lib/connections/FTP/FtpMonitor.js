@@ -11,8 +11,6 @@ class FTPMonitor {
    */
   constructor(equipment) {
     this.isChecking = false;
-    this.maxReconnectAttempts = 5;
-    this.baseDelay = 1000; // Retraso base en milisegundos (1 segundo)
     this.equipment = equipment;
     this.connection = equipment.connection;
     this.bufferParser = new BufferParser(equipment.parsingConfiguration);
@@ -133,4 +131,8 @@ class FTPMonitor {
     );
     return Promise.race([promise, timeout]);
   }
+}
+
+module.exports = {
+  FTPMonitor
 }

@@ -4,7 +4,6 @@ const { MINDRAY_BS120 } = require("../../constants/dictionaries/MINDRAY_BS120");
 
 const { parser: type1 } = require("../../lib/parsers/HL7-type1/parser");
 const { parser: hl7Parser } = require("../../lib/parsers/HL7-type4/parser");
-const { parser: type1 } = require("../../lib/parsers/HL7-type1/parser");
 const { parseMessage: cm200Parser } = require("../../lib/parsers/CM200/parser");
 const { parseData: A15Parser } = require("../../lib/parsers/A15/parser");
 const { parser: VITROS350Parser } = require("../../lib/parsers/Vitros350/parser");
