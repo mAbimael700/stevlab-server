@@ -59,7 +59,10 @@ class EquipmentManager {
     return this.equipmentsOnServer.get(id);
   }
 
-  // Método estático para obtener la instancia única
+  /**
+   * Método estático para obtener la instancia única
+   * @returns {EquipmentManager}
+   */
   static getInstance() {
     if (!EquipmentManager.instance) {
       EquipmentManager.instance = new EquipmentManager();

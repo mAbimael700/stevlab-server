@@ -23,20 +23,15 @@ class ConnectionValidator {
       const currentRemoteMacAddress = await getMacAddress(ipAddress);
 
       if (!currentRemoteMacAddress) {
-        console.warn(
-          `No se encontró la dirección MAC para el equipo con la dirección IP ${ipAddress}. Cerrando conexión.`
-        );
         throw new Error(
           `No se encontró la dirección MAC para el equipo con la dirección IP ${ipAddress}. Cerrando conexión.`
         );
       }
 
-      let foundEquipment = this.equipmentRepository.findByMacAddress(
-        currentRemoteMacAddress
-      );
+      let foundEquipment = this.equipmentRepository
+        .findByMacAddress(currentRemoteMacAddress);
 
       if (!foundEquipment) {
-        console.warn("Equipo no registrado. Conexión cerrada.");
         throw new Error(
           "El equipo que se intenta conectar no se encuentra registrado en la configuración del servidor. Conexión cerrada."
         );
@@ -45,7 +40,7 @@ class ConnectionValidator {
       return foundEquipment;
     } catch (error) {
       console.error(
-        "Hubo un error en la validación de conexión del equipo",
+        "Hubo un error en la validación de conexión del equipo:",
         error.message
       );
       throw new Error(error.message, error);
