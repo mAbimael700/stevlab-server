@@ -2,14 +2,14 @@ const Equipment = require("../../models/Equipment");
 
 class EquipmentRepository {
 
-  constructor(){}
+  constructor() { }
 
   async create(data) {
     const equipment = new Equipment(data);
     return await equipment.save();
   }
 
-  async getAll(){
+  async getAll() {
     return await Equipment.find()
   }
 
@@ -31,6 +31,21 @@ class EquipmentRepository {
 
   async update(id, updateData) {
     return await Equipment.findByIdAndUpdate(id, updateData, { new: true });
+  }
+
+  async updateField(id, fieldPath, newValue) {
+    const updateData = {
+      $set: { [fieldPath]: newValue }
+    };
+    return await Equipment.findByIdAndUpdate(id, updateData, { new: true });
+  }
+
+  async updateLastConnection(id, timestamp) {
+    this.updateField(id, "status.lastConnection", timestamp)
+  }
+
+  async updateConnectionStatus(id, status) {
+    this.updateField(id, "status.connectionStatus", status)
   }
 
   async delete(id) {
