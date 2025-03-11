@@ -50,33 +50,15 @@ class TCPServer {
       });
 
       socket.on("end", () => {
-        console.log(
-          `Conexión cerrada por el equipo ${
-            equipment.name
-          } con IPv4: ${equipment.getIpAddress()}:${socket.remotePort}`
-        );
-
-        emitStatusDevice(
-          {
-            last_connection: new Date(),
-            connection_status: "disconnected",
-          },
-          result.data
-        );
-
-        socket.destroy();
+        eventHandler.end()
       });
 
       socket.on("close", () => {
-        console.log("Conexión cerrada");
-        //Server.setStatus("inactivo");
-        reconnect();
+        eventHandler.close(reconnect);
       });
 
       // Manejador de errores
-      socket.on("error", (err) =>
-        eventHandler.handleConnectionEvent("error", reconnect, err)
-      );
+      socket.on("error", (err) => eventHandler.error(err, reconnect));
     } catch (error) {
       socket.destroy();
     }

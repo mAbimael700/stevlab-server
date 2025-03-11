@@ -21,7 +21,7 @@ class DataEvent {
     /**
      * @type {number}
      */
-    this.MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
+    this.maxDataSize = 1e6; // 1MB máximo por paquete
     this.bufferList = new BufferList()
     this.configuration = configuration
     this.bufferHandler = new BufferHandler(configuration)
@@ -37,7 +37,7 @@ class DataEvent {
   */
   async process(socket, data) {
     // Verifica el tamaño del paquete
-    if (data.length > this.MAX_DATA_SIZE) {
+    if (data.length > this.maxDataSize) {
       console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
       throw new Error(`Paquete demasiado grande recibido: ${data.length} bytes`);
     }
@@ -45,7 +45,7 @@ class DataEvent {
     this.lastMessageTime = Date.now(); // Actualiza el tiempo del último mensaje
     this.bufferList.append(data); // Acumula los datos recibidos
 
-    const { sendsBySingleParameter, ackMessageFunction } = this.configuration;
+    const { ackMessageFunction } = this.configuration;
 
     try {
       while (true) {
@@ -56,7 +56,7 @@ class DataEvent {
           const parsedResults = this.bufferParser
             .parse(bufferResults.completeMessage);
 
-          await this.resultHandler.handle(parsedResults, sendsBySingleParameter); // Manejo ajustado
+          await this.resultHandler.handle(parsedResults); // Manejo ajustado
 
           if (ackMessageFunction) {
             socket.write(ackMessageFunction(bufferResults.messageId));
@@ -70,7 +70,7 @@ class DataEvent {
         }
       }
 
-      if (sendsBySingleParameter) {
+      if (this.configuration.sendsBySingleParameter) {
         // Configura el timeout para procesar inactividad
         setupTimeout(this.lastMessageTime, () => {
           this.resultHandler.finalize();

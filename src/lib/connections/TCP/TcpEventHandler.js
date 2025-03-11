@@ -36,6 +36,37 @@ class TcpEventHandler {
   }
 
   /**
+   *
+   * @param {Error} err
+   * @param {*} scheduleReconnect
+   */
+  error(err, scheduleReconnect) {
+    this.handleConnectionEvent("error", scheduleReconnect, err);
+  }
+
+  close(scheduleReconnect) {
+    this.handleConnectionEvent("close", scheduleReconnect);
+  }
+
+  end() {
+    console.log(
+      `Conexión cerrada por el equipo ${
+        equipment.name
+      } con IPv4: ${equipment.getIpAddress()}:${socket.remotePort}`
+    );
+
+    emitStatusDevice(
+      {
+        last_connection: new Date(),
+        connection_status: "disconnected",
+      },
+      result.data
+    );
+
+    socket.destroy();
+  }
+
+  /**
    * Maneja eventos de conexión (cierre o error).
    * @param {"close" | "error"} eventType - Tipo de evento ("close" o "error").
    * @param {(equipment: Equipment) => void} scheduleReconnect - Función para programar reconexión.
