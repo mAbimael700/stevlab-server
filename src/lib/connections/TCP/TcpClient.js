@@ -1,7 +1,8 @@
 const net = require("node:net");
 const { ConnectionValidator } = require("./ConnectionValidator");
 const { ReconnectionManager } = require("../ReconnectionManager");
-const TcpEventHandler = require("./TcpEventHandler");
+const { TcpSocketListener } = require("./TcpSocketListener");
+
 class TCPClient {
   /**
    *
@@ -11,16 +12,20 @@ class TCPClient {
   constructor(equipment, equipmentRepository) {
     this.equipment = equipment;
     this.connectionValidator = new ConnectionValidator(equipmentRepository);
-    this.eventHandler = null;
     this.reconnectionManager = ReconnectionManager.getInstance();
+    this.client = new net.Socket();
+    this.clientListener = new TcpSocketListener(this.client, this.equipment)
   }
+
 
   async build() {
     try {
-      const client = new net.Socket();
-      this.eventHandler = new TcpEventHandler(client, equipment);
-      this.connect(client);
-      return client;
+
+      // Construye los listeners correspondientes del cliente
+      this.clientListener.build()
+      //Realiza la conexión del cliente TCP
+      this.connect();
+      return this.client;
     } catch (error) {
       console.error(error.message);
     }
@@ -29,94 +34,45 @@ class TCPClient {
   /**
    * @param {net.Socket} client
    */
-  connect(client) {
-    const port = this.equipment.configuration.port;
-    const host = this.equipment.configuration.ipAddress;
-    const id = this.equipment.id;
+  connect() {
+    const port = this.equipment.getPort();
+    const host = this.equipment.getIpAddress();
+    const { id, name } = this.equipment;
 
-    const connectingMsg = `Intentando conectar al equipo ${this.equipment.name} en ${host}:${port}...`;
+
+    const connectingMsg = `Intentando conectar al equipo ${name} en ${host}:${port}...`;
     console.log(connectingMsg);
 
-    emitStatusDevice(
-      { connection_status: "connecting" },
-      this.equipment,
-      connectingMsg
-    );
-
-    client.removeAllListeners(); // Limpia cualquier listener anterior
-
-    // Configurar el manejador de errores antes de llamar a connect
-    client.on("error", (err) => {
-      this.eventHandler.handleConnectionEvent(
-        client,
-        this.equipment,
-        "error",
-        scheduleReconnect,
-        err
-      );
-    });
-
-    client.connect(port, host, async () => {
-      console.log(
-        `Conexión exitosa con ${this.equipment.name} en ${host}:${port}.`
-      );
-      emitStatusDevice(
-        { connection_status: "connected" },
-        this.equipment,
-        `Conexión exitosa con ${this.equipment.name} en ${host}:${port}.`
-      );
-      this.reconnectionManager.removeReconnectInterval(id);
-      client.connecting = false;
-      const validate = await this.connectionValidator.validate(client);
-
-      if (!validate) {
-        client.destroy(
-          "El equipo no está registrado en las configuraciones del servidor."
-        );
-        throw new Error(
-          "El equipo no está registrado en las configuraciones del servidor."
-        );
-      }
-
-      // Configurar eventos
-      client.on("data", (buffer) => {
-        this.eventHandler.data(buffer);
+    this.client
+      .connect(port, host, async () => {
+        const connectionSuccesfullyMsg = `Conexión exitosa con ${name} en ${host}:${port}.`
+        console.log(connectionSuccesfullyMsg);
+        this.reconnectionManager.removeReconnectInterval(id);
+        this.client.connecting = false;
       });
-
-      client.on("close", () =>
-        this.eventHandler.handleConnectionEvent(
-          client,
-          this.equipment,
-          "close",
-          this.scheduleReconnect
-        )
-      );
-    });
   }
 
   /**
    *
-   * @param {Equipment} equipment
    */
-  scheduleReconnect(equipment, maxRetries = 5) {
-    const equipmentId = equipment.id;
-    const client = equipment.connection.client;
+  scheduleReconnect(maxRetries = 5) {
+    const equipmentId = this.equipment.id;
     const interval = this.reconnectionManager.getReconnectInterval(equipmentId);
 
     if (!interval) {
       let retryCount = 0; // Contador de intentos de reconexión
 
-      const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`;
+      const msg = `Programando reconexión para ${this.equipment.name} en 5 segundos.`;
       console.info(msg);
       emitStatusDevice(
         { connection_status: "reconnecting", last_connection: new Date() },
-        equipment,
+        this.equipment,
         msg
       );
 
-      client.connecting = true;
+      this.client.connecting = true;
 
-      if (client) {
+      if (this.client) {
         const reconnectInterval = setInterval(() => {
           retryCount++; // Incrementar el contador de intentos
 
@@ -125,24 +81,24 @@ class TCPClient {
             clearInterval(reconnectInterval); // Detener el intervalo
             this.reconnectionManager.removeReconnectInterval(equipmentId); // Limpiar el intervalo almacenado
 
-            const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${equipment.name}.`;
+            const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${this.equipment.name}.`;
             console.error(errorMsg);
             emitStatusDevice(
               {
                 connection_status: "disconnected",
                 last_connection: new Date(),
               },
-              equipment,
+              this.equipment,
               errorMsg
             );
             return;
           }
 
           console.info(
-            `Reintentando conexión para ${equipment.name} (Intento ${retryCount}/${maxRetries})...`
+            `Reintentando conexión para ${this.equipment.name} (Intento ${retryCount}/${maxRetries})...`
           );
-          client.removeAllListeners(); // Limpia eventos antiguos
-          this.connect(client); // Intentar reconectar
+          this.client.removeAllListeners(); // Limpia eventos antiguos
+          this.connect(); // Intentar reconectar
         }, 5000);
 
         this.reconnectionManager.setReconnectInterval(

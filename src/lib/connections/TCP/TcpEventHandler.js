@@ -24,10 +24,9 @@ class TcpEventHandler {
       emitStatusDevice(
         { lastConnection: new Date() },
         this.equipment,
-        `Mensaje entrante del equipo ${this.equipment.name} ${
-          this.equipment.getIpAddress()
-            ? `con IPv4: ${this.equipment.getIpAddress()}`
-            : ""
+        `Mensaje entrante del equipo ${this.equipment.name} ${this.equipment.getIpAddress()
+          ? `con IPv4: ${this.equipment.getIpAddress()}`
+          : ""
         } en el puerto ${this.equipment.getPort()}`
       );
 
@@ -74,8 +73,8 @@ class TcpEventHandler {
    */
   handleConnectionEvent(eventType, scheduleReconnect, error) {
     const { name, getIpAddress, getPort } = this.equipment;
-    const ipAddress = getIpAddress();
-    const port = getPort();
+    const ipAddress = getIpAddress() ?? this.socket.remoteAddress;
+    const port = getPort() ?? this.socket.remotePort;
 
     switch (eventType) {
       case "close":
@@ -112,7 +111,7 @@ class TcpEventHandler {
         break;
     }
 
-    scheduleReconnect(this.equipment);
+    scheduleReconnect();
   }
 }
 
