@@ -10,6 +10,11 @@ const { processData } = require("../../../lib/process-data");
 const {
   formatMacAddressWithSeparators,
 } = require("../../../utils/formatMacAddressWithSeparators");
+const {
+  getReconnectInterval,
+  setReconnectInterval,
+  removeReconnectInterval,
+} = require("../reconnect-manager");
 
 // Helpers para manejo de archivos
 function loadPreviousState(filePath) {
@@ -31,15 +36,16 @@ function getAddedOrUpdatedFiles(currentFiles, previousFiles) {
       (prevFile) => prevFile.name === currentFile.name
     );
     // Si no existe en los archivos anteriores o si la fecha de modificación es distinta
-    return !previousFile || previousFile.rawModifiedAt !== currentFile.rawModifiedAt;
+    return (
+      !previousFile || previousFile.rawModifiedAt !== currentFile.rawModifiedAt
+    );
   });
 }
 
 function getRemovedFiles(currentFiles, previousFiles) {
   return previousFiles.filter(
-    (prevFile) => !currentFiles.some(
-      (currentFile) => currentFile.name === prevFile.name
-    )
+    (prevFile) =>
+      !currentFiles.some((currentFile) => currentFile.name === prevFile.name)
   );
 }
 // Manejo de reconexión
@@ -48,32 +54,70 @@ async function handleReconnection(
   reconnectAttempts,
   maxRetries = 8
 ) {
+  const idDevice = equipment.mac_address;
+
+  // Verificar si ya hay un intervalo de reconexión en curso para este dispositivo
+  if (getReconnectInterval(idDevice)) {
+    console.log(`Ya hay una reconexión en curso para ${equipment.name}.`);
+    return null;
+  }
+
   if (reconnectAttempts >= maxRetries) {
     console.error(
       `Máximo de intentos de reconexión alcanzado para ${equipment.name}`
     );
     return null;
-  } 
+  }
 
   console.log(
-    `Intentando reconectar con ${equipment.name
+    `Intentando reconectar con ${
+      equipment.name
     } (${formatMacAddressWithSeparators(equipment.mac_address)})...`
   );
   updateFtpConnection(equipment.mac_address, { reconnecting: true });
 
-  await reconnectFTP(equipment);
+  // Configurar un intervalo de reconexión
+  const interval = setInterval(async () => {
+    await reconnectFTP(equipment);
+  }, 1000); // Intentar reconectar cada segundo
+  setReconnectInterval(idDevice, interval);
 
-  // Actualizar conexión después de reconectar
-  const ftpConnections = getFtpConnections();
-  const connection = ftpConnections[equipment.mac_address];
-  updateFtpConnection(equipment.mac_address, { reconnecting: false });
+  // Esperar a que la reconexión sea exitosa o se alcance el máximo de intentos
+  const connection = await waitForReconnection(equipment, maxRetries);
+
+  // Limpiar el intervalo después de la reconexión
+  removeReconnectInterval(idDevice);
 
   if (!connection || connection.client.closed) {
     console.error(`Reconexión fallida para el equipo ${equipment.name}`);
     return null;
   }
 
+  reconnectAttempts = 0;
   return connection;
+}
+
+// Función para esperar a que la reconexión sea exitosa
+async function waitForReconnection(equipment, maxRetries) {
+  const idDevice = equipment.mac_address;
+  let attempts = 0;
+
+  return new Promise((resolve) => {
+    const checkConnection = setInterval(async () => {
+      const ftpConnections = getFtpConnections();
+      const connection = ftpConnections[idDevice];
+
+      if (connection && !connection.client.closed) {
+        clearInterval(checkConnection);
+        resolve(connection);
+      } else if (attempts >= maxRetries) {
+        clearInterval(checkConnection);
+        resolve(null);
+      } else {
+        attempts++;
+      }
+    }, 1000); // Verificar cada segundo
+  });
 }
 
 // Procesamiento de archivos
@@ -104,8 +148,11 @@ async function startMonitoringDirectory(equipment) {
   let previousFiles = loadPreviousState(previousStateFile);
   let isChecking = false;
   let reconnectAttempts = 0;
+  let maxReconnectAttempts = 8; // Máximo de intentos de reconexión
+  let flag = false;
 
   async function detectChanges() {
+    if (flag) return
     if (isChecking) return;
     isChecking = true;
 
@@ -113,6 +160,14 @@ async function startMonitoringDirectory(equipment) {
     let connection = ftpConnections[equipment.mac_address];
     try {
       if (!connection || !connection.client || connection.client.closed) {
+        if (reconnectAttempts >= maxReconnectAttempts) {
+          console.error(
+            `Máximo de intentos de reconexión alcanzado para ${equipment.name}. Deteniendo la verificación.`
+          );
+          flag = true;
+          return; // Detener la verificación si se alcanza el máximo de intentos
+        }
+
         connection = await handleReconnection(equipment, reconnectAttempts++);
         if (!connection) return;
       }

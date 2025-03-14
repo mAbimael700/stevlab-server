@@ -1,5 +1,5 @@
 const { Socket } = require("node:net");
-const { DataEvent } = require("../../DataManagment/DataEvent");
+const { DataEvent } = require("../../BufferStreamManagment/DataEvent");
 const { emitStatusDevice } = require("../../websocket/emit-device-status");
 
 class TcpEventHandler {

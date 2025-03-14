@@ -46,8 +46,7 @@ class FTPClient {
         //emitOpenedDevice(equipment, message);
       }
       this.client.connecting = false
-      this.client = client;
-      return client;
+      return this.client 
 
     } catch (error) {
       console.error(

@@ -1,5 +1,5 @@
 const { SerialPort, ReadlineParser } = require("serialport");
-const { DataEvent } = require("../../DataManagment/DataEvent");
+const { DataEvent } = require("../../BufferStreamManagment/DataEvent");
 
 class Rs232PortListener {
     /**

@@ -11,7 +11,7 @@ function formatName(name) {
 /**
  * Extrae el valor numérico de una cadena en formato "Negativo(0.78)" o "Positivo(0.78)",
  * si el valor es solo el número solo lo castea a dato tipo numner
- * @param {string} value
+ * @param {number} value
  * @returns
  */
 function extractNumericValue(value) {
@@ -55,11 +55,11 @@ function OBX(segment, dictionary) {
     };
   }
 
-  if (!isNaN(valor) && isChart) {
+  if (!isNaN(valor) && isChart) {    
     return {
       isChart: true,
       nombre: nombre,
-      valor,
+      valor: parseFloat(valor),
     };
   }
 }

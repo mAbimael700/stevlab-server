@@ -62,21 +62,23 @@ const responseSchema = z.array(resultSchema);
  * @param {*} parsedResult
  * @returns
  */
-async function validateResponse(parsedResult) {
+function validateResponse(parsedResult) {
   const validation = responseSchema.safeParse(parsedResult);
 
   if (!validation.success) {
     console.warn(
       "¡Los datos parseados proporcionados no son validos!: ",
-      JSON.stringify(parsedResult, null, 2)
+      JSON.stringify(parsedResult, null, 2),
+      JSON.stringify(validation.error.errors, null, 2)
     );
-    return { success: false, errors: validation.error.errors };
+    //return { success: false, errors: validation.error.errors };
   }
 
-  const results = await Promise.all(
+  return validation;
+
+  /* const results = await Promise.all(
     validation.data.map(async (obj) => {
       try {
-        return obj
         return await transformData(obj);
       } catch (error) {
         console.warn(
@@ -85,12 +87,12 @@ async function validateResponse(parsedResult) {
         return obj; // Retorna el objeto original si falla la transformación
       }
     })
-  );
+  ); 
 
-  return { success: true, data: results }; // Siempre retorna success
+  return { success: true, data: validation.data }; // Siempre retorna success */
 }
 
 module.exports = {
   validateResponse,
-  parameterSchema
+  parameterSchema,
 };

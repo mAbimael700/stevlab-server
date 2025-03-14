@@ -38,11 +38,10 @@ async function dataEvent(socket, data, parsingData, bufferList) {
   bufferList.append(data); // Acumula los datos recibidos
 
   const { sendsBySingleParameter, ackMessageFunction } = parsingData;
-  
 
   try {
     while (true) {
-      const accumulatedData = bufferList.toString("utf-8");      
+      const accumulatedData = bufferList.toString("utf-8");
       const bufferResults = handleBuffer(accumulatedData, parsingData);
 
       if (bufferResults) {
@@ -51,8 +50,7 @@ async function dataEvent(socket, data, parsingData, bufferList) {
           parsingData
         );
 
-        
-        await handleResults(parsedResults, sendsBySingleParameter); // Manejo ajustado
+        handleResults(parsedResults, sendsBySingleParameter); // Manejo ajustado
 
         if (ackMessageFunction) {
           socket.write(ackMessageFunction(bufferResults.messageId));
@@ -71,12 +69,14 @@ async function dataEvent(socket, data, parsingData, bufferList) {
         finalizeResultsOnTimeout();
       });
     }
-
   } catch (error) {
     console.error("Error al procesar datos:", error.message);
-    console.warn('Datos a eliminar después del consumo: ', bufferList.toString("utf-8"))
+    console.warn(
+      "Datos a eliminar después del consumo: ",
+      bufferList.toString("utf-8")
+    );
     bufferList.consume(bufferList.length);
-    throw new Error("Error al procesar datos:", error)
+    throw new Error("Error al procesar datos:", error);
   }
 }
 

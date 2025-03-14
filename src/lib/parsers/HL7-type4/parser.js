@@ -9,7 +9,7 @@ const {
 } = require("./messageSpliterFn.js");
 const PID = require("./models/PID.js");
 
-function parseResultsData(hl7Message, dictionary, options = {}) {  
+function parseResultsData(hl7Message, dictionary, options = {}) {
   const { positions = {} } = options; // Desestructura con un valor predeterminado
 
   // Divide el mensaje en sus segmentos
@@ -43,7 +43,11 @@ function parseResultsData(hl7Message, dictionary, options = {}) {
 
         const parametro = OBX(fieldsSegment, dictionary);
         if (parametro) {
-          parametro.isChart ? result.chart.push(parametro) : result.parametros.push(parametro);
+          if (parametro.isChart) {
+            result.chart.push(parametro);
+          } else {
+            result.parametros.push(parametro);
+          }
         }
 
         break;
@@ -56,13 +60,15 @@ function parseResultsData(hl7Message, dictionary, options = {}) {
         };
         break;
       }
-       case "MSH": {
+      case "MSH": {
         result = { ...result, ...MSH(fieldsSegment) };
         break;
-      } 
+      }
 
       default: {
-        console.warn(`Message type '${fieldsSegment.type}' is not recognized or declared`);
+        console.warn(
+          `Message type '${fieldsSegment.type}' is not recognized or declared`
+        );
       }
     }
   });
@@ -81,8 +87,10 @@ function parseResultsData(hl7Message, dictionary, options = {}) {
   if (!result.folio || !result.parametros.length) {
     console.error("El resultado no contiene datos válidos");
 
-    if (!result.folio) console.error("El resultado recibido no tiene asignado un folio");
-    if (!result.parametros?.length) console.error("El resultado recibido envió ningún parámetro");
+    if (!result.folio)
+      console.error("El resultado recibido no tiene asignado un folio");
+    if (!result.parametros?.length)
+      console.error("El resultado recibido envió ningún parámetro");
 
     return []; // Devuelve un arreglo vacío si los datos no son válidos
   }

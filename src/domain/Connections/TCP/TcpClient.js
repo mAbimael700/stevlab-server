@@ -20,7 +20,6 @@ class TCPClient {
 
   async build() {
     try {
-
       // Construye los listeners correspondientes del cliente
       this.clientListener.build()
       //Realiza la conexión del cliente TCP

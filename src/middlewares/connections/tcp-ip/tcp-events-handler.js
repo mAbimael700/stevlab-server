@@ -28,7 +28,7 @@ function handleDataEvent(socket, data, device, parsingData, bufferList) {
       } en el puerto ${device.port}`
     );
 
-   dataEvent(socket, data, parsingData, bufferList);
+    dataEvent(socket, data, parsingData, bufferList);
   }
 }
 
@@ -64,6 +64,9 @@ function handleConnectionEvent(
           break;
         case "EHOSTUNREACH":
           msg = `No se puede alcanzar el host ${equipment.ip_address} en el puerto ${equipment.port}.`;
+          break;
+        case "ECONNRESET":
+          msg = `Conexión reiniciada inesperadamente con ${equipment.name}.`;
           break;
         default:
           msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${error.message}`;

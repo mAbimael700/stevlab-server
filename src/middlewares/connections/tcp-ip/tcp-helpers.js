@@ -1,6 +1,6 @@
 const { removeTCPConnection, getTCPConnection } = require("./tcp-manager");
 const { createTCPConnection } = require("./tcp-connection");
-const { removeReconnectInterval } = require("./tcp-reconnect-manager");
+const { removeReconnectInterval } = require("../reconnect-manager");
 const {
   emitStatusDevice,
 } = require("../../../lib/websocket/emit-device-status");
@@ -11,14 +11,16 @@ const { getEquipmentById } = require("../../equipment/equipment-helpers");
  * @param {Object} device - Información del equipo de laboratorio
  */
 function closeTCP(device) {
+  console.log(device);
+  
   const idDevice = device.id_device;
 
   if (getTCPConnection(idDevice)) {
     console.log(
       `Cerrando y eliminando conexión TCP para el equipo: ${device.name}.`
     );
-    removeTCPConnection(idDevice); // Reutiliza la lógica de eliminación
     removeReconnectInterval(idDevice); // Limpia también los intentos de reconexión programados
+    removeTCPConnection(idDevice); // Reutiliza la lógica de eliminación
     emitStatusDevice(
       { connection_status: "disconnected", last_connection: new Date() },
       device,
@@ -27,7 +29,7 @@ function closeTCP(device) {
   } else {
     console.log(`No se encontró una conexión TCP activa para ${idDevice}.`);
     throw new Error(`No se encontró una conexión TCP activa para ${idDevice}.`);
-  }
+  } 
 }
 
 async function connectTCP(device) {

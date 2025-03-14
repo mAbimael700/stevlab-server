@@ -5,11 +5,11 @@ const {
 const {
   emitStatusDevice,
 } = require("../../../lib/websocket/emit-device-status");
-// Variable para almacenar las conexiones FTP activas
+const { removeReconnectInterval } = require("../reconnect-manager");
+
 let ftpConnections = {};
 
 // Configuración del límite y la frecuencia de reconexión
-const MAX_RETRIES = 5;
 const INITIAL_DELAY = 1000; // 1 segundo
 
 function emitClosedDevice(
@@ -211,6 +211,10 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     return;
   }
 
+  if (connection.reconnecting || connection.client.closed) {
+    return;
+  }
+
   const { client } = connection;
 
   // Marcar como "en proceso de reconexión"
@@ -250,21 +254,14 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     );
     emitOpenedDevice(equipment);
   } catch (error) {
-    console.error(
-      `Error al reconectar con ${
-        equipment.name
-      } (${formatMacAddressWithSeparators(equipment.mac_address)}):`,
+    const errorMsg = `Error al reconectar con ${
+      equipment.name
+    } (${formatMacAddressWithSeparators(equipment.mac_address)}): ${
       error.message
-    );
-    emitClosedDevice(
-      equipment,
-      true,
-      `Error al reconectar con ${
-        equipment.name
-      } (${formatMacAddressWithSeparators(equipment.mac_address)}): ${
-        error.message
-      }`
-    );
+    }`;
+
+    console.error(errorMsg);
+    emitClosedDevice(equipment, true, errorMsg);
 
     if (attempt < maxRetries) {
       console.log(`Reintentando reconectar (${attempt + 1}/${maxRetries})...`);
@@ -273,6 +270,7 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     }
 
     console.error(`Máximo de reintentos alcanzado para ${equipment.name}.`);
+    removeReconnectInterval(equipment.mac_address)
   } finally {
     // Asegurarse de actualizar el estado reconectando
     updateFtpConnection(equipment.mac_address, { reconnecting: false });

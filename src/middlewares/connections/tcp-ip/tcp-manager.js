@@ -32,11 +32,10 @@ function removeTCPConnection(idDevice) {
   const connection = getTCPConnection(idDevice);
   if (connection) {
     if (!connection.destroyed) {
-      console.log(`Cerrando conexión TCP para ${idDevice}.`);
+      console.log(`Cerrando conexión TCP para ${idDevice}...`);
       connection.destroy(); // Cierra la conexión TCP limpiamente
-    } else {
-      console.log(`La conexión TCP para ${idDevice} ya estaba cerrada.`);
     }
+
     tcpConnections.delete(idDevice);
   } else {
     console.log(`No se encontró una conexión TCP activa para ${idDevice}.`);

@@ -55,7 +55,7 @@ equipmentEmitter.on("deviceModified", async (oldEquipment, newEquipment) => {
   }
 
   if (newEquipment.require_tcp_server_conn) {
-    closeTCP(oldEquipment.id_device);
+    closeTCP(newEquipment);
     await connectTCP(newEquipment);
   }
 

@@ -13,18 +13,21 @@ let resultsToSave = { parametros: [] };
  * @param {Object[]} results - Resultados procesados.
  * @param {boolean} sendsBySingleParameter - Indica si el equipo envía un solo parámetro a la vez.
  */
-async function handleResults(results, sendsBySingleParameter = false) {
+function handleResults(results, sendsBySingleParameter = false) {
   try {
-    const response = await validateResponse(results);
-
+    const response = validateResponse(results);
     if (!response.success) {
-      throw new Error("La validación de los resultados no fue satisfactoria", {
+      /* throw new Error("La validación de los resultados no fue satisfactoria", {
         cause: response.errors,
-      });
+      }); */
+      console.error("La validación de los resultados no fue satisfactoria");
+      return
     }
 
     if (!results[0]?.folio) {
-      throw new Error("Resultados ignorados porque no tienen un folio válido");
+      //throw new Error("Resultados ignorados porque no tienen un folio válido");
+      console.error("Resultados ignorados porque no tienen un folio válido");
+      return
     }
 
     if (sendsBySingleParameter) {
