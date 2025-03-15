@@ -31,7 +31,7 @@ async function createTCPConnection(equipment) {
   try {
     const client = new net.Socket();
     setTCPConnection(idDevice, client);
-    connect(client, equipment);
+    await connect(client, equipment);
   } catch (error) {
     console.error(error.message);
   }
@@ -43,7 +43,7 @@ async function createTCPConnection(equipment) {
  * @param {Equipment} equipment
  */
 
-const connect = (client, equipment) => {
+const connect = async (client, equipment) => {
   const port = equipment.port;
   const host = equipment.ip_address;
   const idDevice = equipment.id_device;
@@ -64,17 +64,26 @@ const connect = (client, equipment) => {
     handleConnectionEvent(client, equipment, "error", scheduleReconnect, err);
   });
 
-  client.connect(port, host, async () => {
-    console.log(`Conexión exitosa con ${equipment.name} en ${host}:${port}.`);
-    emitStatusDevice(
-      { connection_status: "connected" },
-      equipment,
-      `Conexión exitosa con ${equipment.name} en ${host}:${port}.`
-    );
-    removeReconnectInterval(idDevice);
-    client.connecting = false;
+  try {
+    await new Promise((resolve, reject) => {
+      client.connect(port, host, () => {
+        console.log(`Conexión exitosa con ${equipment.name} en ${host}:${port}.`);
+        emitStatusDevice(
+          { connection_status: "connected" },
+          equipment,
+          `Conexión exitosa con ${equipment.name} en ${host}:${port}.`
+        );
+        removeReconnectInterval(idDevice);
+        client.connecting = false;
+        resolve()
+      });
+
+      client.once('error', reject);
+    })
+
     const device = await deviceValidation(client);
     const bufferList = new bl();
+
 
     // Configurar eventos
     client.on("data", (data) => {
@@ -84,7 +93,12 @@ const connect = (client, equipment) => {
     client.on("close", () =>
       handleConnectionEvent(client, equipment, "close", scheduleReconnect)
     );
-  });
+  } catch (error) {
+    console.error(`Error al conectar con ${equipment.name}: ${error.message}`);
+    scheduleReconnect(equipment);
+  }
+
+
 };
 
 /**
@@ -122,7 +136,7 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
 
   client.connecting = true;
 
-  const reconnectInterval = setInterval(() => {
+  const reconnectInterval = setInterval(async () => {
     retryCount++; // Incrementar el contador de intentos
 
     if (retryCount > maxRetries) {
@@ -145,7 +159,7 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
     );
     client.removeAllListeners(); // Limpia eventos antiguos
     try {
-      connect(client, equipment); // Intentar reconectar
+      await connect(client, equipment); // Intentar reconectar
     } catch (error) {
       console.error(
         `Error al reconectar con ${equipment.name}: ${err.message}`
@@ -153,10 +167,10 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
     }
 
     client.once("connect", () => {
-        console.info(`Conexión restablecida con el equipo ${equipment.name}`);
-        clearInterval(reconnectInterval);
-        removeReconnectInterval(idDevice);
-        client.connecting = false;
+      console.info(`Conexión restablecida con el equipo ${equipment.name}`);
+      clearInterval(reconnectInterval);
+      removeReconnectInterval(idDevice);
+      client.connecting = false;
     });
 
   }, 5000);

@@ -15,21 +15,27 @@ const { BufferList } = require("bl/BufferList");
  * @param {BufferList} bufferList
  */
 function handleDataEvent(socket, data, device, parsingData, bufferList) {
-  const filteredData = data.toString().replace(/\x02/g, "");
 
-  // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
-  if (filteredData.trim()) {
-    emitStatusDevice(
-      {
-        last_connection: new Date(),
-      },
-      `Mensaje entrante del equipo ${device.name} ${
-        device.ip_address && `con IPv4: ${device.ip_address}`
-      } en el puerto ${device.port}`
-    );
+  try {
+    const filteredData = data.toString().replace(/\x02/g, "");
 
-    dataEvent(socket, data, parsingData, bufferList);
+    // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
+    if (filteredData.trim()) {
+      emitStatusDevice(
+        {
+          last_connection: new Date(),
+        },
+        `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
+        } en el puerto ${device.port}`
+      );
+
+
+      dataEvent(socket, data, parsingData, bufferList);
+    }
+  } catch (error) {
+    console.error(error.message)
   }
+
 }
 
 /**
@@ -47,47 +53,53 @@ function handleConnectionEvent(
   scheduleReconnect,
   error
 ) {
-  switch (eventType) {
-    case "close":
-      console.info(`Conexión cerrada con ${equipment.name}.`);
-      break;
 
-    case "error":
-      let msg = ``;
+  try {
+    switch (eventType) {
+      case "close":
+        console.info(`Conexión cerrada con ${equipment.name}.`);
+        break;
 
-      switch (error.code) {
-        case "ECONNREFUSED":
-          msg = `Conexión rechazada a ${equipment.ip_address}:${equipment.port}.`;
-          break;
-        case "ETIMEDOUT":
-          msg = `Tiempo de espera agotado para ${equipment.ip_address}:${equipment.port}.`;
-          break;
-        case "EHOSTUNREACH":
-          msg = `No se puede alcanzar el host ${equipment.ip_address} en el puerto ${equipment.port}.`;
-          break;
-        case "ECONNRESET":
-          msg = `Conexión reiniciada inesperadamente con ${equipment.name}.`;
-          break;
-        default:
-          msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${error.message}`;
-      }
+      case "error":
+        let msg = ``;
 
-      msg += ` Verifica el equipo ${equipment.name}.`;
+        switch (error.code) {
+          case "ECONNREFUSED":
+            msg = `Conexión rechazada a ${equipment.ip_address}:${equipment.port}.`;
+            break;
+          case "ETIMEDOUT":
+            msg = `Tiempo de espera agotado para ${equipment.ip_address}:${equipment.port}.`;
+            break;
+          case "EHOSTUNREACH":
+            msg = `No se puede alcanzar el host ${equipment.ip_address} en el puerto ${equipment.port}.`;
+            break;
+          case "ECONNRESET":
+            msg = `Conexión reiniciada inesperadamente con ${equipment.name}.`;
+            break;
+          default:
+            msg = `Hubo un error en la conexión con el equipo ${equipment.name}: ${error.message}`;
+        }
 
-      console.error(msg);
-      emitStatusDevice(
-        { connection_status: "disconnected", error: error.code },
-        equipment,
-        msg,
-        true
-      );
-      break;
+        msg += ` Verifica el equipo ${equipment.name}.`;
 
-    default:
-      break;
+        console.error(msg);
+        emitStatusDevice(
+          { connection_status: "disconnected", error: error.code },
+          equipment,
+          msg,
+          true
+        );
+        break;
+
+      default:
+        break;
+    }
+
+    scheduleReconnect(equipment);
+
+  } catch (error) {
+    console.error(error.message)
   }
-
-  scheduleReconnect(equipment);
 }
 module.exports = {
   handleDataEvent,

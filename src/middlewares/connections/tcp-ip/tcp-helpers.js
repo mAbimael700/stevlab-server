@@ -12,7 +12,7 @@ const { getEquipmentById } = require("../../equipment/equipment-helpers");
  */
 function closeTCP(device) {
   console.log(device);
-  
+
   const idDevice = device.id_device;
 
   if (getTCPConnection(idDevice)) {
@@ -29,23 +29,28 @@ function closeTCP(device) {
   } else {
     console.log(`No se encontró una conexión TCP activa para ${idDevice}.`);
     throw new Error(`No se encontró una conexión TCP activa para ${idDevice}.`);
-  } 
+  }
 }
 
 async function connectTCP(device) {
   const idDevice = device.id_device;
 
-  if (getTCPConnection(idDevice)) {
-    console.log(`Cerrando conexión existente para ${device.name}.`);
-    emitStatusDevice(
-      { connection_status: "disconnected", last_connection: new Date() },
-      device,
-      `Cerrando conexión existente para ${device.name} en ${host}:${port}.`
-    );
-    closeTCP(device);
-  }
 
-  createTCPConnection(device);
+  try {
+    if (getTCPConnection(idDevice)) {
+      console.log(`Cerrando conexión existente para ${device.name}.`);
+      emitStatusDevice(
+        { connection_status: "disconnected", last_connection: new Date() },
+        device,
+        `Cerrando conexión existente para ${device.name} en ${host}:${port}.`
+      );
+      closeTCP(device);
+    }
+
+    await createTCPConnection(device);
+  } catch (error) {
+    console.error(error)
+  }
 
 }
 
@@ -74,7 +79,7 @@ function testTcpDevice(id_device) {
   try {
     // Verifica si el socket está escribible (conectado)
     console.log(socket.connecting);
-    
+
     if ((socket.writable || !socket.destroyed) && !socket.connecting) {
       console.info("El socket TCP está conectado.");
       return true;

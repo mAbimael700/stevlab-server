@@ -56,12 +56,12 @@ equipmentEmitter.on("deviceModified", async (oldEquipment, newEquipment) => {
 
   try {
     if (newEquipment.require_ftp_conn) {
-      await closeFTP(oldEquipment.mac_address);
+      await closeFTP(oldEquipment);
       await connectFTP(newEquipment);
     }
 
     if (newEquipment.require_tcp_server_conn) {
-      closeTCP(newEquipment);
+      closeTCP(oldEquipment);
       await connectTCP(newEquipment);
     }
   } catch (error) {

@@ -27,20 +27,25 @@ async function handleReconnection(
   }
 
   console.log(
-    `Intentando reconectar con ${
-      equipment.name
+    `Intentando reconectar con ${equipment.name
     } (${formatMacAddressWithSeparators(equipment.mac_address)})...`
   );
 
-  // Intentar reconectar
-  const connection = await reconnectFTP(equipment);
+  try {
+    const connection = await reconnectFTP(equipment);
+    // Intentar reconectar
 
-  if (!connection || connection.client.closed) {
-    console.error(`Reconexión fallida para el equipo ${equipment.name}`);
-    return null;
+    if (!connection || connection.client.closed) {
+      console.error(`Reconexión fallida para el equipo ${equipment.name}`);
+      return null;
+    }
+
+    return connection;
+
+  } catch (error) {
+    console.error("Ocurrió un error al intentarse reconectar con el equipo", equipment.name, error.message)
+    return null
   }
-
-  return connection;
 }
 
 // Función principal
@@ -79,6 +84,9 @@ async function startMonitoringDirectory(equipment) {
       saveCurrentState(equipment.mac_address, currentFiles);
       previousFiles = currentFiles;
     } catch (error) {
+      console.log("Error de codigo",error.code);
+      return
+
       if (["ECONNRESET", 421, 503, 530].includes(error.code)) {
         console.error(
           `Error de conexión con ${equipment.name}:`,
@@ -87,7 +95,7 @@ async function startMonitoringDirectory(equipment) {
         connection = await handleReconnection(equipment, reconnectAttempts++);
       } else {
         console.error(
-          "Error al detectar cambios en el directorio:",
+          " Error al detectar cambios en el directorio:",
           error.message
         );
       }
@@ -97,7 +105,11 @@ async function startMonitoringDirectory(equipment) {
     }
   }
 
-  detectChanges(); // Inicia la detección inicial
+  try {
+    detectChanges(); // Inicia la detección inicial
+  } catch (error) {
+    console.error("Error al iniciar la monitorización del directorio:", error.message);
+  }
 }
 
 module.exports = { startMonitoringDirectory };

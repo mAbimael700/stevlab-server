@@ -70,64 +70,43 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
   const connection = getFtpConnectionById(equipment.id_device);
 
   if (!connection) {
-    console.error(
-      `No se encontró una conexión para el equipo ${equipment.name}.`
-    );
+    console.error(`No se encontró una conexión para el equipo ${equipment.name}.`);
     return null;
   }
 
-  // Si ya se está reconectando, no hacer nada
   if (connection.reconnecting) {
     console.log(`Ya se está reconectando con ${equipment.name}.`);
     return null;
   }
 
-  // Marcar como "en proceso de reconexión"
   updateFtpConnection(equipment.id_device, { reconnecting: true });
 
   try {
-    // Cerrar el cliente si está abierto
     if (connection.client && !connection.client.closed) {
       connection.client.close();
-      console.log(
-        `Cliente FTP cerrado correctamente para ${equipment.name} (${equipment.mac_address}).`
-      );
+      console.log(`Cliente FTP cerrado correctamente para ${equipment.name}.`);
       emitClosedDevice(equipment);
     }
 
-    // Intentar reconectar
-    console.log(
-      `Intentando reconectar con ${equipment.name} (${equipment.ip_address}:${equipment.port}), intento ${attempt}...`
-    );
-
+    console.log(`Intentando reconectar con ${equipment.name}, intento ${attempt}...`);
     await connection.client.access(createOptions(equipment));
 
-    console.log(
-      `Reconexión exitosa con ${equipment.name} (${equipment.mac_address}).`
-    );
+    console.log(`Reconexión exitosa con ${equipment.name}.`);
     emitOpenedDevice(equipment);
     return getFtpConnectionById(equipment.id_device);
   } catch (error) {
-    const errorMsg = `Error al reconectar con ${
-      equipment.name
-    } (${formatMacAddressWithSeparators(equipment.mac_address)}): ${
-      error.message
-    }`;
+    console.error(`Error al reconectar con ${equipment.name}:`, error.message);
+    emitClosedDevice(equipment, true, error.message);
 
-    console.error(errorMsg);
-    emitClosedDevice(equipment, true, errorMsg);
-
-    // Reintentar si no se ha alcanzado el máximo de intentos
     if (attempt < maxRetries) {
       console.log(`Reintentando reconectar (${attempt + 1}/${maxRetries})...`);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Esperar antes del próximo intento
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       return reconnectFTP(equipment, maxRetries, attempt + 1);
     }
 
     console.error(`Máximo de reintentos alcanzado para ${equipment.name}.`);
     return null;
   } finally {
-    // Asegurarse de actualizar el estado reconectando
     updateFtpConnection(equipment.id_device, { reconnecting: false });
   }
 }

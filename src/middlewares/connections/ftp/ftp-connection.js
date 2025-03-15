@@ -16,7 +16,7 @@ async function connectFTP(equipment) {
 
     await startMonitoringDirectory(equipment); 
   } catch (error) {
-    console.error(error.message);
+    console.error("Ocurrió un error al conectarse el equipo",error.message);
     
   }
 }
