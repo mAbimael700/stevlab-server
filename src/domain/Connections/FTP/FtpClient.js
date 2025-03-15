@@ -20,6 +20,7 @@ class FTPClient {
       }, // Permitir certificados autofirmados
     };
     this.client = null;
+    this.reconnectManager = ReconnectionManager.getInstance();
   }
 
   /**
@@ -33,7 +34,7 @@ class FTPClient {
 
     try {
       // Intentamos acceder al servidor FTP
-      this.client.connecting = true
+      this.client.connecting = true;
       await this.client.access(this.configuration);
 
       // Verificar el estado de la conexión luego de acceder
@@ -45,31 +46,29 @@ class FTPClient {
         console.info("Conexión abierta y activa");
         //emitOpenedDevice(equipment, message);
       }
-      this.client.connecting = false
-      return this.client 
-
+      this.client.connecting = false;
+      return this.client;
     } catch (error) {
       console.error(
         `Error al conectar FTP con el equipo ${equipment.name} en el host ${equipment.ip_address}:${equipment.port}`,
         error.message
       );
 
-      await this.reconnect()
-      return this.client
+      await this.reconnect();
+      return this.client;
     }
   }
 
   async reconnect() {
     const idDevice = this.equipment.id; // Asume que el equipo tiene un ID único
-    const reconnectManager = ReconnectionManager.getInstance();
 
     // Si ya hay un intervalo de reconexión para este dispositivo, lo eliminamos
-    if (reconnectManager.getReconnectInterval(idDevice)) {
-      reconnectManager.removeReconnectInterval(idDevice);
+    if (this.reconnectManager.getReconnectInterval(idDevice)) {
+      this.reconnectManager.removeReconnectInterval(idDevice);
     }
 
     for (let attempt = 1; attempt <= this.maxReconnectAttempts; attempt++) {
-      this.client.connecting = true
+      this.client.connecting = true;
       try {
         console.log(
           `Intentando reconectar con ${this.equipment.name} (Intento ${attempt}/${maxRetries})...`
@@ -78,10 +77,12 @@ class FTPClient {
         console.log(`Reconexión exitosa con ${this.equipment.name}`);
 
         // Si la reconexión es exitosa, eliminamos el intervalo de reconexión
-        reconnectManager.removeReconnectInterval(idDevice);
+        this.reconnectManager.removeReconnectInterval(idDevice);
       } catch (error) {
-
-        console.error(`Error en el intento ${attempt}:`, error.message);
+        console.error(
+          `Error en el intento ${attempt} de reconexión:`,
+          error.message
+        );
 
         if (attempt === this.maxReconnectAttempts) {
           throw new Error(
@@ -93,22 +94,29 @@ class FTPClient {
         const delay = this.baseDelay * Math.pow(2, attempt - 1);
         await new Promise((resolve) => setTimeout(resolve, delay));
       } finally {
-        this.client.connecting = false
+        this.client.connecting = false;
       }
     }
 
     // Si llegamos aquí, significa que se agotaron los intentos
     // Podemos programar un nuevo intento de reconexión después de un tiempo
-    const retryInterval = setInterval(async () => {
+    this.setReconnectionInterval();
+  }
+
+  setReconnectionInterval() {
+    const interval = setInterval(async () => {
       try {
         await this.reconnect(); // Intentar reconectar nuevamente
       } catch (error) {
-        console.error("Error en el intento de reconexión programada:", error.message);
+        console.error(
+          "Error en el intento de reconexión programada:",
+          error.message
+        );
       }
-    }, this.baseDelay * Math.pow(2, this.maxReconnectAttempts)); // Retardo exponencial máximo
-
+    }, this.baseDelay * Math.pow(2, this.maxReconnectAttempts));
+    
     // Guardar el intervalo en el ReconnectionManager
-    reconnectManager.setReconnectInterval(idDevice, retryInterval);
+    this.reconnectManager.setReconnectInterval(this.equipment.id, interval); // Retardo exponencial máximo
   }
 }
 

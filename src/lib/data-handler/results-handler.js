@@ -4,6 +4,8 @@ const {
   emitResultsToWebSocket,
 } = require("../websocket/emit-results-websocket");
 
+const resultsHandler = new Map();
+
 let lastFolio = null;
 let isFinalizing = false; // Bandera para evitar llamadas redundantes
 let resultsToSave = { parametros: [] };
@@ -16,18 +18,15 @@ let resultsToSave = { parametros: [] };
 function handleResults(results, sendsBySingleParameter = false) {
   try {
     const response = validateResponse(results);
+
     if (!response.success) {
-      /* throw new Error("La validación de los resultados no fue satisfactoria", {
-        cause: response.errors,
-      }); */
       console.error("La validación de los resultados no fue satisfactoria");
-      return
+      return;
     }
 
     if (!results[0]?.folio) {
-      //throw new Error("Resultados ignorados porque no tienen un folio válido");
       console.error("Resultados ignorados porque no tienen un folio válido");
-      return
+      return;
     }
 
     if (sendsBySingleParameter) {

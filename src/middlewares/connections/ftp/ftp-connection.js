@@ -1,26 +1,53 @@
-const { addFtpConnection, getFtpConnections, deleteFtpConnection } = require("./ftp-helpers");
+const { addFtpConnection } = require("./ftp-helpers");
 const { startMonitoringDirectory } = require("./ftp-directory-manager");
+const { emitClosedDevice } = require("./ftp-fn");
+const { getFtpConnectionById, deleteFtpConnection } = require("./ftp-manager");
 
 async function connectFTP(equipment) {
-    await addFtpConnection(equipment);
-    await startMonitoringDirectory(equipment);
+  try {
+    // Si ya existe una conexión, ciérrala antes de intentar una nueva conexión
+    const connection = getFtpConnectionById(equipment.id_device);
+
+    if (connection && !connection.client.closed) {
+      await closeFTP(equipment);
+    }
+
+     await addFtpConnection(equipment);
+
+    await startMonitoringDirectory(equipment); 
+  } catch (error) {
+    console.error(error.message);
+    
+  }
 }
 
 // Función para cerrar la conexión FTP
-async function closeFTP(macAddress) {
-    const ftpConnections = getFtpConnections()
-    const { client } = ftpConnections[macAddress];
+async function closeFTP(equipment) {
+  const connection = getFtpConnectionById(equipment.id_device);
+  const { client } = connection;
 
-    if (client) {
-        clearInterval(client.monitoringInterval); // Detener el intervalo de monitoreo
-        await client.close();
-        console.log(`Conexión FTP cerrada para ${macAddress}`);
-        deleteFtpConnection(macAddress)
-    } else {
-        console.log(`No se encontró una conexión FTP activa para ${macAddress}`);
-    }
+  if (!connection || !client) {
+    console.warn(
+      `No hay un cliente de conexión activo para ${equipment.name}.`
+    );
+    return;
+  }
+
+  try {
+    await client.close();
+    console.log(`Conexión cerrada para el equipo ${equipment.name}.`);
+  } catch (error) {
+    console.error(
+      `Error cerrando conexión para el equipo ${equipment.name}:`,
+      error.message
+    );
+  } finally {
+    emitClosedDevice(equipment);
+    deleteFtpConnection(equipment.id_device);
+  }
 }
 
 module.exports = {
-    connectFTP, closeFTP
-}
+  connectFTP,
+  closeFTP,
+};

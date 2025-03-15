@@ -1,4 +1,3 @@
-const { Device } = require("../../../domain/Equipment/Equipment");
 const { Client } = require("basic-ftp")
 
 /**
@@ -13,12 +12,12 @@ function getFtpConnectionById(idDevice) {
 
 /**
  * 
- * @param {Device} device 
+ * @param {string} idDevice 
  * @param {Client} client 
  */
-function setFtpConnection(device, client) {
+function setFtpConnection(idDevice, client) {
     // Agregar o actualizar la conexión
-    ftpConnections.set(device.id_device, {
+    ftpConnections.set(idDevice, {
         client,
         reconnecting: false,
     })
@@ -53,4 +52,9 @@ function deleteFtpConnection(idDevice) {
     console.log("Cliente FTP eliminado");
 }
 
-module.exports = {}
+module.exports = {
+    getFtpConnectionById,
+    setFtpConnection,
+    updateFtpConnection,
+    deleteFtpConnection
+}

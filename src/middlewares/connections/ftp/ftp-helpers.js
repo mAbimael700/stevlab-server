@@ -3,126 +3,29 @@ const {
   formatMacAddressWithSeparators,
 } = require("../../../utils/formatMacAddressWithSeparators");
 const {
-  emitStatusDevice,
-} = require("../../../lib/websocket/emit-device-status");
-const { removeReconnectInterval } = require("../reconnect-manager");
-
-let ftpConnections = {};
+  emitOpenedDevice,
+  emitClosedDevice,
+  createOptions,
+} = require("./ftp-fn");
+const {
+  getFtpConnectionById,
+  setFtpConnection,
+  updateFtpConnection,
+} = require("./ftp-manager");
 
 // Configuración del límite y la frecuencia de reconexión
 const INITIAL_DELAY = 1000; // 1 segundo
 
-function emitClosedDevice(
-  equipment,
-  error = true,
-  message = "Error en la conexión FTP"
-) {
-  emitStatusDevice(
-    {
-      last_connection: new Date(),
-      connection_status: "disconnected",
-    },
-    equipment,
-    message,
-    error
-  );
-}
-
-function emitOpenedDevice(equipment, message) {
-  emitStatusDevice(
-    {
-      require_ftp_conn: true,
-      last_connection: new Date(),
-      connection_status: "connected",
-    },
-    equipment,
-    message
-  );
-}
-
-// Obtiene todas las
-function getFtpConnections() {
-  return ftpConnections;
-}
-
-function setFtpConnections(connections) {
-  return (ftpConnections = connections);
-}
-
-function addClientFtpConnection(macAddress, client) {
-  // Validar que macAddress y client sean válidos
-  if (!macAddress || !client) {
-    throw new Error("macAddress y client son requeridos");
-  }
-
-  // Obtener las conexiones actuales
-  const connections = getFtpConnections();
-
-  // Agregar o actualizar la conexión
-  connections[macAddress] = {
-    client,
-    reconnecting: false,
-  };
-
-  // Actualizar la variable global
-  setFtpConnections(connections);
-}
-
-function updateFtpConnection(macAddress, options) {
-  const connections = getFtpConnections();
-  const ftpConnectionToUpdate = connections[macAddress];
-
-  if (ftpConnectionToUpdate) {
-    // Mezclar el estado anterior con los nuevos atributos
-    const updatedConnection = { ...ftpConnectionToUpdate, ...options };
-    connections[macAddress] = updatedConnection;
-
-    // Actualizar la variable global
-    setFtpConnections(connections);
-
-    return updatedConnection; // Retornar la conexión actualizada para consistencia
-  }
-  console.warn(
-    `Conexión con MAC ${macAddress} no encontrada al intentar actualizar.`
-  );
-  return null;
-}
-
-function deleteFtpConnection(macAddress) {
-  delete ftpConnections[macAddress];
-  console.log("Cliente FTP eliminado");
-}
-
 async function addFtpConnection(equipment, retryCount = 0) {
-  const ftpConnections = getFtpConnections();
-
-  // Si ya existe una conexión, ciérrala antes de intentar una nueva conexión
-  const existConnection = ftpConnections[equipment.mac_address];
-  if (existConnection && !existConnection.client.closed) {
-    await closeFTP(equipment.mac_address);
-  }
-
   // Creamos un objeto de la clase ftp
   const client = new ftp.Client();
 
   // Agregamos el estado de reconexión específico al equipo
-  addClientFtpConnection(equipment.mac_address, client);
+  setFtpConnection(equipment.id_device, client);
 
   try {
     // Intentamos acceder al servidor FTP
-    await client.access({
-      host: equipment.ip_address,
-      port: equipment.port,
-      user: "stevlabserver",
-      password: "annon",
-      secure: true, // TLS explícito
-      sessionReuse: false,
-      passive: true, // Habilita el modo pasivo
-      secureOptions: {
-        rejectUnauthorized: false,
-        maxVersion: "TLSv1.2",
-      }, // Permitir certificados autofirmados
-    });
+    await client.access(createOptions(equipment));
 
     const message = `Conexión FTP establecida con el equipo ${
       equipment.name
@@ -131,7 +34,6 @@ async function addFtpConnection(equipment, retryCount = 0) {
     )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`;
 
     emitOpenedDevice(equipment, message);
-
     console.info(message);
 
     // Verificar el estado de la conexión luego de acceder
@@ -142,26 +44,16 @@ async function addFtpConnection(equipment, retryCount = 0) {
       emitOpenedDevice(equipment, message);
     }
   } catch (error) {
-    console.error(
-      `Error al conectar FTP con el equipo ${
-        equipment.name
-      }: (${formatMacAddressWithSeparators(
-        equipment.mac_address
-      )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} `,
+    let errorMsg = `Error al conectar FTP con el equipo ${
+      equipment.name
+    }: (${formatMacAddressWithSeparators(
+      equipment.mac_address
+    )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} ${
       error.message
-    );
+    }`;
 
-    emitClosedDevice(
-      equipment,
-      true,
-      `Error al conectar FTP con el equipo ${
-        equipment.name
-      }: (${formatMacAddressWithSeparators(
-        equipment.mac_address
-      )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} ${
-        error.message
-      }`
-    );
+    console.error(errorMsg);
+    emitClosedDevice(equipment, true, errorMsg);
 
     // Si hay un error y no se ha alcanzado el máximo de intentos, realizar reconexión con retardo
     const delay = INITIAL_DELAY * 2 ** retryCount; // Incrementa el tiempo de espera exponencialmente
@@ -173,61 +65,33 @@ async function addFtpConnection(equipment, retryCount = 0) {
   }
 }
 
-// Función para cerrar la conexión FTP
-async function closeFTP(equipment) {
-  const ftpConnections = getFtpConnections();
-  const connection = ftpConnections[equipment.mac_address];
-
-  if (!connection || !connection.client) {
-    console.log(`No hay cliente activo para ${equipment.mac_address}.`);
-    return;
-  }
-
-  const { client } = connection;
-
-  try {
-    if (client.closed) {
-      await client.close();
-      console.log(`Conexión cerrada para ${equipment.mac_address}.`);
-    }
-  } catch (error) {
-    console.error(
-      `Error cerrando conexión para ${equipment.mac_address}:`,
-      error.message
-    );
-  } finally {
-    emitClosedDevice(equipment);
-    deleteFtpConnection(equipment.mac_address);
-  }
-}
-
-// Función para reconectar el cliente FTP en caso de desconexión
+// Función para reconectar el cliente FTP
 async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
-  const ftpConnections = getFtpConnections();
-  const connection = ftpConnections[equipment.mac_address];
+  const connection = getFtpConnectionById(equipment.id_device);
 
   if (!connection) {
-    console.error(`No se encontró una conexión para ${equipment.mac_address}.`);
-    return;
+    console.error(
+      `No se encontró una conexión para el equipo ${equipment.name}.`
+    );
+    return null;
   }
 
-  if (connection.reconnecting || connection.client.closed) {
-    return;
+  // Si ya se está reconectando, no hacer nada
+  if (connection.reconnecting) {
+    console.log(`Ya se está reconectando con ${equipment.name}.`);
+    return null;
   }
-
-  const { client } = connection;
 
   // Marcar como "en proceso de reconexión"
-  updateFtpConnection(equipment.mac_address, { reconnecting: true });
+  updateFtpConnection(equipment.id_device, { reconnecting: true });
 
   try {
-    // Cerrar el cliente si está cerrado
-    if (!client || client.closed) {
-      await client.close();
+    // Cerrar el cliente si está abierto
+    if (connection.client && !connection.client.closed) {
+      connection.client.close();
       console.log(
         `Cliente FTP cerrado correctamente para ${equipment.name} (${equipment.mac_address}).`
       );
-
       emitClosedDevice(equipment);
     }
 
@@ -235,24 +99,14 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     console.log(
       `Intentando reconectar con ${equipment.name} (${equipment.ip_address}:${equipment.port}), intento ${attempt}...`
     );
-    await client.access({
-      host: equipment.ip_address,
-      port: equipment.port,
-      user: "stevlabserver",
-      password: "annon",
-      secure: true,
-      sessionReuse: false,
-      passive: true, // Habilita el modo pasivo
-      secureOptions: {
-        rejectUnauthorized: false,
-        maxVersion: "TLSv1.2",
-      },
-    });
+
+    await connection.client.access(createOptions(equipment));
 
     console.log(
       `Reconexión exitosa con ${equipment.name} (${equipment.mac_address}).`
     );
     emitOpenedDevice(equipment);
+    return getFtpConnectionById(equipment.id_device);
   } catch (error) {
     const errorMsg = `Error al reconectar con ${
       equipment.name
@@ -263,6 +117,7 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     console.error(errorMsg);
     emitClosedDevice(equipment, true, errorMsg);
 
+    // Reintentar si no se ha alcanzado el máximo de intentos
     if (attempt < maxRetries) {
       console.log(`Reintentando reconectar (${attempt + 1}/${maxRetries})...`);
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Esperar antes del próximo intento
@@ -270,17 +125,15 @@ async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
     }
 
     console.error(`Máximo de reintentos alcanzado para ${equipment.name}.`);
-    removeReconnectInterval(equipment.mac_address)
+    return null;
   } finally {
     // Asegurarse de actualizar el estado reconectando
-    updateFtpConnection(equipment.mac_address, { reconnecting: false });
+    updateFtpConnection(equipment.id_device, { reconnecting: false });
   }
 }
 
 module.exports = {
-  getFtpConnections,
   addFtpConnection,
-  deleteFtpConnection,
   updateFtpConnection,
   reconnectFTP,
 };

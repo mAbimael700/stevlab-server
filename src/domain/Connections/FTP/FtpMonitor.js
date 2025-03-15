@@ -21,11 +21,12 @@ class FTPMonitor {
      */
     this.client = equipment.connection.client;
     this.previousFiles = null;
+    this.detectorTimeout = null;
   }
 
   async monitorate() {
     this.previousFiles = Server.loadPreviousDirectoryState(this.equipment);
-    this.detectChanges(); // Inicia la detección inicial
+    this.detectorTimeout = setTimeout(this.detectChanges, 1000);
   }
 
   async detectChanges() {
@@ -33,14 +34,11 @@ class FTPMonitor {
     this.isChecking = true;
 
     try {
-      if (this.client.closed) {
+      if (this.client.closed && !this.connection.connecting) {
         await this.connection.reconnect();
 
         if (this.client.closed) {
-          console.error(
-            `No se pudo reconectar con ${this.equipment.name}. Deteniendo el monitoreo.`
-          );
-          return; // Detener el monitoreo si la reconexión falla
+          console.error(`No se pudo reconectar con ${this.equipment.name}. Deteniendo el monitoreo.`);
         }
       }
 
@@ -77,7 +75,6 @@ class FTPMonitor {
       }
     } finally {
       this.isChecking = false;
-      setTimeout(this.detectChanges, 1000);
     }
   }
 
@@ -134,5 +131,5 @@ class FTPMonitor {
 }
 
 module.exports = {
-  FTPMonitor
-}
+  FTPMonitor,
+};
