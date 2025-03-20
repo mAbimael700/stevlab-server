@@ -35,7 +35,7 @@ class ServerFactory {
           initializeWebSocket(expressServer, io);
           initializeTcpServer({ PORT: TPC_PORT });
         }
-      case "local":
+      case "development":
         return () => {
           const expressServer = initializeExpressServer(SOCKET_PORT);
           initializeWebSocket(expressServer, io);

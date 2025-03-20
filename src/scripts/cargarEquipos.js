@@ -1,9 +1,9 @@
-const { A15 } = require("../src/constants/dictionaries/A15");
-const { CM200 } = require("../src/constants/dictionaries/CM200");
-const { CONTROLAB } = require("../src/constants/dictionaries/CONTROLAB");
-const { DYMIND } = require("../src/constants/dictionaries/DYMIND");
-const { FULLJIFILM_NX600_DICTIONARIO } = require("../src/constants/dictionaries/FULJIFILM_NX600");
-const { MINDRAY_BS120 } = require("../src/constants/dictionaries/MINDRAY_BS120");
+const { A15 } = require("../constants/dictionaries/A15");
+const { CM200 } = require("../constants/dictionaries/CM200");
+const { CONTROLAB } = require("../constants/dictionaries/CONTROLAB");
+const { DYMIND } = require("../constants/dictionaries/DYMIND");
+const { FULLJIFILM_NX600_DICTIONARIO } = require("../constants/dictionaries/FULJIFILM_NX600");
+const { MINDRAY_BS120 } = require("../constants/dictionaries/MINDRAY_BS120");
 const Equipo = require("../src/schemas/device");
 
 const equipos = {

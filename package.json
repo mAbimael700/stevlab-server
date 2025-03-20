@@ -1,20 +1,23 @@
 {
-  "name": "stevlablisserver",
+  "name": "stevlab-lis-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "A LIS Server for laboratory equipments for clinical areas",
   "main": "main.js",
-  "bin": "./src/app/app.js",
+  "bin": "src/app/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/app/app.js",
-    "start:local": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true node ./src/app/app.js",
-    "start:trace-warning": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true node --trace-warnings ./src/app/app.js",
-    "dev:local": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true nodemon ./src/app/app.js",
-    "start:electron": "cross-env PRODUCTION_MODE=local DEVELOPMENT=true electron ./main.js",
+    "start:forge": "cross-env PRODUCTION_MODE=development electron-forge start",
+    "start:local": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true node ./src/app/app.js",
+    "start:trace-warning": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true node --trace-warnings ./src/app/app.js",
+    "dev:local": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true nodemon ./src/app/app.js",
+    "start:electron": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true electron ./main.js",
     "build:electron": "npx electron-builder",
     "build:pkg": "pkg . --targets node18-win-x64 --output build/app",
     "git:update": "git pull && npm i",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
   },
   "pkg": {
     "assets": [
@@ -48,6 +51,33 @@
       "target": "AppImage"
     }
   },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron_quick_start"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
   "keywords": [],
   "author": "Abimael Alexander Méndez Landero",
   "license": "ISC",
@@ -58,6 +88,7 @@
     "console-table-printer": "2.12.1",
     "cors": "2.8.5",
     "date-fns": "4.1.0",
+    "electron-squirrel-startup": "^1.0.1",
     "express": "4.21.0",
     "fast-xml-parser": "^4.5.1",
     "mongodb": "^6.12.0",
@@ -76,9 +107,16 @@
     "zod": "3.23.8"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.7.0",
+    "@electron-forge/maker-deb": "^7.7.0",
+    "@electron-forge/maker-rpm": "^7.7.0",
+    "@electron-forge/maker-squirrel": "^7.7.0",
+    "@electron-forge/maker-zip": "^7.7.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.7.0",
+    "@electron-forge/plugin-fuses": "^7.7.0",
+    "@electron/fuses": "^1.8.0",
     "cross-env": "7.0.3",
     "electron": "33.2.1",
-    "electron-builder": "25.1.8",
     "electron-packager": "17.1.2",
     "pkg": "5.8.1"
   }

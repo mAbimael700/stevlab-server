@@ -5,6 +5,9 @@ const {
   overrideConsole,
 } = require("./src/middlewares/logger/overwrite-logger");
 
+// run this as early in the main process as possible
+if (require('electron-squirrel-startup')) app.quit();
+
 let mainWindow;
 let tray = null;
 
