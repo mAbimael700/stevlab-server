@@ -1,8 +1,8 @@
 const { BufferList } = require("bl/BufferList");
 const { saveFile } = require("../save-file");
-const { EquipmentParsingConfiguration } = require("../../domain/Equipment/EquipmentParsingConfiguration");
+const { EquipmentParsingConfiguration } = require("../Equipment/EquipmentParsingConfiguration");
 
-class BufferHandler {
+class BufferStreamHandler {
   /**
    * 
    * @param {EquipmentParsingConfiguration} configuration 
@@ -10,9 +10,9 @@ class BufferHandler {
   constructor(configuration) {
 
     if (!configuration.checksumRegex) {
-      throw new Error("El RegExp deñ checksum no están definidos para el equipo");
+      throw new Error("El RegExp checksum no están definidos para el equipo");
     }
-    this.delimiterRegex = new RegExp(this.checksumRegex, "g");
+    this.delimiterRegex = new RegExp(configuration.checksumRegex, "g");
   }
 
   /**
@@ -31,11 +31,10 @@ class BufferHandler {
       const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
 
       // Extraer el ID del mensaje (MSH-10)
-      const messageId = completeMessage.match(
-        /MSH\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|(.*?)\|/
-      )?.[1];
+      const messageId = parser.getMessageId()
 
       const filePath = saveFile(completeMessage);
+
       console.log(
         "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
         filePath
@@ -64,5 +63,5 @@ class BufferHandler {
 }
 
 module.exports = {
-  BufferHandler
+  BufferStreamHandler
 };

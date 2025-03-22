@@ -3,7 +3,7 @@ const { SerialPort } = require("serialport");
 const BufferList = require("bl");
 const { setupTimeout } = require("../data-handler/timeout-handler");
 const { EquipmentParsingConfiguration } = require("../../domain/Equipment/EquipmentParsingConfiguration");
-const { BufferHandler } = require("./BufferHandler");
+const { BufferStreamHandler } = require("./BufferStreamHandler");
 const { ResultHandler } = require("./ResultHandler");
 const { BufferParser } = require("./BufferParser");
 
@@ -24,7 +24,7 @@ class DataEvent {
     this.maxDataSize = 1e6; // 1MB máximo por paquete
     this.bufferList = new BufferList()
     this.configuration = configuration
-    this.bufferHandler = new BufferHandler(configuration)
+    this.bufferHandler = new BufferStreamHandler(configuration)
     this.bufferParser = new BufferParser(configuration)
     this.resultHandler = new ResultHandler(configuration)
   }

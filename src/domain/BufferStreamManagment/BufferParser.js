@@ -9,7 +9,7 @@ class BufferParser {
    */
   parse(data) {
     try {
-      const results = this.parser(data);
+      const results = this.parser.parse(data);
 
       if (!results) {
         throw new Error("El parser devolvió resultados inválidos");

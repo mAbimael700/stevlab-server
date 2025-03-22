@@ -13,7 +13,7 @@ class ResultHandler {
   }
 
   async handle(result) {
-    const response = await validateResponse(result);
+    const response = validateResponse(result);
     try {
       if (!response.success) {
         throw new Error(

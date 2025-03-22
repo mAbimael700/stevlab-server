@@ -2,14 +2,16 @@ const net = require("node:net");
 const { ConnectionValidator } = require("./ConnectionValidator");
 const { ReconnectionManager } = require("../ReconnectionManager");
 const { TcpSocketListener } = require("./TcpSocketListener");
+const { ClientConnection } = require("../../ClientConnection/ClientConnection");
 
-class TCPClient {
+class TCPClient extends ClientConnection {
   /**
    *
    * @param {Equipment} equipment
    * @param {EquipmentRepository} equipmentRepository
    */
   constructor(equipment, equipmentRepository) {
+    super(equipment.connectionType)
     this.equipment = equipment;
     this.connectionValidator = new ConnectionValidator(equipmentRepository);
     this.reconnectionManager = ReconnectionManager.getInstance();
@@ -24,7 +26,6 @@ class TCPClient {
       this.clientListener.build()
       //Realiza la conexión del cliente TCP
       this.connect();
-      return this.client;
     } catch (error) {
       console.error(error.message);
     }
@@ -34,8 +35,8 @@ class TCPClient {
    * @param {net.Socket} client
    */
   connect() {
-    const port = this.equipment.getPort();
-    const host = this.equipment.getIpAddress();
+    const port = this.equipment.configuration.ipAddress;
+    const host = this.equipment.configuration.ipAddress;
     const { id, name } = this.equipment;
 
 
@@ -52,9 +53,9 @@ class TCPClient {
   }
 
   /**
-   *
-   */
-  scheduleReconnect(maxRetries = 5) {
+     *
+     */
+  reconnect(maxRetries = 5) {
     const equipmentId = this.equipment.id;
     const interval = this.reconnectionManager.getReconnectInterval(equipmentId);
 
