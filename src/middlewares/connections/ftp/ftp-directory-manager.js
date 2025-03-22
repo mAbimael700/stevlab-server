@@ -27,7 +27,8 @@ async function handleReconnection(
   }
 
   console.log(
-    `Intentando reconectar con ${equipment.name
+    `Intentando reconectar con ${
+      equipment.name
     } (${formatMacAddressWithSeparators(equipment.mac_address)})...`
   );
 
@@ -41,10 +42,13 @@ async function handleReconnection(
     }
 
     return connection;
-
   } catch (error) {
-    console.error("Ocurrió un error al intentarse reconectar con el equipo", equipment.name, error.message)
-    return null
+    console.error(
+      "Ocurrió un error al intentarse reconectar con el equipo",
+      equipment.name,
+      error.message
+    );
+    return null;
   }
 }
 
@@ -84,21 +88,19 @@ async function startMonitoringDirectory(equipment) {
       saveCurrentState(equipment.mac_address, currentFiles);
       previousFiles = currentFiles;
     } catch (error) {
-      console.log("Error de codigo",error.code);
-      return
-
       if (["ECONNRESET", 421, 503, 530].includes(error.code)) {
         console.error(
-          `Error de conexión con ${equipment.name}:`,
+          `Error de conexión en el equipo ${equipment.name}:`,
           error.message
         );
-        connection = await handleReconnection(equipment, reconnectAttempts++);
       } else {
         console.error(
-          " Error al detectar cambios en el directorio:",
+          `Error al detectar cambios en el equipo ${equipment.name} en el directorio:`,
           error.message
         );
       }
+      
+      return;
     } finally {
       isChecking = false;
       setTimeout(detectChanges, 1000); // Programar el próximo detectChanges solo si el monitor no está cerrado
@@ -108,7 +110,10 @@ async function startMonitoringDirectory(equipment) {
   try {
     detectChanges(); // Inicia la detección inicial
   } catch (error) {
-    console.error("Error al iniciar la monitorización del directorio:", error.message);
+    console.error(
+      "Error al iniciar la monitorización del directorio:",
+      error.message
+    );
   }
 }
 
