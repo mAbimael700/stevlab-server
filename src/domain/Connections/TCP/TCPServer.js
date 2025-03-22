@@ -2,7 +2,7 @@ const net = require("node:net");
 const { ConnectionValidator } = require("./ConnectionValidator");
 const {
   EquipmentManager,
-} = require("../../../domain/EquipmentManager/EquimentManager");
+} = require("../../EquipmentManager/EquimentManager");
 const { TcpSocketListener } = require("./TcpSocketListener");
 
 class TcpServer {

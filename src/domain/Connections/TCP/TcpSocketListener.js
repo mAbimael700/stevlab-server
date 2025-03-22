@@ -48,10 +48,8 @@ class TcpSocketListener {
         }
 
         console.log(
-          `Conexión TCP/IP entrante del equipo ${
-            this.equipment.name
-          } con la dirección IPv4: ${this.equipment.getIpAddress()}:${
-            this.socket.remotePort
+          `Conexión TCP/IP entrante del equipo ${this.equipment.name
+          } con la dirección IPv4: ${this.equipment.getIpAddress()}:${this.socket.remotePort
           }`
         );
       } catch (error) {
@@ -76,12 +74,14 @@ class TcpSocketListener {
     this.socket.on("error", (err) => {
       if (this.eventHandler) {
         this.eventHandler.error(err);
+      } else {
+        console.error(`Hubo un error en la conexión con el equipo con IPv4: ${this.socket.remoteAddress}:${this.socket.remotePort}: ${err.message}`);
       }
     });
 
     this.socket.on("end", () => {
       if (this.equipment) {
-         this.eventHandler.end()
+        this.eventHandler.end()
       } else {
         console.warn(
           `Conexión cerrada por el equipo no registrado con IPv4: ${this.socket.remoteAddress}:${this.socket.remotePort}`

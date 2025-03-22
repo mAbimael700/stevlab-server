@@ -10,7 +10,7 @@ class TcpEventHandler {
   constructor(socket, equipment) {
     this.socket = socket;
     this.equipment = equipment;
-    this.dataEvent = new DataEvent(this.equipment);
+    this.dataEvent = new DataEvent(this.equipment.parsingConfiguration);
   }
 
   /**
@@ -24,10 +24,7 @@ class TcpEventHandler {
       emitStatusDevice(
         { lastConnection: new Date() },
         this.equipment,
-        `Mensaje entrante del equipo ${this.equipment.name} ${this.equipment.getIpAddress()
-          ? `con IPv4: ${this.equipment.getIpAddress()}`
-          : ""
-        } en el puerto ${this.equipment.getPort()}`
+        `Mensaje entrante del equipo ${this.equipment.name} con IPv4: ${this.equipment.configuration.ipAddress}:${this.equipment.configuration.port}`
       );
 
       this.dataEvent.process(this.socket, data);
@@ -39,27 +36,24 @@ class TcpEventHandler {
    * @param {Error} err
    * @param {*} scheduleReconnect
    */
-  error(err, scheduleReconnect) {
-    this.handleConnectionEvent("error", scheduleReconnect, err);
+  error(err) {
+    this.handleConnectionEvent("error", err);
   }
 
-  close(scheduleReconnect) {
-    this.handleConnectionEvent("close", scheduleReconnect);
+  close() {
+    this.handleConnectionEvent("close");
   }
 
   end() {
     console.log(
-      `Conexión cerrada por el equipo ${
-        equipment.name
-      } con IPv4: ${equipment.getIpAddress()}:${socket.remotePort}`
+      `Conexión cerrada por el equipo ${equipment.name} con IPv4: ${equipment.configuration.ipAddress}:${socket.remotePort}`
     );
 
     emitStatusDevice(
       {
         last_connection: new Date(),
         connection_status: "disconnected",
-      },
-      result.data
+      }
     );
 
     socket.destroy();
@@ -68,13 +62,13 @@ class TcpEventHandler {
   /**
    * Maneja eventos de conexión (cierre o error).
    * @param {"close" | "error"} eventType - Tipo de evento ("close" o "error").
-   * @param {(equipment: Equipment) => void} scheduleReconnect - Función para programar reconexión.
    * @param {Error} [error] - Detalle del error (solo para eventos "error").
    */
-  handleConnectionEvent(eventType, scheduleReconnect, error) {
-    const { name, getIpAddress, getPort } = this.equipment;
-    const ipAddress = getIpAddress() ?? this.socket.remoteAddress;
-    const port = getPort() ?? this.socket.remotePort;
+  handleConnectionEvent(eventType, error) {
+    const { name, configuration } = this.equipment;
+    let { ipAddress, port } = configuration
+    ipAddress = ipAddress ?? this.socket.remoteAddress;
+    port = port ?? this.socket.remotePort;
 
     switch (eventType) {
       case "close":
@@ -99,19 +93,20 @@ class TcpEventHandler {
 
         msg += ` Verifica el equipo ${name}.`;
         console.error(msg);
-        emitStatusDevice(
-          { connection_status: "disconnected", error: error.code },
-          equipment,
-          msg,
-          true
-        );
+
         break;
 
       default:
         break;
     }
 
-    scheduleReconnect();
+
+    emitStatusDevice(
+      { connection_status: "disconnected", error: error.code },
+      equipment,
+      msg,
+      error && true
+    );
   }
 }
 

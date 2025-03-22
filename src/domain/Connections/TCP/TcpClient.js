@@ -3,8 +3,9 @@ const { ConnectionValidator } = require("./ConnectionValidator");
 const { ReconnectionManager } = require("../ReconnectionManager");
 const { TcpSocketListener } = require("./TcpSocketListener");
 const { ClientConnection } = require("../../ClientConnection/ClientConnection");
+const { Equipment } = require("../../Equipment/Equipment");
 
-class TCPClient extends ClientConnection {
+class TcpClient extends ClientConnection {
   /**
    *
    * @param {Equipment} equipment
@@ -15,8 +16,11 @@ class TCPClient extends ClientConnection {
     this.equipment = equipment;
     this.connectionValidator = new ConnectionValidator(equipmentRepository);
     this.reconnectionManager = ReconnectionManager.getInstance();
-    this.client = new net.Socket();
-    this.clientListener = new TcpSocketListener(this.client, this.equipment)
+    this.socket = new net.Socket();
+    this.closed = this.socket.closed
+    this.connecting = this.socket.connecting
+    this.destroyed = this.socket.destroyed
+    this.clientListener = new TcpSocketListener(this.socket, this.equipment)
   }
 
 
@@ -31,11 +35,8 @@ class TCPClient extends ClientConnection {
     }
   }
 
-  /**
-   * @param {net.Socket} client
-   */
   connect() {
-    const port = this.equipment.configuration.ipAddress;
+    const port = this.equipment.configuration.port;
     const host = this.equipment.configuration.ipAddress;
     const { id, name } = this.equipment;
 
@@ -43,12 +44,12 @@ class TCPClient extends ClientConnection {
     const connectingMsg = `Intentando conectar al equipo ${name} en ${host}:${port}...`;
     console.log(connectingMsg);
 
-    this.client
+    this.socket
       .connect(port, host, async () => {
         const connectionSuccesfullyMsg = `Conexión exitosa con ${name} en ${host}:${port}.`
         console.log(connectionSuccesfullyMsg);
         this.reconnectionManager.removeReconnectInterval(id);
-        this.client.connecting = false;
+        this.socket.connecting = false;
       });
   }
 
@@ -56,58 +57,66 @@ class TCPClient extends ClientConnection {
      *
      */
   reconnect(maxRetries = 5) {
-    const equipmentId = this.equipment.id;
-    const interval = this.reconnectionManager.getReconnectInterval(equipmentId);
-
-    if (!interval) {
-      let retryCount = 0; // Contador de intentos de reconexión
-
-      const msg = `Programando reconexión para ${this.equipment.name} en 5 segundos.`;
-      console.info(msg);
-      emitStatusDevice(
-        { connection_status: "reconnecting", last_connection: new Date() },
-        this.equipment,
-        msg
+    if (this.socket.connecting || interval) {
+      console.warn(
+        `Ya hay un intento de reconexión en curso para ${equipment.name}.`
       );
-
-      this.client.connecting = true;
-
-      if (this.client) {
-        const reconnectInterval = setInterval(() => {
-          retryCount++; // Incrementar el contador de intentos
-
-          if (retryCount > maxRetries) {
-            // Si se excede el límite de intentos
-            clearInterval(reconnectInterval); // Detener el intervalo
-            this.reconnectionManager.removeReconnectInterval(equipmentId); // Limpiar el intervalo almacenado
-
-            const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${this.equipment.name}.`;
-            console.error(errorMsg);
-            emitStatusDevice(
-              {
-                connection_status: "disconnected",
-                last_connection: new Date(),
-              },
-              this.equipment,
-              errorMsg
-            );
-            return;
-          }
-
-          console.info(
-            `Reintentando conexión para ${this.equipment.name} (Intento ${retryCount}/${maxRetries})...`
-          );
-          this.client.removeAllListeners(); // Limpia eventos antiguos
-          this.connect(); // Intentar reconectar
-        }, 5000);
-
-        this.reconnectionManager.setReconnectInterval(
-          equipmentId,
-          reconnectInterval
-        ); // Almacenar el intervalo
-      }
+      return;
     }
+
+    let retryCount = 0; // Contador de intentos de reconexión
+
+    const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`;
+    console.info(msg);
+    emitStatusDevice(
+      { connection_status: "reconnecting", last_connection: new Date() },
+      equipment,
+      msg
+    );
+
+    this.socket.connecting = true;
+
+    const reconnectInterval = setInterval(async () => {
+      retryCount++; // Incrementar el contador de intentos
+
+      if (retryCount > maxRetries) {
+        // Si se excede el límite de intentos
+        clearInterval(reconnectInterval); // Detener el intervalo
+        removeReconnectInterval(idDevice); // Limpiar el intervalo almacenado
+
+        const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${equipment.name}.`;
+        console.error(errorMsg);
+        emitStatusDevice(
+          { connection_status: "disconnected", last_connection: new Date() },
+          equipment,
+          errorMsg
+        );
+        return;
+      }
+
+      console.info(
+        `Reintentando conexión para ${equipment.name} (Intento ${retryCount}/${maxRetries})...`
+      );
+      client.removeAllListeners(); // Limpia eventos antiguos
+      try {
+        await connect(client, equipment); // Intentar reconectar
+      } catch (error) {
+        console.error(
+          `Error al reconectar con ${equipment.name}: ${err.message}`
+        );
+      }
+
+      client.once("connect", () => {
+        console.info(`Conexión restablecida con el equipo ${equipment.name}`);
+        clearInterval(reconnectInterval);
+        removeReconnectInterval(idDevice);
+        client.connecting = false;
+      });
+
+    }, 5000);
+
+    setReconnectInterval(idDevice, reconnectInterval); // Almacenar el intervalo
   }
 }
 
-module.exports = { TCPClient };
+module.exports = { TcpClient };
