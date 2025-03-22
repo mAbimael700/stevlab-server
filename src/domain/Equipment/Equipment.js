@@ -12,7 +12,7 @@ class Equipment {
         this.status = new EquipmentConnectionStatus()
         this.configuration = new EquipmentConfiguration(equipment.configuration)
         this.parsingConfiguration = EquipmentParsingConfiguration(equipment.parsingConfiguration)
-        this.client = clientConnection
+
     }
 }
 
