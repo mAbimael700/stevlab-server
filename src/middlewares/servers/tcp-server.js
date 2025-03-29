@@ -5,7 +5,6 @@ const {
   deviceValidation,
 } = require("../connections/tcp-ip/tcp-device-validation");
 const { emitStatusDevice } = require("../../lib/websocket/emit-device-status");
-//const { Server } = require("../../services/server.js");
 const { setTCPConnection } = require("../connections/tcp-ip/tcp-manager.js");
 
 //Se crea el servidor TPC/IP y escribimos los eventos a escuchar
@@ -95,8 +94,6 @@ function initializeTcpServer({ PORT }) {
 
   tcpServer.listen(PORT, () => {
     console.log(`Servidor TPC/IP escuchando en el puerto ${PORT}`);
-   /*  Server.setStatus("activo");
-    Server.setTCPPort(PORT); */
   });
 }
 

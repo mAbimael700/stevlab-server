@@ -1,3 +1,5 @@
+const fs = require("node:fs");
+
 const message = `
 25010301000235	ALBUMIN	SER	4.43	g/dL	03/01/2025 15:28:06
 25010301000235	CHOL HDL DIRECT	SER	53.38	mg/dL	03/01/2025 15:33:42
@@ -7,15 +9,14 @@ const message = `
 25010301000235	CHOL HDL DIRECT	SER	53.38	mg/dL	03/01/2025 15:33:42
 25010301000235	CHOL LDL DIRECT	SER	83.63	mg/dL	03/01/2025 16:05:43
 25010301000235	g-GT	SER	140.65	U/L	03/01/2025 15:30:06
-`
+`;
 
-const c =`25010301000235	ALBUMIN	SER	4.43	g/dL	03/01/2025 15:28:06
+const c = `25010301000235	ALBUMIN	SER	4.43	g/dL	03/01/2025 15:28:06
 25010301000235	CHOL HDL DIRECT	SER	53.38	mg/dL	03/01/2025 15:33:42
 25010301000235	CHOL LDL DIRECT	SER	83.63	mg/dL	03/01/2025 16:05:43
-25010301000235	g-GT	SER	140.65	U/L	03/01/2025 15:30:06`
+25010301000235	g-GT	SER	140.65	U/L	03/01/2025 15:30:06`;
 
-
-const v= `
+const v = `
 ELI	BUN	SER	12.44	mg/dL	19/02/2025 11:08:59
 ELI	INDIRECT BILIRUB DPD	SER	0.35	mg/dL	19/02/2025 11:09:23
 ELI	ALP-AMP	SER	91	U/L	19/02/2025 11:09:23
@@ -148,10 +149,10 @@ Marcelo	TRIGLYCERIDES	SER	87.6	mg/dL	19/02/2025 10:54:09
 Marcelo	UREA UV	SER	29.7	mg/dL	19/02/2025 10:55:21
 Marcelo	URIC ACID	SER	6.74	mg/dL	19/02/2025 10:54:33
 Marcelo	CREATININA.	SER	0.96	mg/dL	19/02/2025 10:55:46
-`
+`;
 
 
- const {parseData} = require("../src/lib/parsers/A15/parser.js")
+const { parseData } = require("../src/lib/parsers/A15/parser.js");
+const result = JSON.stringify(parseData(v), null, 2)
 
- console.log(JSON.stringify(parseData(v), null, 2));
- 
+fs.writeFileSync('test.json', result)
