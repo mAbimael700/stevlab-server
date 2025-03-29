@@ -5,7 +5,7 @@ const { parseData: A15Parser } = require("../parsers/A15/parser");
 const { parser: VITROS350Parser } = require("../parsers/Vitros350/parser");
 const { parser: XMLParser } = require("../parsers/XML/parser");
 const { CONTROLAB } = require("../../constants/dictionaries/CONTROLAB");
-const { DYMIND } = require("../../constants/dictionaries/DYMIND");
+const { HEMATOLOGY } = require("../../constants/dictionaries/HEMATOLOGY");
 const { MINDRAY_BS120 } = require("../../constants/dictionaries/MINDRAY_BS120");
 const FINECARE = {}
 const { generateHl7Ack } = require("../parsers/HL7-type4/messageSpliterFn");
@@ -20,7 +20,7 @@ const createType4Parser =
     type4(hl7Message, dictionary, options);
 
 function parsingDataHL7(
-  dictionary = DYMIND,
+  dictionary = HEMATOLOGY,
   options = {},
   sendsBySingleParameter = false
 ) {

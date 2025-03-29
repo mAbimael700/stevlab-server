@@ -1,5 +1,6 @@
 const path = require("node:path");
-const DATADIR = path.join(process.cwd(), "data");
+const { currentWorkDirectory } = require("./CONSTANTS");
+const DATADIR = path.join(currentWorkDirectory, "data");
 
 module.exports = {
   DATADIR,

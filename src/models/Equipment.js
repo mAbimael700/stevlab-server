@@ -23,4 +23,5 @@ const EquipmentSchema = new mongoose.Schema({
   configuration: { type: EquipmentConfigurationSchema, default: () => ({}) },
 });
 
+
 module.exports = mongoose.model("Equipment", EquipmentSchema);

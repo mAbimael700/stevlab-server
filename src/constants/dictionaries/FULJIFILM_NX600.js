@@ -24,6 +24,9 @@ const FULLJIFILM_NX600_DICTIONARIO = {
   "TP": "QSTP",
   "TBIL": "QSTBILS",
   "UREA": "QSURE",
+  "TCHO": "QSAU", // Colesterol
+  "UA": "QSCOLE", // Ácido úrico,
+  "TG": "QSTRIG" // Triglicéridos
 };
 
 module.exports = {

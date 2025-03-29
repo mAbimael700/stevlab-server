@@ -25,7 +25,11 @@ const createWindow = () => {
   overrideConsole(mainWindow); // Sobrescribe los métodos de consola al inicio
 
   if (process.env.DEVELOPMENT == "true") {
-    mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
+    mainWindow.loadURL("http://localhost:5173")/* .catch((e) => {
+      console.error("Hubo un error al cargar la interfaz de usuario", e.message)
+      mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React  
+    } 
+    ); // Puerto del servidor Vite*/
   } else {
     mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
   }

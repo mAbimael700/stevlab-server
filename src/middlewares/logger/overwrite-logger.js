@@ -1,16 +1,20 @@
 // Configura el envío de logs
 const log = (mainWindow, type, message) => {
-    if (mainWindow && mainWindow.webContents && !mainWindow.isDestroyed()) {
-        mainWindow.webContents.send("log", { date: new Date(), type, message });
-    }
+
+    if (mainWindow)
+        if (mainWindow.webContents && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send("log", { date: new Date(), type, message });
+        }
 };
 
 // Sobrescribe métodos de consola
 const overrideConsole = (mainWindow) => {
-    if (!mainWindow || !mainWindow.webContents || mainWindow.isDestroyed()) {
-        console.error("No se pudo sobrescribir la consola: mainWindow no es válido o está destruido.");
-        return;
-    }
+
+    if (!mainWindow)
+        if (!mainWindow.webContents || mainWindow.isDestroyed()) {
+            console.error("No se pudo sobrescribir la consola: mainWindow no es válido o está destruido.");
+            return;
+        }
 
     // Referencia a los métodos originales de la consola
     const originalConsole = {};

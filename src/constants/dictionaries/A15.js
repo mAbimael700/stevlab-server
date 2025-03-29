@@ -4,7 +4,8 @@ const A15 = {
   "BILIRUBIN DIRECT": "QSBILDIR",
   "BILIRUBIN TOTAL": "QSBILTO",
   CK: "QSCK",
-  CREATININE: "QSCREA",// Creatinina (suero)
+  CREATININE: "QSCREA",// Creatinina (suero),
+  "CREATININE.": "QSCREA",// Creatinina (suero)
   "g-GT": "QSGGT", // Gama-glutamiltransferasa (suero)
   GLUCOSE: "QSGLUC",// Glucosa (suero) 
   "IRON FERROSINE": "QSIRON", //
