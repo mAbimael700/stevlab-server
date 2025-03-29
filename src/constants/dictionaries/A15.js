@@ -43,7 +43,11 @@ const A15 = {
   "GLUCOSA ELI": "QSGLUELI", //Glucosa Eli
   "ALP ELI": "QSALPEL", //ALP Eli
   "CREATININA ELI": "QSCREALI", //Creatinina Eli
-  "A.URICO ELI": "QSAUELI" //Acido urico Eli
+  "A.URICO ELI": "QSAUELI", //Acido urico Eli
+  "INDIRECT BILIRUB DPD": "BILIND",
+  "ALP-AMP":"QSALP",
+  "AMYLASE EPS":"QSAMY",
+
 };
 
 module.exports = { A15 };
