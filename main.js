@@ -24,14 +24,42 @@ const createWindow = () => {
 
   overrideConsole(mainWindow); // Sobrescribe los métodos de consola al inicio
 
-  if (process.env.DEVELOPMENT == "true") {
-    mainWindow.loadURL("http://localhost:5173")/* .catch((e) => {
-      console.error("Hubo un error al cargar la interfaz de usuario", e.message)
-      mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React  
-    } 
-    ); // Puerto del servidor Vite*/
+  if (process.env.DEVELOPMENT === "true") {
+    const viteUrl = "http://localhost:5173";
+    const fallbackFile = path.join(__dirname, "dist", "index.html");
+    
+    // Intentar cargar Vite primero
+    mainWindow.loadURL(viteUrl).catch((error) => {
+      console.error("No se pudo conectar al servidor Vite:", error.message);
+      console.log("Intentando cargar versión de producción...");
+      
+      // Fallback al archivo built
+      mainWindow.loadFile(fallbackFile).catch((fallbackError) => {
+        console.error("También falló al cargar el fallback:", fallbackError.message);
+        
+        // Mostrar mensaje de error en la ventana
+        mainWindow.webContents.executeJavaScript(`
+          document.body.innerHTML = '<div style="padding: 20px; font-family: sans-serif;">
+            <h1>Error al cargar la aplicación</h1>
+            <p>No se pudo conectar al servidor de desarrollo (Vite) ni cargar la versión de producción.</p>
+            <p>${fallbackError.message}</p>
+            <p>Verifica que el servidor de desarrollo esté corriendo o ejecuta <code>npm run build</code></p>
+          </div>';
+        `);
+      });
+    });
   } else {
-    mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
+    // Modo producción - cargar directamente los archivos built
+    mainWindow.loadFile(path.join(__dirname, "dist", "index.html")).catch((error) => {
+      console.error("Error al cargar la versión built:", error.message);
+      mainWindow.webContents.executeJavaScript(`
+        document.body.innerHTML = '<div style="padding: 20px; font-family: sans-serif;">
+          <h1>Error al cargar la aplicación</h1>
+          <p>No se pudo cargar la versión compilada de la aplicación.</p>
+          <p>${error.message}</p>
+        </div>';
+      `);
+    });
   }
 
   tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
