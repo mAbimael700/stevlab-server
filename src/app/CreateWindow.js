@@ -1,11 +1,11 @@
-const { BrowserWindow, Tray, Menu } = require("electron");
+const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 const { overrideConsole } = require("../middlewares/logger/overwrite-logger");
 const { currentWorkDirectory } = require("../constants/CONSTANTS");
 let tray = null;
 
 const createWindow = () => {
-  mainWindow = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
