@@ -20,7 +20,7 @@ class TcpServer {
 
   build() {
     this.server = net.createServer(this.options,
-      (socket) => { new TcpSocketListener(socket) });
+      (socket) => { new TcpSocketListener(socket).build() });
   }
 
   listen() {

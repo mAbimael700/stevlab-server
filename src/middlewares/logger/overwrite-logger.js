@@ -1,9 +1,29 @@
-// Configura el envío de logs
+const { BrowserWindow } = require("electron");
+
+/**
+ * Configura el envío de logs
+ * @param {BrowserWindow} mainWindow 
+ * @param {string} type 
+ * @param {string} message 
+ * @returns 
+ */
 const log = (mainWindow, type, message) => {
-  if (mainWindow) {
-    if (mainWindow.webContents && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send("log", { date: new Date(), type, message });
+  if (!mainWindow) return;
+  
+  try {
+    // Check if window is destroyed first
+    if (mainWindow.isDestroyed()) return;
+    
+    // Then check webContents
+    if (mainWindow.webContents) {
+      mainWindow.webContents.send("log", { 
+        date: new Date(), 
+        type, 
+        message 
+      });
     }
+  } catch (error) {
+    console.error('Failed to send log:', error);
   }
 };
 

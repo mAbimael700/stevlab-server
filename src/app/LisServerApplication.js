@@ -53,13 +53,10 @@ class ServerFactory {
 
 // Carga las variables del archivo .env
 function LisServerApplication() {
-
   ErrorHandler();
   configurationManager();
-  //Server.getInitialServerConfiguration()
   const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
   serverInitializer();
-
   initializeEquipmentManager();
 }
 

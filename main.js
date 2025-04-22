@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require("electron");
 const LisServerApplication = require("./src/app/LisServerApplication");
 const { createWindow } = require("./src/app/CreateWindow");
 // run this as early in the main process as possible
-if (require('electron-squirrel-startup')) app.quit();
+if (require("electron-squirrel-startup")) app.quit();
 
 let mainWindow;
 const gotTheLock = app.requestSingleInstanceLock();
@@ -19,7 +19,7 @@ if (!gotTheLock) {
   });
 
   app.whenReady().then(() => {
-    createWindow();
+    mainWindow = createWindow();
 
     // Asegúrate de que los servicios solo se inicializan una vez
     if (!global.servicesInitialized) {

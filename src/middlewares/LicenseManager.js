@@ -7,7 +7,7 @@ const { machineIdSync } = require('node-machine-id');
 class LicenseManager {
   constructor() {
     this.licensePath = path.join(app.getPath('userData'), 'license.json');
-    this.apiBaseUrl = 'https://tu-servidor-licencias.com/api';
+    this.apiBaseUrl = 'https://servidor-licencias.com/api';
   }
 
   async verifyLicense() {

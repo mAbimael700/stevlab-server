@@ -7,8 +7,8 @@ const {
 } = require("../connections/serial/serial-manager");
 
 const equipmentEmitter = getEquipmetEmitter();
-// Manejar equipos agregados
 
+// Manejar equipos agregados
 equipmentEmitter.on("deviceAdded", async (newEquipment) => {
   console.log(`Nuevo equipo detectado --> ${newEquipment.name}`);
 
