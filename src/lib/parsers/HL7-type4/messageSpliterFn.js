@@ -1,9 +1,12 @@
 const { generateAckDate } = require("../generate-ack-date");
 
-function getSegments(hl7Message) {
-  //Divide el mensaje hl7 por renglones por saltos de línea
-  //Retorna un array de segmentos por cada tipo de mensaje
-  return hl7Message.trim().split(/(?=MSH|PID|PV1|OBR|OBX)/);
+/**
+ * Divide el mensaje hl7 por renglones por saltos de línea (Solo contempla los segmentos MSH|PID|PV1|OBR|OBX )
+ * @param {string} message 
+ * @returns Retorna un array de los segmentos por cada tipo de mensaje
+ */
+function getSegments(message) {
+  return message.trim().split(/(?=MSH|PID|PV1|OBR|OBX)/);
 }
 
 function getFieldsSegment(fieldSeparator, segment) {
@@ -37,12 +40,13 @@ function generateHl7Ack(
   messageId,
   emisor = "Mindray",
   receptor = "BS-120",
-  status = "AA",) {
+  status = "AA"
+) {
   const timestamp = generateAckDate(); // Formato HL7
-  const mshSegment = `MSH|^~\\&|||${emisor}|${receptor}|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||`
-  const msaSegment = `MSA|${status}|${messageId}|Message accepted|||0|`
+  const mshSegment = `MSH|^~\\&|||${emisor}|${receptor}|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||`;
+  const msaSegment = `MSA|${status}|${messageId}|Message accepted|||0|`;
 
-  const ackMessage = `\x0B${mshSegment}\r${msaSegment}\r\x1C\x0D`
+  const ackMessage = `\x0B${mshSegment}\r${msaSegment}\r\x1C\x0D`;
   return ackMessage;
 }
 

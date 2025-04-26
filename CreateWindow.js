@@ -1,7 +1,7 @@
 const { BrowserWindow } = require("electron");
 const path = require("path");
-const { overrideConsole } = require("../middlewares/logger/overwrite-logger");
-const { currentWorkDirectory } = require("../constants/CONSTANTS");
+const { overrideConsole } = require("./src/middlewares/logger/overwrite-logger");
+const { currentWorkDirectory } = require("./src/constants/CONSTANTS");
 const { initializeTrayContextMenu } = require("./TrayMenu");
 
 const createWindow = () => {
@@ -9,7 +9,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(currentWorkDirectory, "preload.js"), // Preload correctamente definido
+      preload: path.join(__dirname, "preload.js"), // Preload correctamente definido
       contextIsolation: true, // Activo para seguridad
       nodeIntegration: false, // Desactivado por seguridad
     },
@@ -33,7 +33,7 @@ module.exports = { createWindow };
  */
 function createDevelopmentWindow(mainWindow) {
   const viteUrl = "http://localhost:5173";
-  const fallbackFile = path.join(currentWorkDirectory, "dist", "index.html");
+  const fallbackFile = path.join(__dirname, "dist", "index.html");
 
   // Intentar cargar Vite primero
   mainWindow.loadURL(viteUrl).catch((error) => {

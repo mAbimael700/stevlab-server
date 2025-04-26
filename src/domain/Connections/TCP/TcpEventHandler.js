@@ -1,16 +1,61 @@
 const { Socket } = require("node:net");
-const { DataEvent } = require("../../BufferStreamManagment/DataEvent");
-const { emitStatusDevice } = require("../../websocket/emit-device-status");
+const {
+  BufferDataEmitter,
+} = require("../../BufferStreamManagment/BufferDataEmitter");
+const { ConnectionValidator } = require("./ConnectionValidator");
+const { EquipmentManager } = require("../../EquipmentManager/EquimentManager");
 
-class TcpEventHandler {
+class TcpEventsHandler {
   /**
    * @param {Socket} socket
    * @param {Equipment} equipment
+   * @param  {ConnectionValidator} connectionValidator
    */
-  constructor(socket, equipment) {
+  constructor(socket, equipment = null, connectionValidator) {
     this.socket = socket;
     this.equipment = equipment;
-    this.dataEvent = new DataEvent(this.equipment);
+
+    this.ipAddress = socket.remoteAddress;
+    this.port = socket.remotePort;
+    this.connectionValidator = connectionValidator;
+    this.equipmentManager = EquipmentManager.getInstance();
+
+    if (equipment) {
+      this.bufferDataEmitter = new BufferDataEmitter(equipment);
+    } else {
+      this.bufferDataEmitter = null;
+    }
+  }
+
+  async connect() {
+    try {
+      if (!this.equipment) {
+        const result = await this.connectionValidator.validate(
+          this.socket.remoteAddress
+        );
+
+        const equipmentOnServerMemory = this.equipmentManager.getEquipmentById(
+          result.id
+        );
+
+        if (!equipmentOnServerMemory)
+          throw new Error(`Equipo con ID ${result.id} no encontrado.`);
+
+        this.equipment = equipmentOnServerMemory.data;
+        this.bufferDataEmitter = new BufferDataEmitter(this.equipment);
+
+        if (!equipmentOnServerMemory.connection.client) {
+          equipmentOnServerMemory.connection.setClient(this.socket);
+        }
+      }
+
+      console.log(
+        `Conexión TCP/IP entrante del equipo ${this.equipment.name} con la dirección IPv4: ${this.equipment.configuration.ipAddress}:${this.socket.remotePort}`
+      );
+    } catch (error) {
+      console.error("Error durante la conexión:", error.message);
+      this.socket.destroy(); // Cierra el socket si hay un error
+    }
   }
 
   /**
@@ -18,19 +63,19 @@ class TcpEventHandler {
    * @param {Buffer} data
    */
   data(data) {
-    const filteredData = data.toString().replace(/\x02/g, "");
+    try {
+      if (!this.bufferDataEmitter) {
+        throw new Error(
+          "El equipo no se ha validado correctamente para procesar su información."
+        );
+      }
 
-    if (filteredData.trim()) {
-      emitStatusDevice(
-        { lastConnection: new Date() },
-        this.equipment,
-        `Mensaje entrante del equipo ${this.equipment.name} ${this.equipment.getIpAddress()
-          ? `con IPv4: ${this.equipment.getIpAddress()}`
-          : ""
-        } en el puerto ${this.equipment.getPort()}`
+      this.bufferDataEmitter.processBufferData(data);
+    } catch (error) {
+      throw new Error(
+        `Hubó un error al procesar la información recibida del equipo con dirección Ipv4 ${this.ipAddress}:${this.port}:`,
+        error
       );
-
-      this.dataEvent.process(this.socket, data);
     }
   }
 
@@ -39,80 +84,51 @@ class TcpEventHandler {
    * @param {Error} err
    * @param {*} scheduleReconnect
    */
-  error(err, scheduleReconnect) {
-    this.handleConnectionEvent("error", scheduleReconnect, err);
+  error(err) {
+    const errorMessage = TcpEventsHandler.generateErrorMessage(err);
   }
 
-  close(scheduleReconnect) {
-    this.handleConnectionEvent("close", scheduleReconnect);
-  }
+  close() {}
 
   end() {
     console.log(
-      `Conexión cerrada por el equipo ${
-        equipment.name
-      } con IPv4: ${equipment.getIpAddress()}:${socket.remotePort}`
+      `Conexión cerrada por el equipo con IPv4: ${this.ipAddress}:${this.port}`
     );
 
-    emitStatusDevice(
-      {
-        last_connection: new Date(),
-        connection_status: "disconnected",
-      },
-      result.data
-    );
+    if (!this.socket.destroyed) {
+      this.socket.destroy();
+    }
+  }
 
-    socket.destroy();
+  timeout() {
+    this.socket.end(); // O this.socket.destroy()
   }
 
   /**
-   * Maneja eventos de conexión (cierre o error).
-   * @param {"close" | "error"} eventType - Tipo de evento ("close" o "error").
-   * @param {(equipment: Equipment) => void} scheduleReconnect - Función para programar reconexión.
-   * @param {Error} [error] - Detalle del error (solo para eventos "error").
+   *
+   * @param {Error} error
+   * @param {string} ipAddress
+   * @param {number | null} port
+   * @returns
    */
-  handleConnectionEvent(eventType, scheduleReconnect, error) {
-    const { name, getIpAddress, getPort } = this.equipment;
-    const ipAddress = getIpAddress() ?? this.socket.remoteAddress;
-    const port = getPort() ?? this.socket.remotePort;
-
-    switch (eventType) {
-      case "close":
-        console.info(`Conexión cerrada por el equipo ${name}.`);
+  generateErrorMessage(error) {
+    let msg;
+    switch (error.code) {
+      case "ECONNREFUSED":
+        msg = `Conexión rechazada a ${this.ipAddress}:${this.port}.`;
         break;
-
-      case "error":
-        let msg = "";
-        switch (error.code) {
-          case "ECONNREFUSED":
-            msg = `Conexión rechazada a ${ipAddress}:${port}.`;
-            break;
-          case "ETIMEDOUT":
-            msg = `Tiempo de espera agotado para ${ipAddress}:${port}.`;
-            break;
-          case "EHOSTUNREACH":
-            msg = `No se puede alcanzar el host ${ipAddress} en el puerto ${port}.`;
-            break;
-          default:
-            msg = `Hubo un error en la conexión con el equipo ${name}: ${error.message}`;
-        }
-
-        msg += ` Verifica el equipo ${name}.`;
-        console.error(msg);
-        emitStatusDevice(
-          { connection_status: "disconnected", error: error.code },
-          equipment,
-          msg,
-          true
-        );
+      case "ETIMEDOUT":
+        msg = `Tiempo de espera agotado para ${this.ipAddress}:${this.port}.`;
         break;
-
+      case "EHOSTUNREACH":
+        msg = `No se puede alcanzar el host ${this.ipAddress} en el puerto ${this.port}.`;
+        break;
       default:
-        break;
+        msg = `Hubo un error en de conexión: ${error.message}`;
     }
 
-    scheduleReconnect();
+    return msg;
   }
 }
 
-module.exports = TcpEventHandler;
+module.exports = TcpEventsHandler;

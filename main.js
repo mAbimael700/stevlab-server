@@ -1,6 +1,6 @@
 const { app, BrowserWindow } = require("electron");
 const LisServerApplication = require("./src/app/LisServerApplication");
-const { createWindow } = require("./src/app/CreateWindow");
+const { createWindow } = require("./CreateWindow");
 // run this as early in the main process as possible
 if (require("electron-squirrel-startup")) app.quit();
 

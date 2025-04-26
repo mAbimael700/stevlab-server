@@ -1,31 +1,32 @@
 class EquipmentConfiguration {
-    constructor() {
-        this.port = null
-        this.macAddress = null
-        this.ipAddress = null
-        this.baudRate = null
-        this.remoteDirectory = null
-    }
+  constructor(configuration) {
+    this.port = configuration.port;
+    this.macAddress = configuration.macAddress;
+    this.ipAddress = configuration.ipAddress;
+    this.baudRate = configuration.baudRate;
+    this.remoteDirectory = configuration.remoteDirectory;
+    this.connectionType = configuration.connectionType;
+  }
 
-    setPort(port) {
-        this.port = port
-    }
+  setPort(port) {
+    this.port = port;
+  }
 
-    setMacAddress(macAddress) {
-        this.macAddress = macAddress
-    }
+  setMacAddress(macAddress) {
+    this.macAddress = macAddress;
+  }
 
-    setIpAddress(ipAddress) {
-        this.ipAddress = ipAddress
-    }
+  setIpAddress(ipAddress) {
+    this.ipAddress = ipAddress;
+  }
 
-    setBaudRate(baudRate) {
-        this.baudRate = baudRate
-    }
+  setBaudRate(baudRate) {
+    this.baudRate = baudRate;
+  }
 
-    setRemoteDirectory(directory) {
-        this.remoteDirectory = directory
-    }
+  setRemoteDirectory(directory) {
+    this.remoteDirectory = directory;
+  }
 }
 
-module.exports = { EquipmentConfiguration }
+module.exports = { EquipmentConfiguration };

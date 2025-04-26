@@ -1,6 +1,5 @@
 const { Tray, Menu, app, BrowserWindow } = require("electron");
 const path = require("node:path");
-const { currentWorkDirectory } = require("../constants/CONSTANTS");
 
 /**
  *
@@ -8,7 +7,7 @@ const { currentWorkDirectory } = require("../constants/CONSTANTS");
  */
 function initializeTrayContextMenu(mainWindow) {
   let tray = null;
-  tray = new Tray(path.join(currentWorkDirectory, "icon.ico")); // Cambia al icono que desees usar
+  tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
 
   // Crear un menú contextual para la bandeja
   const contextMenu = Menu.buildFromTemplate([

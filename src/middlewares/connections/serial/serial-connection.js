@@ -65,7 +65,9 @@ function createSerialConnection(device) {
 
   // Evento para detectar cierre del puerto
   port.on("close", () => {
-    console.info(`El puerto ${device.port} del equipo ${device.name} ha sido cerrado`);
+
+    const msg = `El puerto ${device.port} del equipo ${device.name} ha sido cerrado`
+    console.info(msg);
     emitStatusDevice({
       connection_status: "disconnected",
     }, device,
