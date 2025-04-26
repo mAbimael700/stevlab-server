@@ -1,6 +1,7 @@
 const net = require("node:net");
 const { TcpSocketListener } = require("./TcpSocketListener");
 const { ClientConnection } = require("../../ClientConnection/ClientConnection");
+const { Equipment } = require("../../Equipment/Equipment");
 
 class TcpClient extends ClientConnection {
   /**
