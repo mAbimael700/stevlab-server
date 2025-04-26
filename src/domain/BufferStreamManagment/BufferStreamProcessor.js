@@ -34,14 +34,14 @@ class BufferStreamProcessor {
     try {
       while (true) {
         const accumulatedData = this.bufferList.toString("utf-8");
-        const bufferResults = this.bufferHandler.handle(accumulatedData);
+        const bufferHandlerResults = this.bufferHandler.handle(accumulatedData);
 
-        if (bufferResults) {
-          extractedResults.push(bufferResults.completeMessage);
+        if (bufferHandlerResults) {
+          extractedResults.push(bufferHandlerResults.completeMessage);
           
           BufferStreamHandler.clearProcessedBuffer(
             this.bufferList,
-            bufferResults.consumedBytes
+            bufferHandlerResults.consumedBytes
           );
         } else {
           // Si no hay más mensajes completos, salir del loop
