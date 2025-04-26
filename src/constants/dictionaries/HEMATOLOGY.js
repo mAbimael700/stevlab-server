@@ -19,6 +19,15 @@ const HEMATOLOGY = {
   PCT: "BHPCT", // PCT
   LCR: undefined, // LCR
   LN: undefined, // LN 
+  "RDW-CV": "BHRDW1", // Variación de tamaño de globulos rojos  
+  "RDW-SD": "RDW2", // Amplitud de distribución eritrositaria 
+  "P-LCR": "BH0P", // Índice de cobertura de vida con relación de plaquetas
+  "P-LCC": "BH0LCC", // Coeficiente de plaquetas de células grandes 
+  'RDWR': 'RDWR1', // Ancho de eritrocitos
+  'LR': 'BHLR', // Linfocitos
+  'MR': "BHMR" ,// Monocitos
+  'GR': 'BHGR'// Neutrofilos segmentados
+
 };
 
 module.exports = {

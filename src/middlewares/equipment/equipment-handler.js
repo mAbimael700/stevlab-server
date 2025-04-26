@@ -7,8 +7,8 @@ const {
 } = require("../connections/serial/serial-manager");
 
 const equipmentEmitter = getEquipmetEmitter();
-// Manejar equipos agregados
 
+// Manejar equipos agregados
 equipmentEmitter.on("deviceAdded", async (newEquipment) => {
   console.log(`Nuevo equipo detectado --> ${newEquipment.name}`);
 
@@ -35,7 +35,7 @@ equipmentEmitter.on("deviceRemoved", async (oldEquipment) => {
 
   try {
     if (oldEquipment.require_ftp_conn) {
-      await closeFTP(oldEquipment.mac_address);
+      closeFTP(oldEquipment);
     }
 
     if (oldEquipment.require_tcp_server_conn) {
@@ -56,10 +56,9 @@ equipmentEmitter.on("deviceModified", async (oldEquipment, newEquipment) => {
 
   try {
     if (newEquipment.require_ftp_conn) {
-      await closeFTP(oldEquipment);
+      closeFTP(oldEquipment);
       await connectFTP(newEquipment);
     }
-
     if (newEquipment.require_tcp_server_conn) {
       closeTCP(oldEquipment);
       await connectTCP(newEquipment);

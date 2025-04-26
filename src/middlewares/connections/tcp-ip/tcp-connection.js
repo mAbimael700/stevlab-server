@@ -67,7 +67,9 @@ const connect = async (client, equipment) => {
   try {
     await new Promise((resolve, reject) => {
       client.connect(port, host, () => {
-        console.log(`Conexión exitosa con ${equipment.name} en ${host}:${port}.`);
+        console.log(
+          `Conexión exitosa con ${equipment.name} en ${host}:${port}.`
+        );
         emitStatusDevice(
           { connection_status: "connected" },
           equipment,
@@ -75,15 +77,14 @@ const connect = async (client, equipment) => {
         );
         removeReconnectInterval(idDevice);
         client.connecting = false;
-        resolve()
+        resolve();
       });
 
-      client.once('error', reject);
-    })
+      client.once("error", reject);
+    });
 
     const device = await deviceValidation(client);
     const bufferList = new bl();
-
 
     // Configurar eventos
     client.on("data", (data) => {
@@ -97,15 +98,13 @@ const connect = async (client, equipment) => {
     console.error(`Error al conectar con ${equipment.name}: ${error.message}`);
     scheduleReconnect(equipment);
   }
-
-
 };
 
 /**
  *
  * @param {Equipment} equipment
  */
-const scheduleReconnect = (equipment, maxRetries = 5) => {
+const scheduleReconnect = (equipment) => {
   const idDevice = equipment.id_device;
   const client = getTCPConnection(idDevice);
   const interval = getReconnectInterval(idDevice);
@@ -124,8 +123,6 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
     return;
   }
 
-  let retryCount = 0; // Contador de intentos de reconexión
-
   const msg = `Programando reconexión para ${equipment.name} en 5 segundos.`;
   console.info(msg);
   emitStatusDevice(
@@ -135,6 +132,19 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
   );
 
   client.connecting = true;
+  const reconnectInterval = createReconnectInterval(equipment, client);
+  
+  setReconnectInterval(idDevice, reconnectInterval); // Almacenar el intervalo
+};
+
+/**
+ *
+ * @param {object} equipment
+ * @param {net.Socket} client
+ * @param {number} maxRetries
+ */
+function createReconnectInterval(equipment, client, maxRetries = 5) {
+  let retryCount = 0; // Contador de intentos de reconexión
 
   const reconnectInterval = setInterval(async () => {
     retryCount++; // Incrementar el contador de intentos
@@ -142,7 +152,7 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
     if (retryCount > maxRetries) {
       // Si se excede el límite de intentos
       clearInterval(reconnectInterval); // Detener el intervalo
-      removeReconnectInterval(idDevice); // Limpiar el intervalo almacenado
+      removeReconnectInterval(equipment.id_device); // Limpiar el intervalo almacenado
 
       const errorMsg = `Se excedió el límite de ${maxRetries} intentos de reconexión para ${equipment.name}.`;
       console.error(errorMsg);
@@ -162,20 +172,19 @@ const scheduleReconnect = (equipment, maxRetries = 5) => {
       await connect(client, equipment); // Intentar reconectar
     } catch (error) {
       console.error(
-        `Error al reconectar con ${equipment.name}: ${err.message}`
+        `Error al reconectar con ${equipment.name}: ${error.message}`
       );
     }
 
     client.once("connect", () => {
       console.info(`Conexión restablecida con el equipo ${equipment.name}`);
       clearInterval(reconnectInterval);
-      removeReconnectInterval(idDevice);
+      removeReconnectInterval(equipment.id_device);
       client.connecting = false;
     });
-
   }, 5000);
 
-  setReconnectInterval(idDevice, reconnectInterval); // Almacenar el intervalo
-};
+  return reconnectInterval
+}
 
 module.exports = { createTCPConnection };

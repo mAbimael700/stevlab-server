@@ -1,9 +1,5 @@
 const { Socket } = require("node:net");
-const TcpEventHandler = require("./TcpEventHandler");
-const { ConnectionValidator } = require("./ConnectionValidator");
-const {
-  EquipmentManager,
-} = require("../../../domain/EquipmentManager/EquimentManager");
+const TcpEventsHandler = require("./TcpEventHandler");
 
 class TcpSocketListener {
   /**
@@ -13,83 +9,33 @@ class TcpSocketListener {
    */
   constructor(socket, equipment = null) {
     this.socket = socket;
-    this.connectionValidator = new ConnectionValidator();
-    this.equipmentManager = EquipmentManager.getInstance();
     this.equipment = equipment;
-
-    if (this.equipment) {
-      this.eventHandler = new TcpEventHandler(this.socket, this.equipment);
-    } else {
-      this.eventHandler = null;
-    }
+    this.eventHandler = new TcpEventsHandler(socket, equipment, null, this);
+    // Bind handlers para mantener el contexto
+    this._bindHandlers();
   }
 
-  build() {
+  setup() {
     this.socket.removeAllListeners(); // Limpia cualquier listener anterior
     this.socket.setTimeout(60000); // 60 segundos
+
     // Configurar eventos
+    this.socket.on("connect", this.eventHandler.connect);
+    this.socket.on("data", this.eventHandler.data);
+    this.socket.on("close", this.eventHandler.close);
+    this.socket.on("error", this.eventHandler.error);
+    this.socket.on("end", this.eventHandler.end);
+    this.socket.on("timeout", this.eventHandler.timeout);
+  }
 
-    this.socket.on("connect", async () => {
-      try {
-        if (!this.equipment) {
-          const result = await this.connectionValidator.validate(
-            this.socket.remoteAddress
-          );
-          this.equipment = this.equipmentManager.getEquipmentById(result.id);
+  _bindHandlers() {
+    const methods = ["connect", "data", "close", "error", "end", "timeout"];
 
-          if (!this.equipment)
-            throw new Error(`Equipo con ID ${result.id} no encontrado.`);
-
-          this.eventHandler = new TcpEventHandler(this.socket, this.equipment);
-        }
-
-        if (!this.equipment.connection.client) {
-          this.equipment.connection.setClient(this.socket);
-        }
-
-        console.log(
-          `Conexión TCP/IP entrante del equipo ${this.equipment.name
-          } con la dirección IPv4: ${this.equipment.getIpAddress()}:${this.socket.remotePort
-          }`
+    methods.forEach((method) => {
+      if (typeof this.eventHandler[method] === "function") {
+        this.eventHandler[method] = this.eventHandler[method].bind(
+          this.eventHandler
         );
-      } catch (error) {
-        console.error("Error durante la conexión:", error.message);
-        this.socket.destroy(); // Cierra el socket si hay un error
-      }
-    });
-
-    this.socket.on("data", (buffer) => {
-      if (this.eventHandler) {
-        this.eventHandler.data(buffer);
-      }
-    });
-
-    this.socket.on("close", () => {
-      if (this.eventHandler) {
-        this.eventHandler.close();
-      }
-    });
-
-    // Configurar el manejador de errores antes de llamar a connect
-    this.socket.on("error", (err) => {
-      if (this.eventHandler) {
-        this.eventHandler.error(err);
-      } else {
-        console.error(`Hubo un error en la conexión con el equipo con IPv4: ${this.socket.remoteAddress}:${this.socket.remotePort}: ${err.message}`);
-      }
-    });
-
-    this.socket.on("end", () => {
-      if (this.equipment) {
-        this.eventHandler.end()
-      } else {
-        console.warn(
-          `Conexión cerrada por el equipo no registrado con IPv4: ${this.socket.remoteAddress}:${this.socket.remotePort}`
-        );
-      }
-
-      if (!this.socket.destroyed) {
-        this.socket.destroy();
       }
     });
   }

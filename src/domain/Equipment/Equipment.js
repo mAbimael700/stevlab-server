@@ -1,19 +1,33 @@
+const { ClientConnection } = require("../ClientConnection/ClientConnection");
 const { EquipmentConfiguration } = require("./EquipmentConfiguration");
 const { EquipmentConnectionStatus } = require("./EquipmentConnectionStatus");
-const { EquipmentParsingConfiguration } = require("./EquipmentParsingConfiguration");
 
 class Equipment {
-    constructor(equipment, clientConnection) {
-        this.id = equipment.id;
-        this.name = equipment.name;
-        this.equipmentID = equipment.equipmentID
-        this.brand = equipment.brand;
-        this.area = equipment.area;
-        this.status = new EquipmentConnectionStatus()
-        this.configuration = new EquipmentConfiguration(equipment.configuration)
-        this.parsingConfiguration = EquipmentParsingConfiguration(equipment.parsingConfiguration)
+  /**
+   *
+   * @param {*} equipment
+   * @param {ClientConnection | null} connection
+   */
+  constructor(equipment, connection = null) {
+    this.data = {
+      id: equipment.id,
+      name: equipment.name,
+      equipmentID: equipment.equipmentID,
+      brand: equipment.brand,
+      area: new Area(equipment.area),
+      status: new EquipmentConnectionStatus(),
+      configuration: new EquipmentConfiguration(equipment.configuration),
+    };
+    this.connection = connection;
+  }
 
-    }
+  /**
+   *
+   * @param {ClientConnection} connection
+   */
+  setConnection(connection) {
+    this.connection = connection;
+  }
 }
 
-module.exports = { Equipment }
+module.exports = { Equipment };

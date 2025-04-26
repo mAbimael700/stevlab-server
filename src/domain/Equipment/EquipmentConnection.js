@@ -1,21 +1,30 @@
+const Equipment = require("../../models/Equipment.js");
 const { EquipmentParsingConfiguration } = require("./EquipmentParsingConfiguration.js");
 
-class EquipmentConnection {
+class EquipmentConnection extends Equipment {
 
     /**
      * 
-     * @param {string} equipmentID 
-     * @param {ClientConnection} clientConnection 
+     * @param {*} equipment 
+     * @param {EquipmentParsingConfiguration} parsingConfiguration 
+     * @param {ClientConnection} connection 
      */
-    constructor(equipmentID, clientConnection) {
-        if (!equipmentID || !clientConnection) {
+    constructor(equipment, parsingConfiguration ,connection) {
+
+        if (!equipment || !connection) {
             throw new Error("Invalid parameters provided to Equipment constructor");
         }
 
-        this.equipmentID = equipmentID; // Solo necesitas el ID, no toda la clase Equipment
-        this.connection = clientConnection
-        this.connection.build()
+        super(equipment)
+        this.connection = connection
+        this.parsingConfiguration = parsingConfiguration
+        this.directoryMonitor = null
     }
+
+    setDirectoryMonitor(directoryMonitor){
+        this.directoryMonitor = directoryMonitor
+    }
+
 
 }
 

@@ -2,7 +2,6 @@ const { Socket } = require("node:net");
 const { Client } = require("basic-ftp");
 const { SerialPort } = require("serialport");
 
-
 class ClientConnection {
   /**
    * @param {"TCP server" | "TCP client" | "RS-232" | "FTP server"} type - Tipo de conexión.
@@ -20,20 +19,18 @@ class ClientConnection {
    * Inicializa la conexión.
    * @returns {Promise<void>}
    */
-  async build() { }
-  async connect() { }
-  async reconnect() { }
-  async close() { }
-
+  async build() {}
+  async connect() {}
+  async reconnect() {}
+  async close() {}
 
   /**
-   * Asigna manualmente un cliente de conexión.
-   * @param {Socket | Client | SerialPort} client - Cliente de conexión.
+   *
+   * @param {Socket | SerialPort | Client} client
    */
   setClient(client) {
     this.socket = client;
   }
-
 }
 
 module.exports = { ClientConnection };

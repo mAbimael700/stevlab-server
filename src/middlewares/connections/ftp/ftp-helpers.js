@@ -1,8 +1,5 @@
 const ftp = require("basic-ftp"); // Importa el cliente FTP
 const {
-  formatMacAddressWithSeparators,
-} = require("../../../utils/formatMacAddressWithSeparators");
-const {
   emitOpenedDevice,
   emitClosedDevice,
   createOptions,
@@ -12,9 +9,6 @@ const {
   setFtpConnection,
   updateFtpConnection,
 } = require("./ftp-manager");
-
-// Configuración del límite y la frecuencia de reconexión
-const INITIAL_DELAY = 1000; // 1 segundo
 
 async function addFtpConnection(equipment, retryCount = 0) {
   // Creamos un objeto de la clase ftp
@@ -27,12 +21,7 @@ async function addFtpConnection(equipment, retryCount = 0) {
     // Intentamos acceder al servidor FTP
     await client.access(createOptions(equipment));
 
-    const message = `Conexión FTP establecida con el equipo ${
-      equipment.name
-    } (${formatMacAddressWithSeparators(
-      equipment.mac_address
-    )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port}`;
-
+    const message = `Conexión FTP establecida con el equipo ${equipment.name} con dirección IPv4 ${equipment.ip_address}:${equipment.port}`;
     emitOpenedDevice(equipment, message);
     console.info(message);
 
@@ -44,58 +33,49 @@ async function addFtpConnection(equipment, retryCount = 0) {
       emitOpenedDevice(equipment, message);
     }
   } catch (error) {
-    let errorMsg = `Error al conectar FTP con el equipo ${
-      equipment.name
-    }: (${formatMacAddressWithSeparators(
-      equipment.mac_address
-    )}) con dirección IPv4 ${equipment.ip_address}:${equipment.port} ${
-      error.message
-    }`;
-
+    let errorMsg = `Error al conectar con el equipo ${equipment.name} con dirección IPv4 ${equipment.ip_address}:${equipment.port} -> ${error.message}`;
     console.error(errorMsg);
     emitClosedDevice(equipment, true, errorMsg);
-
-    // Si hay un error y no se ha alcanzado el máximo de intentos, realizar reconexión con retardo
-    const delay = INITIAL_DELAY * 2 ** retryCount; // Incrementa el tiempo de espera exponencialmente
-    console.log(`Reintentando conexión en ${delay / 1000} segundos...`);
-
-    // Esperar el tiempo de retardo antes de reconectar
-    await new Promise((resolve) => setTimeout(resolve, delay));
-    return addFtpConnection(equipment, retryCount + 1); // Intento de reconexión
   }
 }
 
 // Función para reconectar el cliente FTP
 async function reconnectFTP(equipment, maxRetries = 5, attempt = 1) {
-  const connection = getFtpConnectionById(equipment.id_device);
-
-  if (!connection) {
-    console.error(`No se encontró una conexión para el equipo ${equipment.name}.`);
-    return null;
-  }
-
-  if (connection.reconnecting) {
-    console.log(`Ya se está reconectando con ${equipment.name}.`);
-    return null;
-  }
-
-  updateFtpConnection(equipment.id_device, { reconnecting: true });
-
   try {
+    const connection = getFtpConnectionById(equipment.id_device);
+
+    if (!connection) {
+      throw new Error(
+        `No se encontró una conexión para el equipo ${equipment.name}.`
+      );
+    }
+
+    if (connection.reconnecting) {
+      throw new Error(`Ya se está reconectando con ${equipment.name}.`);
+    }
+
+    updateFtpConnection(equipment.id_device, { reconnecting: true });
+
     if (connection.client && !connection.client.closed) {
       connection.client.close();
       console.log(`Cliente FTP cerrado correctamente para ${equipment.name}.`);
       emitClosedDevice(equipment);
     }
 
-    console.log(`Intentando reconectar con ${equipment.name}, intento ${attempt}...`);
+    console.log(
+      `Intentando reconectar con ${equipment.name}, intento ${attempt}...`
+    );
     await connection.client.access(createOptions(equipment));
 
     console.log(`Reconexión exitosa con ${equipment.name}.`);
     emitOpenedDevice(equipment);
     return getFtpConnectionById(equipment.id_device);
   } catch (error) {
-    console.error(`Error al reconectar con ${equipment.name}:`, error.message);
+    console.error(
+      `Error al reconectar con ${equipment.name} con IPv4: ${equipment.ip_address}:${equipment.port}`,
+      error.message
+    );
+    connection.client.close();
     emitClosedDevice(equipment, true, error.message);
 
     if (attempt < maxRetries) {

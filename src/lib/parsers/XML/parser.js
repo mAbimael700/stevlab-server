@@ -1,6 +1,5 @@
 const { XMLParser } = require("fast-xml-parser");
-const { DYMIND } = require("../../../constants/dictionaries/DYMIND");
-//const xml2js = require("xml2js");
+const { HEMATOLOGY } = require("../../../constants/dictionaries/HEMATOLOGY");
 
 const options = {
   ignoreAttributes: false,
@@ -16,7 +15,7 @@ const options = {
  * @param {Object} dictionary
  * @returns
  */
-const parser = (message, dictionary = DYMIND) => {
+const parser = (message, dictionary = HEMATOLOGY) => {
   //const xmlParser = new xml2js.Parser({ explicitArray: false, trim: true }).parseString;
   const xmlParser = new XMLParser(options);
   let xmlMsgParsed;

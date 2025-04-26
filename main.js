@@ -1,67 +1,10 @@
-const { app, BrowserWindow, Tray, Menu } = require("electron");
-const path = require("path");
+const { app, BrowserWindow } = require("electron");
 const LisServerApplication = require("./src/app/LisServerApplication");
-const {
-  overrideConsole,
-} = require("./src/middlewares/logger/overwrite-logger");
-
+const { createWindow } = require("./CreateWindow");
 // run this as early in the main process as possible
-if (require('electron-squirrel-startup')) app.quit();
+if (require("electron-squirrel-startup")) app.quit();
 
 let mainWindow;
-let tray = null;
-
-const createWindow = () => {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"), // Preload correctamente definido
-      contextIsolation: true, // Activo para seguridad
-      nodeIntegration: false, // Desactivado por seguridad
-    },
-  });
-
-  overrideConsole(mainWindow); // Sobrescribe los métodos de consola al inicio
-
-  if (process.env.DEVELOPMENT == "true") {
-    mainWindow.loadURL("http://localhost:5173"); // Puerto del servidor Vite
-  } else {
-    mainWindow.loadFile(path.join(__dirname, "dist", "index.html")); // Build del cliente React
-  }
-
-  tray = new Tray(path.join(__dirname, "icon.ico")); // Cambia al icono que desees usar
-
-  // Crear un menú contextual para la bandeja
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "Mostrar ventana",
-      click: () => {
-        mainWindow.show();
-      },
-    },
-    {
-      label: "Salir",
-      click: () => {
-        app.quit();
-      },
-    },
-  ]);
-
-  tray.setToolTip("Stevlab - Interfaz LIS ");
-  tray.setContextMenu(contextMenu);
-
-  // Evento al hacer clic en el ícono de la bandeja
-  tray.on("click", () => {
-    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
-  });
-
-  // Espera a que la ventana esté lista para mostrar
-  mainWindow.once("ready-to-show", () => {
-    console.log("Ventana lista.");
-  });
-};
-
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
@@ -76,7 +19,7 @@ if (!gotTheLock) {
   });
 
   app.whenReady().then(() => {
-    createWindow();
+    mainWindow = createWindow();
 
     // Asegúrate de que los servicios solo se inicializan una vez
     if (!global.servicesInitialized) {
@@ -91,7 +34,6 @@ if (!gotTheLock) {
     });
 
     // Interceptar el cierre de la ventana
-
     if (mainWindow) {
       mainWindow.on("close", (event) => {
         if (!app.isQuitting) {

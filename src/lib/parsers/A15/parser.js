@@ -55,7 +55,7 @@ function parseData(data) {
     const nombre = [];
     let i = 1;
 
-    // Obtener el nombre del parámetro hasta encontrar "SER"
+    // Obtener el nombre del parámetro hasta encontrar "SER" u otros tipo de resultado en el equipo A15
     while (segments[i] && !RESULT_TYPE_KEYWORDS.some((k) => segments[i] == k)) {
       nombre.push(segments[i]);
       i++;
@@ -96,15 +96,16 @@ function parseData(data) {
         currentEntry.parametros = currentEntry.parametros.filter(
           (p) => p.nombre != parametroNombre
         );
+
+        currentEntry.parametros.push({
+          nombre: parametroNombre,
+          clave_sistema,
+          valor,
+          unidad_medida,
+          fecha: date,
+        });
       }
 
-      currentEntry.parametros.push({
-        nombre: parametroNombre,
-        clave_sistema,
-        valor,
-        unidad_medida,
-        fecha: date,
-      });
     } else {
       // Si el parámetro no existe, agregarlo
       currentEntry.parametros.push({

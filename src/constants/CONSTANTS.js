@@ -1,7 +1,7 @@
 const path = require("node:path");
 
-let currentWorkDirectory;
-let ENV_DEPLOY;
+let currentWorkDirectory = '';
+let ENV_DEPLOY = '';
 
 if (process.env.PRODUCTION_MODE == "development") {
   currentWorkDirectory = process.cwd();

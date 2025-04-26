@@ -1,6 +1,6 @@
 const path = require("node:path");
-const os = require("node:os")
+const { currentWorkDirectory } = require("./CONSTANTS");
 
-const LOG_DIR = path.join(process.cwd(), "logs")
+const LOG_DIR = path.join(currentWorkDirectory, "logs")
 
 module.exports = { LOG_DIR }

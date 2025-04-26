@@ -9,22 +9,20 @@ async function connectFTP(equipment) {
     const connection = getFtpConnectionById(equipment.id_device);
 
     if (connection && !connection.client.closed) {
-      await closeFTP(equipment);
+      closeFTP(equipment);
     }
 
-     await addFtpConnection(equipment);
-
-    await startMonitoringDirectory(equipment); 
+    await addFtpConnection(equipment);
+    await startMonitoringDirectory(equipment);
   } catch (error) {
-    console.error("Ocurrió un error al conectarse el equipo",error.message);
-    
+    console.error("Ocurrió un error al conectarse el equipo", error.message);
   }
 }
 
 // Función para cerrar la conexión FTP
-async function closeFTP(equipment) {
+function closeFTP(equipment) {
   const connection = getFtpConnectionById(equipment.id_device);
-  const { client } = connection;
+  const client = connection.client;
 
   if (!connection || !client) {
     console.warn(
@@ -34,16 +32,16 @@ async function closeFTP(equipment) {
   }
 
   try {
-    await client.close();
+    client.close();
+    client.closed = true
     console.log(`Conexión cerrada para el equipo ${equipment.name}.`);
+    emitClosedDevice(equipment);
+    deleteFtpConnection(equipment.id_device);
   } catch (error) {
     console.error(
       `Error cerrando conexión para el equipo ${equipment.name}:`,
       error.message
     );
-  } finally {
-    emitClosedDevice(equipment);
-    deleteFtpConnection(equipment.id_device);
   }
 }
 

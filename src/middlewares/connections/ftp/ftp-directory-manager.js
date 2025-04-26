@@ -1,51 +1,28 @@
 const { reconnectFTP } = require("./ftp-helpers");
-const {
-  formatMacAddressWithSeparators,
-} = require("../../../utils/formatMacAddressWithSeparators");
 const { getFtpConnectionById } = require("./ftp-manager");
 const {
   loadPreviousState,
   getAddedOrUpdatedFiles,
-  getRemovedFiles,
   processNewFiles,
   saveCurrentState,
   getCurrentFiles,
 } = require("./ftp-file-manager");
 
 // Manejo de reconexión simplificado
-async function handleReconnection(
-  equipment,
-  reconnectAttempts = 0,
-  maxRetries = 8
-) {
-  // Verificar si ya se alcanzó el máximo de intentos
-  if (reconnectAttempts >= maxRetries) {
-    console.error(
-      `Máximo de intentos de reconexión alcanzado para ${equipment.name}`
-    );
-    return null;
-  }
-
-  console.log(
-    `Intentando reconectar con ${
-      equipment.name
-    } (${formatMacAddressWithSeparators(equipment.mac_address)})...`
-  );
-
+async function handleReconnection(equipment) {
   try {
     const connection = await reconnectFTP(equipment);
     // Intentar reconectar
 
     if (!connection || connection.client.closed) {
-      console.error(`Reconexión fallida para el equipo ${equipment.name}`);
-      return null;
+      connection.client.close();
+      throw new Error(`Reconexión fallida para el equipo ${equipment.name}`);
     }
 
     return connection;
   } catch (error) {
     console.error(
-      "Ocurrió un error al intentarse reconectar con el equipo",
-      equipment.name,
+      `Ocurrió un error al intentarse reconectar con el equipo ${equipment.name} con IPv4 ${equipment.ip_address}:${equipment.port} =>`,
       error.message
     );
     return null;
@@ -54,66 +31,64 @@ async function handleReconnection(
 
 // Función principal
 async function startMonitoringDirectory(equipment) {
-  let previousFiles = loadPreviousState(equipment.mac_address);
-
-  let isChecking = false;
-
-  async function detectChanges() {
-    let connection = getFtpConnectionById(equipment.id_device);
-    if (isChecking && connection.reconnecting) return;
-    isChecking = true;
-
-    try {
-      if (!connection || !connection.client || connection.client.closed) {
-        connection = await handleReconnection(equipment);
-        if (!connection) return;
-      }
-      const currentFiles = await getCurrentFiles(connection.client);
-
-      const addedFiles = getAddedOrUpdatedFiles(currentFiles, previousFiles);
-      const removedFiles = getRemovedFiles(currentFiles, previousFiles);
-
-      if (addedFiles.length > 0) {
-        console.log(
-          `Archivos añadidos en ${equipment.name}:`,
-          addedFiles.map((f) => f.name)
-        );
-        await processNewFiles(connection.client, equipment, addedFiles);
-      }
-
-      if (removedFiles.length > 0) {
-        console.log(`Archivos eliminados en ${equipment.name}:`, removedFiles);
-      }
-
-      saveCurrentState(equipment.mac_address, currentFiles);
-      previousFiles = currentFiles;
-    } catch (error) {
-      if (["ECONNRESET", 421, 503, 530].includes(error.code)) {
-        console.error(
-          `Error de conexión en el equipo ${equipment.name}:`,
-          error.message
-        );
-      } else {
-        console.error(
-          `Error al detectar cambios en el equipo ${equipment.name} en el directorio:`,
-          error.message
-        );
-      }
-      
-      return;
-    } finally {
-      isChecking = false;
-      setTimeout(detectChanges, 1000); // Programar el próximo detectChanges solo si el monitor no está cerrado
-    }
-  }
-
   try {
-    detectChanges(); // Inicia la detección inicial
+    detectChanges(equipment); // Inicia la detección inicial
   } catch (error) {
     console.error(
       "Error al iniciar la monitorización del directorio:",
       error.message
     );
+  }
+}
+
+async function detectChanges(equipment) {
+  let previousFiles = loadPreviousState(equipment.mac_address);
+  let isChecking = false;
+
+  let connection = getFtpConnectionById(equipment.id_device);
+  if (isChecking || connection.reconnecting || !connection) return;
+
+  isChecking = true;
+
+  try {
+    if (connection.client.closed) {
+      connection = await handleReconnection(equipment);
+      if (!connection) return;
+    }
+
+    const currentFiles = await getCurrentFiles(connection.client);
+    const addedFiles = getAddedOrUpdatedFiles(currentFiles, previousFiles);
+
+    if (addedFiles.length > 0) {
+      console.log(
+        `Archivos añadidos en ${equipment.name}:`,
+        addedFiles.map((f) => f.name)
+      );
+      await processNewFiles(connection.client, equipment, addedFiles);
+    }
+
+    saveCurrentState(equipment.mac_address, currentFiles);
+    previousFiles = currentFiles;
+  } catch (error) {
+    if (["ECONNRESET", 421, 503, 530].includes(error.code)) {
+      console.error(
+        `Error de conexión en el equipo ${equipment.name}:`,
+        error.message
+      );
+    } else {
+      console.error(
+        `Error al detectar cambios en el equipo ${equipment.name} en el directorio:`,
+        error.message
+      );
+    }
+  } finally {
+    isChecking = false;
+
+    if (connection) {
+      // Esperar el tiempo de retardo antes de reconectar
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      detectChanges(equipment);
+    }
   }
 }
 
