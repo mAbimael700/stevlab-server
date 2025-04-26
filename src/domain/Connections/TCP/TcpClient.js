@@ -11,12 +11,11 @@ class TcpClient extends ClientConnection {
   constructor(equipment) {
     super(equipment.configuration.connectionType);
     this.equipment = equipment;
-    this.client = new net.Socket();
-    this.socketListener = new TcpSocketListener(this.client, this.equipment);
-
     this.connecting = this.client.connecting;
     this.closed = this.client.closed;
     this.destroyed = this.client.destroyed;
+    this.client = new net.Socket();
+    this.socketListener = new TcpSocketListener(this.client, this.equipment);
   }
 
   async build() {

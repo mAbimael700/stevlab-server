@@ -10,8 +10,8 @@ class BufferStreamProcessor {
   /**
     @param {EquipmentParsingConfiguration} configuration 
    */
-  constructor(configuration) {
-    this.maxDataSize = 1e6; // 1MB máximo por paquete
+  constructor(configuration, maxDataSize = 1e6) {
+    this.maxDataSize = maxDataSize; // 1MB máximo por paquete
     this.bufferList = new BufferList();
     this.bufferHandler = new BufferStreamHandler(configuration);
   }
@@ -38,7 +38,7 @@ class BufferStreamProcessor {
 
         if (bufferHandlerResults) {
           extractedResults.push(bufferHandlerResults.completeMessage);
-          
+
           BufferStreamHandler.clearProcessedBuffer(
             this.bufferList,
             bufferHandlerResults.consumedBytes
@@ -55,7 +55,10 @@ class BufferStreamProcessor {
         "Datos a eliminar después del consumo: ",
         this.bufferList.toString("utf-8")
       );
-      BufferStreamHandler.clearProcessedBuffer(this.bufferList,bufferList.length);
+      BufferStreamHandler.clearProcessedBuffer(
+        this.bufferList,
+        bufferList.length
+      );
       throw new Error(`Error al procesar datos: ${error.message}`, error);
     }
   }
