@@ -10,8 +10,7 @@ class TcpSocketListener {
   constructor(socket, equipment = null) {
     this.socket = socket;
     this.equipment = equipment;
-    this.eventHandler = new TcpEventsHandler(this.socket, this.equipment);
-
+    this.eventHandler = new TcpEventsHandler(socket, equipment, null, this);
     // Bind handlers para mantener el contexto
     this._bindHandlers();
   }

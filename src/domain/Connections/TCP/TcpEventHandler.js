@@ -4,6 +4,7 @@ const {
 } = require("../../BufferStreamManagment/BufferDataEmitter");
 const { ConnectionValidator } = require("./ConnectionValidator");
 const { EquipmentManager } = require("../../EquipmentManager/EquimentManager");
+const { TcpClient } = require("./TcpClient");
 
 class TcpEventsHandler {
   /**
@@ -11,7 +12,7 @@ class TcpEventsHandler {
    * @param {Equipment} equipment
    * @param  {ConnectionValidator} connectionValidator
    */
-  constructor(socket, equipment = null, connectionValidator) {
+  constructor(socket, equipment = null, connectionValidator, socketListener) {
     this.socket = socket;
     this.equipment = equipment;
 
@@ -25,6 +26,8 @@ class TcpEventsHandler {
     } else {
       this.bufferDataEmitter = null;
     }
+
+    this.socketListener = socketListener;
   }
 
   async connect() {
@@ -44,9 +47,12 @@ class TcpEventsHandler {
         this.equipment = equipmentOnServerMemory.data;
         this.bufferDataEmitter = new BufferDataEmitter(this.equipment);
 
-        if (!equipmentOnServerMemory.connection.client) {
-          equipmentOnServerMemory.connection.setClient(this.socket);
+        if (!equipmentOnServerMemory.connection) {
+          equipmentOnServerMemory.setConnection(
+            new TcpClient(this.equipment, this.socket, this.socketListener)
+          );
         }
+
       }
 
       console.log(
