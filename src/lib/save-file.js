@@ -14,7 +14,7 @@ function saveFile(content) {
   const uniqueId = crypto.randomBytes(3).toString("hex");
   const filePath = path.join(
     FILE_UPLOADS_DIR,
-    `resultados-${timestamp}-${uniqueId}.txt`
+    `resultados-${timestamp}-${uniqueId}dd.txt`
   );
   fs.appendFileSync(filePath, content);
   return filePath;
