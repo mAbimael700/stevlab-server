@@ -25,7 +25,8 @@
       "src/**/*",
       ".env",
       "node_modules/ffi-napi/**/*",
-      "node_modules/ref-napi/**/*"
+      "node_modules/ref-napi/**/*",
+      "node_modules/@serialport/**/*"
     ],
     "outputPath": "build"
   },

@@ -50,15 +50,16 @@ function handleBuffer(data, parsingData) {
  * @returns {Object[]}
  */
 function parseMessage(message, parsingConfig) {
-  const { parser } = parsingConfig;
-
-  if (!parser) {
-    console.error("Parser no definido para el equipo");
-    throw new Error("Parser no definido para el equipo");
-  }
 
   try {
-    const results = parser(message);
+    const { parser } = parsingConfig;
+
+    if (!parser) {
+      console.error("Parser no definido para el equipo");
+      throw new Error("Parser no definido para el equipo");
+    }
+
+    const results = parser(message); 
 
     if (!results) {
       console.error("El parser devolvió resultados inválidos");
@@ -67,7 +68,8 @@ function parseMessage(message, parsingConfig) {
 
     return results;
   } catch (error) {
-    throw new Error(error.message);
+    console.error(error);
+    
   }
 }
 
@@ -81,7 +83,10 @@ function clearProcessedBuffer(bufferList, consumedBytes) {
     bufferList.consume(consumedBytes);
   } else {
     console.error("Error: consumedBytes no válido:", consumedBytes); // Depuración
-    console.warn('Datos a eliminar después del consumo: ', bufferList.toString("utf-8"))
+    console.warn(
+      "Datos a eliminar después del consumo: ",
+      bufferList.toString("utf-8")
+    );
     bufferList.consume(bufferList.length);
   }
 }
