@@ -1,14 +1,10 @@
 const net = require("node:net");
 const { ConnectionValidator } = require("./ConnectionValidator");
-const {
-  EquipmentManager,
-} = require("../../EquipmentManager/EquimentManager");
-const { TcpSocketListener } = require("./TcpSocketListener");
+const { TcpInBoundClient } = require("./TcpInBoundClient");
 
 class TcpServer {
   constructor(port = 3000) {
-    this.port = port
-    this.equipmentManager = new EquipmentManager();
+    this.port = port;
     this.connectionValidator = new ConnectionValidator();
     this.server = null;
     this.options = {
@@ -19,8 +15,9 @@ class TcpServer {
   }
 
   build() {
-    this.server = net.createServer(this.options,
-      (socket) => { new TcpSocketListener(socket).build() });
+    this.server = net.createServer(this.options, (socket) => {
+      new TcpInBoundClient(socket);
+    });
   }
 
   listen() {
@@ -32,7 +29,9 @@ class TcpServer {
   reconnect() {
     if (!this.server.listening) {
       console.log("Intentando reconectar el servidor TCP/IP...");
-      setTimeout(() => { this.listen() }, 5000); // Reintentar después de 5 segundos
+      setTimeout(() => {
+        this.listen();
+      }, 5000); // Reintentar después de 5 segundos
     }
   }
 }

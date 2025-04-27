@@ -20,13 +20,13 @@ function handleDataEvent(socket, data, device, parsingData, bufferList) {
 
     // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
     if (filteredData.trim()) {
-      /* emitStatusDevice(
+      emitStatusDevice(
         {
           last_connection: new Date(),
         },
         `Mensaje entrante del equipo ${device.name} ${device.ip_address && `con IPv4: ${device.ip_address}`
         } en el puerto ${device.port}`
-      ); */
+      ); 
 
       console.log(
         `Mensaje entrante del equipo ${device.name} ${
@@ -85,12 +85,12 @@ function handleConnectionEvent(
         msg += ` Verifica el equipo ${equipment.name}.`;
 
         console.error(msg);
-        /* emitStatusDevice(
+         emitStatusDevice(
           { connection_status: "disconnected", error: error.code },
           equipment,
           msg,
           true
-        ); */
+        ); 
         break;
 
       default:

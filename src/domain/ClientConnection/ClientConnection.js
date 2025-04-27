@@ -4,7 +4,7 @@ const { SerialPort } = require("serialport");
 
 class ClientConnection {
   /**
-   * @param {"TCP server" | "TCP client" | "RS-232" | "FTP server"} type - Tipo de conexión.
+   * @param {"TcpInBound" | "TcpOutBound" | "Serial" | "Ftp"} type - Tipo de conexión.
    */
   constructor(type) {
     this.type = type;
@@ -15,12 +15,6 @@ class ClientConnection {
     this.destroyed = false;
   }
 
-  /**
-   * Inicializa la conexión.
-   * @returns {Promise<void>}
-   */
-  async build() {}
-  async connect() {}
   async reconnect() {}
   async close() {}
 

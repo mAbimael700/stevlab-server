@@ -64,7 +64,7 @@ function handleSingleParameterResponse(result) {
  */
 function handleCompleteResponse(results) {
   saveResultsToLocalData(results);
-  //emitResultsToWebSocket(results);
+  emitResultsToWebSocket(results);
 }
 
 /**
