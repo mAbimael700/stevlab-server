@@ -5,6 +5,7 @@ const {
 const { ConnectionValidator } = require("./ConnectionValidator");
 const { EquipmentManager } = require("../../EquipmentManager/EquimentManager");
 const { TcpClient } = require("./TcpClient");
+const { TcpSocketListener } = require('./TcpSocketListener')
 
 class TcpEventsHandler {
   /**
@@ -12,7 +13,7 @@ class TcpEventsHandler {
    * @param {Equipment} equipment
    * @param  {ConnectionValidator} connectionValidator
    */
-  constructor(socket, equipment = null, connectionValidator, socketListener) {
+  constructor(socket, equipment = null, connectionValidator) {
     this.socket = socket;
     this.equipment = equipment;
 
@@ -26,9 +27,8 @@ class TcpEventsHandler {
     } else {
       this.bufferDataEmitter = null;
     }
-
-    this.socketListener = socketListener;
   }
+
 
   async connect() {
     try {
@@ -49,7 +49,7 @@ class TcpEventsHandler {
 
         if (!equipmentOnServerMemory.connection) {
           equipmentOnServerMemory.setConnection(
-            new TcpClient(this.equipment, this.socket, this.socketListener)
+            new TcpClient(this.equipment, this.socket, this)
           );
         }
 
@@ -94,7 +94,7 @@ class TcpEventsHandler {
     const errorMessage = TcpEventsHandler.generateErrorMessage(err);
   }
 
-  close() {}
+  close() { }
 
   end() {
     console.log(

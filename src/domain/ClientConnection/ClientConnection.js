@@ -8,7 +8,7 @@ class ClientConnection {
    */
   constructor(type) {
     this.type = type;
-    this.client = null;
+    this.socket = null;
     this.connecting = false;
     this.closed = false;
     this.closing = false;
@@ -29,7 +29,7 @@ class ClientConnection {
    * @param {Socket | SerialPort | Client} client
    */
   setClient(client) {
-    this.client = client;
+    this.socket = client;
   }
 }
 
