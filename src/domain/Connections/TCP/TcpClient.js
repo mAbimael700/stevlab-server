@@ -1,31 +1,38 @@
 const net = require("node:net");
-const { TcpSocketListener } = require("./TcpSocketListener");
+const { TcpEventsHandler } = require('./TcpEventHandler')
 const { ClientConnection } = require("../../ClientConnection/ClientConnection");
+const { Equipment } = require("../../Equipment/Equipment");
+const { TcpSocketListener } = require("./TcpSocketListener");
 
 class TcpClient extends ClientConnection {
   /**
    *
    * @param {Equipment | null} equipment
    * @param {net.Socket} socket
-   * @param {TcpSocketListener} [socketListener] 
+   * @param {TcpEventsHandler} [eventsHandler] 
    * @param {"remoteClient" | 'remoteServerClient'} role
    */
   constructor(
     equipment = null,
     socket = new net.Socket(),
-    socketListener = new TcpSocketListener(socket, equipment),
+    {
+      eventsHandler = new TcpEventsHandler(socket, equipment),
+      socketListener = new TcpSocketListener(socket, equipment)
+    } = {},
     role = "remoteClient"
   ) {
-    if (equipment) {
-      super(equipment.configuration.connectionType);
-    }
+
     this.role = role;
     this.equipment = equipment;
     this.client = socket;
     this.closed = this.client.closed;
     this.destroyed = this.client.destroyed;
     this.connecting = this.client.connecting;
+    this.eventsHandler = eventsHandler;
     this.socketListener = socketListener;
+    
+    // Configurar listeners
+    this.socketListener.setHandler(this.eventsHandler);
   }
 
   async build() {
@@ -39,7 +46,7 @@ class TcpClient extends ClientConnection {
       const { port, ipAddress: host } = this.equipment.configuration;
 
       // Construye los listeners correspondientes del cliente
-      this.socketListener.setup();
+      this.eventHandler.setup();
 
       await new Promise((resolve, reject) => {
         const onConnect = this.client.once("connect", () => {
