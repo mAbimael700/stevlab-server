@@ -1,8 +1,11 @@
-const path = require('node:path')
+const path = require("node:path");
 const fs = require("node:fs");
-const crypto = require("node:crypto");
 const { format } = require("date-fns");
 const { FILE_UPLOADS_DIR } = require("../constants/CONFIG_DIR");
+const {
+  getPIDSegmentDataPosition,
+  getOBRSegmentDataPosition,
+} = require("./parsers/HL7-type4/messageSpliterFn");
 
 /**
  *
@@ -10,14 +13,20 @@ const { FILE_UPLOADS_DIR } = require("../constants/CONFIG_DIR");
  * @returns {string} Ruta del archivo guardado
  */
 function saveFile(content) {
-  const timestamp = format(new Date(), "ddMMyyyy-HHmmss-SSS");
-  const uniqueId = crypto.randomBytes(3).toString("hex");
-  const filePath = path.join(
-    FILE_UPLOADS_DIR,
-    `resultados-${timestamp}-${uniqueId}dd.txt`
-  );
-  fs.appendFileSync(filePath, content);
-  return filePath;
+  const timestamp = format(new Date(), "dd-MM-yyyy");
+
+  try {
+    const person = getPIDSegmentDataPosition(content, 5)?.replaceAll("^", "");
+    const uniqueId = getOBRSegmentDataPosition(content, 3);
+    const filePath = path.join(
+      FILE_UPLOADS_DIR,
+      `envi${timestamp}_fol_${uniqueId}_${person}.txt`
+    );
+    fs.writeFileSync(filePath, content);
+    return filePath;
+  } catch (error) {
+    console.error("Ocurrió un error al guardar el archivo:", error.message);
+  }
 }
 
 module.exports = {

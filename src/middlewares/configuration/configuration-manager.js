@@ -6,6 +6,7 @@ const {
   FILE_UPLOADS_DIR,
   STATES,
   SERVER,
+  FILEPATH_DIR,
 } = require("../../constants/CONFIG_DIR");
 const { DATADIR } = require("../../constants/DATADIR");
 const { LOG_DIR } = require("../../constants/LOG_DIR");
@@ -41,6 +42,7 @@ function configurationManager() {
 
   // Crear archivo devices.json si no existe
   ensureFileExists(DEVICES_DIR, { devices: [] });
+  ensureFileExists(FILEPATH_DIR, { filePath: "" });
   ensureFileExists(path.join(CONFIG_DIR, "server.json"), {});
 }
 

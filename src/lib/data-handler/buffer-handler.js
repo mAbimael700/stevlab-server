@@ -13,11 +13,10 @@ function handleBuffer(data, parsingData) {
   if (!CHAR_DELIMITER) {
     console.error("Parser o delimitador no definidos para el equipo");
     throw new Error("Parser o delimitador no definidos para el equipo");
-  }
-
+  }  
   // Crear la expresión regular
   const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
-
+  
   // Buscar el índice del delimitador
   const delimiterIndex = data.search(delimiterRegex);
 
