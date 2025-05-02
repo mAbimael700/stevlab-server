@@ -28,7 +28,7 @@ function ensureDirectoryExists(directoryPath) {
   }
 }
 
-function ensureFileExists(filePath, defaultContent = {}) {
+function ensureJsonFileExists(filePath, defaultContent = {}) {
   const absolutePath = path.resolve(filePath);
   if (!fs.existsSync(absolutePath)) {
     console.info(`Creando archivo: ${absolutePath}`);
@@ -36,14 +36,21 @@ function ensureFileExists(filePath, defaultContent = {}) {
   }
 }
 
+function ensureFileExists(filePath) {
+  const absolutePath = path.resolve(filePath);
+  if (!fs.existsSync(absolutePath)) {
+    console.info(`Creando archivo: ${absolutePath}`);
+    fs.writeFileSync(absolutePath, "");
+  }
+}
 function configurationManager() {
   // Crear carpetas necesarias
   directorios.forEach(ensureDirectoryExists);
 
   // Crear archivo devices.json si no existe
-  ensureFileExists(DEVICES_DIR, { devices: [] });
-  ensureFileExists(FILEPATH_DIR, { filePath: "" });
-  ensureFileExists(path.join(CONFIG_DIR, "server.json"), {});
+  ensureJsonFileExists(DEVICES_DIR, { devices: [] });
+  ensureJsonFileExists(path.join(CONFIG_DIR, "server.json"), {});
+  ensureFileExists(FILEPATH_DIR);
 }
 
 module.exports = {

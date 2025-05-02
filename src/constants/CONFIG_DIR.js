@@ -15,7 +15,10 @@ function loadFileDirectory() {
     const filePath = fs.readFileSync(FILEPATH_DIR).toString("utf-8");
     return filePath ? path.join(filePath) : null;
   } catch (error) {
-    console.error("Ocurrió un error al leer el archivo de directorio:", error);
+    console.error(
+      "Ocurrió un error al leer el archivo de directorio:",
+      error.message
+    );
   }
 }
 module.exports = {
