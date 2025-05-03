@@ -11,11 +11,14 @@ const { IDeviceService } = require("../IDeviceService");
 
 class DeviceService extends IDeviceService {
 
-  constructor(){
+  constructor() {
     super()
-    
+
   }
-  getDeviceProfiles() {}
+  getDeviceProfiles() {
+    const devices = Object.values(devicesAreas).flat()
+    return new Promise((resolve) => resolve(devices))
+  }
 
   getDevices() {
     return getEquipments();
@@ -33,8 +36,8 @@ class DeviceService extends IDeviceService {
    * @param {string} id
    */
   getDeviceById(id) {
-    const devices = getEquipments();
-    return devices.find((d) => d.id_device === id);
+    const device = getEquipments().find(e => e.id_device === id);
+    return new Promise((resolve) => resolve(device))
   }
 
   async save(data) {
@@ -65,7 +68,7 @@ class DeviceService extends IDeviceService {
     const equipmentsOnServer = getEquipments();
     if (equipmentsOnServer.some((equiptment) => equiptment.id_device === id)) {
       new Promise((resolve) => {
-        deleteEquipmentOnServer(id_device);
+        deleteEquipmentOnServer(id);
         resolve();
       });
     } else {
