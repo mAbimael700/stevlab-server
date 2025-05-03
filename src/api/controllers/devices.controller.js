@@ -1,5 +1,6 @@
-const { devicesAreas } = require("../../db/devices-areas");
-const { closeFTP } = require("../../middlewares/connections/ftp/ftp-connection");
+const {
+  closeFTP,
+} = require("../../middlewares/connections/ftp/ftp-connection");
 const {
   getAvailableCOMPorts,
   testSerialDevice,
@@ -8,25 +9,26 @@ const {
   testTcpDevice,
   closeTCP,
 } = require("../../middlewares/connections/tcp-ip/tcp-helpers");
-const {
-  getEquipments,
-  deleteEquipmentOnServer,
-  writeEquipmentOnServer,
-} = require("../../middlewares/equipment/equiment-manager");
-const {
-  getEquipmetEmitter,
-} = require("../../middlewares/equipment/equipment-events");
+
 const {
   getEquipmentById,
 } = require("../../middlewares/equipment/equipment-helpers");
-const { validateDevice } = require("../../schemas/device-schema");
+const { IDeviceService } = require("../../services/IDeviceService");
 
 class DevicesController {
-  static getDevicesByArea(req, res) {
+  /**
+   *
+   * @param {IDeviceService} deviceService
+   */
+  constructor(deviceService) {
+    this.service = deviceService;
+  }
+
+  getDevicesByArea(req, res) {
     const { area } = req.params;
 
     if (area) {
-      const devices = devicesAreas[area];
+      const devices = this.service.getDeviceProfiles();
 
       if (!devices) {
         return res.status(404).json({
@@ -47,8 +49,8 @@ class DevicesController {
     }
   }
 
-  static getDevicesOnServer(req, res) {
-    const equipmentsOnServer = getEquipments();
+  getDevicesOnServer = (req, res) => {
+    const equipmentsOnServer = this.service.getDevices();
 
     if (equipmentsOnServer.length > 0) {
       return res.status(200).json({
@@ -63,58 +65,41 @@ class DevicesController {
       status: 404,
       message: "No se encontrarón equipos registrados en el servidor.",
     });
-  }
+  };
 
-  static setDeviceToStorage(req, res) {
+  async save(req, res) {
     const { data } = req.body;
-    const equipmentsOnServer = getEquipments();
 
-    const result = validateDevice(data);
-    const existDevice = equipmentsOnServer.some(
-      (equiptment) => equiptment.mac_address === result.data?.mac_address
-    );
+    try {
+      const result = await this.service.save(data);
 
-    if (!result.success) {
+      return res.status(201).json({
+        status: 201,
+        message: "El equipo de laboratorio se ha registrado con éxito.",
+        body: result,
+      });
+    } catch (error) {
       return res.status(400).json({
         status: 400,
-        error: result.error.errors,
+        error: error.message,
+        cause: error.cause,
       });
     }
-
-    if (existDevice) {
-      return res.status(400).json({
-        status: 400,
-        error: "El equipo de laboratorio ya está registrado",
-      });
-    }
-
-    writeEquipmentOnServer(result.data);
-
-    return res.status(201).json({
-      status: 201,
-      message: "El equipo de laboratorio se ha registrado con éxito.",
-      body: result.data,
-    });
   }
 
-  static removeDeviceToStorage(req, res) {
-    const { id_device } = req.params;
-    const equipmentsOnServer = getEquipments();
-    if (
-      equipmentsOnServer.some(
-        (equiptment) => equiptment.id_device === id_device
-      )
-    ) {
-      deleteEquipmentOnServer(id_device);
+  async remove(req, res) {
+    const { id } = req.params;
 
+    try {
+      await this.service.delete(id);
       return res.status(200).json({
         status: 200,
         message: "El equipo de laboratorio se ha eliminado con éxito.",
       });
-    } else {
+    } catch (error) {
       return res.status(400).json({
         status: 400,
-        message: "El equipo de laboratorio especificado no existe.",
+        message: error.message,
       });
     }
   }
@@ -192,38 +177,37 @@ class DevicesController {
   static async closeConnection(req, res) {
     const { id_device } = req.params;
 
-    const device = getEquipmentById(id_device)
+    const device = getEquipmentById(id_device);
     if (device) {
       try {
         if (device.require_ftp_conn) {
-          closeFTP(device.mac_address)
-        }
-        else if (device.require_serial_conn) {
-
+          closeFTP(device.mac_address);
+        } else if (device.require_serial_conn) {
         } else {
-          closeTCP(device)
+          closeTCP(device);
         }
 
         return res.status(200).json({
           status: 200,
-          body: { message: "La conexión del dispositivo ha sido cerrada satisfactoriamente del servidor" },
-        })
-
+          body: {
+            message:
+              "La conexión del dispositivo ha sido cerrada satisfactoriamente del servidor",
+          },
+        });
       } catch (error) {
         console.log(error);
 
         return res.status(400).json({
           status: 400,
           body: { message: error.message },
-        })
+        });
       }
     } else {
       return res.status(404).json({
         status: 404,
         body: { message: "No existe el equipo proporcionado" },
-      })
+      });
     }
-
   }
 }
 

@@ -7,7 +7,6 @@ const {
   formatMacAddressWithSeparators,
 } = require("../../utils/formatMacAddressWithSeparators");
 
-
 const equipmentEmitter = getEquipmetEmitter();
 let previousEquipments = [];
 
@@ -33,7 +32,8 @@ function readDevicesFromFile() {
 
     const equipmentsOnServer = equipments.map((e) => ({
       Nombre: e.name,
-      "Dirección MAC": e.mac_address && formatMacAddressWithSeparators(e.mac_address),
+      "Dirección MAC":
+        e.mac_address && formatMacAddressWithSeparators(e.mac_address),
       Área: e.area.Nombre_area,
     }));
 
@@ -53,7 +53,7 @@ function readDevicesFromFile() {
       console.info("No existen equipos registrados en el servidor.");
     }
   } catch (error) {
-    console.error("Error al leer el archivo de dispositivos:", error.message);  
+    console.error("Error al leer el archivo de dispositivos:", error.message);
   }
 }
 
@@ -126,6 +126,7 @@ function writeEquipmentOnServer(equipment) {
   const uniqueId = crypto.randomBytes(3).toString("hex");
   equipment.id_device = uniqueId;
   writeAndRefreshEquipments([...equipmentsOnServer, equipment]);
+  return equipment;
 }
 
 function deleteEquipmentOnServer(id_device) {
