@@ -28,18 +28,20 @@ let lastMessageTime = null;
  *
  */
 async function dataEvent(socket, data, parsingData, bufferList) {
-  // Verifica el tamaño del paquete
-  if (data.length > MAX_DATA_SIZE) {
-    console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
-    throw new Error(`Paquete demasiado grande recibido: ${data.length} bytes`);
-  }
-
-  lastMessageTime = Date.now(); // Actualiza el tiempo del último mensaje
-  bufferList.append(data); // Acumula los datos recibidos
-
-  const { sendsBySingleParameter, ackMessageFunction } = parsingData;
-
   try {
+    // Verifica el tamaño del paquete
+    if (data.length > MAX_DATA_SIZE) {
+      console.warn(`Paquete demasiado grande recibido: ${data.length} bytes`);
+      throw new Error(
+        `Paquete demasiado grande recibido: ${data.length} bytes`
+      );
+    }
+
+    lastMessageTime = Date.now(); // Actualiza el tiempo del último mensaje
+    bufferList.append(data); // Acumula los datos recibidos
+
+    const { sendsBySingleParameter, ackMessageFunction } = parsingData;
+    
     while (true) {
       const accumulatedData = bufferList.toString("utf-8");
       const bufferResults = handleBuffer(accumulatedData, parsingData);
@@ -76,7 +78,6 @@ async function dataEvent(socket, data, parsingData, bufferList) {
       bufferList.toString("utf-8")
     );
     bufferList.consume(bufferList.length);
-    throw new Error("Error al procesar datos:", error);
   }
 }
 

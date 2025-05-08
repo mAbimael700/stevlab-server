@@ -6,16 +6,17 @@ class SpU120BufferParser {
    * @param {string} data
    */
   constructor(data) {
-    this.data = data;
+    this.data = data.trim();
     this.splitedData = this.separate();
   }
 
   parse() {
     const folio = this.getFolio();
+    const id = folio;
     const parametros = this.getParameters();
     const date = this.getDate();
 
-    return { folio, date, parametros };
+    return { folio, id, date, parametros };
   }
 
   getParameters() {
@@ -26,7 +27,7 @@ class SpU120BufferParser {
 
       // Decide cómo asignar los valores según la estructura de la línea
       return {
-        nombre,
+        nombre: nombre.replaceAll('*', ''),
         valor: valor || indicador, // Si no hay 'valor', entonces 'indicador' es el valor
         unidad_medida: unidad_medida || undefined,
         indicador: valor ? indicador : undefined, // Si hay 'valor', entonces 'indicador' existe

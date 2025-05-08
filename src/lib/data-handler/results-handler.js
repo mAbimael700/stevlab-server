@@ -4,7 +4,6 @@ const {
   emitResultsToWebSocket,
 } = require("../websocket/emit-results-websocket");
 
-const resultsHandler = new Map();
 
 let lastFolio = null;
 let isFinalizing = false; // Bandera para evitar llamadas redundantes
@@ -20,13 +19,11 @@ function handleResults(results, sendsBySingleParameter = false) {
     const response = validateResponse(results);
 
     if (!response.success) {
-      console.error("La validación de los resultados no fue satisfactoria");
-      return;
+      throw new Error("La validación de los resultados no fue satisfactoria", {cause: response.error.errors});
     }
 
     if (!results[0]?.folio) {
-      console.error("Resultados ignorados porque no tienen un folio válido");
-      return;
+      throw new Error("Resultados ignorados porque no tienen un folio válido");
     }
 
     if (sendsBySingleParameter) {
@@ -35,13 +32,17 @@ function handleResults(results, sendsBySingleParameter = false) {
       handleCompleteResponse(response.data);
     }
   } catch (e) {
-    console.error(error.message, error.cause || "");
+    console.error(
+      "Error al manejar el resultado parseado:",
+      error.message,
+      error.cause || ""
+    );
   }
 }
 
 /**
  * Maneja los resultados cuando el equipo envía un solo parámetro a la vez.
- * @param {Object} result - Resultado validado.
+ * @param {object} result - Resultado validado.
  */
 function handleSingleParameterResponse(result) {
   if (result.folio !== lastFolio) {
@@ -60,7 +61,7 @@ function handleSingleParameterResponse(result) {
 
 /**
  * Maneja los resultados cuando el equipo envía mensajes completos.
- * @param {Object[]} results - Resultados validados.
+ * @param {object[]} results - Resultados validados.
  */
 function handleCompleteResponse(results) {
   saveResultsToLocalData(results);

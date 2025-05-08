@@ -7,9 +7,12 @@ const { parser: XMLParser } = require("../parsers/XML/parser");
 const { CONTROLAB } = require("../../constants/dictionaries/CONTROLAB");
 const { HEMATOLOGY } = require("../../constants/dictionaries/HEMATOLOGY");
 const { MINDRAY_BS120 } = require("../../constants/dictionaries/MINDRAY_BS120");
-const FINECARE = {}
+const FINECARE = {};
 const { generateHl7Ack } = require("../parsers/HL7-type4/messageSpliterFn");
 const { generateAck } = require("../parsers/XML/ack-function");
+const {
+  SpU120BufferParser,
+} = require("../parsers/SpU120BufferParser/SpU120BufferParser");
 
 const CHAR_DELIMITER = "\\x1C";
 
@@ -56,7 +59,18 @@ const equipmentsParsers = {
   SWELAB_PLUS: {
     parser: XMLParser,
     CHAR_DELIMITER: "<!--:End:Chksum:\\d+(:\\d+)*:-->",
-    ackMessageFunction: generateAck
+    ackMessageFunction: generateAck,
+  },
+  SP_U120: {
+    parser: (data) => {
+      try {
+        return new SpU120BufferParser(data).parse();
+      } catch (error) {
+        console.error("[SP_U120] Parser failed:", error.message);
+        return null;
+      }
+    },
+    CHAR_DELIMITER: "[\\n\\r]+\\s*GLU\\s+.+?(?=[\\n\\r]|$)",
   },
 };
 
