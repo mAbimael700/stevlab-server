@@ -25,7 +25,8 @@
       "src/**/*",
       ".env",
       "node_modules/ffi-napi/**/*",
-      "node_modules/ref-napi/**/*"
+      "node_modules/ref-napi/**/*",
+      "node_modules/@serialport/**/*"
     ],
     "outputPath": "build"
   },
@@ -90,7 +91,6 @@
   "author": "Abimael Alexander Méndez Landero",
   "license": "ISC",
   "dependencies": {
-    "axios": "1.8.4",
     "basic-ftp": "5.0.5",
     "bl": "6.0.16",
     "cheerio": "^1.0.0",

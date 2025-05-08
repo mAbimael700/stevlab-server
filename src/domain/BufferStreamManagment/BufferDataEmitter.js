@@ -6,7 +6,7 @@ class BufferDataEmitter extends EventEmitter {
   constructor(equipment) {
     super();
     this.equipment = equipment;
-    this.bufferStreamProcessor = new BufferStreamProcessor(equipment);
+    this.bufferStreamProcessor = new BufferStreamProcessor(equipment.configuration);
   }
 
   /**

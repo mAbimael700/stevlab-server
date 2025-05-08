@@ -83,6 +83,10 @@ function clearProcessedBuffer(bufferList, consumedBytes) {
       "Datos a eliminar después del consumo: ",
       bufferList.toString("utf-8")
     );
+    console.warn(
+      "Datos a eliminar después del consumo: ",
+      bufferList.toString("utf-8")
+    );
     bufferList.consume(bufferList.length);
   }
 }

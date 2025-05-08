@@ -20,9 +20,7 @@ const { getIO } = require("../middlewares/servers/Websocket.js");
 
 // Definición de los puertos de cada servidor
 
-
 class ServerFactory {
-
   static create(mode) {
     const TPC_PORT = process.env.PORT ?? 3000;
     const SOCKET_PORT = process.env.SOCKET_PORT ?? 4000;
@@ -34,22 +32,25 @@ class ServerFactory {
           const expressServer = initializeExpressServer(SOCKET_PORT);
           initializeWebSocket(expressServer, io);
           initializeTcpServer({ PORT: TPC_PORT });
-        }
+        };
       case "development":
         return () => {
           const expressServer = initializeExpressServer(SOCKET_PORT);
           initializeWebSocket(expressServer, io);
           initializeTcpServer({ PORT: TPC_PORT });
+        };
 
+      case "local":
+        return () => {
+          const expressServer = initializeExpressServer(SOCKET_PORT);
+          initializeWebSocket(expressServer, io);
+          initializeTcpServer({ PORT: TPC_PORT });
         };
       default:
         throw new Error("Modo de producción no soportado.");
     }
-
-    
   }
 }
-
 
 // Carga las variables del archivo .env
 function LisServerApplication() {

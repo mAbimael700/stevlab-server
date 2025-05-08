@@ -5,12 +5,11 @@ class TcpSocketListener {
   /**
    *
    * @param {Socket} socket
-   * @param {Equipment} equipment
+   * @param {TcpEventsHandler} tcpEventsHandler
    */
-  constructor(socket, equipment = null) {
+  constructor(socket, tcpEventsHandler) {
     this.socket = socket;
-    this.equipment = equipment;
-    this.eventHandler = new TcpEventsHandler(socket, equipment, null, this);
+    this.eventsHandler = tcpEventsHandler;
     // Bind handlers para mantener el contexto
     this._bindHandlers();
   }
@@ -19,22 +18,23 @@ class TcpSocketListener {
     this.socket.removeAllListeners(); // Limpia cualquier listener anterior
     this.socket.setTimeout(60000); // 60 segundos
 
-    // Configurar eventos
-    this.socket.on("connect", this.eventHandler.connect);
-    this.socket.on("data", this.eventHandler.data);
-    this.socket.on("close", this.eventHandler.close);
-    this.socket.on("error", this.eventHandler.error);
-    this.socket.on("end", this.eventHandler.end);
-    this.socket.on("timeout", this.eventHandler.timeout);
+  
+    this.socket.on('connect', this.eventsHandler.connect)
+    this.socket.on("data", this.eventsHandler.data);
+    this.socket.on("close", this.eventsHandler.close);
+    this.socket.on("error", this.eventsHandler.error);
+    this.socket.on("end", this.eventsHandler.end);
+    this.socket.on("timeout", this.eventsHandler.timeout);
   }
+
 
   _bindHandlers() {
     const methods = ["connect", "data", "close", "error", "end", "timeout"];
 
     methods.forEach((method) => {
-      if (typeof this.eventHandler[method] === "function") {
-        this.eventHandler[method] = this.eventHandler[method].bind(
-          this.eventHandler
+      if (typeof this.eventsHandler[method] === "function") {
+        this.eventsHandler[method] = this.eventsHandler[method].bind(
+          this.eventsHandler
         );
       }
     });

@@ -3,7 +3,7 @@ const { deviceValidation } = require("./tcp-device-validation");
 const { setTCPConnection, removeTCPConnection } = require("./tcp-manager");
 const {
   emitStatusDevice,
-} = require("../../../lib/websocket/emit-device-status");
+} = require("../../../lib/websocket/emit-device-status"); 
 const bl = require("bl");
 const {
   handleDataEvent,
@@ -39,7 +39,7 @@ async function tcpSocketListener(socket) {
       connection_status: "connected",
     },
     device.data
-  );
+  ); 
 
   // Establece un timeout más largo para la conexión
   socket.setTimeout(60000); // 60 segundos
@@ -47,7 +47,7 @@ async function tcpSocketListener(socket) {
   const bufferList = new bl();
 
   socket.on("data", async (data) => {
-    handleDataEvent(socket, data, device.data, device.parsingData, bufferList);
+     handleDataEvent(socket, data, device.data, device.parsingData, bufferList); 
   });
 
   socket.on("end", () => {
@@ -61,7 +61,7 @@ async function tcpSocketListener(socket) {
         connection_status: "disconnected",
       },
       device.data
-    );
+    ); 
 
     socket.destroy();
   });
@@ -81,7 +81,7 @@ async function tcpSocketListener(socket) {
         connection_status: "disconnected",
       },
       device.data
-    );
+    ); 
   });
 }
 
