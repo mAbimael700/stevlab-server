@@ -1,5 +1,4 @@
 const devicesAreas = {
-  HORMONAS: [""],
   INMUNOLOGIA: [
     {
       id: "FINECARE_PLUS",

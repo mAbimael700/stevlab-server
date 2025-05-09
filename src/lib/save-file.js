@@ -16,7 +16,7 @@ function saveFile(content) {
     FILE_UPLOADS_DIR,
     `resultados-${timestamp}-${uniqueId}.txt`
   );
-  fs.appendFileSync(filePath, content);
+  fs.writeFileSync(filePath, content);
   return filePath;
 }
 

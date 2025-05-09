@@ -28,14 +28,14 @@ function OBX(segment, dictionary) {
   const { fields } = segment;
 
   // Devuelve el nombre está en la celda 4, sino existe devuelve la tercera celda
-  const nombre = formatName(fields[4] || fields[3]);
+  const nombre = formatName(fields[4]?.trim() || fields[3]?.trim());
 
   // Formateamos el valor en caso de que esté en formato separados por comas
-  const valor = extractNumericValue(fields[5]).toFixed(2);
+  const valor = extractNumericValue(fields[5]?.trim()).toFixed(2);
 
   const [rango_min, rango_max] =
     fields[7]
-      ?.split("-")
+      ?.trim().split("-")
       .map((range) =>
         range ? parseFloat(range.replace(",", ".")) : undefined
       ) ?? [];
@@ -49,7 +49,7 @@ function OBX(segment, dictionary) {
       clave_sistema: dictionary?.[nombre], // Este el diccionario del equipo en cuestión
       nombre: nombre,
       valor: valor,
-      unidad_medida: fields[6],
+      unidad_medida: fields[6]?.trim(),
       rango_min: rango_min,
       rango_max: rango_max,
     };

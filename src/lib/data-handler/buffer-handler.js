@@ -8,41 +8,44 @@ const { saveFile } = require("../save-file");
  * @returns {{completeMessage: string, consumedBytes: number, messageId: string} | null}
  */
 function handleBuffer(data, parsingData) {
-  const { CHAR_DELIMITER } = parsingData;
+  try {
+    const { CHAR_DELIMITER } = parsingData;
 
-  if (!CHAR_DELIMITER) {
-    console.error("Parser o delimitador no definidos para el equipo");
-    throw new Error("Parser o delimitador no definidos para el equipo");
+    if (!CHAR_DELIMITER) {
+      throw new Error("Parser o delimitador no definidos para el equipo");
+    }
+
+    // Crear la expresión regular
+    const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
+
+    // Buscar el índice del delimitador
+    const delimiterIndex = data.search(delimiterRegex);
+
+    if (delimiterIndex !== -1) {
+      const match = data.match(delimiterRegex);
+      const matchLength = match ? match[0].length : 0;
+
+      const completeMessage = data.slice(0, delimiterIndex + matchLength);
+      const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
+
+      // Extraer el ID del mensaje (MSH-10)
+      const messageId = completeMessage.match(
+        /MSH\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|(.*?)\|/
+      )?.[1];
+
+      const filePath = saveFile(completeMessage);
+      console.log(
+        "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
+        filePath
+      );
+
+      return { completeMessage, consumedBytes, messageId };
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error al manejar el stream del buffer", error.message);
   }
-
-  // Crear la expresión regular
-  const delimiterRegex = new RegExp(CHAR_DELIMITER, "g");
-
-  // Buscar el índice del delimitador
-  const delimiterIndex = data.search(delimiterRegex);
-
-  if (delimiterIndex !== -1) {
-    const match = data.match(delimiterRegex);
-    const matchLength = match ? match[0].length : 0;
-
-    const completeMessage = data.slice(0, delimiterIndex + matchLength);
-    const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
-
-    // Extraer el ID del mensaje (MSH-10)
-    const messageId = completeMessage.match(
-      /MSH\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|.*?\|(.*?)\|/
-    )?.[1];
-
-    const filePath = saveFile(completeMessage);
-    console.log(
-      "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
-      filePath
-    );
-
-    return { completeMessage, consumedBytes, messageId };
-  }
-
-  return null;
 }
 /**
  * @param {string} message
@@ -60,7 +63,7 @@ function parseMessage(message, parsingConfig) {
     const results = parser(message);
 
     if (!results) {
-      throw new Error("El parser devolvió resultados inválidos");
+      throw new Error("El parseo del mensaje no devolvió resultados");
     }
 
     return [results].flat();

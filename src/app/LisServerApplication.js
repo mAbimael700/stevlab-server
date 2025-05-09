@@ -15,7 +15,7 @@ const { ErrorHandler } = require("../middlewares/error-handler.js");
 const {
   initializeEquipmentManager,
 } = require("../middlewares/equipment/equiment-manager.js");
-const { PRODUCTION_MODE } = require("../constants/CONSTANTS.js");
+const { PRODUCTION_MODE, currentWorkDirectory, ENV_DEPLOY } = require("../constants/CONSTANTS.js");
 const { getIO } = require("../middlewares/servers/Websocket.js");
 
 // Definición de los puertos de cada servidor
@@ -54,11 +54,16 @@ class ServerFactory {
 
 // Carga las variables del archivo .env
 function LisServerApplication() {
-  ErrorHandler();
-  configurationManager();
-  const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
-  serverInitializer();
-  initializeEquipmentManager();
+  try {
+    ErrorHandler();
+    configurationManager();
+    process.loadEnvFile(ENV_DEPLOY)
+    const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
+    serverInitializer();
+    initializeEquipmentManager();
+  } catch (error) {
+    console.error("Error al inicializar la aplicación", error.message);
+  }
 }
 
 module.exports = LisServerApplication;
