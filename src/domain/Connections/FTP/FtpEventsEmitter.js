@@ -1,11 +1,13 @@
-const { FileInfo } = require("basic-ftp");
 const EventEmitter = require("node:events");
+const { FileInfo } = require("basic-ftp");
 
 class FtpEventsEmitter extends EventEmitter {
-  constructor() {}
+  constructor() { 
+    super()
+  }
   /**
    *
-   * @param {'addedFile' | 'data' | 'error' | 'close' | 'end'} event
+   * @param {'addedFile' | 'data' | 'error' | 'close' | 'end' | 'stop'} event
    * @param {AnyRest} args
    */
   emitEvent(event, ...args) {
@@ -33,6 +35,9 @@ class FtpEventsEmitter extends EventEmitter {
 
   emitError(error) {
     this.emitEvent("error", error);
+  }
+  emitStoppedMonitor() {
+    this.emitEvent('stoppedMonitor')
   }
 }
 

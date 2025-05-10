@@ -3,7 +3,7 @@ const { SerialPort } = require("serialport");
 const BufferList = require("bl");
 const {
   EquipmentParsingConfiguration,
-} = require("../Equipment/EquipmentParsingConfiguration");
+} = require("../EquipmentParsingProfile/EquipmentParsingProfileConfiguration");
 const { BufferStreamHandler } = require("./BufferStreamHandler");
 
 class BufferStreamProcessor {

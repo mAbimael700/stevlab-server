@@ -1,0 +1,5 @@
+class EquipmentService {
+    constructor(parameters) {
+        
+    }
+}

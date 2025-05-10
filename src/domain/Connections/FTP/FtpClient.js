@@ -1,17 +1,21 @@
 const ftp = require("basic-ftp");
-const { ReconnectionManager } = require("../ReconnectionManager");
-const {
-  ExponentialBackoff,
-} = require("../../ExponentialBackoff/ExponentialBackoff");
+const { FtpEventsEmitter } = require("./FtpEventsEmitter");
+const { FtpEventsListener } = require("./FtpEventListener");
+const { FtpEventsHandler } = require("./FtpEventsHandler");
+const { FtpDirectoryMonitor } = require("../../FtpDirectoryMonitor/FtpDirectoryMonitor");
+const { FtpDirectoryFileManager } = require("../../FtpDirectoryMonitor/FtpDirectoryFileManager");
+const { ClientOutBoundConnection } = require("../../ClientConnection/ClientOutBoundConnection");
 
-class FtpClient {
+class FtpClient extends ClientOutBoundConnection {
   constructor(equipment) {
+    super("Ftp");
     this.equipment = equipment;
-    this.retryStrategy = new ExponentialBackoff();
+    this.client = new ftp.Client();
+    this.closed = this.client.closed
 
     this.configuration = {
-      host: this.equipment.configuration.ipAddress,
-      port: this.equipment.configuration.port,
+      host: equipment.configuration.ipAddress,
+      port: equipment.configuration.port,
       user: "stevlabserver",
       password: "annon",
       secure: true, // TLS explícito
@@ -22,97 +26,80 @@ class FtpClient {
         maxVersion: "TLSv1.2",
       }, // Permitir certificados autofirmados
     };
-    /**
-     * Cliente de conexión FTP
-     * @type {ftp.Client}
-     */
-    this.client = new ftp.Client();
-    this.client.connecting = false;
-    this.reconnectManager = ReconnectionManager.getInstance();
-    /**
-     * Manejo de intervalos activos
-     * @type {Set<NodeJS.T>}
-     */
-    this.activeIntervals = new Set();
-  }
 
-  /**
-   *
-   */
-  async build() {
-    try {
-      // Intentamos acceder al servidor FTP
-      this.client.connecting = true;
+    this.eventsEmitter = new FtpEventsEmitter();
+    this.eventHandler = new FtpEventsHandler(this.client, this.equipment);
+    this.eventsListener = new FtpEventsListener(
+      this.eventsEmitter,
+      this.eventHandler
+    );
 
-      await this.retryStrategy.executeWithRetry(async () => {
-        await this.connect();
-      });
-    } catch (error) {
-      throw error;
-    } finally {
-      this.client.connecting = false;
-    }
-  }
-
-  async reconnect() {
-    try {
-      this.retryStrategy.reset();
-      await this.build();
-
-      if (this.client.closed) {
-        this.scheduleReconnection();
-      } else {
-        this.cancelScheduledReconnection();
-      }
-    } catch (error) {
-      console.error(`Error en proceso de reconexión: ${error.message}`);
-    }
+    //
+    this.fileManager = new FtpDirectoryFileManager(this.client, this.equipment);
+    this.directoryMonitor = new FtpDirectoryMonitor(
+      this.client,
+      this.fileManager,
+      this.eventsEmitter
+    );
   }
 
   async connect() {
     try {
-      await this.client.access(this.configuration);
-
-      // Verifica el estado de la conexión luego de acceder
-      if (this.client.closed) {
-        throw new Error(
-          "Conexión cerrada inmediatamente después de establecerse"
-        );
+      if (this.connecting) {
+        throw new Error(`Ya se está conectando el cliente Ftp para ${this.equipment.name}`);
       }
+
+      this.connecting = true
+      await this.client.access(this.configuration)
+
+      if (this.client.closed) {
+        this.eventsEmitter.emitClosed()
+      } else {
+        this.eventsEmitter.emitConnected()
+        await this.directoryMonitor.monitorate({ delayBetweenChecks: 1200 })
+      }
+
     } catch (error) {
-      throw error;
+      this.eventsEmitter.emitConnectionError(error)
+    }
+    finally {
+      this.connecting = false
     }
   }
 
-  /**
-   * Programa la reconexión automática
-   */
-  scheduleReconnection() {
-    if (!this.reconnectManager.getReconnectInterval(this.equipment.id)) {
-      const interval = setInterval(async () => {
-        try {
-          await this.reconnect();
-        } catch (error) {
-          console.error(`Error en reconexión programada: ${error.message}`);
-        }
-      }, this.retryStrategy.getNextDelay());
 
-      this.reconnectManager.setReconnectInterval(this.equipment.id, interval);
-      this.activeIntervals.add(interval);
+  async disconnect() {
+    try {
+      if (this.closing) {
+        throw new Error(`Ya se está cerrando el cliente Ftp para ${this.equipment.name}`);
+      }
+      this.closing = true
+      await this.directoryMonitor.stop()
+      this.client.close()
+      this.client.closed = true
+    } catch (error) {
+      this.eventsEmitter.emitDisconnectionError(error)
+    } finally {
+      this.closing = false
     }
   }
 
-  /**
-   * Cancela la reconexión programada
-   */
-  cancelScheduledReconnection() {
-    const interval = this.reconnectManager.getReconnectInterval(
-      this.equipment.id
-    );
-    if (interval) {
-      clearInterval(interval);
-      this.reconnectManager.removeReconnectInterval(this.equipment.id);
-      this.activeIntervals.delete(interval);
+  async reconnect() {
+    if (this.reconnectAttempts >= this.maxReconnectAttempts) {
+      this.eventsEmitter.emitMaxReconnectAttempts();
+      return false;
+    }
+
+    this.reconnectAttempts++;
+    await this.delay(this.reconnectDelay);
+
+    try {
+      await this.connect();
+      this.reconnectAttempts = 0; // Resetear intentos si es exitoso
+      return true;
+    } catch (error) {
+      this.reconnectDelay *= 2; // Backoff exponencial
+      return false;
     }
   }
 }

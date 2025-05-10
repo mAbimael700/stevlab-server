@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { Client, FileInfo } = require("basic-ftp");
-const { STATES, FILE_UPLOADS_DIR } = require("../../../constants/CONFIG_DIR");
+const { STATES, FILE_UPLOADS_DIR } = require("../../constants/CONFIG_DIR");
 
 class FtpDirectoryFileManager {
   /**
@@ -65,7 +65,7 @@ class FtpDirectoryFileManager {
       const previousFile = this.previousFileDirectoryState.find(
         (prevFile) => prevFile.name === currentFile.name
       );
-      // Si no existe en los archivos anteriores o si la fecha de modificación es distinta
+      // Si no existe en los archivos anteriores o si la fecha de modificación es distinta y no sea una carpeta
       return (
         (!previousFile ||
           previousFile.rawModifiedAt !== currentFile.rawModifiedAt) &&

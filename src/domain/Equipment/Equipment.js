@@ -1,33 +1,67 @@
-const { ClientConnection } = require("../ClientConnection/ClientConnection");
-const { EquipmentConfiguration } = require("./EquipmentConfiguration");
-const { EquipmentConnectionStatus } = require("./EquipmentConnectionStatus");
+const mongoose = require("mongoose");
 
-class Equipment {
-  /**
-   *
-   * @param {*} equipment
-   * @param {ClientConnection | null} connection
-   */
-  constructor(equipment, connection = null) {
-    this.data = {
-      id: equipment.id,
-      name: equipment.name,
-      equipmentID: equipment.equipmentID,
-      brand: equipment.brand,
-      area: new Area(equipment.area),
-      status: new EquipmentConnectionStatus(),
-      configuration: new EquipmentConfiguration(equipment.configuration),
-    };
-    this.connection = connection;
+class EquipmentConnectionStatus {
+  constructor() {
+    this.lastConnection = { type: Date, default: null };
+    this.status = { type: String, default: null };
   }
 
-  /**
-   *
-   * @param {ClientConnection} connection
-   */
-  setConnection(connection) {
-    this.connection = connection;
+  getSchema() {
+    return new mongoose.Schema({
+      lastConnection: this.lastConnection,
+      connectionStatus: this.status
+    });
   }
 }
 
-module.exports = { Equipment };
+class EquipmentConfiguration {
+  constructor() {
+    this.port = { type: Number, default: null };
+    this.macAddress = { type: String, default: null };
+    this.ipAddress = { type: String, default: null, unique: true };
+    this.baudRate = { type: Number, default: null };
+    this.remoteDirectory = { type: String, default: null };
+  }
+
+  getSchema() {
+    return new mongoose.Schema({
+      port: this.port,
+      macAddress: this.macAddress,
+      ipAddress: this.ipAddress,
+      baudRate: this.baudRate,
+      remoteDirectory: this.remoteDirectory
+    });
+  }
+}
+
+class Equipment {
+  constructor() {
+    this.id = { type: String, required: true, unique: true };
+    this.name = { type: String, required: true };
+    this.profile = { type: String, required: true };
+    this.connectionStatus = { 
+      type: new EquipmentConnectionStatus().getSchema(), 
+      default: () => ({}) 
+    };
+    this.configuration = { 
+      type: new EquipmentConfiguration().getSchema(), 
+      default: () => ({}) 
+    };
+  }
+
+  getSchema() {
+    return new mongoose.Schema({
+      id: this.id,
+      name: this.name,
+      profile: this.profile,
+      connectionStatus: this.connectionStatus,
+      configuration: this.configuration
+    });
+  }
+
+  getModel() {
+    return mongoose.model("Equipment", this.getSchema());
+  }
+}
+
+module.exports = new Equipment().getModel();

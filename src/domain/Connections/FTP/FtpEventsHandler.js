@@ -6,7 +6,7 @@ class FtpEventsHandler {
    * @param {Client} client
    * @param {*} equipment
    */
-  constructor(client, equipment) {}
+  constructor(client, equipment) { }
 
   /**
    *
@@ -21,7 +21,7 @@ class FtpEventsHandler {
    * @param {string} data 
    */
   data(data) {
-    
+
   }
 
   error({ code }) {
@@ -37,6 +37,13 @@ class FtpEventsHandler {
       );
     }
   }
+
+  monitoringStopped({ shouldReconnect }) {
+    if (shouldReconnect) {
+      this.ftpClient.reconnect();
+    }
+  }
+  
 }
 
 module.exports = {

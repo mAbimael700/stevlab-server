@@ -10,7 +10,7 @@ class TcpServer {
     this.options = {
       allowHalfOpen: true, // Permite conexiones a medias en caso de ser necesario
       keepAlive: true, // Envia paquetes keep-alive cada 30 segundos
-      keepAliveInitialDelay: 3000,
+      keepAliveInitialDelay: 1000,
     };
   }
 

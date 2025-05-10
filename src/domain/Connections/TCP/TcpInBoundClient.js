@@ -10,9 +10,7 @@ class TcpInBoundClient extends TcpClient {
    * @param {Socket} socket
    */
   constructor(socket) {
-    super(socket);
-    this.eventsHandler = null;
-    this.socketListener = null;
+    super(socket, 'TcpInBound');
     this.equipmentManager = EquipmentManager.getInstance();
     // Valida el socket entrante
     this.validateInboundSocket();
@@ -24,7 +22,7 @@ class TcpInBoundClient extends TcpClient {
   async validateInboundSocket() {
     try {
       const response = await this.connectionValidator.validate(
-        this.socket.remoteAddress
+        this.client.remoteAddress
       );
 
       const equipmentOnServerMemory = this.equipmentManager.getEquipmentById(
@@ -35,9 +33,9 @@ class TcpInBoundClient extends TcpClient {
         throw new Error(`Equipo con ID ${response.id} no encontrado.`);
 
       if (!equipmentOnServerMemory.connection) {
-        this.eventsHandler = new TcpEventsHandler(this.socket, response);
+        this.eventsHandler = new TcpEventsHandler(this.client, response);
         this.socketListener = new TcpSocketListener(
-          this.socket,
+          this.client,
           this.eventsHandler
         );
         equipmentOnServerMemory.setConnection(this);
@@ -45,9 +43,9 @@ class TcpInBoundClient extends TcpClient {
         this.socketListener.setup();
       }
     } catch (error) {
-      this.socket.destroy(); // Cierra el socket si hay un error
+      this.client.destroy(); // Cierra el socket si hay un error
       throw new Error(
-        `Error durante la validación de conexión con ${this.socket.remoteAddress}:${this.socket.remotePort}`,
+        `Error durante la validación de conexión con ${this.client.remoteAddress}:${this.client.remotePort}`,
         error.message
       ); // <-- Propagar el error
     }

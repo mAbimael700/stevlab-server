@@ -1,13 +1,14 @@
-class EquipmentParsingConfiguration {
-  constructor(parserConfiguration) {
-    this.type = parserConfiguration.type;
-    this.checksumRegex = parserConfiguration.checksumRegex;
-    this.options = parserConfiguration.options ?? {};
+class EquipmentParsingProfileConfiguration {
+  constructor(parserProfileConfiguration) {
+    this.name = parserProfileConfiguration.name
+    this.type = parserProfileConfiguration.type;
+    this.checksumRegex = parserProfileConfiguration.checksumRegex;
+    this.options = parserProfileConfiguration.options ?? {};
     this.parser = null;
-    this.build();
+    this.setupParser();
   }
 
-  build() {
+  setupParser() {
     switch (this.type) {
       case "HL7":
         this.parser = Hl7BufferParser;
@@ -39,5 +40,5 @@ class EquipmentParsingConfiguration {
 }
 
 module.exports = {
-  EquipmentParsingConfiguration,
+  EquipmentParsingProfileConfiguration,
 };

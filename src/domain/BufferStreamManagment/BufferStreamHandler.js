@@ -1,7 +1,7 @@
 const { BufferList } = require("bl/BufferList");
 const {
   EquipmentParsingConfiguration,
-} = require("../Equipment/EquipmentParsingConfiguration");
+} = require("../EquipmentParsingProfile/EquipmentParsingProfileConfiguration");
 const { BufferParser } = require("../BufferParser/BufferParser");
 
 class BufferStreamHandler {

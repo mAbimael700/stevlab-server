@@ -8,22 +8,20 @@ class ClientConnection {
    */
   constructor(type) {
     this.type = type;
-    this.socket = null;
+    this.client = null;
     this.connecting = false;
     this.closed = false;
     this.closing = false;
     this.destroyed = false;
   }
-
-  async reconnect() {}
-  async close() {}
+  async disconnect() {}
 
   /**
    *
    * @param {Socket | SerialPort | Client} client
    */
   setClient(client) {
-    this.socket = client;
+    this.client = client;
   }
 }
 

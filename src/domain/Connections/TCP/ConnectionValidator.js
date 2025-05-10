@@ -1,9 +1,8 @@
 const { exec } = require("node:child_process");
 const os = require("os");
 class ConnectionValidator {
-  constructor(equipmentService, ipWhiteListService) {
+  constructor(equipmentService) {
     this.equipmentService = equipmentService;
-    this.ipWhiteListService = ipWhiteListService
   }
 
   /**
@@ -18,7 +17,7 @@ class ConnectionValidator {
         ipAddress = ipAddress.split("::ffff:")[1];
       }
 
-      if (!this.ipWhiteListService.exist(ipAddress)) {
+      if (!this.equipmentService.findByIpAddress(ipAddress)) {
         throw new Error(
           `No se encontró la dirección IP ${ipAddress} en la lista de IP permitidos en el whitelist. Cerrando conexión.`
         );

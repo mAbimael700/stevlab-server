@@ -1,4 +1,4 @@
-const Equipment = require("../../models/Equipment");
+const Equipment = require("./Equipment");
 
 class EquipmentRepository {
 
@@ -17,8 +17,8 @@ class EquipmentRepository {
     return await Equipment.findById(id);
   }
 
-  async findByEquipmentID(equipmentID) {
-    return await Equipment.findOne({ equipmentID });
+  async findByProfile(profile) {
+    return await Equipment.findOne({ profile });
   }
 
   async findByMacAddress(macAddress) {
@@ -40,11 +40,11 @@ class EquipmentRepository {
     return await Equipment.findByIdAndUpdate(id, updateData, { new: true });
   }
 
-  async updateLastConnection(id, timestamp) {
+  async updateEquipmentLastConnection(id, timestamp) {
     this.updateField(id, "status.lastConnection", timestamp)
   }
 
-  async updateConnectionStatus(id, status) {
+  async updateEquipmentConnectionStatus(id, status) {
     this.updateField(id, "status.connectionStatus", status)
   }
 
