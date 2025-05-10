@@ -1,6 +1,6 @@
 const { Socket } = require("node:net");
 const { TcpClient } = require("./TcpClient");
-const { EquipmentManager } = require("../../EquipmentManager/EquimentManager");
+const { EquipmentManager } = require("../../EquipmentConnectionManager/EquimentManager");
 const TcpEventsHandler = require("./TcpEventHandler");
 const { TcpSocketListener } = require("./TcpSocketListener");
 
