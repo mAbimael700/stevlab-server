@@ -2,7 +2,7 @@
 const { EventEmitter } = require("node:events");
 const { BufferStreamProcessor } = require("./BufferStreamProcessor");
 
-class BufferDataEmitter extends EventEmitter {
+class BufferStreamDataEmitter extends EventEmitter {
   constructor(equipment) {
     super();
     this.equipment = equipment;
@@ -30,4 +30,4 @@ class BufferDataEmitter extends EventEmitter {
   }
 }
 
-module.exports = { BufferDataEmitter };
+module.exports = { BufferStreamDataEmitter };

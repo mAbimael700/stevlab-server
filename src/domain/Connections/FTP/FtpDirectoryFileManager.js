@@ -6,10 +6,10 @@ const { STATES, FILE_UPLOADS_DIR } = require("../../../constants/CONFIG_DIR");
 class FtpDirectoryFileManager {
   /**
    *
-   * @param {*} equipment
    * @param {Client} client
+   * @param {*} equipment
    */
-  constructor(equipment, client) {
+  constructor(client, equipment) {
     this.client = client;
     this.previousFileDirectoryState = this.loadEquipmentDirectoryState(
       equipment.id

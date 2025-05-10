@@ -1,116 +1,87 @@
 const { Client } = require("basic-ftp");
-const { FtpClient } = require("./FtpClient");
 const { FtpDirectoryFileManager } = require("./FtpDirectoryFileManager");
-const { ResultHandler } = require("../../BufferStreamManagment/ResultHandler");
-const { BufferParser } = require("../../BufferStreamManagment/BufferParser");
+const { FtpEventsEmitter } = require("./FtpEventsEmitter");
 
 class FtpDirectoryMonitor {
   /**
-   * @param {*} equipment
-   * @param {FtpClient} connection
+   * @param {Client} client
+   * @param {FtpDirectoryFileManager} fileManager
+   * @param {FtpEventsEmitter} eventsEmitter
    */
-  constructor(equipment, connection) {
-    this.isChecking = false;
-    this.equipment = equipment;
-    this.connection = connection;
-    this.bufferParser = new BufferParser(equipment.parsingConfiguration);
-    this.resultHandler = new ResultHandler(equipment.parsingConfiguration);
-
-    /**
-     * @type {Client}
-     */
-    this.client = connection.client;
+  constructor(client, fileManager, eventsEmitter) {
+    this.isMonitoring = false;
+    this.isStopped = false; // Bandera para detener el monitoreo
+    this.client = client;
+    this.fileManager = fileManager;
+    this.eventsEmitter = eventsEmitter;
     this.monitoringTimeout = null;
-    this.fileManager = new FtpDirectoryFileManager(equipment, this.client);
+    this.currentRetryDelay = 5000;
   }
 
-  async monitorate() {
-    try {
-      if (this.isChecking) {
-        return;
-      }
+  async monitorate({ delayBetweenChecks = 1000 }) {
+    if (!this.isMonitoring) {
+      this.isMonitoring = true;
+      this.isStopped = false;
 
-      if (this.client.closed) {
+      while (this.isStopped) {
         try {
-          await this.connection.reconnect();
-        } catch (reconnectError) {
-          throw new Error(
-            `Error al reconectar ${this.equipment.name}: ${reconnectError.message}`
-          );
+          if (this.client.closed) {
+            this.eventsEmitter.emitClosed();
+          }
+          await this.detectChanges();
+          await this.delay(delayBetweenChecks); // Espera antes de la próxima iteración
+        } catch (error) {
+          this.handleMonitoringError(error);
+          await this.delay(this.currentRetryDelay); // Espera antes de reintentar
         }
       }
-
-      await this.detectChanges();
-    } catch (error) {
-      console.error(
-        "Error al iniciar la monitorización del directorio:",
-        error.message
-      );
-
-      // Errores de conexión tienen mayor delay
-      if (["ECONNRESET", "ETIMEDOUT", "ECONNREFUSED"].includes(error.code)) {
-        this.currentRetryDelay = 15000; // 15 segundos para errores de red
-      }
-      // Errores de protocolo FTP específicos
-      else if ([421, 503, 530].includes(error.code)) {
-        this.currentRetryDelay = 10000; // 10 segundos
-      }
-      // Otros errores
-      else {
-        this.currentRetryDelay = 5000; // 5 segundos por defecto
-      }
-    } finally {
-      // Configurar el próximo ciclo independientemente del resultado
-      if (!this.monitoringTimeout) {
-        this.monitoringTimeout = setTimeout(() => {
-          this.monitoringTimeout = null;
-          this.monitorate();
-        }, this.currentRetryDelay || 5000);
-      }
     }
+    
+    this.isMonitoring = false;
   }
 
   async detectChanges() {
-    if (this.isChecking) return; // Prevención de ejecuciones simultáneas
-
-    this.isChecking = true;
-
-    try {
-      const addedFiles = await this.fileManager.getAddedOrUpdatedFiles();
-
-      if (addedFiles.length > 0) {
-        console.log(
-          `Archivos añadidos en ${equipment.name}:`,
-          addedFiles.map((f) => f.name)
-        );
-
-        const results = await this.fileManager.downloadFiles(addedFiles);
-        const parsedResults = this.bufferParser.parse(results);
-        this.resultHandler.handle(parsedResults);
-      }
-    } catch (error) {
-      if (["ECONNRESET", 421, 503, 530].includes(error.code)) {
-        console.error(
-          `Error de conexión en el equipo ${equipment.name}:`,
-          error.message
-        );
-      } else {
-        console.error(
-          `Error al detectar cambios en el equipo ${equipment.name} en el directorio:`,
-          error.message
-        );
-      }
-    } finally {
-      this.isChecking = false;
+    const addedFiles = await this.fileManager.getAddedOrUpdatedFiles();
+    if (addedFiles.length > 0) {
+      addedFiles.forEach((af) => this.eventsEmitter.emitAddedFile(af));
+      const filesContent = await this.fileManager.downloadFiles(addedFiles);
+      filesContent.forEach((fc) => this.eventsEmitter.data(fc));
     }
   }
 
+  /**
+   * Detiene el monitoreo de manera controlada.
+   */
   stopMonitoring() {
-    if (this.monitoringTimeout) {
-      clearTimeout(this.monitoringTimeout);
-      this.monitoringTimeout = null;
+    this.shouldStop = true;
+  }
+
+  /**
+   * Maneja errores durante el monitoreo y ajusta el retraso de reintento.
+   * @param {Error} error
+   */
+  handleMonitoringError(error) {
+    this.eventsEmitter.emitError(
+      new Error(`Error en monitoreo: ${error.message}`, error)
+    );
+
+    // Ajusta el retraso según el tipo de error
+    if (["ECONNRESET", "ETIMEDOUT", "ECONNREFUSED"].includes(error.code)) {
+      this.currentRetryDelay = 15000; // 15 segundos para errores de red
+    } else if ([421, 503, 530].includes(error.code)) {
+      this.currentRetryDelay = 10000; // 10 segundos para errores FTP
+    } else {
+      this.currentRetryDelay = 5000; // 5 segundos por defecto
     }
-    this.isChecking = false;
+  }
+
+  /**
+   * Retraso asíncrono (alternativa a setTimeout con Promesas).
+   * @param {number} ms - Milisegundos a esperar.
+   * @returns {Promise<void>}
+   */
+  delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 

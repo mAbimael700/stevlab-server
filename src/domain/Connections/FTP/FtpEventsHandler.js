@@ -1,0 +1,44 @@
+const { Client, FileInfo } = require("basic-ftp");
+
+class FtpEventsHandler {
+  /**
+   *
+   * @param {Client} client
+   * @param {*} equipment
+   */
+  constructor(client, equipment) {}
+
+  /**
+   *
+   * @param {FileInfo} file
+   */
+  addedFile(file) {
+    console.log(`Archivos añadidos en ${equipment.name}: ${file.name}`);
+  }
+
+  /**
+   * 
+   * @param {string} data 
+   */
+  data(data) {
+    
+  }
+
+  error({ code }) {
+    if (["ECONNRESET", 421, 503, 530].includes(code)) {
+      console.error(
+        `Error de conexión en el equipo ${equipment.name}:`,
+        error.message
+      );
+    } else {
+      console.error(
+        `Error al detectar cambios en el equipo ${equipment.name} en el directorio:`,
+        error.message
+      );
+    }
+  }
+}
+
+module.exports = {
+  FtpEventsHandler,
+};

@@ -1,17 +1,14 @@
 const { SerialPort, ReadlineParser } = require("serialport");
-const { DataEvent } = require("../../BufferStreamManagment/DataEvent");
 const { SerialEventsHandler } = require("./SerialEventsHandler");
 
 class SerialPortListener {
   /**
    *
-   * @param {SerialPort<Buffer} port
+   * @param {SerialPort<Buffer>} port
    * @param {SerialEventsHandler} eventsHandler
    */
   constructor(port, eventsHandler) {
     this.serialPort = port;
-    this.equipment = equipment;
-    this.dataHandler = new equipment.parsingConfiguration();
     this.parser = this.serialPort.pipe(new ReadlineParser({ delimiter: "\n" }));
     this.eventsHandler = eventsHandler;
     this._bindHandlers()
