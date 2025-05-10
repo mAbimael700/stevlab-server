@@ -1,9 +1,10 @@
-const { Client, FileInfo } = require("basic-ftp");
+const { FileInfo } = require("basic-ftp");
+const { FtpClient } = require("./FtpClient");
 
 class FtpEventsHandler {
   /**
    *
-   * @param {Client} client
+   * @param {FtpClient} client
    * @param {*} equipment
    */
   constructor(client, equipment) { }
@@ -43,7 +44,7 @@ class FtpEventsHandler {
       this.ftpClient.reconnect();
     }
   }
-  
+
 }
 
 module.exports = {
