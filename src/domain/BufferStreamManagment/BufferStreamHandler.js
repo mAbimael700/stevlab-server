@@ -1,21 +1,20 @@
 const { BufferList } = require("bl/BufferList");
 const {
-  EquipmentParsingConfiguration,
-} = require("../EquipmentParsingProfile/EquipmentParsingProfileConfiguration");
+  EquipmentCommunicationProfileConfiguration,
+} = require("../EquipmentCommunicationProfileConfiguration/EquipmentCommunicationProfileConfiguration");
 const { BufferParser } = require("../BufferParser/BufferParser");
 
 class BufferStreamHandler {
   /**
    *
-   * @param {EquipmentParsingConfiguration} configuration
+   * @param {EquipmentCommunicationProfileConfiguration} configuration
    * @param {BufferParser} parser
    */
   constructor(configuration) {
     if (!configuration.checksumRegex) {
       throw new Error("El RegExp checksum no están definidos para el equipo");
     }
-
-    this.delimiterRegex = new RegExp(configuration.checksumRegex, "g");
+    this.delimiterChecksumRegex = new RegExp(configuration.checksumRegex, "g");
   }
 
   /**
@@ -24,15 +23,15 @@ class BufferStreamHandler {
    */
   handle(data) {
     // Buscar el índice del delimitador
-    const delimiterIndex = data.search(this.delimiterRegex);
+    const delimiterIndex = data.search(this.delimiterChecksumRegex);
 
     if (delimiterIndex !== -1) {
-      const match = data.match(this.delimiterRegex);
+      const match = data.match(this.delimiterChecksumRegex);
       const matchLength = match ? match[0].length : 0;
 
       const completeMessage = data.slice(0, delimiterIndex + matchLength);
       const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
-  
+
       console.log(
         "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
         filePath

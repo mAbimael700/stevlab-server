@@ -2,16 +2,15 @@ const { Socket } = require("node:net");
 const {
   BufferStreamDataEmitter,
 } = require("../../BufferStreamManagment/BufferStreamDataEmitter");
-const { ConnectionValidator } = require("./ConnectionValidator");
 class TcpEventsHandler {
   /**
-   * @param {Socket} socket
-   * @param  {ConnectionValidator} connectionValidator
+   * 
+   * @param {Socket} socket 
+   * @param {*} equipment 
    */
-  constructor(socket, equipment, connectionValidator) {
+  constructor(socket, equipment) {
     this.socket = socket;
     this.equipment = equipment;
-    this.connectionValidator = connectionValidator;
     this.bufferDataEmitter = new BufferStreamDataEmitter(equipment);
     this.ipAddress = socket.remoteAddress;
     this.port = socket.remotePort;

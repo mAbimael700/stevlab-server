@@ -1,9 +1,13 @@
-class EquipmentParsingProfileConfiguration {
-  constructor(parserProfileConfiguration) {
-    this.name = parserProfileConfiguration.name
-    this.type = parserProfileConfiguration.type;
-    this.checksumRegex = parserProfileConfiguration.checksumRegex;
-    this.options = parserProfileConfiguration.options ?? {};
+const {
+  SpU120BufferParser,
+} = require("../../lib/parsers/SpU120BufferParser/SpU120BufferParser");
+
+class EquipmentCommunicationProfileConfiguration {
+  constructor(communicationProfileConfiguration) {
+    this.name = communicationProfileConfiguration.name;
+    this.type = communicationProfileConfiguration.type;
+    this.checksumRegex = communicationProfileConfiguration.checksumRegex;
+    this.options = communicationProfileConfiguration.options ?? {};
     this.parser = null;
     this.setupParser();
   }
@@ -16,6 +20,10 @@ class EquipmentParsingProfileConfiguration {
 
       case "XML":
         this.parser = XmlBufferParser;
+        break;
+
+      case "SPRU120":
+        this.parser = SpU120BufferParser;
         break;
 
       case "A15":
@@ -40,5 +48,5 @@ class EquipmentParsingProfileConfiguration {
 }
 
 module.exports = {
-  EquipmentParsingProfileConfiguration,
+  EquipmentCommunicationProfileConfiguration,
 };

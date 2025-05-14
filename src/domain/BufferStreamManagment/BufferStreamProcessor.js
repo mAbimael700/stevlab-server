@@ -1,5 +1,3 @@
-const { Socket } = require("node:net");
-const { SerialPort } = require("serialport");
 const BufferList = require("bl");
 const {
   EquipmentParsingConfiguration,
@@ -18,7 +16,6 @@ class BufferStreamProcessor {
 
   /**
    *
-   * @param {Socket | SerialPort} socket
    * @param {Buffer} data
    */
   process(data) {

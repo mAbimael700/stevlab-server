@@ -1,7 +1,7 @@
 const { ClientConnection } = require("../ClientConnection/ClientConnection.js");
 const { EquipmentConfiguration } = require("../Equipment/EquipmentConfiguration.js");
 const { EquipmentConnectionStatus } = require("../EquipmentConnectionStatus/EquipmentConnectionStatus.js");
-const { EquipmentParsingProfileConfiguration } = require("../EquipmentParsingProfile/EquipmentParsingProfileConfiguration.js");
+const { EquipmentParsingProfileConfiguration } = require("../EquipmentCommunicationProfileConfiguration/EquipmentCommunicationProfileConfiguration.js");
 
 class EquipmentConnection {
 
