@@ -10,14 +10,12 @@ const { validateDevice } = require("../../schemas/device-schema");
 const { IDeviceService } = require("../IDeviceService");
 
 class DeviceService extends IDeviceService {
-
   constructor() {
-    super()
-
+    super();
   }
   getDeviceProfiles() {
-    const devices = Object.values(devicesAreas).flat()
-    return new Promise((resolve) => resolve(devices))
+    const devices = Object.values(devicesAreas).flat();
+    return new Promise((resolve) => resolve(devices));
   }
 
   getDevices() {
@@ -36,8 +34,8 @@ class DeviceService extends IDeviceService {
    * @param {string} id
    */
   getDeviceById(id) {
-    const device = getEquipments().find(e => e.id_device === id);
-    return new Promise((resolve) => resolve(device))
+    const device = getEquipments().find((e) => e.id_device === id);
+    return new Promise((resolve) => resolve(device));
   }
 
   async save(data) {
@@ -51,7 +49,9 @@ class DeviceService extends IDeviceService {
     }
 
     const existDevice = equipmentsOnServer.some(
-      (equiptment) => equiptment.mac_address === result.data?.mac_address
+      (equipment) =>
+        equipment.mac_address === result.data?.mac_address ||
+        equipment.port === result.data?.port
     );
 
     if (existDevice) {
