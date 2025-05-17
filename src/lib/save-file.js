@@ -16,12 +16,17 @@ function saveFile(content) {
   const timestamp = format(new Date(), "dd-MM-yyyy");
 
   try {
-    const person = getPIDSegmentDataPosition(content, 5)?.replaceAll("^", "");
+    const person = getPIDSegmentDataPosition(content, 5);
     const uniqueId = getOBRSegmentDataPosition(content, 3);
+    
+    // Limpiar el nombre de persona si existe, o usar 'undefined'
+    const cleanPerson = person ? person.replaceAll("^", "") : 'undefined'
+    
     const filePath = path.join(
       FILE_UPLOADS_DIR,
-      `envi${timestamp}_fol_${uniqueId}_${person}.txt`
+      `envi${timestamp}_fol_${uniqueId}_${cleanPerson}.txt`
     );
+
     fs.writeFileSync(filePath, content);
     return filePath;
   } catch (error) {
