@@ -15,7 +15,7 @@ class DevicesController {
       const devices = await this.service.getDeviceProfiles()
       return res.status(200).json({
         status: 200,
-        body: { data: devices },
+        data: devices,
       });
     } catch (error) {
       return res.status(500).json({
@@ -40,7 +40,7 @@ class DevicesController {
 
       return res.status(200).json({
         status: 200,
-        body: { data: devices },
+        data: devices,
       });
     } else {
       return res.status(400).json({
@@ -55,11 +55,12 @@ class DevicesController {
 
     try {
       const device = await this.service.getDeviceById(id)
-      
+
       return res.status(200).json({
         status: 200,
-        body: { data: device },
+        data: device,
       });
+
     } catch (error) {
       return res.status(404).json({
         status: 404,
@@ -74,9 +75,8 @@ class DevicesController {
     if (equipmentsOnServer.length > 0) {
       return res.status(200).json({
         status: 200,
-        body: {
-          data: equipmentsOnServer,
-        },
+
+        data: equipmentsOnServer,
       });
     }
 

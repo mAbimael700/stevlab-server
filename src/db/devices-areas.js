@@ -89,6 +89,15 @@ const devicesAreas = {
         Nombre_area: "HEMATOLOGIA",
       },
     },
+
+     {
+      id: "SWELAB_PLUS",
+      name: "SWELAB PLUS",
+      area: {
+        ID: 4,
+        Nombre_area: "HEMATOLOGIA",
+      },
+    },
     {
       id: "DYMIND",
       name: "DYMIND",

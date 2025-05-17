@@ -6,6 +6,7 @@ const cors = require("cors");
 const { filesRouter } = require("../../api/routes/files.routes");
 const { devicesRouter } = require("../../api/routes/devices.routes");
 const { serverRouter } = require("../../api/routes/server.routes");
+const { EquipmentCommunicationProfileRouter } = require("../../api/routes/EquipmentCommunicationProfile.routes");
 const { messageRouter } = require("../../api/routes/messages.routes");
 
 // Se inicializa el servidor Express (http) para conexiones WebSocket
@@ -26,6 +27,7 @@ function initializeExpressServer(PORT) {
   app.use("/api/files", filesRouter);
   app.use("/api/areas", devicesRouter);
   app.use("/api/communication/devices", devicesRouter);
+  app.use("/api/communication/equipments/profiles", EquipmentCommunicationProfileRouter);
   app.use("/api/message", messageRouter);
   app.use("/api/server", serverRouter);
 
