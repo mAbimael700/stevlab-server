@@ -31,12 +31,7 @@ class BufferStreamHandler {
 
       const completeMessage = data.slice(0, delimiterIndex + matchLength);
       const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
-
-      console.log(
-        "¡Mensaje completo recibido!. Mensaje guardado en la ruta:\n",
-        filePath
-      );
-
+      
       return { completeMessage, consumedBytes };
     }
 
@@ -49,15 +44,13 @@ class BufferStreamHandler {
    * @param {number} consumedBytes
    */
   static clearProcessedBuffer(bufferList, consumedBytes) {
-    if (consumedBytes > 0 && consumedBytes <= bufferList.length) {
+    try {
+      if (!(consumedBytes > 0 && consumedBytes <= bufferList.length)) {
+        throw new Error(`ConsumedBytes no válido: ${consumedBytes}`);
+      }
       bufferList.consume(consumedBytes);
-    } else {
-      console.error("Error: consumedBytes no válido:", consumedBytes); // Depuración
-      console.warn(
-        "Datos a eliminar después del consumo: ",
-        bufferList.toString("utf-8")
-      );
-      bufferList.consume(bufferList.length);
+    } catch (error) {
+      throw new Error(`Error al limpiar el buffer: ${error}`);
     }
   }
 }

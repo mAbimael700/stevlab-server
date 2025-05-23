@@ -1,10 +1,13 @@
 const { Socket } = require("node:net");
 const { TcpClient } = require("./TcpClient");
 const {
-  EquipmentManager,
-} = require("../../EquipmentConnectionManager/EquimentManager");
+  EquipmentConnectionManager,
+} = require("../../EquipmentConnectionManager/EquimentConnectionManager");
 const TcpEventsHandler = require("./TcpEventHandler");
 const { TcpSocketListener } = require("./TcpSocketListener");
+const {
+  BufferDataHandler,
+} = require("../../BufferDataHandler/BufferDataHandler");
 
 class TcpInBoundClient extends TcpClient {
   /**
@@ -13,7 +16,7 @@ class TcpInBoundClient extends TcpClient {
    */
   constructor(socket) {
     super(socket, "TcpInBound");
-    this.equipmentManager = EquipmentManager.getInstance();
+    this.equipmentManager = EquipmentConnectionManager.getInstance();
     this.socketListener = null;
     // Valida el socket entrante
     this.validateInboundSocket();
@@ -24,7 +27,6 @@ class TcpInBoundClient extends TcpClient {
    */
   async validateInboundSocket() {
     try {
-
       const equipmentResponse = await this.connectionValidator.validate(
         this.client.remoteAddress
       );
@@ -36,16 +38,23 @@ class TcpInBoundClient extends TcpClient {
       if (!equipmentOnServerMemory)
         throw new Error(`Equipo con ID ${equipmentResponse.id} no encontrado.`);
 
-      if (!equipmentOnServerMemory.connection) {
-        this.eventsHandler = new TcpEventsHandler(this.client, equipmentResponse);
-        this.socketListener = new TcpSocketListener(
-          this.client,
-          this.eventsHandler
-        );
-        equipmentOnServerMemory.setConnection(this);
-
-        this.socketListener.setup();
+      if (equipmentOnServerMemory.connection) {
+        equipmentOnServerMemory.setConnection(null);
       }
+
+      this.dataHandler = new BufferDataHandler(equipmentResponse);
+      this.eventsHandler = new TcpEventsHandler(
+        this.client,
+        equipmentResponse,
+        dataHandler
+      );
+      this.socketListener = new TcpSocketListener(
+        this.client,
+        this.eventsHandler
+      );
+
+      equipmentOnServerMemory.setConnection(this);
+      this.socketListener.setup();
     } catch (error) {
       this.client.destroy(); // Cierra el socket si hay un error
       throw new Error(

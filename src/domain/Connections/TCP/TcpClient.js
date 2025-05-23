@@ -12,6 +12,7 @@ class TcpClient extends ClientConnection {
     this.closed = this.client.closed;
     this.destroyed = this.client.destroyed;
     this.connecting = this.client.connecting;
+    this.dataHandler = null;
     this.eventsHandler = null;
     this.socketListener = null;
   }

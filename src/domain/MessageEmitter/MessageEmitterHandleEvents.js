@@ -1,5 +1,0 @@
-class MessageEmitterHandleEvents {
-  constructor(messageEmitter) {
-    
-  }
-}

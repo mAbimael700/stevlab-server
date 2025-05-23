@@ -2,23 +2,30 @@ const { Socket } = require("node:net");
 const {
   BufferStreamDataEmitter,
 } = require("../../BufferStreamManagment/BufferStreamDataEmitter");
+const {
+  BufferDataEmitter,
+} = require("../../BufferDataHandler/BufferDataEmitter");
+const {
+  BufferDataHandler,
+} = require("../../BufferDataHandler/BufferDataHandler");
 class TcpEventsHandler {
   /**
-   * 
-   * @param {Socket} socket 
+   *
+   * @param {Socket} socket
    * @param {*} equipment 
+   * @param {BufferDataHandler} dataHandler
    */
-  constructor(socket, equipment) {
+  constructor(socket,equipment, dataHandler) {
     this.socket = socket;
     this.equipment = equipment;
-    this.bufferDataEmitter = new BufferStreamDataEmitter(equipment);
+    this.dataHandler = dataHandler;
     this.ipAddress = socket.remoteAddress;
     this.port = socket.remotePort;
   }
 
   connect() {
     console.log(
-      `Conexión TCP/IP entrante del equipo ${this.equipment.name} con la dirección IPv4: ${this.socket.remoteAddress}:${this.socket.remotePort}`
+      `Conexión TCP/IP entrante del equipo ${this.equipment.name} con la dirección IPv4: ${this.ipAddress}:${this.port}`
     );
   }
   /**
@@ -27,7 +34,7 @@ class TcpEventsHandler {
    */
   data(data) {
     try {
-      this.bufferDataEmitter.processBufferData(data);
+      this.dataHandler.processBufferData(data);
     } catch (error) {
       throw new Error(
         `Hubó un error al procesar la información recibida del equipo con dirección Ipv4 ${this.ipAddress}:${this.port}:`,
@@ -64,8 +71,6 @@ class TcpEventsHandler {
   /**
    *
    * @param {Error} error
-   * @param {string} ipAddress
-   * @param {number | null} port
    * @returns
    */
   generateErrorMessage(error) {

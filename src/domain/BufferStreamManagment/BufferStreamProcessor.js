@@ -1,7 +1,7 @@
 const BufferList = require("bl");
 const {
   EquipmentParsingConfiguration,
-} = require("../EquipmentParsingProfile/EquipmentParsingProfileConfiguration");
+} = require("../EquipmentCommunicationProfileConfiguration/EquipmentCommunicationProfileConfiguration");
 const { BufferStreamHandler } = require("./BufferStreamHandler");
 
 class BufferStreamProcessor {
@@ -19,26 +19,26 @@ class BufferStreamProcessor {
    * @param {Buffer} data
    */
   process(data) {
-    // Verifica el tamaño del paquete
-    if (data.length > this.maxDataSize) {
-      throw new Error(
-        `Paquete demasiado grande recibido: ${data.length} bytes`
-      );
-    }
-    this.bufferList.append(data); // Acumula los datos recibidos
-    const extractedResults = [];
-
     try {
+      // Verifica el tamaño del paquete
+      if (data.length > this.maxDataSize) {
+        throw new Error(
+          `Paquete demasiado grande recibido: ${data.length} bytes`
+        );
+      }
+      // Acumula los datos recibidos
+      this.bufferList.append(data);
+      const extractedResults = [];
+
       while (true) {
-        const accumulatedData = this.bufferList.toString("utf-8");
-        const bufferHandlerResults = this.bufferHandler.handle(accumulatedData);
+        const bufferListData = this.bufferList.toString("utf-8");
+        const bufferMessageResult = this.bufferHandler.handle(bufferListData);
 
-        if (bufferHandlerResults) {
-          extractedResults.push(bufferHandlerResults.completeMessage);
-
+        if (bufferMessageResult) {
+          extractedResults.push(bufferMessageResult.completeMessage.trim());
           BufferStreamHandler.clearProcessedBuffer(
             this.bufferList,
-            bufferHandlerResults.consumedBytes
+            bufferMessageResult.consumedBytes
           );
         } else {
           // Si no hay más mensajes completos, salir del loop
@@ -46,7 +46,12 @@ class BufferStreamProcessor {
         }
       }
 
-      return extractedResults;
+      if (extractedResults.length > 0) {
+        return extractedResults;
+      } else {
+        return null;
+      }
+      
     } catch (error) {
       console.warn(
         "Datos a eliminar después del consumo: ",
@@ -54,9 +59,9 @@ class BufferStreamProcessor {
       );
       BufferStreamHandler.clearProcessedBuffer(
         this.bufferList,
-        bufferList.length
+        this.bufferList.length
       );
-      throw new Error(`Error al procesar datos: ${error.message}`, error);
+      throw new Error(`Error al procesar datos: ${error.message}`);
     }
   }
 }

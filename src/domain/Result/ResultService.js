@@ -1,16 +1,15 @@
-const { ResultSchema } = require("../Schema/ResultSchema");
+const { ResultSchema } = require("./ResultSchema");
 
 class ResultService {
-  constructor(resultRepository, parametrosRepository) {
+  constructor(resultRepository) {
     this.resultRepository = resultRepository;
-    this.parametrosRepository = parametrosRepository;
   }
 
   async save(result) {
     try {
       const response = ResultSchema.validate(result);
       const savedResult = await this.resultRepository.save(response.data);
-      await this.parametrosRepository.updateParametrosByResult(savedResult.id);
+      await this.resultRepository.updateParametrosByResultId(savedResult.id);
     } catch (error) {
       throw new Error("Ocurrió un error al guardar los resultados", error);
     }

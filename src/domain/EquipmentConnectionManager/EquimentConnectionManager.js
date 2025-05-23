@@ -36,8 +36,15 @@ class EquipmentConnectionManager {
   }
 
   async setEquipment(equipment) {
-    const profile = await this.equipmentProfileService.getById(equipment.profile);
-    const equipmentProfile = new EquipmentCommunicationProfileConfiguration(profile);
+    const profile = await this.equipmentProfileService.getById(
+      equipment.profile
+    );
+    equipment.profile = profile;
+
+    const equipmentProfile = new EquipmentCommunicationProfileConfiguration(
+      profile
+    );
+    
     const equipmentConnection = new EquipmentConnection(
       equipment,
       equipmentProfile
@@ -55,7 +62,7 @@ class EquipmentConnectionManager {
 
   /**
    * Método estático para obtener la instancia única
-   * @returns
+   * @returns {EquipmentConnectionManager}
    */
   static getInstance() {
     if (!EquipmentConnectionManager.instance) {
