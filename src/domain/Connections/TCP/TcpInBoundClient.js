@@ -1,8 +1,6 @@
 const { Socket } = require("node:net");
 const { TcpClient } = require("./TcpClient");
-const {
-  EquipmentConnectionManager,
-} = require("../../EquipmentConnectionManager/EquimentConnectionManager");
+const EquipmentConnectionManager = require("../../EquipmentConnectionManager/EquimentConnectionManager");
 const TcpEventsHandler = require("./TcpEventHandler");
 const { TcpSocketListener } = require("./TcpSocketListener");
 const {
@@ -14,12 +12,13 @@ class TcpInBoundClient extends TcpClient {
    *
    * @param {Socket} socket
    */
-  constructor(socket) {
+  constructor(socket, connectionValidator) {
     super(socket, "TcpInBound");
-    this.equipmentManager = EquipmentConnectionManager.getInstance();
+    this.equipmentManager = EquipmentConnectionManager;
+    this.connectionValidator = connectionValidator;
     this.socketListener = null;
-    // Valida el socket entrante
-    this.validateInboundSocket();
+
+    this.initializeSocket();
   }
 
   /**
@@ -27,40 +26,50 @@ class TcpInBoundClient extends TcpClient {
    */
   async validateInboundSocket() {
     try {
-      const equipmentResponse = await this.connectionValidator.validate(
-        this.client.remoteAddress
-      );
-
-      const equipmentOnServerMemory = this.equipmentManager.getEquipmentById(
-        equipmentResponse.id
-      );
-
-      if (!equipmentOnServerMemory)
-        throw new Error(`Equipo con ID ${equipmentResponse.id} no encontrado.`);
-
-      if (equipmentOnServerMemory.connection) {
-        equipmentOnServerMemory.setConnection(null);
-      }
-
-      this.dataHandler = new BufferDataHandler(equipmentResponse);
-      this.eventsHandler = new TcpEventsHandler(
-        this.client,
-        equipmentResponse,
-        dataHandler
-      );
-      this.socketListener = new TcpSocketListener(
-        this.client,
-        this.eventsHandler
-      );
-
-      equipmentOnServerMemory.setConnection(this);
-      this.socketListener.setup();
+      return await this.connectionValidator.validate(this.client.remoteAddress);
     } catch (error) {
       this.client.destroy(); // Cierra el socket si hay un error
+      throw new Error(`Falló la validación de conexión: ${error.message}`); // <-- Propagar el error
+    }
+  }
+
+  async configureSocketEquipment(equipmentResponse) {
+    let equipmentOnServerMemory = this.equipmentManager.getEquipmentById(
+      equipmentResponse.id
+    );
+
+    if (!equipmentOnServerMemory) {
+      equipmentOnServerMemory =
+        await this.equipmentManager.setEquipmentConnection(equipmentResponse);
+    }
+
+    if (equipmentOnServerMemory.connection) {
+      equipmentOnServerMemory.setConnection(null);
+    }
+
+    this.dataHandler = new BufferDataHandler(equipmentResponse);
+    this.eventsHandler = new TcpEventsHandler(
+      this.client,
+      equipmentResponse,
+      this.dataHandler
+    );
+    this.socketListener = new TcpSocketListener(
+      this.client,
+      this.eventsHandler
+    );
+    equipmentOnServerMemory.setConnection(this);
+    this.socketListener.setup();
+  }
+
+  async initializeSocket() {
+    try {
+      // Valida el socket entrante
+      const response = await this.validateInboundSocket();
+      await this.configureSocketEquipment(response);
+    } catch (error) {
       throw new Error(
-        `Error durante la validación de conexión con ${this.client.remoteAddress}:${this.client.remotePort}`,
-        error.message
-      ); // <-- Propagar el error
+        `Ocurrió una excepción al inicializar el socket de conexión ${this.client.remoteAddress}:${this.client.remotePort}: ${error.message}`
+      );
     }
   }
 }

@@ -2,12 +2,14 @@ const {
   EquipmentConnection,
 } = require("../EquipmentConnection/EquipmentConnection");
 const {
-  EquipmentCommunicationProfileConfiguration,
-} = require("../EquipmentCommunicationProfileConfiguration/EquipmentCommunicationProfileConfiguration");
-const { EquipmentValidator } = require("./EquipmentValidator");
+  EquipmentProfileConfiguration,
+} = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration");
+const EquipmentSchema = require("../Equipment/EquipmentSchema");
+const equipmentService = require("../Equipment/Memory/EquipmentService");
+const EquipmentProfileConfigurationService = require("../EquipmentProfileConfiguration/Memory/EquipmentProfileConfigurationService");
 
 class EquipmentConnectionManager {
-  constructor() {
+  constructor(equipmentService) {
     if (EquipmentConnectionManager.instance) {
       return EquipmentConnectionManager.instance;
     }
@@ -15,19 +17,18 @@ class EquipmentConnectionManager {
      * @type {Map<string, EquipmentConnection>}
      */
     this.equipmentsOnServer = new Map();
-    this.equipmentService = new Equipmentservice();
-    this.equipmentProfileService = new EquipmentProfileService();
+    this.equipmentService = equipmentService;
     EquipmentConnectionManager.instance = this;
   }
 
   // Función para leer equipos desde el archivo
-  async loadEquipments() {
+  async initialize() {
     try {
       const equipments = await this.equipmentService.getAll();
       equipments.forEach(async (e) => {
-        const result = EquipmentValidator.validate(e);
+        const result = EquipmentSchema.validate(e);
         if (result.success) {
-          await this.setEquipment(result.data); // Actualiza la lista en equipment-helpers
+          await this.setEquipmentConnection(result.data); // Actualiza la lista en equipment-helpers
         }
       });
     } catch (error) {
@@ -35,21 +36,14 @@ class EquipmentConnectionManager {
     }
   }
 
-  async setEquipment(equipment) {
-    const profile = await this.equipmentProfileService.getById(
-      equipment.profile
-    );
-    equipment.profile = profile;
-
-    const equipmentProfile = new EquipmentCommunicationProfileConfiguration(
-      profile
-    );
-    
+  async setEquipmentConnection(equipment) {
+    const equipmentProfile = new EquipmentProfileConfiguration(equipment.profile);
     const equipmentConnection = new EquipmentConnection(
       equipment,
       equipmentProfile
     );
     this.equipmentsOnServer.set(equipment.id, equipmentConnection);
+    return this.equipmentsOnServer.get(equipment.id);
   }
   /**
    *
@@ -72,6 +66,8 @@ class EquipmentConnectionManager {
   }
 }
 
-module.exports = {
-  EquipmentConnectionManager,
-};
+const equipmentConnectionManager = new EquipmentConnectionManager(
+  equipmentService
+);
+
+module.exports = equipmentConnectionManager;

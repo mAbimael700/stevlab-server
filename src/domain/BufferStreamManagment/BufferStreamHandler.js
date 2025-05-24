@@ -1,14 +1,14 @@
 const { BufferList } = require("bl/BufferList");
 const {
   EquipmentCommunicationProfileConfiguration,
-} = require("../EquipmentCommunicationProfileConfiguration/EquipmentCommunicationProfileConfiguration");
-const { BufferParser } = require("../BufferParser/BufferParser");
+} = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration");
+const { IBufferParser } = require("../BufferParser/IBufferParser");
 
 class BufferStreamHandler {
   /**
    *
    * @param {EquipmentCommunicationProfileConfiguration} configuration
-   * @param {BufferParser} parser
+   * @param {IBufferParser} parser
    */
   constructor(configuration) {
     if (!configuration.checksumRegex) {
@@ -22,20 +22,20 @@ class BufferStreamHandler {
    * @param {string} data
    */
   handle(data) {
-    // Buscar el índice del delimitador
-    const delimiterIndex = data.search(this.delimiterChecksumRegex);
+   const delimiterMatch = this.delimiterChecksumRegex.exec(data);
+    this.delimiterChecksumRegex.lastIndex = 0; // Reset regex state
 
-    if (delimiterIndex !== -1) {
-      const match = data.match(this.delimiterChecksumRegex);
-      const matchLength = match ? match[0].length : 0;
+    if (!delimiterMatch) return null;
 
-      const completeMessage = data.slice(0, delimiterIndex + matchLength);
-      const consumedBytes = Buffer.byteLength(completeMessage, "utf-8");
-      
-      return { completeMessage, consumedBytes };
-    }
+    const delimiterIndex = delimiterMatch.index;
+    const matchLength = delimiterMatch[0].length;
+    const completeMessage = data.slice(0, delimiterIndex + matchLength);
+    const consumedBytes = Buffer.byteLength(completeMessage, this.bufferEncoding);
 
-    return null;
+    return { 
+      completeMessage: completeMessage.trim(),
+      consumedBytes
+    };
   }
 
   /**

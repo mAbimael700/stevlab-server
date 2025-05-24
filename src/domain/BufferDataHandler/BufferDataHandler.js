@@ -9,7 +9,6 @@ class BufferDataHandler {
    * @param {*} equipment
    */
   constructor(equipment) {
-    super();
     this.equipment = equipment;
     this.bufferStreamProcessor = new BufferStreamProcessor(equipment.profile);
     this.bufferEmitter = new BufferDataEmitter()
@@ -31,7 +30,7 @@ class BufferDataHandler {
               equipment: this.equipment,
               message: bm,
             })
-          ); // Emitimos solo los mensajes procesados
+          ); // Emitimos solo los mensajes procesados  
       }
     } catch (error) {
       this.emit("error", {

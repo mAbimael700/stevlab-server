@@ -1,21 +1,15 @@
 const { Socket } = require("node:net");
 const {
-  BufferStreamDataEmitter,
-} = require("../../BufferStreamManagment/BufferStreamDataEmitter");
-const {
-  BufferDataEmitter,
-} = require("../../BufferDataHandler/BufferDataEmitter");
-const {
   BufferDataHandler,
 } = require("../../BufferDataHandler/BufferDataHandler");
 class TcpEventsHandler {
   /**
    *
    * @param {Socket} socket
-   * @param {*} equipment 
+   * @param {*} equipment
    * @param {BufferDataHandler} dataHandler
    */
-  constructor(socket,equipment, dataHandler) {
+  constructor(socket, equipment, dataHandler) {
     this.socket = socket;
     this.equipment = equipment;
     this.dataHandler = dataHandler;

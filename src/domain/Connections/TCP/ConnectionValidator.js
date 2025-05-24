@@ -19,7 +19,7 @@ class ConnectionValidator {
 
       if (!this.equipmentService.findByIpAddress(ipAddress)) {
         throw new Error(
-          `No se encontró la dirección IP ${ipAddress} en la lista de IP permitidos en el whitelist. Cerrando conexión.`
+          `No se encontró la dirección IPv4 en la lista de direcciones permitidos en el whitelist. Cerrando conexión.`
         );
       }
 
@@ -44,11 +44,8 @@ class ConnectionValidator {
       return foundEquipment;
       
     } catch (error) {
-      console.error(
-        "Hubo un error en la validación de conexión del equipo:",
-        error.message
-      );
-      throw new Error(error.message, error);
+
+      throw error;
     }
   }
 
@@ -109,7 +106,7 @@ class ConnectionValidator {
           !iface.internal &&
           interfaceName.toLowerCase().includes("ethernet")
         ) {
-          return iface.mac.toUpperCase().replace(/:/g, "");
+          return iface.mac.toUpperCase().replace(/:/g, "-");
         }
       }
     }

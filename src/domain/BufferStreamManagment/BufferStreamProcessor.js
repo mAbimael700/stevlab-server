@@ -1,7 +1,7 @@
 const BufferList = require("bl");
 const {
   EquipmentParsingConfiguration,
-} = require("../EquipmentCommunicationProfileConfiguration/EquipmentCommunicationProfileConfiguration");
+} = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration");
 const { BufferStreamHandler } = require("./BufferStreamHandler");
 
 class BufferStreamProcessor {
@@ -20,22 +20,17 @@ class BufferStreamProcessor {
    */
   process(data) {
     try {
-      // Verifica el tamaño del paquete
-      if (data.length > this.maxDataSize) {
-        throw new Error(
-          `Paquete demasiado grande recibido: ${data.length} bytes`
-        );
-      }
-      // Acumula los datos recibidos
+      this.validateDataSize(data);
       this.bufferList.append(data);
+      
       const extractedResults = [];
 
       while (true) {
-        const bufferListData = this.bufferList.toString("utf-8");
+        const bufferListData = this.getBufferedData()
         const bufferMessageResult = this.bufferHandler.handle(bufferListData);
 
         if (bufferMessageResult) {
-          extractedResults.push(bufferMessageResult.completeMessage.trim());
+          extractedResults.push(bufferMessageResult.completeMessage);
           BufferStreamHandler.clearProcessedBuffer(
             this.bufferList,
             bufferMessageResult.consumedBytes
@@ -51,7 +46,6 @@ class BufferStreamProcessor {
       } else {
         return null;
       }
-      
     } catch (error) {
       console.warn(
         "Datos a eliminar después del consumo: ",
@@ -63,6 +57,26 @@ class BufferStreamProcessor {
       );
       throw new Error(`Error al procesar datos: ${error.message}`);
     }
+  }
+
+  /**
+   * Valida el tamaño de los datos recibidos
+   * @param {Buffer} data
+   */
+  validateDataSize(data) {
+    if (data.length > this.maxDataSize) {
+      throw new Error(
+        `Packet size exceeded limit: ${data.length} bytes (max: ${this.maxDataSize})`
+      );
+    }
+  }
+
+  /**
+   * Obtiene los datos actuales del buffer
+   * @returns {string}
+   */
+  getBufferedData() {
+    return this.bufferList.toString('utf-8');
   }
 }
 
