@@ -91,6 +91,7 @@
   "author": "Abimael Alexander Méndez Landero",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^6.8.2",
     "basic-ftp": "5.0.5",
     "bl": "6.0.16",
     "cheerio": "^1.0.0",
@@ -128,6 +129,7 @@
     "cross-env": "7.0.3",
     "electron": "33.2.1",
     "electron-packager": "17.1.2",
-    "pkg": "5.8.1"
+    "pkg": "5.8.1",
+    "prisma": "^6.8.2"
   }
 }

@@ -143,3 +143,9 @@ dist2/
 dist3/
 electron
 electron2
+
+/src/generated/prisma
+
+/prisma/src/infra/Generated/Prisma
+
+/src/infra/Generated/Prisma
