@@ -17,7 +17,6 @@ class TcpInBoundClient extends TcpClient {
     this.equipmentManager = EquipmentConnectionManager;
     this.connectionValidator = connectionValidator;
     this.socketListener = null;
-
     this.initializeSocket();
   }
 
