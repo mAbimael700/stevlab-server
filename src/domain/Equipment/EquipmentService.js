@@ -1,5 +1,11 @@
 class EquipmentService {
-    constructor(parameters) {
-        
+    constructor(equipmentRepository) {
+        this.equipmentRepository = equipmentRepository
+    }
+
+    getAll(){
+
+        const result =  c
+        return equipments
     }
 }
