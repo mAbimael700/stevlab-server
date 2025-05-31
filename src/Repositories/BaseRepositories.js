@@ -1,5 +1,10 @@
-// src/repositories/BaseRepository.js
+const { PrismaClient } = require("@prisma/client/extension");
 class BaseRepository {
+  /**
+   *
+   * @param {string} modelName
+   * @param {PrismaClient} prisma
+   */
   constructor(modelName, prisma) {
     this.model = modelName;
     this.prisma = prisma;

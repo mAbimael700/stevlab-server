@@ -14,7 +14,6 @@
     "build:electron": "npx electron-builder",
     "build:pkg": "pkg . --targets node18-win-x64 --output build/app",
     "git:update": "git pull && npm i",
-    "postinstall": "electron-builder install-app-deps",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish"

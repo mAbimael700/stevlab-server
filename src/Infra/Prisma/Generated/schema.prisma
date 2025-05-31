@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/infra/Prisma/Generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model CommunicationProfiles {
+  id                 String             @id @db.VarChar(10)
+  name               String?            @db.VarChar(25)
+  checksum_regex     String?            @db.VarChar(50)
+  type               String?            @db.VarChar(25)
+  equipment_profiles EquipmentProfile[]
+
+  @@map("communication_profiles")
+}
+
+model DirectoryHistorial {
+  id           BigInt     @id
+  equipment_id BigInt?
+  filename     String?    @db.VarChar(250)
+  filepath     String?    @db.VarChar(500)
+  modified_at  BigInt?
+  equipments   Equipment? @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_directory_historials_equipment_id_equipments_id")
+
+  @@map("directory_historials")
+}
+
+model EquipmentProfile {
+  id                     BigInt                 @id
+  communication_profile  String?                @db.VarChar(10)
+  name                   String?                @db.VarChar(25)
+  communication_profiles CommunicationProfiles? @relation(fields: [communication_profile], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipment_profiles_communication_profile_communication_pr")
+  equipments             Equipment[]
+
+  @@map("equipment_profiles")
+}
+
+model Equipment {
+  id                   BigInt               @id
+  profile_id           BigInt?
+  name                 String?              @db.VarChar(25)
+  created_at           DateTime?            @db.Timestamp(6)
+  modified_at          DateTime?            @db.Timestamp(6)
+  last_connection      DateTime?            @db.Timestamp(6)
+  connection_status    String?              @db.VarChar(25)
+  directory_historials DirectoryHistorial[]
+  equipment_profiles   EquipmentProfile?    @relation(fields: [profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipments_profile_id_equipment_profiles_id")
+  parameters           Parameter[]
+
+  @@map("equipments")
+}
+
+model HistogramResult {
+  id           BigInt  @id
+  result_folio String? @db.VarChar(25)
+  description  String? @db.VarChar(25)
+  value        String? @db.VarChar(10)
+  results      Result? @relation(fields: [result_folio], references: [folio], onDelete: NoAction, onUpdate: NoAction, map: "fk_histogram_results_result_folio_results_folio")
+
+  @@map("histogram_results")
+}
+
+model Parameter {
+  id               BigInt     @id
+  result_folio     String?    @db.VarChar(15)
+  equipment_id     BigInt?
+  description      String?    @db.VarChar(25)
+  value            String?    @db.VarChar(25)
+  unit_measurement String?    @db.VarChar(10)
+  max_range        String?    @db.VarChar(10)
+  min_range        String?    @db.VarChar(10)
+  created_at       DateTime?  @db.Timestamp(6)
+  modified_at      DateTime?  @db.Timestamp(6)
+  equipments       Equipment? @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameters_equipment_id_equipments_id")
+  results          Result?    @relation(fields: [result_folio], references: [folio], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameters_result_folio_results_folio")
+
+  @@map("parameters")
+}
+
+model Result {
+  folio             String            @id @db.VarChar(12)
+  sample_id         String?           @db.VarChar(12)
+  pacient_name      String?           @db.VarChar(50)
+  sex               String?           @db.VarChar
+  created_at        DateTime?         @db.Timestamp(6)
+  modified_at       DateTime?         @db.Timestamp(6)
+  histogram_results HistogramResult[]
+  parameters        Parameter[]
+
+  @@map("results")
+}

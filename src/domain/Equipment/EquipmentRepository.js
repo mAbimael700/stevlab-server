@@ -1,5 +1,4 @@
 
-
 const { PrismaClient } = require('@prisma/client/extension');
 const BaseRepository = require('../../Repositories/BaseRepositories');
 
