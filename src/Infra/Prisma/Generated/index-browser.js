@@ -122,7 +122,6 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.CommunicationProfilesScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   checksum_regex: 'checksum_regex',
   type: 'type'
 };
@@ -138,7 +137,9 @@ exports.Prisma.DirectoryHistorialScalarFieldEnum = {
 exports.Prisma.EquipmentProfileScalarFieldEnum = {
   id: 'id',
   communication_profile: 'communication_profile',
-  name: 'name'
+  name: 'name',
+  active: 'active',
+  communication_type: 'communication_type'
 };
 
 exports.Prisma.EquipmentScalarFieldEnum = {
@@ -148,41 +149,86 @@ exports.Prisma.EquipmentScalarFieldEnum = {
   created_at: 'created_at',
   modified_at: 'modified_at',
   last_connection: 'last_connection',
-  connection_status: 'connection_status'
+  connection_status: 'connection_status',
+  active: 'active'
 };
 
 exports.Prisma.HistogramResultScalarFieldEnum = {
   id: 'id',
   result_folio: 'result_folio',
   description: 'description',
-  value: 'value'
+  value: 'value',
+  created_at: 'created_at',
+  active: 'active'
 };
 
 exports.Prisma.ParameterScalarFieldEnum = {
   id: 'id',
   result_folio: 'result_folio',
   equipment_id: 'equipment_id',
+  parameter_dictionary_id: 'parameter_dictionary_id',
   description: 'description',
   value: 'value',
   unit_measurement: 'unit_measurement',
   max_range: 'max_range',
   min_range: 'min_range',
   created_at: 'created_at',
-  modified_at: 'modified_at'
+  active: 'active'
 };
 
 exports.Prisma.ResultScalarFieldEnum = {
   folio: 'folio',
+  created_by: 'created_by',
   sample_id: 'sample_id',
-  pacient_name: 'pacient_name',
-  sex: 'sex',
   created_at: 'created_at',
-  modified_at: 'modified_at'
+  last_modified_at: 'last_modified_at',
+  active: 'active'
+};
+
+exports.Prisma.ParameterDictionaryScalarFieldEnum = {
+  id: 'id',
+  system_parameter_id: 'system_parameter_id',
+  parameter_description: 'parameter_description'
+};
+
+exports.Prisma.ResultSendScalarFieldEnum = {
+  id: 'id',
+  result_folio: 'result_folio',
+  send_by: 'send_by',
+  send_at: 'send_at',
+  status: 'status',
+  payload: 'payload',
+  response: 'response'
+};
+
+exports.Prisma.SystemParameterScalarFieldEnum = {
+  id: 'id',
+  value: 'value'
+};
+
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password'
+};
+
+exports.Prisma.EquipmentConfigurationScalarFieldEnum = {
+  equipment_id: 'equipment_id',
+  port: 'port',
+  ip_address: 'ip_address',
+  baud_rate: 'baud_rate',
+  mac_address: 'mac_address',
+  remote_directory: 'remote_directory'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -195,6 +241,12 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
 
 exports.Prisma.ModelName = {
   CommunicationProfiles: 'CommunicationProfiles',
@@ -203,7 +255,12 @@ exports.Prisma.ModelName = {
   Equipment: 'Equipment',
   HistogramResult: 'HistogramResult',
   Parameter: 'Parameter',
-  Result: 'Result'
+  Result: 'Result',
+  ParameterDictionary: 'ParameterDictionary',
+  ResultSend: 'ResultSend',
+  SystemParameter: 'SystemParameter',
+  User: 'User',
+  EquipmentConfiguration: 'EquipmentConfiguration'
 };
 
 /**

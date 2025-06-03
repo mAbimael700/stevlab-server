@@ -4,6 +4,7 @@ class Hl7ClinicalDataModel extends IClinicalDataModel {
   constructor() {
     super();
   }
+  
 
 }
 

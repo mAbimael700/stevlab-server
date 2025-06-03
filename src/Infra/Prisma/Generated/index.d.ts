@@ -48,6 +48,31 @@ export type Parameter = $Result.DefaultSelection<Prisma.$ParameterPayload>
  * 
  */
 export type Result = $Result.DefaultSelection<Prisma.$ResultPayload>
+/**
+ * Model ParameterDictionary
+ * 
+ */
+export type ParameterDictionary = $Result.DefaultSelection<Prisma.$ParameterDictionaryPayload>
+/**
+ * Model ResultSend
+ * 
+ */
+export type ResultSend = $Result.DefaultSelection<Prisma.$ResultSendPayload>
+/**
+ * Model SystemParameter
+ * 
+ */
+export type SystemParameter = $Result.DefaultSelection<Prisma.$SystemParameterPayload>
+/**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model EquipmentConfiguration
+ * 
+ */
+export type EquipmentConfiguration = $Result.DefaultSelection<Prisma.$EquipmentConfigurationPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -243,6 +268,56 @@ export class PrismaClient<
     * ```
     */
   get result(): Prisma.ResultDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.parameterDictionary`: Exposes CRUD operations for the **ParameterDictionary** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ParameterDictionaries
+    * const parameterDictionaries = await prisma.parameterDictionary.findMany()
+    * ```
+    */
+  get parameterDictionary(): Prisma.ParameterDictionaryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.resultSend`: Exposes CRUD operations for the **ResultSend** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ResultSends
+    * const resultSends = await prisma.resultSend.findMany()
+    * ```
+    */
+  get resultSend(): Prisma.ResultSendDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.systemParameter`: Exposes CRUD operations for the **SystemParameter** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SystemParameters
+    * const systemParameters = await prisma.systemParameter.findMany()
+    * ```
+    */
+  get systemParameter(): Prisma.SystemParameterDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.equipmentConfiguration`: Exposes CRUD operations for the **EquipmentConfiguration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EquipmentConfigurations
+    * const equipmentConfigurations = await prisma.equipmentConfiguration.findMany()
+    * ```
+    */
+  get equipmentConfiguration(): Prisma.EquipmentConfigurationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -689,7 +764,12 @@ export namespace Prisma {
     Equipment: 'Equipment',
     HistogramResult: 'HistogramResult',
     Parameter: 'Parameter',
-    Result: 'Result'
+    Result: 'Result',
+    ParameterDictionary: 'ParameterDictionary',
+    ResultSend: 'ResultSend',
+    SystemParameter: 'SystemParameter',
+    User: 'User',
+    EquipmentConfiguration: 'EquipmentConfiguration'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -708,7 +788,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "communicationProfiles" | "directoryHistorial" | "equipmentProfile" | "equipment" | "histogramResult" | "parameter" | "result"
+      modelProps: "communicationProfiles" | "directoryHistorial" | "equipmentProfile" | "equipment" | "histogramResult" | "parameter" | "result" | "parameterDictionary" | "resultSend" | "systemParameter" | "user" | "equipmentConfiguration"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1230,6 +1310,376 @@ export namespace Prisma {
           }
         }
       }
+      ParameterDictionary: {
+        payload: Prisma.$ParameterDictionaryPayload<ExtArgs>
+        fields: Prisma.ParameterDictionaryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ParameterDictionaryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ParameterDictionaryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>
+          }
+          findFirst: {
+            args: Prisma.ParameterDictionaryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ParameterDictionaryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>
+          }
+          findMany: {
+            args: Prisma.ParameterDictionaryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>[]
+          }
+          create: {
+            args: Prisma.ParameterDictionaryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>
+          }
+          createMany: {
+            args: Prisma.ParameterDictionaryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ParameterDictionaryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>[]
+          }
+          delete: {
+            args: Prisma.ParameterDictionaryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>
+          }
+          update: {
+            args: Prisma.ParameterDictionaryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>
+          }
+          deleteMany: {
+            args: Prisma.ParameterDictionaryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ParameterDictionaryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ParameterDictionaryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>[]
+          }
+          upsert: {
+            args: Prisma.ParameterDictionaryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParameterDictionaryPayload>
+          }
+          aggregate: {
+            args: Prisma.ParameterDictionaryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateParameterDictionary>
+          }
+          groupBy: {
+            args: Prisma.ParameterDictionaryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ParameterDictionaryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ParameterDictionaryCountArgs<ExtArgs>
+            result: $Utils.Optional<ParameterDictionaryCountAggregateOutputType> | number
+          }
+        }
+      }
+      ResultSend: {
+        payload: Prisma.$ResultSendPayload<ExtArgs>
+        fields: Prisma.ResultSendFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ResultSendFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ResultSendFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>
+          }
+          findFirst: {
+            args: Prisma.ResultSendFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ResultSendFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>
+          }
+          findMany: {
+            args: Prisma.ResultSendFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>[]
+          }
+          create: {
+            args: Prisma.ResultSendCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>
+          }
+          createMany: {
+            args: Prisma.ResultSendCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ResultSendCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>[]
+          }
+          delete: {
+            args: Prisma.ResultSendDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>
+          }
+          update: {
+            args: Prisma.ResultSendUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>
+          }
+          deleteMany: {
+            args: Prisma.ResultSendDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ResultSendUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ResultSendUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>[]
+          }
+          upsert: {
+            args: Prisma.ResultSendUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResultSendPayload>
+          }
+          aggregate: {
+            args: Prisma.ResultSendAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResultSend>
+          }
+          groupBy: {
+            args: Prisma.ResultSendGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResultSendGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ResultSendCountArgs<ExtArgs>
+            result: $Utils.Optional<ResultSendCountAggregateOutputType> | number
+          }
+        }
+      }
+      SystemParameter: {
+        payload: Prisma.$SystemParameterPayload<ExtArgs>
+        fields: Prisma.SystemParameterFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SystemParameterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SystemParameterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>
+          }
+          findFirst: {
+            args: Prisma.SystemParameterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SystemParameterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>
+          }
+          findMany: {
+            args: Prisma.SystemParameterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>[]
+          }
+          create: {
+            args: Prisma.SystemParameterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>
+          }
+          createMany: {
+            args: Prisma.SystemParameterCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SystemParameterCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>[]
+          }
+          delete: {
+            args: Prisma.SystemParameterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>
+          }
+          update: {
+            args: Prisma.SystemParameterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>
+          }
+          deleteMany: {
+            args: Prisma.SystemParameterDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SystemParameterUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SystemParameterUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>[]
+          }
+          upsert: {
+            args: Prisma.SystemParameterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SystemParameterPayload>
+          }
+          aggregate: {
+            args: Prisma.SystemParameterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSystemParameter>
+          }
+          groupBy: {
+            args: Prisma.SystemParameterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SystemParameterGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SystemParameterCountArgs<ExtArgs>
+            result: $Utils.Optional<SystemParameterCountAggregateOutputType> | number
+          }
+        }
+      }
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      EquipmentConfiguration: {
+        payload: Prisma.$EquipmentConfigurationPayload<ExtArgs>
+        fields: Prisma.EquipmentConfigurationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EquipmentConfigurationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EquipmentConfigurationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>
+          }
+          findFirst: {
+            args: Prisma.EquipmentConfigurationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EquipmentConfigurationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>
+          }
+          findMany: {
+            args: Prisma.EquipmentConfigurationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>[]
+          }
+          create: {
+            args: Prisma.EquipmentConfigurationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>
+          }
+          createMany: {
+            args: Prisma.EquipmentConfigurationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EquipmentConfigurationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>[]
+          }
+          delete: {
+            args: Prisma.EquipmentConfigurationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>
+          }
+          update: {
+            args: Prisma.EquipmentConfigurationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>
+          }
+          deleteMany: {
+            args: Prisma.EquipmentConfigurationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EquipmentConfigurationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EquipmentConfigurationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>[]
+          }
+          upsert: {
+            args: Prisma.EquipmentConfigurationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EquipmentConfigurationPayload>
+          }
+          aggregate: {
+            args: Prisma.EquipmentConfigurationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEquipmentConfiguration>
+          }
+          groupBy: {
+            args: Prisma.EquipmentConfigurationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EquipmentConfigurationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EquipmentConfigurationCountArgs<ExtArgs>
+            result: $Utils.Optional<EquipmentConfigurationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1321,6 +1771,11 @@ export namespace Prisma {
     histogramResult?: HistogramResultOmit
     parameter?: ParameterOmit
     result?: ResultOmit
+    parameterDictionary?: ParameterDictionaryOmit
+    resultSend?: ResultSendOmit
+    systemParameter?: SystemParameterOmit
+    user?: UserOmit
+    equipmentConfiguration?: EquipmentConfigurationOmit
   }
 
   /* Types for Logging */
@@ -1415,11 +1870,11 @@ export namespace Prisma {
    */
 
   export type CommunicationProfilesCountOutputType = {
-    equipment_profiles: number
+    equipmentProfiles: number
   }
 
   export type CommunicationProfilesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipment_profiles?: boolean | CommunicationProfilesCountOutputTypeCountEquipment_profilesArgs
+    equipmentProfiles?: boolean | CommunicationProfilesCountOutputTypeCountEquipmentProfilesArgs
   }
 
   // Custom InputTypes
@@ -1436,7 +1891,7 @@ export namespace Prisma {
   /**
    * CommunicationProfilesCountOutputType without action
    */
-  export type CommunicationProfilesCountOutputTypeCountEquipment_profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CommunicationProfilesCountOutputTypeCountEquipmentProfilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EquipmentProfileWhereInput
   }
 
@@ -1477,13 +1932,15 @@ export namespace Prisma {
    */
 
   export type EquipmentCountOutputType = {
-    directory_historials: number
+    directoryHistorials: number
     parameters: number
+    EquipmentConfiguration: number
   }
 
   export type EquipmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    directory_historials?: boolean | EquipmentCountOutputTypeCountDirectory_historialsArgs
+    directoryHistorials?: boolean | EquipmentCountOutputTypeCountDirectoryHistorialsArgs
     parameters?: boolean | EquipmentCountOutputTypeCountParametersArgs
+    EquipmentConfiguration?: boolean | EquipmentCountOutputTypeCountEquipmentConfigurationArgs
   }
 
   // Custom InputTypes
@@ -1500,7 +1957,7 @@ export namespace Prisma {
   /**
    * EquipmentCountOutputType without action
    */
-  export type EquipmentCountOutputTypeCountDirectory_historialsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EquipmentCountOutputTypeCountDirectoryHistorialsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DirectoryHistorialWhereInput
   }
 
@@ -1511,19 +1968,28 @@ export namespace Prisma {
     where?: ParameterWhereInput
   }
 
+  /**
+   * EquipmentCountOutputType without action
+   */
+  export type EquipmentCountOutputTypeCountEquipmentConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EquipmentConfigurationWhereInput
+  }
+
 
   /**
    * Count Type ResultCountOutputType
    */
 
   export type ResultCountOutputType = {
-    histogram_results: number
+    histogramResults: number
     parameters: number
+    resultSends: number
   }
 
   export type ResultCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    histogram_results?: boolean | ResultCountOutputTypeCountHistogram_resultsArgs
+    histogramResults?: boolean | ResultCountOutputTypeCountHistogramResultsArgs
     parameters?: boolean | ResultCountOutputTypeCountParametersArgs
+    resultSends?: boolean | ResultCountOutputTypeCountResultSendsArgs
   }
 
   // Custom InputTypes
@@ -1540,7 +2006,7 @@ export namespace Prisma {
   /**
    * ResultCountOutputType without action
    */
-  export type ResultCountOutputTypeCountHistogram_resultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResultCountOutputTypeCountHistogramResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: HistogramResultWhereInput
   }
 
@@ -1549,6 +2015,115 @@ export namespace Prisma {
    */
   export type ResultCountOutputTypeCountParametersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ParameterWhereInput
+  }
+
+  /**
+   * ResultCountOutputType without action
+   */
+  export type ResultCountOutputTypeCountResultSendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResultSendWhereInput
+  }
+
+
+  /**
+   * Count Type ParameterDictionaryCountOutputType
+   */
+
+  export type ParameterDictionaryCountOutputType = {
+    parameters: number
+  }
+
+  export type ParameterDictionaryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parameters?: boolean | ParameterDictionaryCountOutputTypeCountParametersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ParameterDictionaryCountOutputType without action
+   */
+  export type ParameterDictionaryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionaryCountOutputType
+     */
+    select?: ParameterDictionaryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ParameterDictionaryCountOutputType without action
+   */
+  export type ParameterDictionaryCountOutputTypeCountParametersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParameterWhereInput
+  }
+
+
+  /**
+   * Count Type SystemParameterCountOutputType
+   */
+
+  export type SystemParameterCountOutputType = {
+    parameterDictionaries: number
+  }
+
+  export type SystemParameterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parameterDictionaries?: boolean | SystemParameterCountOutputTypeCountParameterDictionariesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SystemParameterCountOutputType without action
+   */
+  export type SystemParameterCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameterCountOutputType
+     */
+    select?: SystemParameterCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SystemParameterCountOutputType without action
+   */
+  export type SystemParameterCountOutputTypeCountParameterDictionariesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParameterDictionaryWhereInput
+  }
+
+
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    resultSends: number
+    createdResults: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    resultSends?: boolean | UserCountOutputTypeCountResultSendsArgs
+    createdResults?: boolean | UserCountOutputTypeCountCreatedResultsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountResultSendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResultSendWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResultWhereInput
   }
 
 
@@ -1568,21 +2143,18 @@ export namespace Prisma {
 
   export type CommunicationProfilesMinAggregateOutputType = {
     id: string | null
-    name: string | null
     checksum_regex: string | null
     type: string | null
   }
 
   export type CommunicationProfilesMaxAggregateOutputType = {
     id: string | null
-    name: string | null
     checksum_regex: string | null
     type: string | null
   }
 
   export type CommunicationProfilesCountAggregateOutputType = {
     id: number
-    name: number
     checksum_regex: number
     type: number
     _all: number
@@ -1591,21 +2163,18 @@ export namespace Prisma {
 
   export type CommunicationProfilesMinAggregateInputType = {
     id?: true
-    name?: true
     checksum_regex?: true
     type?: true
   }
 
   export type CommunicationProfilesMaxAggregateInputType = {
     id?: true
-    name?: true
     checksum_regex?: true
     type?: true
   }
 
   export type CommunicationProfilesCountAggregateInputType = {
     id?: true
-    name?: true
     checksum_regex?: true
     type?: true
     _all?: true
@@ -1685,7 +2254,6 @@ export namespace Prisma {
 
   export type CommunicationProfilesGroupByOutputType = {
     id: string
-    name: string | null
     checksum_regex: string | null
     type: string | null
     _count: CommunicationProfilesCountAggregateOutputType | null
@@ -1709,37 +2277,33 @@ export namespace Prisma {
 
   export type CommunicationProfilesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
     checksum_regex?: boolean
     type?: boolean
-    equipment_profiles?: boolean | CommunicationProfiles$equipment_profilesArgs<ExtArgs>
+    equipmentProfiles?: boolean | CommunicationProfiles$equipmentProfilesArgs<ExtArgs>
     _count?: boolean | CommunicationProfilesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["communicationProfiles"]>
 
   export type CommunicationProfilesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
     checksum_regex?: boolean
     type?: boolean
   }, ExtArgs["result"]["communicationProfiles"]>
 
   export type CommunicationProfilesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
     checksum_regex?: boolean
     type?: boolean
   }, ExtArgs["result"]["communicationProfiles"]>
 
   export type CommunicationProfilesSelectScalar = {
     id?: boolean
-    name?: boolean
     checksum_regex?: boolean
     type?: boolean
   }
 
-  export type CommunicationProfilesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "checksum_regex" | "type", ExtArgs["result"]["communicationProfiles"]>
+  export type CommunicationProfilesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "checksum_regex" | "type", ExtArgs["result"]["communicationProfiles"]>
   export type CommunicationProfilesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipment_profiles?: boolean | CommunicationProfiles$equipment_profilesArgs<ExtArgs>
+    equipmentProfiles?: boolean | CommunicationProfiles$equipmentProfilesArgs<ExtArgs>
     _count?: boolean | CommunicationProfilesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CommunicationProfilesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1748,11 +2312,10 @@ export namespace Prisma {
   export type $CommunicationProfilesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "CommunicationProfiles"
     objects: {
-      equipment_profiles: Prisma.$EquipmentProfilePayload<ExtArgs>[]
+      equipmentProfiles: Prisma.$EquipmentProfilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      name: string | null
       checksum_regex: string | null
       type: string | null
     }, ExtArgs["result"]["communicationProfiles"]>
@@ -2149,7 +2712,7 @@ export namespace Prisma {
    */
   export interface Prisma__CommunicationProfilesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    equipment_profiles<T extends CommunicationProfiles$equipment_profilesArgs<ExtArgs> = {}>(args?: Subset<T, CommunicationProfiles$equipment_profilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    equipmentProfiles<T extends CommunicationProfiles$equipmentProfilesArgs<ExtArgs> = {}>(args?: Subset<T, CommunicationProfiles$equipmentProfilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2180,7 +2743,6 @@ export namespace Prisma {
    */
   interface CommunicationProfilesFieldRefs {
     readonly id: FieldRef<"CommunicationProfiles", 'String'>
-    readonly name: FieldRef<"CommunicationProfiles", 'String'>
     readonly checksum_regex: FieldRef<"CommunicationProfiles", 'String'>
     readonly type: FieldRef<"CommunicationProfiles", 'String'>
   }
@@ -2571,9 +3133,9 @@ export namespace Prisma {
   }
 
   /**
-   * CommunicationProfiles.equipment_profiles
+   * CommunicationProfiles.equipmentProfiles
    */
-  export type CommunicationProfiles$equipment_profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type CommunicationProfiles$equipmentProfilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the EquipmentProfile
      */
@@ -2819,7 +3381,7 @@ export namespace Prisma {
     filename?: boolean
     filepath?: boolean
     modified_at?: boolean
-    equipments?: boolean | DirectoryHistorial$equipmentsArgs<ExtArgs>
+    equipment?: boolean | DirectoryHistorial$equipmentArgs<ExtArgs>
   }, ExtArgs["result"]["directoryHistorial"]>
 
   export type DirectoryHistorialSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2828,7 +3390,7 @@ export namespace Prisma {
     filename?: boolean
     filepath?: boolean
     modified_at?: boolean
-    equipments?: boolean | DirectoryHistorial$equipmentsArgs<ExtArgs>
+    equipment?: boolean | DirectoryHistorial$equipmentArgs<ExtArgs>
   }, ExtArgs["result"]["directoryHistorial"]>
 
   export type DirectoryHistorialSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2837,7 +3399,7 @@ export namespace Prisma {
     filename?: boolean
     filepath?: boolean
     modified_at?: boolean
-    equipments?: boolean | DirectoryHistorial$equipmentsArgs<ExtArgs>
+    equipment?: boolean | DirectoryHistorial$equipmentArgs<ExtArgs>
   }, ExtArgs["result"]["directoryHistorial"]>
 
   export type DirectoryHistorialSelectScalar = {
@@ -2850,19 +3412,19 @@ export namespace Prisma {
 
   export type DirectoryHistorialOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "equipment_id" | "filename" | "filepath" | "modified_at", ExtArgs["result"]["directoryHistorial"]>
   export type DirectoryHistorialInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipments?: boolean | DirectoryHistorial$equipmentsArgs<ExtArgs>
+    equipment?: boolean | DirectoryHistorial$equipmentArgs<ExtArgs>
   }
   export type DirectoryHistorialIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipments?: boolean | DirectoryHistorial$equipmentsArgs<ExtArgs>
+    equipment?: boolean | DirectoryHistorial$equipmentArgs<ExtArgs>
   }
   export type DirectoryHistorialIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipments?: boolean | DirectoryHistorial$equipmentsArgs<ExtArgs>
+    equipment?: boolean | DirectoryHistorial$equipmentArgs<ExtArgs>
   }
 
   export type $DirectoryHistorialPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "DirectoryHistorial"
     objects: {
-      equipments: Prisma.$EquipmentPayload<ExtArgs> | null
+      equipment: Prisma.$EquipmentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -3264,7 +3826,7 @@ export namespace Prisma {
    */
   export interface Prisma__DirectoryHistorialClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    equipments<T extends DirectoryHistorial$equipmentsArgs<ExtArgs> = {}>(args?: Subset<T, DirectoryHistorial$equipmentsArgs<ExtArgs>>): Prisma__EquipmentClient<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    equipment<T extends DirectoryHistorial$equipmentArgs<ExtArgs> = {}>(args?: Subset<T, DirectoryHistorial$equipmentArgs<ExtArgs>>): Prisma__EquipmentClient<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3695,9 +4257,9 @@ export namespace Prisma {
   }
 
   /**
-   * DirectoryHistorial.equipments
+   * DirectoryHistorial.equipment
    */
-  export type DirectoryHistorial$equipmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DirectoryHistorial$equipmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Equipment
      */
@@ -3756,18 +4318,24 @@ export namespace Prisma {
     id: bigint | null
     communication_profile: string | null
     name: string | null
+    active: boolean | null
+    communication_type: string | null
   }
 
   export type EquipmentProfileMaxAggregateOutputType = {
     id: bigint | null
     communication_profile: string | null
     name: string | null
+    active: boolean | null
+    communication_type: string | null
   }
 
   export type EquipmentProfileCountAggregateOutputType = {
     id: number
     communication_profile: number
     name: number
+    active: number
+    communication_type: number
     _all: number
   }
 
@@ -3784,18 +4352,24 @@ export namespace Prisma {
     id?: true
     communication_profile?: true
     name?: true
+    active?: true
+    communication_type?: true
   }
 
   export type EquipmentProfileMaxAggregateInputType = {
     id?: true
     communication_profile?: true
     name?: true
+    active?: true
+    communication_type?: true
   }
 
   export type EquipmentProfileCountAggregateInputType = {
     id?: true
     communication_profile?: true
     name?: true
+    active?: true
+    communication_type?: true
     _all?: true
   }
 
@@ -3889,6 +4463,8 @@ export namespace Prisma {
     id: bigint
     communication_profile: string | null
     name: string | null
+    active: boolean | null
+    communication_type: string | null
     _count: EquipmentProfileCountAggregateOutputType | null
     _avg: EquipmentProfileAvgAggregateOutputType | null
     _sum: EquipmentProfileSumAggregateOutputType | null
@@ -3914,7 +4490,9 @@ export namespace Prisma {
     id?: boolean
     communication_profile?: boolean
     name?: boolean
-    communication_profiles?: boolean | EquipmentProfile$communication_profilesArgs<ExtArgs>
+    active?: boolean
+    communication_type?: boolean
+    communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
     equipments?: boolean | EquipmentProfile$equipmentsArgs<ExtArgs>
     _count?: boolean | EquipmentProfileCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["equipmentProfile"]>
@@ -3923,45 +4501,53 @@ export namespace Prisma {
     id?: boolean
     communication_profile?: boolean
     name?: boolean
-    communication_profiles?: boolean | EquipmentProfile$communication_profilesArgs<ExtArgs>
+    active?: boolean
+    communication_type?: boolean
+    communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
   }, ExtArgs["result"]["equipmentProfile"]>
 
   export type EquipmentProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     communication_profile?: boolean
     name?: boolean
-    communication_profiles?: boolean | EquipmentProfile$communication_profilesArgs<ExtArgs>
+    active?: boolean
+    communication_type?: boolean
+    communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
   }, ExtArgs["result"]["equipmentProfile"]>
 
   export type EquipmentProfileSelectScalar = {
     id?: boolean
     communication_profile?: boolean
     name?: boolean
+    active?: boolean
+    communication_type?: boolean
   }
 
-  export type EquipmentProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "communication_profile" | "name", ExtArgs["result"]["equipmentProfile"]>
+  export type EquipmentProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "communication_profile" | "name" | "active" | "communication_type", ExtArgs["result"]["equipmentProfile"]>
   export type EquipmentProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    communication_profiles?: boolean | EquipmentProfile$communication_profilesArgs<ExtArgs>
+    communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
     equipments?: boolean | EquipmentProfile$equipmentsArgs<ExtArgs>
     _count?: boolean | EquipmentProfileCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EquipmentProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    communication_profiles?: boolean | EquipmentProfile$communication_profilesArgs<ExtArgs>
+    communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
   }
   export type EquipmentProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    communication_profiles?: boolean | EquipmentProfile$communication_profilesArgs<ExtArgs>
+    communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
   }
 
   export type $EquipmentProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "EquipmentProfile"
     objects: {
-      communication_profiles: Prisma.$CommunicationProfilesPayload<ExtArgs> | null
+      communicationProfile: Prisma.$CommunicationProfilesPayload<ExtArgs> | null
       equipments: Prisma.$EquipmentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       communication_profile: string | null
       name: string | null
+      active: boolean | null
+      communication_type: string | null
     }, ExtArgs["result"]["equipmentProfile"]>
     composites: {}
   }
@@ -4356,7 +4942,7 @@ export namespace Prisma {
    */
   export interface Prisma__EquipmentProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    communication_profiles<T extends EquipmentProfile$communication_profilesArgs<ExtArgs> = {}>(args?: Subset<T, EquipmentProfile$communication_profilesArgs<ExtArgs>>): Prisma__CommunicationProfilesClient<$Result.GetResult<Prisma.$CommunicationProfilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    communicationProfile<T extends EquipmentProfile$communicationProfileArgs<ExtArgs> = {}>(args?: Subset<T, EquipmentProfile$communicationProfileArgs<ExtArgs>>): Prisma__CommunicationProfilesClient<$Result.GetResult<Prisma.$CommunicationProfilesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     equipments<T extends EquipmentProfile$equipmentsArgs<ExtArgs> = {}>(args?: Subset<T, EquipmentProfile$equipmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4390,6 +4976,8 @@ export namespace Prisma {
     readonly id: FieldRef<"EquipmentProfile", 'BigInt'>
     readonly communication_profile: FieldRef<"EquipmentProfile", 'String'>
     readonly name: FieldRef<"EquipmentProfile", 'String'>
+    readonly active: FieldRef<"EquipmentProfile", 'Boolean'>
+    readonly communication_type: FieldRef<"EquipmentProfile", 'String'>
   }
     
 
@@ -4786,9 +5374,9 @@ export namespace Prisma {
   }
 
   /**
-   * EquipmentProfile.communication_profiles
+   * EquipmentProfile.communicationProfile
    */
-  export type EquipmentProfile$communication_profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type EquipmentProfile$communicationProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the CommunicationProfiles
      */
@@ -4877,6 +5465,7 @@ export namespace Prisma {
     modified_at: Date | null
     last_connection: Date | null
     connection_status: string | null
+    active: boolean | null
   }
 
   export type EquipmentMaxAggregateOutputType = {
@@ -4887,6 +5476,7 @@ export namespace Prisma {
     modified_at: Date | null
     last_connection: Date | null
     connection_status: string | null
+    active: boolean | null
   }
 
   export type EquipmentCountAggregateOutputType = {
@@ -4897,6 +5487,7 @@ export namespace Prisma {
     modified_at: number
     last_connection: number
     connection_status: number
+    active: number
     _all: number
   }
 
@@ -4919,6 +5510,7 @@ export namespace Prisma {
     modified_at?: true
     last_connection?: true
     connection_status?: true
+    active?: true
   }
 
   export type EquipmentMaxAggregateInputType = {
@@ -4929,6 +5521,7 @@ export namespace Prisma {
     modified_at?: true
     last_connection?: true
     connection_status?: true
+    active?: true
   }
 
   export type EquipmentCountAggregateInputType = {
@@ -4939,6 +5532,7 @@ export namespace Prisma {
     modified_at?: true
     last_connection?: true
     connection_status?: true
+    active?: true
     _all?: true
   }
 
@@ -5036,6 +5630,7 @@ export namespace Prisma {
     modified_at: Date | null
     last_connection: Date | null
     connection_status: string | null
+    active: boolean | null
     _count: EquipmentCountAggregateOutputType | null
     _avg: EquipmentAvgAggregateOutputType | null
     _sum: EquipmentSumAggregateOutputType | null
@@ -5065,9 +5660,11 @@ export namespace Prisma {
     modified_at?: boolean
     last_connection?: boolean
     connection_status?: boolean
-    directory_historials?: boolean | Equipment$directory_historialsArgs<ExtArgs>
-    equipment_profiles?: boolean | Equipment$equipment_profilesArgs<ExtArgs>
+    active?: boolean
+    directoryHistorials?: boolean | Equipment$directoryHistorialsArgs<ExtArgs>
+    equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
     parameters?: boolean | Equipment$parametersArgs<ExtArgs>
+    EquipmentConfiguration?: boolean | Equipment$EquipmentConfigurationArgs<ExtArgs>
     _count?: boolean | EquipmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["equipment"]>
 
@@ -5079,7 +5676,8 @@ export namespace Prisma {
     modified_at?: boolean
     last_connection?: boolean
     connection_status?: boolean
-    equipment_profiles?: boolean | Equipment$equipment_profilesArgs<ExtArgs>
+    active?: boolean
+    equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
   }, ExtArgs["result"]["equipment"]>
 
   export type EquipmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5090,7 +5688,8 @@ export namespace Prisma {
     modified_at?: boolean
     last_connection?: boolean
     connection_status?: boolean
-    equipment_profiles?: boolean | Equipment$equipment_profilesArgs<ExtArgs>
+    active?: boolean
+    equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
   }, ExtArgs["result"]["equipment"]>
 
   export type EquipmentSelectScalar = {
@@ -5101,28 +5700,31 @@ export namespace Prisma {
     modified_at?: boolean
     last_connection?: boolean
     connection_status?: boolean
+    active?: boolean
   }
 
-  export type EquipmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "profile_id" | "name" | "created_at" | "modified_at" | "last_connection" | "connection_status", ExtArgs["result"]["equipment"]>
+  export type EquipmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "profile_id" | "name" | "created_at" | "modified_at" | "last_connection" | "connection_status" | "active", ExtArgs["result"]["equipment"]>
   export type EquipmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    directory_historials?: boolean | Equipment$directory_historialsArgs<ExtArgs>
-    equipment_profiles?: boolean | Equipment$equipment_profilesArgs<ExtArgs>
+    directoryHistorials?: boolean | Equipment$directoryHistorialsArgs<ExtArgs>
+    equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
     parameters?: boolean | Equipment$parametersArgs<ExtArgs>
+    EquipmentConfiguration?: boolean | Equipment$EquipmentConfigurationArgs<ExtArgs>
     _count?: boolean | EquipmentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EquipmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipment_profiles?: boolean | Equipment$equipment_profilesArgs<ExtArgs>
+    equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
   }
   export type EquipmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipment_profiles?: boolean | Equipment$equipment_profilesArgs<ExtArgs>
+    equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
   }
 
   export type $EquipmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Equipment"
     objects: {
-      directory_historials: Prisma.$DirectoryHistorialPayload<ExtArgs>[]
-      equipment_profiles: Prisma.$EquipmentProfilePayload<ExtArgs> | null
+      directoryHistorials: Prisma.$DirectoryHistorialPayload<ExtArgs>[]
+      equipmentProfile: Prisma.$EquipmentProfilePayload<ExtArgs> | null
       parameters: Prisma.$ParameterPayload<ExtArgs>[]
+      EquipmentConfiguration: Prisma.$EquipmentConfigurationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -5132,6 +5734,7 @@ export namespace Prisma {
       modified_at: Date | null
       last_connection: Date | null
       connection_status: string | null
+      active: boolean | null
     }, ExtArgs["result"]["equipment"]>
     composites: {}
   }
@@ -5526,9 +6129,10 @@ export namespace Prisma {
    */
   export interface Prisma__EquipmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    directory_historials<T extends Equipment$directory_historialsArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$directory_historialsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DirectoryHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    equipment_profiles<T extends Equipment$equipment_profilesArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$equipment_profilesArgs<ExtArgs>>): Prisma__EquipmentProfileClient<$Result.GetResult<Prisma.$EquipmentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    directoryHistorials<T extends Equipment$directoryHistorialsArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$directoryHistorialsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DirectoryHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    equipmentProfile<T extends Equipment$equipmentProfileArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$equipmentProfileArgs<ExtArgs>>): Prisma__EquipmentProfileClient<$Result.GetResult<Prisma.$EquipmentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     parameters<T extends Equipment$parametersArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$parametersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    EquipmentConfiguration<T extends Equipment$EquipmentConfigurationArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$EquipmentConfigurationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5565,6 +6169,7 @@ export namespace Prisma {
     readonly modified_at: FieldRef<"Equipment", 'DateTime'>
     readonly last_connection: FieldRef<"Equipment", 'DateTime'>
     readonly connection_status: FieldRef<"Equipment", 'String'>
+    readonly active: FieldRef<"Equipment", 'Boolean'>
   }
     
 
@@ -5961,9 +6566,9 @@ export namespace Prisma {
   }
 
   /**
-   * Equipment.directory_historials
+   * Equipment.directoryHistorials
    */
-  export type Equipment$directory_historialsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Equipment$directoryHistorialsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the DirectoryHistorial
      */
@@ -5985,9 +6590,9 @@ export namespace Prisma {
   }
 
   /**
-   * Equipment.equipment_profiles
+   * Equipment.equipmentProfile
    */
-  export type Equipment$equipment_profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Equipment$equipmentProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the EquipmentProfile
      */
@@ -6025,6 +6630,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ParameterScalarFieldEnum | ParameterScalarFieldEnum[]
+  }
+
+  /**
+   * Equipment.EquipmentConfiguration
+   */
+  export type Equipment$EquipmentConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    where?: EquipmentConfigurationWhereInput
+    orderBy?: EquipmentConfigurationOrderByWithRelationInput | EquipmentConfigurationOrderByWithRelationInput[]
+    cursor?: EquipmentConfigurationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EquipmentConfigurationScalarFieldEnum | EquipmentConfigurationScalarFieldEnum[]
   }
 
   /**
@@ -6071,6 +6700,8 @@ export namespace Prisma {
     result_folio: string | null
     description: string | null
     value: string | null
+    created_at: Date | null
+    active: boolean | null
   }
 
   export type HistogramResultMaxAggregateOutputType = {
@@ -6078,6 +6709,8 @@ export namespace Prisma {
     result_folio: string | null
     description: string | null
     value: string | null
+    created_at: Date | null
+    active: boolean | null
   }
 
   export type HistogramResultCountAggregateOutputType = {
@@ -6085,6 +6718,8 @@ export namespace Prisma {
     result_folio: number
     description: number
     value: number
+    created_at: number
+    active: number
     _all: number
   }
 
@@ -6102,6 +6737,8 @@ export namespace Prisma {
     result_folio?: true
     description?: true
     value?: true
+    created_at?: true
+    active?: true
   }
 
   export type HistogramResultMaxAggregateInputType = {
@@ -6109,6 +6746,8 @@ export namespace Prisma {
     result_folio?: true
     description?: true
     value?: true
+    created_at?: true
+    active?: true
   }
 
   export type HistogramResultCountAggregateInputType = {
@@ -6116,6 +6755,8 @@ export namespace Prisma {
     result_folio?: true
     description?: true
     value?: true
+    created_at?: true
+    active?: true
     _all?: true
   }
 
@@ -6210,6 +6851,8 @@ export namespace Prisma {
     result_folio: string | null
     description: string | null
     value: string | null
+    created_at: Date | null
+    active: boolean | null
     _count: HistogramResultCountAggregateOutputType | null
     _avg: HistogramResultAvgAggregateOutputType | null
     _sum: HistogramResultSumAggregateOutputType | null
@@ -6236,7 +6879,9 @@ export namespace Prisma {
     result_folio?: boolean
     description?: boolean
     value?: boolean
-    results?: boolean | HistogramResult$resultsArgs<ExtArgs>
+    created_at?: boolean
+    active?: boolean
+    result?: boolean | HistogramResult$resultArgs<ExtArgs>
   }, ExtArgs["result"]["histogramResult"]>
 
   export type HistogramResultSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6244,7 +6889,9 @@ export namespace Prisma {
     result_folio?: boolean
     description?: boolean
     value?: boolean
-    results?: boolean | HistogramResult$resultsArgs<ExtArgs>
+    created_at?: boolean
+    active?: boolean
+    result?: boolean | HistogramResult$resultArgs<ExtArgs>
   }, ExtArgs["result"]["histogramResult"]>
 
   export type HistogramResultSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6252,7 +6899,9 @@ export namespace Prisma {
     result_folio?: boolean
     description?: boolean
     value?: boolean
-    results?: boolean | HistogramResult$resultsArgs<ExtArgs>
+    created_at?: boolean
+    active?: boolean
+    result?: boolean | HistogramResult$resultArgs<ExtArgs>
   }, ExtArgs["result"]["histogramResult"]>
 
   export type HistogramResultSelectScalar = {
@@ -6260,29 +6909,33 @@ export namespace Prisma {
     result_folio?: boolean
     description?: boolean
     value?: boolean
+    created_at?: boolean
+    active?: boolean
   }
 
-  export type HistogramResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "description" | "value", ExtArgs["result"]["histogramResult"]>
+  export type HistogramResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "description" | "value" | "created_at" | "active", ExtArgs["result"]["histogramResult"]>
   export type HistogramResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    results?: boolean | HistogramResult$resultsArgs<ExtArgs>
+    result?: boolean | HistogramResult$resultArgs<ExtArgs>
   }
   export type HistogramResultIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    results?: boolean | HistogramResult$resultsArgs<ExtArgs>
+    result?: boolean | HistogramResult$resultArgs<ExtArgs>
   }
   export type HistogramResultIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    results?: boolean | HistogramResult$resultsArgs<ExtArgs>
+    result?: boolean | HistogramResult$resultArgs<ExtArgs>
   }
 
   export type $HistogramResultPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "HistogramResult"
     objects: {
-      results: Prisma.$ResultPayload<ExtArgs> | null
+      result: Prisma.$ResultPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       result_folio: string | null
       description: string | null
       value: string | null
+      created_at: Date | null
+      active: boolean | null
     }, ExtArgs["result"]["histogramResult"]>
     composites: {}
   }
@@ -6677,7 +7330,7 @@ export namespace Prisma {
    */
   export interface Prisma__HistogramResultClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    results<T extends HistogramResult$resultsArgs<ExtArgs> = {}>(args?: Subset<T, HistogramResult$resultsArgs<ExtArgs>>): Prisma__ResultClient<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    result<T extends HistogramResult$resultArgs<ExtArgs> = {}>(args?: Subset<T, HistogramResult$resultArgs<ExtArgs>>): Prisma__ResultClient<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6711,6 +7364,8 @@ export namespace Prisma {
     readonly result_folio: FieldRef<"HistogramResult", 'String'>
     readonly description: FieldRef<"HistogramResult", 'String'>
     readonly value: FieldRef<"HistogramResult", 'String'>
+    readonly created_at: FieldRef<"HistogramResult", 'DateTime'>
+    readonly active: FieldRef<"HistogramResult", 'Boolean'>
   }
     
 
@@ -7107,9 +7762,9 @@ export namespace Prisma {
   }
 
   /**
-   * HistogramResult.results
+   * HistogramResult.result
    */
-  export type HistogramResult$resultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type HistogramResult$resultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Result
      */
@@ -7159,50 +7814,55 @@ export namespace Prisma {
   export type ParameterAvgAggregateOutputType = {
     id: number | null
     equipment_id: number | null
+    parameter_dictionary_id: number | null
   }
 
   export type ParameterSumAggregateOutputType = {
     id: bigint | null
     equipment_id: bigint | null
+    parameter_dictionary_id: bigint | null
   }
 
   export type ParameterMinAggregateOutputType = {
     id: bigint | null
     result_folio: string | null
     equipment_id: bigint | null
+    parameter_dictionary_id: bigint | null
     description: string | null
     value: string | null
     unit_measurement: string | null
     max_range: string | null
     min_range: string | null
     created_at: Date | null
-    modified_at: Date | null
+    active: boolean | null
   }
 
   export type ParameterMaxAggregateOutputType = {
     id: bigint | null
     result_folio: string | null
     equipment_id: bigint | null
+    parameter_dictionary_id: bigint | null
     description: string | null
     value: string | null
     unit_measurement: string | null
     max_range: string | null
     min_range: string | null
     created_at: Date | null
-    modified_at: Date | null
+    active: boolean | null
   }
 
   export type ParameterCountAggregateOutputType = {
     id: number
     result_folio: number
     equipment_id: number
+    parameter_dictionary_id: number
     description: number
     value: number
     unit_measurement: number
     max_range: number
     min_range: number
     created_at: number
-    modified_at: number
+    active: number
     _all: number
   }
 
@@ -7210,50 +7870,55 @@ export namespace Prisma {
   export type ParameterAvgAggregateInputType = {
     id?: true
     equipment_id?: true
+    parameter_dictionary_id?: true
   }
 
   export type ParameterSumAggregateInputType = {
     id?: true
     equipment_id?: true
+    parameter_dictionary_id?: true
   }
 
   export type ParameterMinAggregateInputType = {
     id?: true
     result_folio?: true
     equipment_id?: true
+    parameter_dictionary_id?: true
     description?: true
     value?: true
     unit_measurement?: true
     max_range?: true
     min_range?: true
     created_at?: true
-    modified_at?: true
+    active?: true
   }
 
   export type ParameterMaxAggregateInputType = {
     id?: true
     result_folio?: true
     equipment_id?: true
+    parameter_dictionary_id?: true
     description?: true
     value?: true
     unit_measurement?: true
     max_range?: true
     min_range?: true
     created_at?: true
-    modified_at?: true
+    active?: true
   }
 
   export type ParameterCountAggregateInputType = {
     id?: true
     result_folio?: true
     equipment_id?: true
+    parameter_dictionary_id?: true
     description?: true
     value?: true
     unit_measurement?: true
     max_range?: true
     min_range?: true
     created_at?: true
-    modified_at?: true
+    active?: true
     _all?: true
   }
 
@@ -7347,13 +8012,14 @@ export namespace Prisma {
     id: bigint
     result_folio: string | null
     equipment_id: bigint | null
+    parameter_dictionary_id: bigint | null
     description: string | null
     value: string | null
     unit_measurement: string | null
     max_range: string | null
     min_range: string | null
     created_at: Date | null
-    modified_at: Date | null
+    active: boolean | null
     _count: ParameterCountAggregateOutputType | null
     _avg: ParameterAvgAggregateOutputType | null
     _sum: ParameterSumAggregateOutputType | null
@@ -7379,91 +8045,103 @@ export namespace Prisma {
     id?: boolean
     result_folio?: boolean
     equipment_id?: boolean
+    parameter_dictionary_id?: boolean
     description?: boolean
     value?: boolean
     unit_measurement?: boolean
     max_range?: boolean
     min_range?: boolean
     created_at?: boolean
-    modified_at?: boolean
-    equipments?: boolean | Parameter$equipmentsArgs<ExtArgs>
-    results?: boolean | Parameter$resultsArgs<ExtArgs>
+    active?: boolean
+    equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
+    parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
+    result?: boolean | Parameter$resultArgs<ExtArgs>
   }, ExtArgs["result"]["parameter"]>
 
   export type ParameterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     result_folio?: boolean
     equipment_id?: boolean
+    parameter_dictionary_id?: boolean
     description?: boolean
     value?: boolean
     unit_measurement?: boolean
     max_range?: boolean
     min_range?: boolean
     created_at?: boolean
-    modified_at?: boolean
-    equipments?: boolean | Parameter$equipmentsArgs<ExtArgs>
-    results?: boolean | Parameter$resultsArgs<ExtArgs>
+    active?: boolean
+    equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
+    parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
+    result?: boolean | Parameter$resultArgs<ExtArgs>
   }, ExtArgs["result"]["parameter"]>
 
   export type ParameterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     result_folio?: boolean
     equipment_id?: boolean
+    parameter_dictionary_id?: boolean
     description?: boolean
     value?: boolean
     unit_measurement?: boolean
     max_range?: boolean
     min_range?: boolean
     created_at?: boolean
-    modified_at?: boolean
-    equipments?: boolean | Parameter$equipmentsArgs<ExtArgs>
-    results?: boolean | Parameter$resultsArgs<ExtArgs>
+    active?: boolean
+    equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
+    parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
+    result?: boolean | Parameter$resultArgs<ExtArgs>
   }, ExtArgs["result"]["parameter"]>
 
   export type ParameterSelectScalar = {
     id?: boolean
     result_folio?: boolean
     equipment_id?: boolean
+    parameter_dictionary_id?: boolean
     description?: boolean
     value?: boolean
     unit_measurement?: boolean
     max_range?: boolean
     min_range?: boolean
     created_at?: boolean
-    modified_at?: boolean
+    active?: boolean
   }
 
-  export type ParameterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "equipment_id" | "description" | "value" | "unit_measurement" | "max_range" | "min_range" | "created_at" | "modified_at", ExtArgs["result"]["parameter"]>
+  export type ParameterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "equipment_id" | "parameter_dictionary_id" | "description" | "value" | "unit_measurement" | "max_range" | "min_range" | "created_at" | "active", ExtArgs["result"]["parameter"]>
   export type ParameterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipments?: boolean | Parameter$equipmentsArgs<ExtArgs>
-    results?: boolean | Parameter$resultsArgs<ExtArgs>
+    equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
+    parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
+    result?: boolean | Parameter$resultArgs<ExtArgs>
   }
   export type ParameterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipments?: boolean | Parameter$equipmentsArgs<ExtArgs>
-    results?: boolean | Parameter$resultsArgs<ExtArgs>
+    equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
+    parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
+    result?: boolean | Parameter$resultArgs<ExtArgs>
   }
   export type ParameterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    equipments?: boolean | Parameter$equipmentsArgs<ExtArgs>
-    results?: boolean | Parameter$resultsArgs<ExtArgs>
+    equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
+    parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
+    result?: boolean | Parameter$resultArgs<ExtArgs>
   }
 
   export type $ParameterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Parameter"
     objects: {
-      equipments: Prisma.$EquipmentPayload<ExtArgs> | null
-      results: Prisma.$ResultPayload<ExtArgs> | null
+      equipment: Prisma.$EquipmentPayload<ExtArgs> | null
+      parameterDictionary: Prisma.$ParameterDictionaryPayload<ExtArgs> | null
+      result: Prisma.$ResultPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
       result_folio: string | null
       equipment_id: bigint | null
+      parameter_dictionary_id: bigint | null
       description: string | null
       value: string | null
       unit_measurement: string | null
       max_range: string | null
       min_range: string | null
       created_at: Date | null
-      modified_at: Date | null
+      active: boolean | null
     }, ExtArgs["result"]["parameter"]>
     composites: {}
   }
@@ -7858,8 +8536,9 @@ export namespace Prisma {
    */
   export interface Prisma__ParameterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    equipments<T extends Parameter$equipmentsArgs<ExtArgs> = {}>(args?: Subset<T, Parameter$equipmentsArgs<ExtArgs>>): Prisma__EquipmentClient<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    results<T extends Parameter$resultsArgs<ExtArgs> = {}>(args?: Subset<T, Parameter$resultsArgs<ExtArgs>>): Prisma__ResultClient<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    equipment<T extends Parameter$equipmentArgs<ExtArgs> = {}>(args?: Subset<T, Parameter$equipmentArgs<ExtArgs>>): Prisma__EquipmentClient<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    parameterDictionary<T extends Parameter$parameterDictionaryArgs<ExtArgs> = {}>(args?: Subset<T, Parameter$parameterDictionaryArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    result<T extends Parameter$resultArgs<ExtArgs> = {}>(args?: Subset<T, Parameter$resultArgs<ExtArgs>>): Prisma__ResultClient<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7892,13 +8571,14 @@ export namespace Prisma {
     readonly id: FieldRef<"Parameter", 'BigInt'>
     readonly result_folio: FieldRef<"Parameter", 'String'>
     readonly equipment_id: FieldRef<"Parameter", 'BigInt'>
+    readonly parameter_dictionary_id: FieldRef<"Parameter", 'BigInt'>
     readonly description: FieldRef<"Parameter", 'String'>
     readonly value: FieldRef<"Parameter", 'String'>
     readonly unit_measurement: FieldRef<"Parameter", 'String'>
     readonly max_range: FieldRef<"Parameter", 'String'>
     readonly min_range: FieldRef<"Parameter", 'String'>
     readonly created_at: FieldRef<"Parameter", 'DateTime'>
-    readonly modified_at: FieldRef<"Parameter", 'DateTime'>
+    readonly active: FieldRef<"Parameter", 'Boolean'>
   }
     
 
@@ -8295,9 +8975,9 @@ export namespace Prisma {
   }
 
   /**
-   * Parameter.equipments
+   * Parameter.equipment
    */
-  export type Parameter$equipmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Parameter$equipmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Equipment
      */
@@ -8314,9 +8994,28 @@ export namespace Prisma {
   }
 
   /**
-   * Parameter.results
+   * Parameter.parameterDictionary
    */
-  export type Parameter$resultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Parameter$parameterDictionaryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    where?: ParameterDictionaryWhereInput
+  }
+
+  /**
+   * Parameter.result
+   */
+  export type Parameter$resultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Result
      */
@@ -8357,64 +9056,82 @@ export namespace Prisma {
 
   export type AggregateResult = {
     _count: ResultCountAggregateOutputType | null
+    _avg: ResultAvgAggregateOutputType | null
+    _sum: ResultSumAggregateOutputType | null
     _min: ResultMinAggregateOutputType | null
     _max: ResultMaxAggregateOutputType | null
   }
 
+  export type ResultAvgAggregateOutputType = {
+    created_by: number | null
+  }
+
+  export type ResultSumAggregateOutputType = {
+    created_by: bigint | null
+  }
+
   export type ResultMinAggregateOutputType = {
     folio: string | null
+    created_by: bigint | null
     sample_id: string | null
-    pacient_name: string | null
-    sex: string | null
     created_at: Date | null
-    modified_at: Date | null
+    last_modified_at: Date | null
+    active: boolean | null
   }
 
   export type ResultMaxAggregateOutputType = {
     folio: string | null
+    created_by: bigint | null
     sample_id: string | null
-    pacient_name: string | null
-    sex: string | null
     created_at: Date | null
-    modified_at: Date | null
+    last_modified_at: Date | null
+    active: boolean | null
   }
 
   export type ResultCountAggregateOutputType = {
     folio: number
+    created_by: number
     sample_id: number
-    pacient_name: number
-    sex: number
     created_at: number
-    modified_at: number
+    last_modified_at: number
+    active: number
     _all: number
   }
 
 
+  export type ResultAvgAggregateInputType = {
+    created_by?: true
+  }
+
+  export type ResultSumAggregateInputType = {
+    created_by?: true
+  }
+
   export type ResultMinAggregateInputType = {
     folio?: true
+    created_by?: true
     sample_id?: true
-    pacient_name?: true
-    sex?: true
     created_at?: true
-    modified_at?: true
+    last_modified_at?: true
+    active?: true
   }
 
   export type ResultMaxAggregateInputType = {
     folio?: true
+    created_by?: true
     sample_id?: true
-    pacient_name?: true
-    sex?: true
     created_at?: true
-    modified_at?: true
+    last_modified_at?: true
+    active?: true
   }
 
   export type ResultCountAggregateInputType = {
     folio?: true
+    created_by?: true
     sample_id?: true
-    pacient_name?: true
-    sex?: true
     created_at?: true
-    modified_at?: true
+    last_modified_at?: true
+    active?: true
     _all?: true
   }
 
@@ -8456,6 +9173,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ResultAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ResultSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ResultMinAggregateInputType
@@ -8486,18 +9215,22 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ResultCountAggregateInputType | true
+    _avg?: ResultAvgAggregateInputType
+    _sum?: ResultSumAggregateInputType
     _min?: ResultMinAggregateInputType
     _max?: ResultMaxAggregateInputType
   }
 
   export type ResultGroupByOutputType = {
     folio: string
+    created_by: bigint | null
     sample_id: string | null
-    pacient_name: string | null
-    sex: string | null
     created_at: Date | null
-    modified_at: Date | null
+    last_modified_at: Date | null
+    active: boolean | null
     _count: ResultCountAggregateOutputType | null
+    _avg: ResultAvgAggregateOutputType | null
+    _sum: ResultSumAggregateOutputType | null
     _min: ResultMinAggregateOutputType | null
     _max: ResultMaxAggregateOutputType | null
   }
@@ -8518,65 +9251,77 @@ export namespace Prisma {
 
   export type ResultSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     folio?: boolean
+    created_by?: boolean
     sample_id?: boolean
-    pacient_name?: boolean
-    sex?: boolean
     created_at?: boolean
-    modified_at?: boolean
-    histogram_results?: boolean | Result$histogram_resultsArgs<ExtArgs>
+    last_modified_at?: boolean
+    active?: boolean
+    histogramResults?: boolean | Result$histogramResultsArgs<ExtArgs>
     parameters?: boolean | Result$parametersArgs<ExtArgs>
+    resultSends?: boolean | Result$resultSendsArgs<ExtArgs>
+    user?: boolean | Result$userArgs<ExtArgs>
     _count?: boolean | ResultCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     folio?: boolean
+    created_by?: boolean
     sample_id?: boolean
-    pacient_name?: boolean
-    sex?: boolean
     created_at?: boolean
-    modified_at?: boolean
+    last_modified_at?: boolean
+    active?: boolean
+    user?: boolean | Result$userArgs<ExtArgs>
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     folio?: boolean
+    created_by?: boolean
     sample_id?: boolean
-    pacient_name?: boolean
-    sex?: boolean
     created_at?: boolean
-    modified_at?: boolean
+    last_modified_at?: boolean
+    active?: boolean
+    user?: boolean | Result$userArgs<ExtArgs>
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectScalar = {
     folio?: boolean
+    created_by?: boolean
     sample_id?: boolean
-    pacient_name?: boolean
-    sex?: boolean
     created_at?: boolean
-    modified_at?: boolean
+    last_modified_at?: boolean
+    active?: boolean
   }
 
-  export type ResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"folio" | "sample_id" | "pacient_name" | "sex" | "created_at" | "modified_at", ExtArgs["result"]["result"]>
+  export type ResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"folio" | "created_by" | "sample_id" | "created_at" | "last_modified_at" | "active", ExtArgs["result"]["result"]>
   export type ResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    histogram_results?: boolean | Result$histogram_resultsArgs<ExtArgs>
+    histogramResults?: boolean | Result$histogramResultsArgs<ExtArgs>
     parameters?: boolean | Result$parametersArgs<ExtArgs>
+    resultSends?: boolean | Result$resultSendsArgs<ExtArgs>
+    user?: boolean | Result$userArgs<ExtArgs>
     _count?: boolean | ResultCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type ResultIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type ResultIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ResultIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Result$userArgs<ExtArgs>
+  }
+  export type ResultIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | Result$userArgs<ExtArgs>
+  }
 
   export type $ResultPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Result"
     objects: {
-      histogram_results: Prisma.$HistogramResultPayload<ExtArgs>[]
+      histogramResults: Prisma.$HistogramResultPayload<ExtArgs>[]
       parameters: Prisma.$ParameterPayload<ExtArgs>[]
+      resultSends: Prisma.$ResultSendPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       folio: string
+      created_by: bigint | null
       sample_id: string | null
-      pacient_name: string | null
-      sex: string | null
       created_at: Date | null
-      modified_at: Date | null
+      last_modified_at: Date | null
+      active: boolean | null
     }, ExtArgs["result"]["result"]>
     composites: {}
   }
@@ -8971,8 +9716,10 @@ export namespace Prisma {
    */
   export interface Prisma__ResultClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    histogram_results<T extends Result$histogram_resultsArgs<ExtArgs> = {}>(args?: Subset<T, Result$histogram_resultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistogramResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    histogramResults<T extends Result$histogramResultsArgs<ExtArgs> = {}>(args?: Subset<T, Result$histogramResultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistogramResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     parameters<T extends Result$parametersArgs<ExtArgs> = {}>(args?: Subset<T, Result$parametersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    resultSends<T extends Result$resultSendsArgs<ExtArgs> = {}>(args?: Subset<T, Result$resultSendsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends Result$userArgs<ExtArgs> = {}>(args?: Subset<T, Result$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9003,11 +9750,11 @@ export namespace Prisma {
    */
   interface ResultFieldRefs {
     readonly folio: FieldRef<"Result", 'String'>
+    readonly created_by: FieldRef<"Result", 'BigInt'>
     readonly sample_id: FieldRef<"Result", 'String'>
-    readonly pacient_name: FieldRef<"Result", 'String'>
-    readonly sex: FieldRef<"Result", 'String'>
     readonly created_at: FieldRef<"Result", 'DateTime'>
-    readonly modified_at: FieldRef<"Result", 'DateTime'>
+    readonly last_modified_at: FieldRef<"Result", 'DateTime'>
+    readonly active: FieldRef<"Result", 'Boolean'>
   }
     
 
@@ -9257,6 +10004,10 @@ export namespace Prisma {
      */
     data: ResultCreateManyInput | ResultCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9327,6 +10078,10 @@ export namespace Prisma {
      * Limit how many Results to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -9396,9 +10151,9 @@ export namespace Prisma {
   }
 
   /**
-   * Result.histogram_results
+   * Result.histogramResults
    */
-  export type Result$histogram_resultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Result$histogramResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the HistogramResult
      */
@@ -9444,6 +10199,49 @@ export namespace Prisma {
   }
 
   /**
+   * Result.resultSends
+   */
+  export type Result$resultSendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    where?: ResultSendWhereInput
+    orderBy?: ResultSendOrderByWithRelationInput | ResultSendOrderByWithRelationInput[]
+    cursor?: ResultSendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResultSendScalarFieldEnum | ResultSendScalarFieldEnum[]
+  }
+
+  /**
+   * Result.user
+   */
+  export type Result$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Result without action
    */
   export type ResultDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9463,6 +10261,5565 @@ export namespace Prisma {
 
 
   /**
+   * Model ParameterDictionary
+   */
+
+  export type AggregateParameterDictionary = {
+    _count: ParameterDictionaryCountAggregateOutputType | null
+    _avg: ParameterDictionaryAvgAggregateOutputType | null
+    _sum: ParameterDictionarySumAggregateOutputType | null
+    _min: ParameterDictionaryMinAggregateOutputType | null
+    _max: ParameterDictionaryMaxAggregateOutputType | null
+  }
+
+  export type ParameterDictionaryAvgAggregateOutputType = {
+    id: number | null
+    system_parameter_id: number | null
+  }
+
+  export type ParameterDictionarySumAggregateOutputType = {
+    id: bigint | null
+    system_parameter_id: bigint | null
+  }
+
+  export type ParameterDictionaryMinAggregateOutputType = {
+    id: bigint | null
+    system_parameter_id: bigint | null
+    parameter_description: string | null
+  }
+
+  export type ParameterDictionaryMaxAggregateOutputType = {
+    id: bigint | null
+    system_parameter_id: bigint | null
+    parameter_description: string | null
+  }
+
+  export type ParameterDictionaryCountAggregateOutputType = {
+    id: number
+    system_parameter_id: number
+    parameter_description: number
+    _all: number
+  }
+
+
+  export type ParameterDictionaryAvgAggregateInputType = {
+    id?: true
+    system_parameter_id?: true
+  }
+
+  export type ParameterDictionarySumAggregateInputType = {
+    id?: true
+    system_parameter_id?: true
+  }
+
+  export type ParameterDictionaryMinAggregateInputType = {
+    id?: true
+    system_parameter_id?: true
+    parameter_description?: true
+  }
+
+  export type ParameterDictionaryMaxAggregateInputType = {
+    id?: true
+    system_parameter_id?: true
+    parameter_description?: true
+  }
+
+  export type ParameterDictionaryCountAggregateInputType = {
+    id?: true
+    system_parameter_id?: true
+    parameter_description?: true
+    _all?: true
+  }
+
+  export type ParameterDictionaryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ParameterDictionary to aggregate.
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParameterDictionaries to fetch.
+     */
+    orderBy?: ParameterDictionaryOrderByWithRelationInput | ParameterDictionaryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ParameterDictionaryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParameterDictionaries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParameterDictionaries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ParameterDictionaries
+    **/
+    _count?: true | ParameterDictionaryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ParameterDictionaryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ParameterDictionarySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ParameterDictionaryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ParameterDictionaryMaxAggregateInputType
+  }
+
+  export type GetParameterDictionaryAggregateType<T extends ParameterDictionaryAggregateArgs> = {
+        [P in keyof T & keyof AggregateParameterDictionary]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateParameterDictionary[P]>
+      : GetScalarType<T[P], AggregateParameterDictionary[P]>
+  }
+
+
+
+
+  export type ParameterDictionaryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParameterDictionaryWhereInput
+    orderBy?: ParameterDictionaryOrderByWithAggregationInput | ParameterDictionaryOrderByWithAggregationInput[]
+    by: ParameterDictionaryScalarFieldEnum[] | ParameterDictionaryScalarFieldEnum
+    having?: ParameterDictionaryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ParameterDictionaryCountAggregateInputType | true
+    _avg?: ParameterDictionaryAvgAggregateInputType
+    _sum?: ParameterDictionarySumAggregateInputType
+    _min?: ParameterDictionaryMinAggregateInputType
+    _max?: ParameterDictionaryMaxAggregateInputType
+  }
+
+  export type ParameterDictionaryGroupByOutputType = {
+    id: bigint
+    system_parameter_id: bigint | null
+    parameter_description: string | null
+    _count: ParameterDictionaryCountAggregateOutputType | null
+    _avg: ParameterDictionaryAvgAggregateOutputType | null
+    _sum: ParameterDictionarySumAggregateOutputType | null
+    _min: ParameterDictionaryMinAggregateOutputType | null
+    _max: ParameterDictionaryMaxAggregateOutputType | null
+  }
+
+  type GetParameterDictionaryGroupByPayload<T extends ParameterDictionaryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ParameterDictionaryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ParameterDictionaryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ParameterDictionaryGroupByOutputType[P]>
+            : GetScalarType<T[P], ParameterDictionaryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ParameterDictionarySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    system_parameter_id?: boolean
+    parameter_description?: boolean
+    systemParameter?: boolean | ParameterDictionary$systemParameterArgs<ExtArgs>
+    parameters?: boolean | ParameterDictionary$parametersArgs<ExtArgs>
+    _count?: boolean | ParameterDictionaryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["parameterDictionary"]>
+
+  export type ParameterDictionarySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    system_parameter_id?: boolean
+    parameter_description?: boolean
+    systemParameter?: boolean | ParameterDictionary$systemParameterArgs<ExtArgs>
+  }, ExtArgs["result"]["parameterDictionary"]>
+
+  export type ParameterDictionarySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    system_parameter_id?: boolean
+    parameter_description?: boolean
+    systemParameter?: boolean | ParameterDictionary$systemParameterArgs<ExtArgs>
+  }, ExtArgs["result"]["parameterDictionary"]>
+
+  export type ParameterDictionarySelectScalar = {
+    id?: boolean
+    system_parameter_id?: boolean
+    parameter_description?: boolean
+  }
+
+  export type ParameterDictionaryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "system_parameter_id" | "parameter_description", ExtArgs["result"]["parameterDictionary"]>
+  export type ParameterDictionaryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    systemParameter?: boolean | ParameterDictionary$systemParameterArgs<ExtArgs>
+    parameters?: boolean | ParameterDictionary$parametersArgs<ExtArgs>
+    _count?: boolean | ParameterDictionaryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ParameterDictionaryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    systemParameter?: boolean | ParameterDictionary$systemParameterArgs<ExtArgs>
+  }
+  export type ParameterDictionaryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    systemParameter?: boolean | ParameterDictionary$systemParameterArgs<ExtArgs>
+  }
+
+  export type $ParameterDictionaryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ParameterDictionary"
+    objects: {
+      systemParameter: Prisma.$SystemParameterPayload<ExtArgs> | null
+      parameters: Prisma.$ParameterPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      system_parameter_id: bigint | null
+      parameter_description: string | null
+    }, ExtArgs["result"]["parameterDictionary"]>
+    composites: {}
+  }
+
+  type ParameterDictionaryGetPayload<S extends boolean | null | undefined | ParameterDictionaryDefaultArgs> = $Result.GetResult<Prisma.$ParameterDictionaryPayload, S>
+
+  type ParameterDictionaryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ParameterDictionaryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ParameterDictionaryCountAggregateInputType | true
+    }
+
+  export interface ParameterDictionaryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ParameterDictionary'], meta: { name: 'ParameterDictionary' } }
+    /**
+     * Find zero or one ParameterDictionary that matches the filter.
+     * @param {ParameterDictionaryFindUniqueArgs} args - Arguments to find a ParameterDictionary
+     * @example
+     * // Get one ParameterDictionary
+     * const parameterDictionary = await prisma.parameterDictionary.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ParameterDictionaryFindUniqueArgs>(args: SelectSubset<T, ParameterDictionaryFindUniqueArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ParameterDictionary that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ParameterDictionaryFindUniqueOrThrowArgs} args - Arguments to find a ParameterDictionary
+     * @example
+     * // Get one ParameterDictionary
+     * const parameterDictionary = await prisma.parameterDictionary.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ParameterDictionaryFindUniqueOrThrowArgs>(args: SelectSubset<T, ParameterDictionaryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ParameterDictionary that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryFindFirstArgs} args - Arguments to find a ParameterDictionary
+     * @example
+     * // Get one ParameterDictionary
+     * const parameterDictionary = await prisma.parameterDictionary.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ParameterDictionaryFindFirstArgs>(args?: SelectSubset<T, ParameterDictionaryFindFirstArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ParameterDictionary that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryFindFirstOrThrowArgs} args - Arguments to find a ParameterDictionary
+     * @example
+     * // Get one ParameterDictionary
+     * const parameterDictionary = await prisma.parameterDictionary.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ParameterDictionaryFindFirstOrThrowArgs>(args?: SelectSubset<T, ParameterDictionaryFindFirstOrThrowArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ParameterDictionaries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ParameterDictionaries
+     * const parameterDictionaries = await prisma.parameterDictionary.findMany()
+     * 
+     * // Get first 10 ParameterDictionaries
+     * const parameterDictionaries = await prisma.parameterDictionary.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const parameterDictionaryWithIdOnly = await prisma.parameterDictionary.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ParameterDictionaryFindManyArgs>(args?: SelectSubset<T, ParameterDictionaryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ParameterDictionary.
+     * @param {ParameterDictionaryCreateArgs} args - Arguments to create a ParameterDictionary.
+     * @example
+     * // Create one ParameterDictionary
+     * const ParameterDictionary = await prisma.parameterDictionary.create({
+     *   data: {
+     *     // ... data to create a ParameterDictionary
+     *   }
+     * })
+     * 
+     */
+    create<T extends ParameterDictionaryCreateArgs>(args: SelectSubset<T, ParameterDictionaryCreateArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ParameterDictionaries.
+     * @param {ParameterDictionaryCreateManyArgs} args - Arguments to create many ParameterDictionaries.
+     * @example
+     * // Create many ParameterDictionaries
+     * const parameterDictionary = await prisma.parameterDictionary.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ParameterDictionaryCreateManyArgs>(args?: SelectSubset<T, ParameterDictionaryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ParameterDictionaries and returns the data saved in the database.
+     * @param {ParameterDictionaryCreateManyAndReturnArgs} args - Arguments to create many ParameterDictionaries.
+     * @example
+     * // Create many ParameterDictionaries
+     * const parameterDictionary = await prisma.parameterDictionary.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ParameterDictionaries and only return the `id`
+     * const parameterDictionaryWithIdOnly = await prisma.parameterDictionary.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ParameterDictionaryCreateManyAndReturnArgs>(args?: SelectSubset<T, ParameterDictionaryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ParameterDictionary.
+     * @param {ParameterDictionaryDeleteArgs} args - Arguments to delete one ParameterDictionary.
+     * @example
+     * // Delete one ParameterDictionary
+     * const ParameterDictionary = await prisma.parameterDictionary.delete({
+     *   where: {
+     *     // ... filter to delete one ParameterDictionary
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ParameterDictionaryDeleteArgs>(args: SelectSubset<T, ParameterDictionaryDeleteArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ParameterDictionary.
+     * @param {ParameterDictionaryUpdateArgs} args - Arguments to update one ParameterDictionary.
+     * @example
+     * // Update one ParameterDictionary
+     * const parameterDictionary = await prisma.parameterDictionary.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ParameterDictionaryUpdateArgs>(args: SelectSubset<T, ParameterDictionaryUpdateArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ParameterDictionaries.
+     * @param {ParameterDictionaryDeleteManyArgs} args - Arguments to filter ParameterDictionaries to delete.
+     * @example
+     * // Delete a few ParameterDictionaries
+     * const { count } = await prisma.parameterDictionary.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ParameterDictionaryDeleteManyArgs>(args?: SelectSubset<T, ParameterDictionaryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ParameterDictionaries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ParameterDictionaries
+     * const parameterDictionary = await prisma.parameterDictionary.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ParameterDictionaryUpdateManyArgs>(args: SelectSubset<T, ParameterDictionaryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ParameterDictionaries and returns the data updated in the database.
+     * @param {ParameterDictionaryUpdateManyAndReturnArgs} args - Arguments to update many ParameterDictionaries.
+     * @example
+     * // Update many ParameterDictionaries
+     * const parameterDictionary = await prisma.parameterDictionary.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ParameterDictionaries and only return the `id`
+     * const parameterDictionaryWithIdOnly = await prisma.parameterDictionary.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ParameterDictionaryUpdateManyAndReturnArgs>(args: SelectSubset<T, ParameterDictionaryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ParameterDictionary.
+     * @param {ParameterDictionaryUpsertArgs} args - Arguments to update or create a ParameterDictionary.
+     * @example
+     * // Update or create a ParameterDictionary
+     * const parameterDictionary = await prisma.parameterDictionary.upsert({
+     *   create: {
+     *     // ... data to create a ParameterDictionary
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ParameterDictionary we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ParameterDictionaryUpsertArgs>(args: SelectSubset<T, ParameterDictionaryUpsertArgs<ExtArgs>>): Prisma__ParameterDictionaryClient<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ParameterDictionaries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryCountArgs} args - Arguments to filter ParameterDictionaries to count.
+     * @example
+     * // Count the number of ParameterDictionaries
+     * const count = await prisma.parameterDictionary.count({
+     *   where: {
+     *     // ... the filter for the ParameterDictionaries we want to count
+     *   }
+     * })
+    **/
+    count<T extends ParameterDictionaryCountArgs>(
+      args?: Subset<T, ParameterDictionaryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ParameterDictionaryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ParameterDictionary.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ParameterDictionaryAggregateArgs>(args: Subset<T, ParameterDictionaryAggregateArgs>): Prisma.PrismaPromise<GetParameterDictionaryAggregateType<T>>
+
+    /**
+     * Group by ParameterDictionary.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParameterDictionaryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ParameterDictionaryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ParameterDictionaryGroupByArgs['orderBy'] }
+        : { orderBy?: ParameterDictionaryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ParameterDictionaryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetParameterDictionaryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ParameterDictionary model
+   */
+  readonly fields: ParameterDictionaryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ParameterDictionary.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ParameterDictionaryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    systemParameter<T extends ParameterDictionary$systemParameterArgs<ExtArgs> = {}>(args?: Subset<T, ParameterDictionary$systemParameterArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    parameters<T extends ParameterDictionary$parametersArgs<ExtArgs> = {}>(args?: Subset<T, ParameterDictionary$parametersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ParameterDictionary model
+   */
+  interface ParameterDictionaryFieldRefs {
+    readonly id: FieldRef<"ParameterDictionary", 'BigInt'>
+    readonly system_parameter_id: FieldRef<"ParameterDictionary", 'BigInt'>
+    readonly parameter_description: FieldRef<"ParameterDictionary", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ParameterDictionary findUnique
+   */
+  export type ParameterDictionaryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * Filter, which ParameterDictionary to fetch.
+     */
+    where: ParameterDictionaryWhereUniqueInput
+  }
+
+  /**
+   * ParameterDictionary findUniqueOrThrow
+   */
+  export type ParameterDictionaryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * Filter, which ParameterDictionary to fetch.
+     */
+    where: ParameterDictionaryWhereUniqueInput
+  }
+
+  /**
+   * ParameterDictionary findFirst
+   */
+  export type ParameterDictionaryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * Filter, which ParameterDictionary to fetch.
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParameterDictionaries to fetch.
+     */
+    orderBy?: ParameterDictionaryOrderByWithRelationInput | ParameterDictionaryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ParameterDictionaries.
+     */
+    cursor?: ParameterDictionaryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParameterDictionaries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParameterDictionaries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ParameterDictionaries.
+     */
+    distinct?: ParameterDictionaryScalarFieldEnum | ParameterDictionaryScalarFieldEnum[]
+  }
+
+  /**
+   * ParameterDictionary findFirstOrThrow
+   */
+  export type ParameterDictionaryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * Filter, which ParameterDictionary to fetch.
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParameterDictionaries to fetch.
+     */
+    orderBy?: ParameterDictionaryOrderByWithRelationInput | ParameterDictionaryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ParameterDictionaries.
+     */
+    cursor?: ParameterDictionaryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParameterDictionaries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParameterDictionaries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ParameterDictionaries.
+     */
+    distinct?: ParameterDictionaryScalarFieldEnum | ParameterDictionaryScalarFieldEnum[]
+  }
+
+  /**
+   * ParameterDictionary findMany
+   */
+  export type ParameterDictionaryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * Filter, which ParameterDictionaries to fetch.
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParameterDictionaries to fetch.
+     */
+    orderBy?: ParameterDictionaryOrderByWithRelationInput | ParameterDictionaryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ParameterDictionaries.
+     */
+    cursor?: ParameterDictionaryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParameterDictionaries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParameterDictionaries.
+     */
+    skip?: number
+    distinct?: ParameterDictionaryScalarFieldEnum | ParameterDictionaryScalarFieldEnum[]
+  }
+
+  /**
+   * ParameterDictionary create
+   */
+  export type ParameterDictionaryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ParameterDictionary.
+     */
+    data: XOR<ParameterDictionaryCreateInput, ParameterDictionaryUncheckedCreateInput>
+  }
+
+  /**
+   * ParameterDictionary createMany
+   */
+  export type ParameterDictionaryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ParameterDictionaries.
+     */
+    data: ParameterDictionaryCreateManyInput | ParameterDictionaryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ParameterDictionary createManyAndReturn
+   */
+  export type ParameterDictionaryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * The data used to create many ParameterDictionaries.
+     */
+    data: ParameterDictionaryCreateManyInput | ParameterDictionaryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ParameterDictionary update
+   */
+  export type ParameterDictionaryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ParameterDictionary.
+     */
+    data: XOR<ParameterDictionaryUpdateInput, ParameterDictionaryUncheckedUpdateInput>
+    /**
+     * Choose, which ParameterDictionary to update.
+     */
+    where: ParameterDictionaryWhereUniqueInput
+  }
+
+  /**
+   * ParameterDictionary updateMany
+   */
+  export type ParameterDictionaryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ParameterDictionaries.
+     */
+    data: XOR<ParameterDictionaryUpdateManyMutationInput, ParameterDictionaryUncheckedUpdateManyInput>
+    /**
+     * Filter which ParameterDictionaries to update
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * Limit how many ParameterDictionaries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ParameterDictionary updateManyAndReturn
+   */
+  export type ParameterDictionaryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * The data used to update ParameterDictionaries.
+     */
+    data: XOR<ParameterDictionaryUpdateManyMutationInput, ParameterDictionaryUncheckedUpdateManyInput>
+    /**
+     * Filter which ParameterDictionaries to update
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * Limit how many ParameterDictionaries to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ParameterDictionary upsert
+   */
+  export type ParameterDictionaryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ParameterDictionary to update in case it exists.
+     */
+    where: ParameterDictionaryWhereUniqueInput
+    /**
+     * In case the ParameterDictionary found by the `where` argument doesn't exist, create a new ParameterDictionary with this data.
+     */
+    create: XOR<ParameterDictionaryCreateInput, ParameterDictionaryUncheckedCreateInput>
+    /**
+     * In case the ParameterDictionary was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ParameterDictionaryUpdateInput, ParameterDictionaryUncheckedUpdateInput>
+  }
+
+  /**
+   * ParameterDictionary delete
+   */
+  export type ParameterDictionaryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    /**
+     * Filter which ParameterDictionary to delete.
+     */
+    where: ParameterDictionaryWhereUniqueInput
+  }
+
+  /**
+   * ParameterDictionary deleteMany
+   */
+  export type ParameterDictionaryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ParameterDictionaries to delete
+     */
+    where?: ParameterDictionaryWhereInput
+    /**
+     * Limit how many ParameterDictionaries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ParameterDictionary.systemParameter
+   */
+  export type ParameterDictionary$systemParameterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    where?: SystemParameterWhereInput
+  }
+
+  /**
+   * ParameterDictionary.parameters
+   */
+  export type ParameterDictionary$parametersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Parameter
+     */
+    select?: ParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Parameter
+     */
+    omit?: ParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterInclude<ExtArgs> | null
+    where?: ParameterWhereInput
+    orderBy?: ParameterOrderByWithRelationInput | ParameterOrderByWithRelationInput[]
+    cursor?: ParameterWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ParameterScalarFieldEnum | ParameterScalarFieldEnum[]
+  }
+
+  /**
+   * ParameterDictionary without action
+   */
+  export type ParameterDictionaryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ResultSend
+   */
+
+  export type AggregateResultSend = {
+    _count: ResultSendCountAggregateOutputType | null
+    _avg: ResultSendAvgAggregateOutputType | null
+    _sum: ResultSendSumAggregateOutputType | null
+    _min: ResultSendMinAggregateOutputType | null
+    _max: ResultSendMaxAggregateOutputType | null
+  }
+
+  export type ResultSendAvgAggregateOutputType = {
+    id: number | null
+    send_by: number | null
+  }
+
+  export type ResultSendSumAggregateOutputType = {
+    id: bigint | null
+    send_by: bigint | null
+  }
+
+  export type ResultSendMinAggregateOutputType = {
+    id: bigint | null
+    result_folio: string | null
+    send_by: bigint | null
+    send_at: Date | null
+    status: string | null
+  }
+
+  export type ResultSendMaxAggregateOutputType = {
+    id: bigint | null
+    result_folio: string | null
+    send_by: bigint | null
+    send_at: Date | null
+    status: string | null
+  }
+
+  export type ResultSendCountAggregateOutputType = {
+    id: number
+    result_folio: number
+    send_by: number
+    send_at: number
+    status: number
+    payload: number
+    response: number
+    _all: number
+  }
+
+
+  export type ResultSendAvgAggregateInputType = {
+    id?: true
+    send_by?: true
+  }
+
+  export type ResultSendSumAggregateInputType = {
+    id?: true
+    send_by?: true
+  }
+
+  export type ResultSendMinAggregateInputType = {
+    id?: true
+    result_folio?: true
+    send_by?: true
+    send_at?: true
+    status?: true
+  }
+
+  export type ResultSendMaxAggregateInputType = {
+    id?: true
+    result_folio?: true
+    send_by?: true
+    send_at?: true
+    status?: true
+  }
+
+  export type ResultSendCountAggregateInputType = {
+    id?: true
+    result_folio?: true
+    send_by?: true
+    send_at?: true
+    status?: true
+    payload?: true
+    response?: true
+    _all?: true
+  }
+
+  export type ResultSendAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResultSend to aggregate.
+     */
+    where?: ResultSendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResultSends to fetch.
+     */
+    orderBy?: ResultSendOrderByWithRelationInput | ResultSendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ResultSendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResultSends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResultSends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ResultSends
+    **/
+    _count?: true | ResultSendCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ResultSendAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ResultSendSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResultSendMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResultSendMaxAggregateInputType
+  }
+
+  export type GetResultSendAggregateType<T extends ResultSendAggregateArgs> = {
+        [P in keyof T & keyof AggregateResultSend]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResultSend[P]>
+      : GetScalarType<T[P], AggregateResultSend[P]>
+  }
+
+
+
+
+  export type ResultSendGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResultSendWhereInput
+    orderBy?: ResultSendOrderByWithAggregationInput | ResultSendOrderByWithAggregationInput[]
+    by: ResultSendScalarFieldEnum[] | ResultSendScalarFieldEnum
+    having?: ResultSendScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResultSendCountAggregateInputType | true
+    _avg?: ResultSendAvgAggregateInputType
+    _sum?: ResultSendSumAggregateInputType
+    _min?: ResultSendMinAggregateInputType
+    _max?: ResultSendMaxAggregateInputType
+  }
+
+  export type ResultSendGroupByOutputType = {
+    id: bigint
+    result_folio: string | null
+    send_by: bigint | null
+    send_at: Date | null
+    status: string | null
+    payload: JsonValue | null
+    response: JsonValue | null
+    _count: ResultSendCountAggregateOutputType | null
+    _avg: ResultSendAvgAggregateOutputType | null
+    _sum: ResultSendSumAggregateOutputType | null
+    _min: ResultSendMinAggregateOutputType | null
+    _max: ResultSendMaxAggregateOutputType | null
+  }
+
+  type GetResultSendGroupByPayload<T extends ResultSendGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResultSendGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResultSendGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResultSendGroupByOutputType[P]>
+            : GetScalarType<T[P], ResultSendGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ResultSendSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    result_folio?: boolean
+    send_by?: boolean
+    send_at?: boolean
+    status?: boolean
+    payload?: boolean
+    response?: boolean
+    result?: boolean | ResultSend$resultArgs<ExtArgs>
+    user?: boolean | ResultSend$userArgs<ExtArgs>
+  }, ExtArgs["result"]["resultSend"]>
+
+  export type ResultSendSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    result_folio?: boolean
+    send_by?: boolean
+    send_at?: boolean
+    status?: boolean
+    payload?: boolean
+    response?: boolean
+    result?: boolean | ResultSend$resultArgs<ExtArgs>
+    user?: boolean | ResultSend$userArgs<ExtArgs>
+  }, ExtArgs["result"]["resultSend"]>
+
+  export type ResultSendSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    result_folio?: boolean
+    send_by?: boolean
+    send_at?: boolean
+    status?: boolean
+    payload?: boolean
+    response?: boolean
+    result?: boolean | ResultSend$resultArgs<ExtArgs>
+    user?: boolean | ResultSend$userArgs<ExtArgs>
+  }, ExtArgs["result"]["resultSend"]>
+
+  export type ResultSendSelectScalar = {
+    id?: boolean
+    result_folio?: boolean
+    send_by?: boolean
+    send_at?: boolean
+    status?: boolean
+    payload?: boolean
+    response?: boolean
+  }
+
+  export type ResultSendOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "send_by" | "send_at" | "status" | "payload" | "response", ExtArgs["result"]["resultSend"]>
+  export type ResultSendInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    result?: boolean | ResultSend$resultArgs<ExtArgs>
+    user?: boolean | ResultSend$userArgs<ExtArgs>
+  }
+  export type ResultSendIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    result?: boolean | ResultSend$resultArgs<ExtArgs>
+    user?: boolean | ResultSend$userArgs<ExtArgs>
+  }
+  export type ResultSendIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    result?: boolean | ResultSend$resultArgs<ExtArgs>
+    user?: boolean | ResultSend$userArgs<ExtArgs>
+  }
+
+  export type $ResultSendPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ResultSend"
+    objects: {
+      result: Prisma.$ResultPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      result_folio: string | null
+      send_by: bigint | null
+      send_at: Date | null
+      status: string | null
+      payload: Prisma.JsonValue | null
+      response: Prisma.JsonValue | null
+    }, ExtArgs["result"]["resultSend"]>
+    composites: {}
+  }
+
+  type ResultSendGetPayload<S extends boolean | null | undefined | ResultSendDefaultArgs> = $Result.GetResult<Prisma.$ResultSendPayload, S>
+
+  type ResultSendCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResultSendFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResultSendCountAggregateInputType | true
+    }
+
+  export interface ResultSendDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ResultSend'], meta: { name: 'ResultSend' } }
+    /**
+     * Find zero or one ResultSend that matches the filter.
+     * @param {ResultSendFindUniqueArgs} args - Arguments to find a ResultSend
+     * @example
+     * // Get one ResultSend
+     * const resultSend = await prisma.resultSend.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ResultSendFindUniqueArgs>(args: SelectSubset<T, ResultSendFindUniqueArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ResultSend that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ResultSendFindUniqueOrThrowArgs} args - Arguments to find a ResultSend
+     * @example
+     * // Get one ResultSend
+     * const resultSend = await prisma.resultSend.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ResultSendFindUniqueOrThrowArgs>(args: SelectSubset<T, ResultSendFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResultSend that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendFindFirstArgs} args - Arguments to find a ResultSend
+     * @example
+     * // Get one ResultSend
+     * const resultSend = await prisma.resultSend.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ResultSendFindFirstArgs>(args?: SelectSubset<T, ResultSendFindFirstArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResultSend that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendFindFirstOrThrowArgs} args - Arguments to find a ResultSend
+     * @example
+     * // Get one ResultSend
+     * const resultSend = await prisma.resultSend.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ResultSendFindFirstOrThrowArgs>(args?: SelectSubset<T, ResultSendFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ResultSends that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ResultSends
+     * const resultSends = await prisma.resultSend.findMany()
+     * 
+     * // Get first 10 ResultSends
+     * const resultSends = await prisma.resultSend.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const resultSendWithIdOnly = await prisma.resultSend.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ResultSendFindManyArgs>(args?: SelectSubset<T, ResultSendFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ResultSend.
+     * @param {ResultSendCreateArgs} args - Arguments to create a ResultSend.
+     * @example
+     * // Create one ResultSend
+     * const ResultSend = await prisma.resultSend.create({
+     *   data: {
+     *     // ... data to create a ResultSend
+     *   }
+     * })
+     * 
+     */
+    create<T extends ResultSendCreateArgs>(args: SelectSubset<T, ResultSendCreateArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ResultSends.
+     * @param {ResultSendCreateManyArgs} args - Arguments to create many ResultSends.
+     * @example
+     * // Create many ResultSends
+     * const resultSend = await prisma.resultSend.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ResultSendCreateManyArgs>(args?: SelectSubset<T, ResultSendCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ResultSends and returns the data saved in the database.
+     * @param {ResultSendCreateManyAndReturnArgs} args - Arguments to create many ResultSends.
+     * @example
+     * // Create many ResultSends
+     * const resultSend = await prisma.resultSend.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ResultSends and only return the `id`
+     * const resultSendWithIdOnly = await prisma.resultSend.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ResultSendCreateManyAndReturnArgs>(args?: SelectSubset<T, ResultSendCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ResultSend.
+     * @param {ResultSendDeleteArgs} args - Arguments to delete one ResultSend.
+     * @example
+     * // Delete one ResultSend
+     * const ResultSend = await prisma.resultSend.delete({
+     *   where: {
+     *     // ... filter to delete one ResultSend
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ResultSendDeleteArgs>(args: SelectSubset<T, ResultSendDeleteArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ResultSend.
+     * @param {ResultSendUpdateArgs} args - Arguments to update one ResultSend.
+     * @example
+     * // Update one ResultSend
+     * const resultSend = await prisma.resultSend.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ResultSendUpdateArgs>(args: SelectSubset<T, ResultSendUpdateArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ResultSends.
+     * @param {ResultSendDeleteManyArgs} args - Arguments to filter ResultSends to delete.
+     * @example
+     * // Delete a few ResultSends
+     * const { count } = await prisma.resultSend.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ResultSendDeleteManyArgs>(args?: SelectSubset<T, ResultSendDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResultSends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ResultSends
+     * const resultSend = await prisma.resultSend.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ResultSendUpdateManyArgs>(args: SelectSubset<T, ResultSendUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResultSends and returns the data updated in the database.
+     * @param {ResultSendUpdateManyAndReturnArgs} args - Arguments to update many ResultSends.
+     * @example
+     * // Update many ResultSends
+     * const resultSend = await prisma.resultSend.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ResultSends and only return the `id`
+     * const resultSendWithIdOnly = await prisma.resultSend.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ResultSendUpdateManyAndReturnArgs>(args: SelectSubset<T, ResultSendUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ResultSend.
+     * @param {ResultSendUpsertArgs} args - Arguments to update or create a ResultSend.
+     * @example
+     * // Update or create a ResultSend
+     * const resultSend = await prisma.resultSend.upsert({
+     *   create: {
+     *     // ... data to create a ResultSend
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ResultSend we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ResultSendUpsertArgs>(args: SelectSubset<T, ResultSendUpsertArgs<ExtArgs>>): Prisma__ResultSendClient<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ResultSends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendCountArgs} args - Arguments to filter ResultSends to count.
+     * @example
+     * // Count the number of ResultSends
+     * const count = await prisma.resultSend.count({
+     *   where: {
+     *     // ... the filter for the ResultSends we want to count
+     *   }
+     * })
+    **/
+    count<T extends ResultSendCountArgs>(
+      args?: Subset<T, ResultSendCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResultSendCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ResultSend.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResultSendAggregateArgs>(args: Subset<T, ResultSendAggregateArgs>): Prisma.PrismaPromise<GetResultSendAggregateType<T>>
+
+    /**
+     * Group by ResultSend.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResultSendGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ResultSendGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ResultSendGroupByArgs['orderBy'] }
+        : { orderBy?: ResultSendGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ResultSendGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResultSendGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ResultSend model
+   */
+  readonly fields: ResultSendFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ResultSend.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ResultSendClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    result<T extends ResultSend$resultArgs<ExtArgs> = {}>(args?: Subset<T, ResultSend$resultArgs<ExtArgs>>): Prisma__ResultClient<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends ResultSend$userArgs<ExtArgs> = {}>(args?: Subset<T, ResultSend$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ResultSend model
+   */
+  interface ResultSendFieldRefs {
+    readonly id: FieldRef<"ResultSend", 'BigInt'>
+    readonly result_folio: FieldRef<"ResultSend", 'String'>
+    readonly send_by: FieldRef<"ResultSend", 'BigInt'>
+    readonly send_at: FieldRef<"ResultSend", 'DateTime'>
+    readonly status: FieldRef<"ResultSend", 'String'>
+    readonly payload: FieldRef<"ResultSend", 'Json'>
+    readonly response: FieldRef<"ResultSend", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ResultSend findUnique
+   */
+  export type ResultSendFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * Filter, which ResultSend to fetch.
+     */
+    where: ResultSendWhereUniqueInput
+  }
+
+  /**
+   * ResultSend findUniqueOrThrow
+   */
+  export type ResultSendFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * Filter, which ResultSend to fetch.
+     */
+    where: ResultSendWhereUniqueInput
+  }
+
+  /**
+   * ResultSend findFirst
+   */
+  export type ResultSendFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * Filter, which ResultSend to fetch.
+     */
+    where?: ResultSendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResultSends to fetch.
+     */
+    orderBy?: ResultSendOrderByWithRelationInput | ResultSendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResultSends.
+     */
+    cursor?: ResultSendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResultSends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResultSends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResultSends.
+     */
+    distinct?: ResultSendScalarFieldEnum | ResultSendScalarFieldEnum[]
+  }
+
+  /**
+   * ResultSend findFirstOrThrow
+   */
+  export type ResultSendFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * Filter, which ResultSend to fetch.
+     */
+    where?: ResultSendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResultSends to fetch.
+     */
+    orderBy?: ResultSendOrderByWithRelationInput | ResultSendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResultSends.
+     */
+    cursor?: ResultSendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResultSends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResultSends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResultSends.
+     */
+    distinct?: ResultSendScalarFieldEnum | ResultSendScalarFieldEnum[]
+  }
+
+  /**
+   * ResultSend findMany
+   */
+  export type ResultSendFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * Filter, which ResultSends to fetch.
+     */
+    where?: ResultSendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResultSends to fetch.
+     */
+    orderBy?: ResultSendOrderByWithRelationInput | ResultSendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ResultSends.
+     */
+    cursor?: ResultSendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResultSends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResultSends.
+     */
+    skip?: number
+    distinct?: ResultSendScalarFieldEnum | ResultSendScalarFieldEnum[]
+  }
+
+  /**
+   * ResultSend create
+   */
+  export type ResultSendCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ResultSend.
+     */
+    data: XOR<ResultSendCreateInput, ResultSendUncheckedCreateInput>
+  }
+
+  /**
+   * ResultSend createMany
+   */
+  export type ResultSendCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ResultSends.
+     */
+    data: ResultSendCreateManyInput | ResultSendCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ResultSend createManyAndReturn
+   */
+  export type ResultSendCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * The data used to create many ResultSends.
+     */
+    data: ResultSendCreateManyInput | ResultSendCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ResultSend update
+   */
+  export type ResultSendUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ResultSend.
+     */
+    data: XOR<ResultSendUpdateInput, ResultSendUncheckedUpdateInput>
+    /**
+     * Choose, which ResultSend to update.
+     */
+    where: ResultSendWhereUniqueInput
+  }
+
+  /**
+   * ResultSend updateMany
+   */
+  export type ResultSendUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ResultSends.
+     */
+    data: XOR<ResultSendUpdateManyMutationInput, ResultSendUncheckedUpdateManyInput>
+    /**
+     * Filter which ResultSends to update
+     */
+    where?: ResultSendWhereInput
+    /**
+     * Limit how many ResultSends to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResultSend updateManyAndReturn
+   */
+  export type ResultSendUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * The data used to update ResultSends.
+     */
+    data: XOR<ResultSendUpdateManyMutationInput, ResultSendUncheckedUpdateManyInput>
+    /**
+     * Filter which ResultSends to update
+     */
+    where?: ResultSendWhereInput
+    /**
+     * Limit how many ResultSends to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ResultSend upsert
+   */
+  export type ResultSendUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ResultSend to update in case it exists.
+     */
+    where: ResultSendWhereUniqueInput
+    /**
+     * In case the ResultSend found by the `where` argument doesn't exist, create a new ResultSend with this data.
+     */
+    create: XOR<ResultSendCreateInput, ResultSendUncheckedCreateInput>
+    /**
+     * In case the ResultSend was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResultSendUpdateInput, ResultSendUncheckedUpdateInput>
+  }
+
+  /**
+   * ResultSend delete
+   */
+  export type ResultSendDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    /**
+     * Filter which ResultSend to delete.
+     */
+    where: ResultSendWhereUniqueInput
+  }
+
+  /**
+   * ResultSend deleteMany
+   */
+  export type ResultSendDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResultSends to delete
+     */
+    where?: ResultSendWhereInput
+    /**
+     * Limit how many ResultSends to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResultSend.result
+   */
+  export type ResultSend$resultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Result
+     */
+    select?: ResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Result
+     */
+    omit?: ResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultInclude<ExtArgs> | null
+    where?: ResultWhereInput
+  }
+
+  /**
+   * ResultSend.user
+   */
+  export type ResultSend$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * ResultSend without action
+   */
+  export type ResultSendDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SystemParameter
+   */
+
+  export type AggregateSystemParameter = {
+    _count: SystemParameterCountAggregateOutputType | null
+    _avg: SystemParameterAvgAggregateOutputType | null
+    _sum: SystemParameterSumAggregateOutputType | null
+    _min: SystemParameterMinAggregateOutputType | null
+    _max: SystemParameterMaxAggregateOutputType | null
+  }
+
+  export type SystemParameterAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type SystemParameterSumAggregateOutputType = {
+    id: bigint | null
+  }
+
+  export type SystemParameterMinAggregateOutputType = {
+    id: bigint | null
+    value: string | null
+  }
+
+  export type SystemParameterMaxAggregateOutputType = {
+    id: bigint | null
+    value: string | null
+  }
+
+  export type SystemParameterCountAggregateOutputType = {
+    id: number
+    value: number
+    _all: number
+  }
+
+
+  export type SystemParameterAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type SystemParameterSumAggregateInputType = {
+    id?: true
+  }
+
+  export type SystemParameterMinAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type SystemParameterMaxAggregateInputType = {
+    id?: true
+    value?: true
+  }
+
+  export type SystemParameterCountAggregateInputType = {
+    id?: true
+    value?: true
+    _all?: true
+  }
+
+  export type SystemParameterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemParameter to aggregate.
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemParameters to fetch.
+     */
+    orderBy?: SystemParameterOrderByWithRelationInput | SystemParameterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SystemParameterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemParameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemParameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SystemParameters
+    **/
+    _count?: true | SystemParameterCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SystemParameterAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SystemParameterSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SystemParameterMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SystemParameterMaxAggregateInputType
+  }
+
+  export type GetSystemParameterAggregateType<T extends SystemParameterAggregateArgs> = {
+        [P in keyof T & keyof AggregateSystemParameter]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSystemParameter[P]>
+      : GetScalarType<T[P], AggregateSystemParameter[P]>
+  }
+
+
+
+
+  export type SystemParameterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SystemParameterWhereInput
+    orderBy?: SystemParameterOrderByWithAggregationInput | SystemParameterOrderByWithAggregationInput[]
+    by: SystemParameterScalarFieldEnum[] | SystemParameterScalarFieldEnum
+    having?: SystemParameterScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SystemParameterCountAggregateInputType | true
+    _avg?: SystemParameterAvgAggregateInputType
+    _sum?: SystemParameterSumAggregateInputType
+    _min?: SystemParameterMinAggregateInputType
+    _max?: SystemParameterMaxAggregateInputType
+  }
+
+  export type SystemParameterGroupByOutputType = {
+    id: bigint
+    value: string | null
+    _count: SystemParameterCountAggregateOutputType | null
+    _avg: SystemParameterAvgAggregateOutputType | null
+    _sum: SystemParameterSumAggregateOutputType | null
+    _min: SystemParameterMinAggregateOutputType | null
+    _max: SystemParameterMaxAggregateOutputType | null
+  }
+
+  type GetSystemParameterGroupByPayload<T extends SystemParameterGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SystemParameterGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SystemParameterGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SystemParameterGroupByOutputType[P]>
+            : GetScalarType<T[P], SystemParameterGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SystemParameterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+    parameterDictionaries?: boolean | SystemParameter$parameterDictionariesArgs<ExtArgs>
+    _count?: boolean | SystemParameterCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["systemParameter"]>
+
+  export type SystemParameterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["systemParameter"]>
+
+  export type SystemParameterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["systemParameter"]>
+
+  export type SystemParameterSelectScalar = {
+    id?: boolean
+    value?: boolean
+  }
+
+  export type SystemParameterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "value", ExtArgs["result"]["systemParameter"]>
+  export type SystemParameterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parameterDictionaries?: boolean | SystemParameter$parameterDictionariesArgs<ExtArgs>
+    _count?: boolean | SystemParameterCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SystemParameterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SystemParameterIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SystemParameterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SystemParameter"
+    objects: {
+      parameterDictionaries: Prisma.$ParameterDictionaryPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      value: string | null
+    }, ExtArgs["result"]["systemParameter"]>
+    composites: {}
+  }
+
+  type SystemParameterGetPayload<S extends boolean | null | undefined | SystemParameterDefaultArgs> = $Result.GetResult<Prisma.$SystemParameterPayload, S>
+
+  type SystemParameterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SystemParameterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SystemParameterCountAggregateInputType | true
+    }
+
+  export interface SystemParameterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SystemParameter'], meta: { name: 'SystemParameter' } }
+    /**
+     * Find zero or one SystemParameter that matches the filter.
+     * @param {SystemParameterFindUniqueArgs} args - Arguments to find a SystemParameter
+     * @example
+     * // Get one SystemParameter
+     * const systemParameter = await prisma.systemParameter.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SystemParameterFindUniqueArgs>(args: SelectSubset<T, SystemParameterFindUniqueArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SystemParameter that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SystemParameterFindUniqueOrThrowArgs} args - Arguments to find a SystemParameter
+     * @example
+     * // Get one SystemParameter
+     * const systemParameter = await prisma.systemParameter.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SystemParameterFindUniqueOrThrowArgs>(args: SelectSubset<T, SystemParameterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemParameter that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterFindFirstArgs} args - Arguments to find a SystemParameter
+     * @example
+     * // Get one SystemParameter
+     * const systemParameter = await prisma.systemParameter.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SystemParameterFindFirstArgs>(args?: SelectSubset<T, SystemParameterFindFirstArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SystemParameter that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterFindFirstOrThrowArgs} args - Arguments to find a SystemParameter
+     * @example
+     * // Get one SystemParameter
+     * const systemParameter = await prisma.systemParameter.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SystemParameterFindFirstOrThrowArgs>(args?: SelectSubset<T, SystemParameterFindFirstOrThrowArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SystemParameters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SystemParameters
+     * const systemParameters = await prisma.systemParameter.findMany()
+     * 
+     * // Get first 10 SystemParameters
+     * const systemParameters = await prisma.systemParameter.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const systemParameterWithIdOnly = await prisma.systemParameter.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SystemParameterFindManyArgs>(args?: SelectSubset<T, SystemParameterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SystemParameter.
+     * @param {SystemParameterCreateArgs} args - Arguments to create a SystemParameter.
+     * @example
+     * // Create one SystemParameter
+     * const SystemParameter = await prisma.systemParameter.create({
+     *   data: {
+     *     // ... data to create a SystemParameter
+     *   }
+     * })
+     * 
+     */
+    create<T extends SystemParameterCreateArgs>(args: SelectSubset<T, SystemParameterCreateArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SystemParameters.
+     * @param {SystemParameterCreateManyArgs} args - Arguments to create many SystemParameters.
+     * @example
+     * // Create many SystemParameters
+     * const systemParameter = await prisma.systemParameter.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SystemParameterCreateManyArgs>(args?: SelectSubset<T, SystemParameterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SystemParameters and returns the data saved in the database.
+     * @param {SystemParameterCreateManyAndReturnArgs} args - Arguments to create many SystemParameters.
+     * @example
+     * // Create many SystemParameters
+     * const systemParameter = await prisma.systemParameter.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SystemParameters and only return the `id`
+     * const systemParameterWithIdOnly = await prisma.systemParameter.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SystemParameterCreateManyAndReturnArgs>(args?: SelectSubset<T, SystemParameterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SystemParameter.
+     * @param {SystemParameterDeleteArgs} args - Arguments to delete one SystemParameter.
+     * @example
+     * // Delete one SystemParameter
+     * const SystemParameter = await prisma.systemParameter.delete({
+     *   where: {
+     *     // ... filter to delete one SystemParameter
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SystemParameterDeleteArgs>(args: SelectSubset<T, SystemParameterDeleteArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SystemParameter.
+     * @param {SystemParameterUpdateArgs} args - Arguments to update one SystemParameter.
+     * @example
+     * // Update one SystemParameter
+     * const systemParameter = await prisma.systemParameter.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SystemParameterUpdateArgs>(args: SelectSubset<T, SystemParameterUpdateArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SystemParameters.
+     * @param {SystemParameterDeleteManyArgs} args - Arguments to filter SystemParameters to delete.
+     * @example
+     * // Delete a few SystemParameters
+     * const { count } = await prisma.systemParameter.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SystemParameterDeleteManyArgs>(args?: SelectSubset<T, SystemParameterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemParameters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SystemParameters
+     * const systemParameter = await prisma.systemParameter.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SystemParameterUpdateManyArgs>(args: SelectSubset<T, SystemParameterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SystemParameters and returns the data updated in the database.
+     * @param {SystemParameterUpdateManyAndReturnArgs} args - Arguments to update many SystemParameters.
+     * @example
+     * // Update many SystemParameters
+     * const systemParameter = await prisma.systemParameter.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SystemParameters and only return the `id`
+     * const systemParameterWithIdOnly = await prisma.systemParameter.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SystemParameterUpdateManyAndReturnArgs>(args: SelectSubset<T, SystemParameterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SystemParameter.
+     * @param {SystemParameterUpsertArgs} args - Arguments to update or create a SystemParameter.
+     * @example
+     * // Update or create a SystemParameter
+     * const systemParameter = await prisma.systemParameter.upsert({
+     *   create: {
+     *     // ... data to create a SystemParameter
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SystemParameter we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SystemParameterUpsertArgs>(args: SelectSubset<T, SystemParameterUpsertArgs<ExtArgs>>): Prisma__SystemParameterClient<$Result.GetResult<Prisma.$SystemParameterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SystemParameters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterCountArgs} args - Arguments to filter SystemParameters to count.
+     * @example
+     * // Count the number of SystemParameters
+     * const count = await prisma.systemParameter.count({
+     *   where: {
+     *     // ... the filter for the SystemParameters we want to count
+     *   }
+     * })
+    **/
+    count<T extends SystemParameterCountArgs>(
+      args?: Subset<T, SystemParameterCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SystemParameterCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SystemParameter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SystemParameterAggregateArgs>(args: Subset<T, SystemParameterAggregateArgs>): Prisma.PrismaPromise<GetSystemParameterAggregateType<T>>
+
+    /**
+     * Group by SystemParameter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SystemParameterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SystemParameterGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SystemParameterGroupByArgs['orderBy'] }
+        : { orderBy?: SystemParameterGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SystemParameterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSystemParameterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SystemParameter model
+   */
+  readonly fields: SystemParameterFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SystemParameter.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SystemParameterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    parameterDictionaries<T extends SystemParameter$parameterDictionariesArgs<ExtArgs> = {}>(args?: Subset<T, SystemParameter$parameterDictionariesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterDictionaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SystemParameter model
+   */
+  interface SystemParameterFieldRefs {
+    readonly id: FieldRef<"SystemParameter", 'BigInt'>
+    readonly value: FieldRef<"SystemParameter", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SystemParameter findUnique
+   */
+  export type SystemParameterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * Filter, which SystemParameter to fetch.
+     */
+    where: SystemParameterWhereUniqueInput
+  }
+
+  /**
+   * SystemParameter findUniqueOrThrow
+   */
+  export type SystemParameterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * Filter, which SystemParameter to fetch.
+     */
+    where: SystemParameterWhereUniqueInput
+  }
+
+  /**
+   * SystemParameter findFirst
+   */
+  export type SystemParameterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * Filter, which SystemParameter to fetch.
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemParameters to fetch.
+     */
+    orderBy?: SystemParameterOrderByWithRelationInput | SystemParameterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemParameters.
+     */
+    cursor?: SystemParameterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemParameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemParameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemParameters.
+     */
+    distinct?: SystemParameterScalarFieldEnum | SystemParameterScalarFieldEnum[]
+  }
+
+  /**
+   * SystemParameter findFirstOrThrow
+   */
+  export type SystemParameterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * Filter, which SystemParameter to fetch.
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemParameters to fetch.
+     */
+    orderBy?: SystemParameterOrderByWithRelationInput | SystemParameterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SystemParameters.
+     */
+    cursor?: SystemParameterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemParameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemParameters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SystemParameters.
+     */
+    distinct?: SystemParameterScalarFieldEnum | SystemParameterScalarFieldEnum[]
+  }
+
+  /**
+   * SystemParameter findMany
+   */
+  export type SystemParameterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * Filter, which SystemParameters to fetch.
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SystemParameters to fetch.
+     */
+    orderBy?: SystemParameterOrderByWithRelationInput | SystemParameterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SystemParameters.
+     */
+    cursor?: SystemParameterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SystemParameters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SystemParameters.
+     */
+    skip?: number
+    distinct?: SystemParameterScalarFieldEnum | SystemParameterScalarFieldEnum[]
+  }
+
+  /**
+   * SystemParameter create
+   */
+  export type SystemParameterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SystemParameter.
+     */
+    data: XOR<SystemParameterCreateInput, SystemParameterUncheckedCreateInput>
+  }
+
+  /**
+   * SystemParameter createMany
+   */
+  export type SystemParameterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SystemParameters.
+     */
+    data: SystemParameterCreateManyInput | SystemParameterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemParameter createManyAndReturn
+   */
+  export type SystemParameterCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * The data used to create many SystemParameters.
+     */
+    data: SystemParameterCreateManyInput | SystemParameterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SystemParameter update
+   */
+  export type SystemParameterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SystemParameter.
+     */
+    data: XOR<SystemParameterUpdateInput, SystemParameterUncheckedUpdateInput>
+    /**
+     * Choose, which SystemParameter to update.
+     */
+    where: SystemParameterWhereUniqueInput
+  }
+
+  /**
+   * SystemParameter updateMany
+   */
+  export type SystemParameterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SystemParameters.
+     */
+    data: XOR<SystemParameterUpdateManyMutationInput, SystemParameterUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemParameters to update
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * Limit how many SystemParameters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemParameter updateManyAndReturn
+   */
+  export type SystemParameterUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * The data used to update SystemParameters.
+     */
+    data: XOR<SystemParameterUpdateManyMutationInput, SystemParameterUncheckedUpdateManyInput>
+    /**
+     * Filter which SystemParameters to update
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * Limit how many SystemParameters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemParameter upsert
+   */
+  export type SystemParameterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SystemParameter to update in case it exists.
+     */
+    where: SystemParameterWhereUniqueInput
+    /**
+     * In case the SystemParameter found by the `where` argument doesn't exist, create a new SystemParameter with this data.
+     */
+    create: XOR<SystemParameterCreateInput, SystemParameterUncheckedCreateInput>
+    /**
+     * In case the SystemParameter was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SystemParameterUpdateInput, SystemParameterUncheckedUpdateInput>
+  }
+
+  /**
+   * SystemParameter delete
+   */
+  export type SystemParameterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+    /**
+     * Filter which SystemParameter to delete.
+     */
+    where: SystemParameterWhereUniqueInput
+  }
+
+  /**
+   * SystemParameter deleteMany
+   */
+  export type SystemParameterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SystemParameters to delete
+     */
+    where?: SystemParameterWhereInput
+    /**
+     * Limit how many SystemParameters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SystemParameter.parameterDictionaries
+   */
+  export type SystemParameter$parameterDictionariesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParameterDictionary
+     */
+    select?: ParameterDictionarySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParameterDictionary
+     */
+    omit?: ParameterDictionaryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParameterDictionaryInclude<ExtArgs> | null
+    where?: ParameterDictionaryWhereInput
+    orderBy?: ParameterDictionaryOrderByWithRelationInput | ParameterDictionaryOrderByWithRelationInput[]
+    cursor?: ParameterDictionaryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ParameterDictionaryScalarFieldEnum | ParameterDictionaryScalarFieldEnum[]
+  }
+
+  /**
+   * SystemParameter without action
+   */
+  export type SystemParameterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SystemParameter
+     */
+    select?: SystemParameterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SystemParameter
+     */
+    omit?: SystemParameterOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SystemParameterInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: bigint | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: bigint | null
+    username: string | null
+    password: string | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: bigint | null
+    username: string | null
+    password: string | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    username: number
+    password: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    username?: true
+    password?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    username?: true
+    password?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    username?: true
+    password?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    id: bigint
+    username: string | null
+    password: string | null
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    password?: boolean
+    resultSends?: boolean | User$resultSendsArgs<ExtArgs>
+    createdResults?: boolean | User$createdResultsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    password?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    username?: boolean
+    password?: boolean
+  }, ExtArgs["result"]["user"]>
+
+  export type UserSelectScalar = {
+    id?: boolean
+    username?: boolean
+    password?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "username" | "password", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    resultSends?: boolean | User$resultSendsArgs<ExtArgs>
+    createdResults?: boolean | User$createdResultsArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {
+      resultSends: Prisma.$ResultSendPayload<ExtArgs>[]
+      createdResults: Prisma.$ResultPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      username: string | null
+      password: string | null
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Users and returns the data saved in the database.
+     * @param {UserCreateManyAndReturnArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserCreateManyAndReturnArgs>(args?: SelectSubset<T, UserCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users and returns the data updated in the database.
+     * @param {UserUpdateManyAndReturnArgs} args - Arguments to update many Users.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Users and only return the `id`
+     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserUpdateManyAndReturnArgs>(args: SelectSubset<T, UserUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    resultSends<T extends User$resultSendsArgs<ExtArgs> = {}>(args?: Subset<T, User$resultSendsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultSendPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdResults<T extends User$createdResultsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdResultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'BigInt'>
+    readonly username: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User createManyAndReturn
+   */
+  export type UserCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User updateManyAndReturn
+   */
+  export type UserUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User.resultSends
+   */
+  export type User$resultSendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResultSend
+     */
+    select?: ResultSendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResultSend
+     */
+    omit?: ResultSendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultSendInclude<ExtArgs> | null
+    where?: ResultSendWhereInput
+    orderBy?: ResultSendOrderByWithRelationInput | ResultSendOrderByWithRelationInput[]
+    cursor?: ResultSendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResultSendScalarFieldEnum | ResultSendScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdResults
+   */
+  export type User$createdResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Result
+     */
+    select?: ResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Result
+     */
+    omit?: ResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResultInclude<ExtArgs> | null
+    where?: ResultWhereInput
+    orderBy?: ResultOrderByWithRelationInput | ResultOrderByWithRelationInput[]
+    cursor?: ResultWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResultScalarFieldEnum | ResultScalarFieldEnum[]
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model EquipmentConfiguration
+   */
+
+  export type AggregateEquipmentConfiguration = {
+    _count: EquipmentConfigurationCountAggregateOutputType | null
+    _avg: EquipmentConfigurationAvgAggregateOutputType | null
+    _sum: EquipmentConfigurationSumAggregateOutputType | null
+    _min: EquipmentConfigurationMinAggregateOutputType | null
+    _max: EquipmentConfigurationMaxAggregateOutputType | null
+  }
+
+  export type EquipmentConfigurationAvgAggregateOutputType = {
+    equipment_id: number | null
+    baud_rate: number | null
+  }
+
+  export type EquipmentConfigurationSumAggregateOutputType = {
+    equipment_id: bigint | null
+    baud_rate: number | null
+  }
+
+  export type EquipmentConfigurationMinAggregateOutputType = {
+    equipment_id: bigint | null
+    port: string | null
+    ip_address: string | null
+    baud_rate: number | null
+    mac_address: string | null
+    remote_directory: string | null
+  }
+
+  export type EquipmentConfigurationMaxAggregateOutputType = {
+    equipment_id: bigint | null
+    port: string | null
+    ip_address: string | null
+    baud_rate: number | null
+    mac_address: string | null
+    remote_directory: string | null
+  }
+
+  export type EquipmentConfigurationCountAggregateOutputType = {
+    equipment_id: number
+    port: number
+    ip_address: number
+    baud_rate: number
+    mac_address: number
+    remote_directory: number
+    _all: number
+  }
+
+
+  export type EquipmentConfigurationAvgAggregateInputType = {
+    equipment_id?: true
+    baud_rate?: true
+  }
+
+  export type EquipmentConfigurationSumAggregateInputType = {
+    equipment_id?: true
+    baud_rate?: true
+  }
+
+  export type EquipmentConfigurationMinAggregateInputType = {
+    equipment_id?: true
+    port?: true
+    ip_address?: true
+    baud_rate?: true
+    mac_address?: true
+    remote_directory?: true
+  }
+
+  export type EquipmentConfigurationMaxAggregateInputType = {
+    equipment_id?: true
+    port?: true
+    ip_address?: true
+    baud_rate?: true
+    mac_address?: true
+    remote_directory?: true
+  }
+
+  export type EquipmentConfigurationCountAggregateInputType = {
+    equipment_id?: true
+    port?: true
+    ip_address?: true
+    baud_rate?: true
+    mac_address?: true
+    remote_directory?: true
+    _all?: true
+  }
+
+  export type EquipmentConfigurationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EquipmentConfiguration to aggregate.
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EquipmentConfigurations to fetch.
+     */
+    orderBy?: EquipmentConfigurationOrderByWithRelationInput | EquipmentConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EquipmentConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EquipmentConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EquipmentConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EquipmentConfigurations
+    **/
+    _count?: true | EquipmentConfigurationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EquipmentConfigurationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EquipmentConfigurationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EquipmentConfigurationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EquipmentConfigurationMaxAggregateInputType
+  }
+
+  export type GetEquipmentConfigurationAggregateType<T extends EquipmentConfigurationAggregateArgs> = {
+        [P in keyof T & keyof AggregateEquipmentConfiguration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEquipmentConfiguration[P]>
+      : GetScalarType<T[P], AggregateEquipmentConfiguration[P]>
+  }
+
+
+
+
+  export type EquipmentConfigurationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EquipmentConfigurationWhereInput
+    orderBy?: EquipmentConfigurationOrderByWithAggregationInput | EquipmentConfigurationOrderByWithAggregationInput[]
+    by: EquipmentConfigurationScalarFieldEnum[] | EquipmentConfigurationScalarFieldEnum
+    having?: EquipmentConfigurationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EquipmentConfigurationCountAggregateInputType | true
+    _avg?: EquipmentConfigurationAvgAggregateInputType
+    _sum?: EquipmentConfigurationSumAggregateInputType
+    _min?: EquipmentConfigurationMinAggregateInputType
+    _max?: EquipmentConfigurationMaxAggregateInputType
+  }
+
+  export type EquipmentConfigurationGroupByOutputType = {
+    equipment_id: bigint
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
+    _count: EquipmentConfigurationCountAggregateOutputType | null
+    _avg: EquipmentConfigurationAvgAggregateOutputType | null
+    _sum: EquipmentConfigurationSumAggregateOutputType | null
+    _min: EquipmentConfigurationMinAggregateOutputType | null
+    _max: EquipmentConfigurationMaxAggregateOutputType | null
+  }
+
+  type GetEquipmentConfigurationGroupByPayload<T extends EquipmentConfigurationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EquipmentConfigurationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EquipmentConfigurationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EquipmentConfigurationGroupByOutputType[P]>
+            : GetScalarType<T[P], EquipmentConfigurationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EquipmentConfigurationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    equipment_id?: boolean
+    port?: boolean
+    ip_address?: boolean
+    baud_rate?: boolean
+    mac_address?: boolean
+    remote_directory?: boolean
+    equipment?: boolean | EquipmentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["equipmentConfiguration"]>
+
+  export type EquipmentConfigurationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    equipment_id?: boolean
+    port?: boolean
+    ip_address?: boolean
+    baud_rate?: boolean
+    mac_address?: boolean
+    remote_directory?: boolean
+    equipment?: boolean | EquipmentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["equipmentConfiguration"]>
+
+  export type EquipmentConfigurationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    equipment_id?: boolean
+    port?: boolean
+    ip_address?: boolean
+    baud_rate?: boolean
+    mac_address?: boolean
+    remote_directory?: boolean
+    equipment?: boolean | EquipmentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["equipmentConfiguration"]>
+
+  export type EquipmentConfigurationSelectScalar = {
+    equipment_id?: boolean
+    port?: boolean
+    ip_address?: boolean
+    baud_rate?: boolean
+    mac_address?: boolean
+    remote_directory?: boolean
+  }
+
+  export type EquipmentConfigurationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"equipment_id" | "port" | "ip_address" | "baud_rate" | "mac_address" | "remote_directory", ExtArgs["result"]["equipmentConfiguration"]>
+  export type EquipmentConfigurationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    equipment?: boolean | EquipmentDefaultArgs<ExtArgs>
+  }
+  export type EquipmentConfigurationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    equipment?: boolean | EquipmentDefaultArgs<ExtArgs>
+  }
+  export type EquipmentConfigurationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    equipment?: boolean | EquipmentDefaultArgs<ExtArgs>
+  }
+
+  export type $EquipmentConfigurationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EquipmentConfiguration"
+    objects: {
+      equipment: Prisma.$EquipmentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      equipment_id: bigint
+      port: string
+      ip_address: string
+      baud_rate: number
+      mac_address: string
+      remote_directory: string
+    }, ExtArgs["result"]["equipmentConfiguration"]>
+    composites: {}
+  }
+
+  type EquipmentConfigurationGetPayload<S extends boolean | null | undefined | EquipmentConfigurationDefaultArgs> = $Result.GetResult<Prisma.$EquipmentConfigurationPayload, S>
+
+  type EquipmentConfigurationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EquipmentConfigurationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EquipmentConfigurationCountAggregateInputType | true
+    }
+
+  export interface EquipmentConfigurationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EquipmentConfiguration'], meta: { name: 'EquipmentConfiguration' } }
+    /**
+     * Find zero or one EquipmentConfiguration that matches the filter.
+     * @param {EquipmentConfigurationFindUniqueArgs} args - Arguments to find a EquipmentConfiguration
+     * @example
+     * // Get one EquipmentConfiguration
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EquipmentConfigurationFindUniqueArgs>(args: SelectSubset<T, EquipmentConfigurationFindUniqueArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one EquipmentConfiguration that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EquipmentConfigurationFindUniqueOrThrowArgs} args - Arguments to find a EquipmentConfiguration
+     * @example
+     * // Get one EquipmentConfiguration
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EquipmentConfigurationFindUniqueOrThrowArgs>(args: SelectSubset<T, EquipmentConfigurationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EquipmentConfiguration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationFindFirstArgs} args - Arguments to find a EquipmentConfiguration
+     * @example
+     * // Get one EquipmentConfiguration
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EquipmentConfigurationFindFirstArgs>(args?: SelectSubset<T, EquipmentConfigurationFindFirstArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EquipmentConfiguration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationFindFirstOrThrowArgs} args - Arguments to find a EquipmentConfiguration
+     * @example
+     * // Get one EquipmentConfiguration
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EquipmentConfigurationFindFirstOrThrowArgs>(args?: SelectSubset<T, EquipmentConfigurationFindFirstOrThrowArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more EquipmentConfigurations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EquipmentConfigurations
+     * const equipmentConfigurations = await prisma.equipmentConfiguration.findMany()
+     * 
+     * // Get first 10 EquipmentConfigurations
+     * const equipmentConfigurations = await prisma.equipmentConfiguration.findMany({ take: 10 })
+     * 
+     * // Only select the `equipment_id`
+     * const equipmentConfigurationWithEquipment_idOnly = await prisma.equipmentConfiguration.findMany({ select: { equipment_id: true } })
+     * 
+     */
+    findMany<T extends EquipmentConfigurationFindManyArgs>(args?: SelectSubset<T, EquipmentConfigurationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a EquipmentConfiguration.
+     * @param {EquipmentConfigurationCreateArgs} args - Arguments to create a EquipmentConfiguration.
+     * @example
+     * // Create one EquipmentConfiguration
+     * const EquipmentConfiguration = await prisma.equipmentConfiguration.create({
+     *   data: {
+     *     // ... data to create a EquipmentConfiguration
+     *   }
+     * })
+     * 
+     */
+    create<T extends EquipmentConfigurationCreateArgs>(args: SelectSubset<T, EquipmentConfigurationCreateArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many EquipmentConfigurations.
+     * @param {EquipmentConfigurationCreateManyArgs} args - Arguments to create many EquipmentConfigurations.
+     * @example
+     * // Create many EquipmentConfigurations
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EquipmentConfigurationCreateManyArgs>(args?: SelectSubset<T, EquipmentConfigurationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EquipmentConfigurations and returns the data saved in the database.
+     * @param {EquipmentConfigurationCreateManyAndReturnArgs} args - Arguments to create many EquipmentConfigurations.
+     * @example
+     * // Create many EquipmentConfigurations
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EquipmentConfigurations and only return the `equipment_id`
+     * const equipmentConfigurationWithEquipment_idOnly = await prisma.equipmentConfiguration.createManyAndReturn({
+     *   select: { equipment_id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EquipmentConfigurationCreateManyAndReturnArgs>(args?: SelectSubset<T, EquipmentConfigurationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a EquipmentConfiguration.
+     * @param {EquipmentConfigurationDeleteArgs} args - Arguments to delete one EquipmentConfiguration.
+     * @example
+     * // Delete one EquipmentConfiguration
+     * const EquipmentConfiguration = await prisma.equipmentConfiguration.delete({
+     *   where: {
+     *     // ... filter to delete one EquipmentConfiguration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EquipmentConfigurationDeleteArgs>(args: SelectSubset<T, EquipmentConfigurationDeleteArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one EquipmentConfiguration.
+     * @param {EquipmentConfigurationUpdateArgs} args - Arguments to update one EquipmentConfiguration.
+     * @example
+     * // Update one EquipmentConfiguration
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EquipmentConfigurationUpdateArgs>(args: SelectSubset<T, EquipmentConfigurationUpdateArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more EquipmentConfigurations.
+     * @param {EquipmentConfigurationDeleteManyArgs} args - Arguments to filter EquipmentConfigurations to delete.
+     * @example
+     * // Delete a few EquipmentConfigurations
+     * const { count } = await prisma.equipmentConfiguration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EquipmentConfigurationDeleteManyArgs>(args?: SelectSubset<T, EquipmentConfigurationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EquipmentConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EquipmentConfigurations
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EquipmentConfigurationUpdateManyArgs>(args: SelectSubset<T, EquipmentConfigurationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EquipmentConfigurations and returns the data updated in the database.
+     * @param {EquipmentConfigurationUpdateManyAndReturnArgs} args - Arguments to update many EquipmentConfigurations.
+     * @example
+     * // Update many EquipmentConfigurations
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EquipmentConfigurations and only return the `equipment_id`
+     * const equipmentConfigurationWithEquipment_idOnly = await prisma.equipmentConfiguration.updateManyAndReturn({
+     *   select: { equipment_id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EquipmentConfigurationUpdateManyAndReturnArgs>(args: SelectSubset<T, EquipmentConfigurationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one EquipmentConfiguration.
+     * @param {EquipmentConfigurationUpsertArgs} args - Arguments to update or create a EquipmentConfiguration.
+     * @example
+     * // Update or create a EquipmentConfiguration
+     * const equipmentConfiguration = await prisma.equipmentConfiguration.upsert({
+     *   create: {
+     *     // ... data to create a EquipmentConfiguration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EquipmentConfiguration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EquipmentConfigurationUpsertArgs>(args: SelectSubset<T, EquipmentConfigurationUpsertArgs<ExtArgs>>): Prisma__EquipmentConfigurationClient<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of EquipmentConfigurations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationCountArgs} args - Arguments to filter EquipmentConfigurations to count.
+     * @example
+     * // Count the number of EquipmentConfigurations
+     * const count = await prisma.equipmentConfiguration.count({
+     *   where: {
+     *     // ... the filter for the EquipmentConfigurations we want to count
+     *   }
+     * })
+    **/
+    count<T extends EquipmentConfigurationCountArgs>(
+      args?: Subset<T, EquipmentConfigurationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EquipmentConfigurationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EquipmentConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EquipmentConfigurationAggregateArgs>(args: Subset<T, EquipmentConfigurationAggregateArgs>): Prisma.PrismaPromise<GetEquipmentConfigurationAggregateType<T>>
+
+    /**
+     * Group by EquipmentConfiguration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EquipmentConfigurationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EquipmentConfigurationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EquipmentConfigurationGroupByArgs['orderBy'] }
+        : { orderBy?: EquipmentConfigurationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EquipmentConfigurationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEquipmentConfigurationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EquipmentConfiguration model
+   */
+  readonly fields: EquipmentConfigurationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EquipmentConfiguration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EquipmentConfigurationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    equipment<T extends EquipmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EquipmentDefaultArgs<ExtArgs>>): Prisma__EquipmentClient<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EquipmentConfiguration model
+   */
+  interface EquipmentConfigurationFieldRefs {
+    readonly equipment_id: FieldRef<"EquipmentConfiguration", 'BigInt'>
+    readonly port: FieldRef<"EquipmentConfiguration", 'String'>
+    readonly ip_address: FieldRef<"EquipmentConfiguration", 'String'>
+    readonly baud_rate: FieldRef<"EquipmentConfiguration", 'Int'>
+    readonly mac_address: FieldRef<"EquipmentConfiguration", 'String'>
+    readonly remote_directory: FieldRef<"EquipmentConfiguration", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EquipmentConfiguration findUnique
+   */
+  export type EquipmentConfigurationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which EquipmentConfiguration to fetch.
+     */
+    where: EquipmentConfigurationWhereUniqueInput
+  }
+
+  /**
+   * EquipmentConfiguration findUniqueOrThrow
+   */
+  export type EquipmentConfigurationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which EquipmentConfiguration to fetch.
+     */
+    where: EquipmentConfigurationWhereUniqueInput
+  }
+
+  /**
+   * EquipmentConfiguration findFirst
+   */
+  export type EquipmentConfigurationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which EquipmentConfiguration to fetch.
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EquipmentConfigurations to fetch.
+     */
+    orderBy?: EquipmentConfigurationOrderByWithRelationInput | EquipmentConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EquipmentConfigurations.
+     */
+    cursor?: EquipmentConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EquipmentConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EquipmentConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EquipmentConfigurations.
+     */
+    distinct?: EquipmentConfigurationScalarFieldEnum | EquipmentConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * EquipmentConfiguration findFirstOrThrow
+   */
+  export type EquipmentConfigurationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which EquipmentConfiguration to fetch.
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EquipmentConfigurations to fetch.
+     */
+    orderBy?: EquipmentConfigurationOrderByWithRelationInput | EquipmentConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EquipmentConfigurations.
+     */
+    cursor?: EquipmentConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EquipmentConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EquipmentConfigurations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EquipmentConfigurations.
+     */
+    distinct?: EquipmentConfigurationScalarFieldEnum | EquipmentConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * EquipmentConfiguration findMany
+   */
+  export type EquipmentConfigurationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter, which EquipmentConfigurations to fetch.
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EquipmentConfigurations to fetch.
+     */
+    orderBy?: EquipmentConfigurationOrderByWithRelationInput | EquipmentConfigurationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EquipmentConfigurations.
+     */
+    cursor?: EquipmentConfigurationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EquipmentConfigurations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EquipmentConfigurations.
+     */
+    skip?: number
+    distinct?: EquipmentConfigurationScalarFieldEnum | EquipmentConfigurationScalarFieldEnum[]
+  }
+
+  /**
+   * EquipmentConfiguration create
+   */
+  export type EquipmentConfigurationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EquipmentConfiguration.
+     */
+    data: XOR<EquipmentConfigurationCreateInput, EquipmentConfigurationUncheckedCreateInput>
+  }
+
+  /**
+   * EquipmentConfiguration createMany
+   */
+  export type EquipmentConfigurationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EquipmentConfigurations.
+     */
+    data: EquipmentConfigurationCreateManyInput | EquipmentConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EquipmentConfiguration createManyAndReturn
+   */
+  export type EquipmentConfigurationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * The data used to create many EquipmentConfigurations.
+     */
+    data: EquipmentConfigurationCreateManyInput | EquipmentConfigurationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EquipmentConfiguration update
+   */
+  export type EquipmentConfigurationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EquipmentConfiguration.
+     */
+    data: XOR<EquipmentConfigurationUpdateInput, EquipmentConfigurationUncheckedUpdateInput>
+    /**
+     * Choose, which EquipmentConfiguration to update.
+     */
+    where: EquipmentConfigurationWhereUniqueInput
+  }
+
+  /**
+   * EquipmentConfiguration updateMany
+   */
+  export type EquipmentConfigurationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EquipmentConfigurations.
+     */
+    data: XOR<EquipmentConfigurationUpdateManyMutationInput, EquipmentConfigurationUncheckedUpdateManyInput>
+    /**
+     * Filter which EquipmentConfigurations to update
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * Limit how many EquipmentConfigurations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EquipmentConfiguration updateManyAndReturn
+   */
+  export type EquipmentConfigurationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * The data used to update EquipmentConfigurations.
+     */
+    data: XOR<EquipmentConfigurationUpdateManyMutationInput, EquipmentConfigurationUncheckedUpdateManyInput>
+    /**
+     * Filter which EquipmentConfigurations to update
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * Limit how many EquipmentConfigurations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EquipmentConfiguration upsert
+   */
+  export type EquipmentConfigurationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EquipmentConfiguration to update in case it exists.
+     */
+    where: EquipmentConfigurationWhereUniqueInput
+    /**
+     * In case the EquipmentConfiguration found by the `where` argument doesn't exist, create a new EquipmentConfiguration with this data.
+     */
+    create: XOR<EquipmentConfigurationCreateInput, EquipmentConfigurationUncheckedCreateInput>
+    /**
+     * In case the EquipmentConfiguration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EquipmentConfigurationUpdateInput, EquipmentConfigurationUncheckedUpdateInput>
+  }
+
+  /**
+   * EquipmentConfiguration delete
+   */
+  export type EquipmentConfigurationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+    /**
+     * Filter which EquipmentConfiguration to delete.
+     */
+    where: EquipmentConfigurationWhereUniqueInput
+  }
+
+  /**
+   * EquipmentConfiguration deleteMany
+   */
+  export type EquipmentConfigurationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EquipmentConfigurations to delete
+     */
+    where?: EquipmentConfigurationWhereInput
+    /**
+     * Limit how many EquipmentConfigurations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EquipmentConfiguration without action
+   */
+  export type EquipmentConfigurationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EquipmentConfiguration
+     */
+    select?: EquipmentConfigurationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EquipmentConfiguration
+     */
+    omit?: EquipmentConfigurationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentConfigurationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9478,7 +15835,6 @@ export namespace Prisma {
 
   export const CommunicationProfilesScalarFieldEnum: {
     id: 'id',
-    name: 'name',
     checksum_regex: 'checksum_regex',
     type: 'type'
   };
@@ -9500,7 +15856,9 @@ export namespace Prisma {
   export const EquipmentProfileScalarFieldEnum: {
     id: 'id',
     communication_profile: 'communication_profile',
-    name: 'name'
+    name: 'name',
+    active: 'active',
+    communication_type: 'communication_type'
   };
 
   export type EquipmentProfileScalarFieldEnum = (typeof EquipmentProfileScalarFieldEnum)[keyof typeof EquipmentProfileScalarFieldEnum]
@@ -9513,7 +15871,8 @@ export namespace Prisma {
     created_at: 'created_at',
     modified_at: 'modified_at',
     last_connection: 'last_connection',
-    connection_status: 'connection_status'
+    connection_status: 'connection_status',
+    active: 'active'
   };
 
   export type EquipmentScalarFieldEnum = (typeof EquipmentScalarFieldEnum)[keyof typeof EquipmentScalarFieldEnum]
@@ -9523,7 +15882,9 @@ export namespace Prisma {
     id: 'id',
     result_folio: 'result_folio',
     description: 'description',
-    value: 'value'
+    value: 'value',
+    created_at: 'created_at',
+    active: 'active'
   };
 
   export type HistogramResultScalarFieldEnum = (typeof HistogramResultScalarFieldEnum)[keyof typeof HistogramResultScalarFieldEnum]
@@ -9533,13 +15894,14 @@ export namespace Prisma {
     id: 'id',
     result_folio: 'result_folio',
     equipment_id: 'equipment_id',
+    parameter_dictionary_id: 'parameter_dictionary_id',
     description: 'description',
     value: 'value',
     unit_measurement: 'unit_measurement',
     max_range: 'max_range',
     min_range: 'min_range',
     created_at: 'created_at',
-    modified_at: 'modified_at'
+    active: 'active'
   };
 
   export type ParameterScalarFieldEnum = (typeof ParameterScalarFieldEnum)[keyof typeof ParameterScalarFieldEnum]
@@ -9547,14 +15909,65 @@ export namespace Prisma {
 
   export const ResultScalarFieldEnum: {
     folio: 'folio',
+    created_by: 'created_by',
     sample_id: 'sample_id',
-    pacient_name: 'pacient_name',
-    sex: 'sex',
     created_at: 'created_at',
-    modified_at: 'modified_at'
+    last_modified_at: 'last_modified_at',
+    active: 'active'
   };
 
   export type ResultScalarFieldEnum = (typeof ResultScalarFieldEnum)[keyof typeof ResultScalarFieldEnum]
+
+
+  export const ParameterDictionaryScalarFieldEnum: {
+    id: 'id',
+    system_parameter_id: 'system_parameter_id',
+    parameter_description: 'parameter_description'
+  };
+
+  export type ParameterDictionaryScalarFieldEnum = (typeof ParameterDictionaryScalarFieldEnum)[keyof typeof ParameterDictionaryScalarFieldEnum]
+
+
+  export const ResultSendScalarFieldEnum: {
+    id: 'id',
+    result_folio: 'result_folio',
+    send_by: 'send_by',
+    send_at: 'send_at',
+    status: 'status',
+    payload: 'payload',
+    response: 'response'
+  };
+
+  export type ResultSendScalarFieldEnum = (typeof ResultSendScalarFieldEnum)[keyof typeof ResultSendScalarFieldEnum]
+
+
+  export const SystemParameterScalarFieldEnum: {
+    id: 'id',
+    value: 'value'
+  };
+
+  export type SystemParameterScalarFieldEnum = (typeof SystemParameterScalarFieldEnum)[keyof typeof SystemParameterScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    username: 'username',
+    password: 'password'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const EquipmentConfigurationScalarFieldEnum: {
+    equipment_id: 'equipment_id',
+    port: 'port',
+    ip_address: 'ip_address',
+    baud_rate: 'baud_rate',
+    mac_address: 'mac_address',
+    remote_directory: 'remote_directory'
+  };
+
+  export type EquipmentConfigurationScalarFieldEnum = (typeof EquipmentConfigurationScalarFieldEnum)[keyof typeof EquipmentConfigurationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9563,6 +15976,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -9579,6 +16000,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -9615,6 +16045,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -9625,6 +16062,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -9664,18 +16115,16 @@ export namespace Prisma {
     OR?: CommunicationProfilesWhereInput[]
     NOT?: CommunicationProfilesWhereInput | CommunicationProfilesWhereInput[]
     id?: StringFilter<"CommunicationProfiles"> | string
-    name?: StringNullableFilter<"CommunicationProfiles"> | string | null
     checksum_regex?: StringNullableFilter<"CommunicationProfiles"> | string | null
     type?: StringNullableFilter<"CommunicationProfiles"> | string | null
-    equipment_profiles?: EquipmentProfileListRelationFilter
+    equipmentProfiles?: EquipmentProfileListRelationFilter
   }
 
   export type CommunicationProfilesOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
     checksum_regex?: SortOrderInput | SortOrder
     type?: SortOrderInput | SortOrder
-    equipment_profiles?: EquipmentProfileOrderByRelationAggregateInput
+    equipmentProfiles?: EquipmentProfileOrderByRelationAggregateInput
   }
 
   export type CommunicationProfilesWhereUniqueInput = Prisma.AtLeast<{
@@ -9683,15 +16132,13 @@ export namespace Prisma {
     AND?: CommunicationProfilesWhereInput | CommunicationProfilesWhereInput[]
     OR?: CommunicationProfilesWhereInput[]
     NOT?: CommunicationProfilesWhereInput | CommunicationProfilesWhereInput[]
-    name?: StringNullableFilter<"CommunicationProfiles"> | string | null
     checksum_regex?: StringNullableFilter<"CommunicationProfiles"> | string | null
     type?: StringNullableFilter<"CommunicationProfiles"> | string | null
-    equipment_profiles?: EquipmentProfileListRelationFilter
+    equipmentProfiles?: EquipmentProfileListRelationFilter
   }, "id">
 
   export type CommunicationProfilesOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrderInput | SortOrder
     checksum_regex?: SortOrderInput | SortOrder
     type?: SortOrderInput | SortOrder
     _count?: CommunicationProfilesCountOrderByAggregateInput
@@ -9704,7 +16151,6 @@ export namespace Prisma {
     OR?: CommunicationProfilesScalarWhereWithAggregatesInput[]
     NOT?: CommunicationProfilesScalarWhereWithAggregatesInput | CommunicationProfilesScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"CommunicationProfiles"> | string
-    name?: StringNullableWithAggregatesFilter<"CommunicationProfiles"> | string | null
     checksum_regex?: StringNullableWithAggregatesFilter<"CommunicationProfiles"> | string | null
     type?: StringNullableWithAggregatesFilter<"CommunicationProfiles"> | string | null
   }
@@ -9718,7 +16164,7 @@ export namespace Prisma {
     filename?: StringNullableFilter<"DirectoryHistorial"> | string | null
     filepath?: StringNullableFilter<"DirectoryHistorial"> | string | null
     modified_at?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
-    equipments?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
+    equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
   }
 
   export type DirectoryHistorialOrderByWithRelationInput = {
@@ -9727,7 +16173,7 @@ export namespace Prisma {
     filename?: SortOrderInput | SortOrder
     filepath?: SortOrderInput | SortOrder
     modified_at?: SortOrderInput | SortOrder
-    equipments?: EquipmentOrderByWithRelationInput
+    equipment?: EquipmentOrderByWithRelationInput
   }
 
   export type DirectoryHistorialWhereUniqueInput = Prisma.AtLeast<{
@@ -9739,7 +16185,7 @@ export namespace Prisma {
     filename?: StringNullableFilter<"DirectoryHistorial"> | string | null
     filepath?: StringNullableFilter<"DirectoryHistorial"> | string | null
     modified_at?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
-    equipments?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
+    equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
   }, "id">
 
   export type DirectoryHistorialOrderByWithAggregationInput = {
@@ -9773,7 +16219,9 @@ export namespace Prisma {
     id?: BigIntFilter<"EquipmentProfile"> | bigint | number
     communication_profile?: StringNullableFilter<"EquipmentProfile"> | string | null
     name?: StringNullableFilter<"EquipmentProfile"> | string | null
-    communication_profiles?: XOR<CommunicationProfilesNullableScalarRelationFilter, CommunicationProfilesWhereInput> | null
+    active?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
+    communication_type?: StringNullableFilter<"EquipmentProfile"> | string | null
+    communicationProfile?: XOR<CommunicationProfilesNullableScalarRelationFilter, CommunicationProfilesWhereInput> | null
     equipments?: EquipmentListRelationFilter
   }
 
@@ -9781,7 +16229,9 @@ export namespace Prisma {
     id?: SortOrder
     communication_profile?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
-    communication_profiles?: CommunicationProfilesOrderByWithRelationInput
+    active?: SortOrderInput | SortOrder
+    communication_type?: SortOrderInput | SortOrder
+    communicationProfile?: CommunicationProfilesOrderByWithRelationInput
     equipments?: EquipmentOrderByRelationAggregateInput
   }
 
@@ -9792,7 +16242,9 @@ export namespace Prisma {
     NOT?: EquipmentProfileWhereInput | EquipmentProfileWhereInput[]
     communication_profile?: StringNullableFilter<"EquipmentProfile"> | string | null
     name?: StringNullableFilter<"EquipmentProfile"> | string | null
-    communication_profiles?: XOR<CommunicationProfilesNullableScalarRelationFilter, CommunicationProfilesWhereInput> | null
+    active?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
+    communication_type?: StringNullableFilter<"EquipmentProfile"> | string | null
+    communicationProfile?: XOR<CommunicationProfilesNullableScalarRelationFilter, CommunicationProfilesWhereInput> | null
     equipments?: EquipmentListRelationFilter
   }, "id">
 
@@ -9800,6 +16252,8 @@ export namespace Prisma {
     id?: SortOrder
     communication_profile?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
+    communication_type?: SortOrderInput | SortOrder
     _count?: EquipmentProfileCountOrderByAggregateInput
     _avg?: EquipmentProfileAvgOrderByAggregateInput
     _max?: EquipmentProfileMaxOrderByAggregateInput
@@ -9814,6 +16268,8 @@ export namespace Prisma {
     id?: BigIntWithAggregatesFilter<"EquipmentProfile"> | bigint | number
     communication_profile?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
     name?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
+    active?: BoolNullableWithAggregatesFilter<"EquipmentProfile"> | boolean | null
+    communication_type?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
   }
 
   export type EquipmentWhereInput = {
@@ -9827,9 +16283,11 @@ export namespace Prisma {
     modified_at?: DateTimeNullableFilter<"Equipment"> | Date | string | null
     last_connection?: DateTimeNullableFilter<"Equipment"> | Date | string | null
     connection_status?: StringNullableFilter<"Equipment"> | string | null
-    directory_historials?: DirectoryHistorialListRelationFilter
-    equipment_profiles?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
+    active?: BoolNullableFilter<"Equipment"> | boolean | null
+    directoryHistorials?: DirectoryHistorialListRelationFilter
+    equipmentProfile?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
     parameters?: ParameterListRelationFilter
+    EquipmentConfiguration?: EquipmentConfigurationListRelationFilter
   }
 
   export type EquipmentOrderByWithRelationInput = {
@@ -9840,9 +16298,11 @@ export namespace Prisma {
     modified_at?: SortOrderInput | SortOrder
     last_connection?: SortOrderInput | SortOrder
     connection_status?: SortOrderInput | SortOrder
-    directory_historials?: DirectoryHistorialOrderByRelationAggregateInput
-    equipment_profiles?: EquipmentProfileOrderByWithRelationInput
+    active?: SortOrderInput | SortOrder
+    directoryHistorials?: DirectoryHistorialOrderByRelationAggregateInput
+    equipmentProfile?: EquipmentProfileOrderByWithRelationInput
     parameters?: ParameterOrderByRelationAggregateInput
+    EquipmentConfiguration?: EquipmentConfigurationOrderByRelationAggregateInput
   }
 
   export type EquipmentWhereUniqueInput = Prisma.AtLeast<{
@@ -9856,9 +16316,11 @@ export namespace Prisma {
     modified_at?: DateTimeNullableFilter<"Equipment"> | Date | string | null
     last_connection?: DateTimeNullableFilter<"Equipment"> | Date | string | null
     connection_status?: StringNullableFilter<"Equipment"> | string | null
-    directory_historials?: DirectoryHistorialListRelationFilter
-    equipment_profiles?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
+    active?: BoolNullableFilter<"Equipment"> | boolean | null
+    directoryHistorials?: DirectoryHistorialListRelationFilter
+    equipmentProfile?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
     parameters?: ParameterListRelationFilter
+    EquipmentConfiguration?: EquipmentConfigurationListRelationFilter
   }, "id">
 
   export type EquipmentOrderByWithAggregationInput = {
@@ -9869,6 +16331,7 @@ export namespace Prisma {
     modified_at?: SortOrderInput | SortOrder
     last_connection?: SortOrderInput | SortOrder
     connection_status?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
     _count?: EquipmentCountOrderByAggregateInput
     _avg?: EquipmentAvgOrderByAggregateInput
     _max?: EquipmentMaxOrderByAggregateInput
@@ -9887,6 +16350,7 @@ export namespace Prisma {
     modified_at?: DateTimeNullableWithAggregatesFilter<"Equipment"> | Date | string | null
     last_connection?: DateTimeNullableWithAggregatesFilter<"Equipment"> | Date | string | null
     connection_status?: StringNullableWithAggregatesFilter<"Equipment"> | string | null
+    active?: BoolNullableWithAggregatesFilter<"Equipment"> | boolean | null
   }
 
   export type HistogramResultWhereInput = {
@@ -9897,7 +16361,9 @@ export namespace Prisma {
     result_folio?: StringNullableFilter<"HistogramResult"> | string | null
     description?: StringNullableFilter<"HistogramResult"> | string | null
     value?: StringNullableFilter<"HistogramResult"> | string | null
-    results?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
+    active?: BoolNullableFilter<"HistogramResult"> | boolean | null
+    result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
   }
 
   export type HistogramResultOrderByWithRelationInput = {
@@ -9905,7 +16371,9 @@ export namespace Prisma {
     result_folio?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     value?: SortOrderInput | SortOrder
-    results?: ResultOrderByWithRelationInput
+    created_at?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
+    result?: ResultOrderByWithRelationInput
   }
 
   export type HistogramResultWhereUniqueInput = Prisma.AtLeast<{
@@ -9916,7 +16384,9 @@ export namespace Prisma {
     result_folio?: StringNullableFilter<"HistogramResult"> | string | null
     description?: StringNullableFilter<"HistogramResult"> | string | null
     value?: StringNullableFilter<"HistogramResult"> | string | null
-    results?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
+    active?: BoolNullableFilter<"HistogramResult"> | boolean | null
+    result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
   }, "id">
 
   export type HistogramResultOrderByWithAggregationInput = {
@@ -9924,6 +16394,8 @@ export namespace Prisma {
     result_folio?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     value?: SortOrderInput | SortOrder
+    created_at?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
     _count?: HistogramResultCountOrderByAggregateInput
     _avg?: HistogramResultAvgOrderByAggregateInput
     _max?: HistogramResultMaxOrderByAggregateInput
@@ -9939,6 +16411,8 @@ export namespace Prisma {
     result_folio?: StringNullableWithAggregatesFilter<"HistogramResult"> | string | null
     description?: StringNullableWithAggregatesFilter<"HistogramResult"> | string | null
     value?: StringNullableWithAggregatesFilter<"HistogramResult"> | string | null
+    created_at?: DateTimeNullableWithAggregatesFilter<"HistogramResult"> | Date | string | null
+    active?: BoolNullableWithAggregatesFilter<"HistogramResult"> | boolean | null
   }
 
   export type ParameterWhereInput = {
@@ -9948,30 +16422,34 @@ export namespace Prisma {
     id?: BigIntFilter<"Parameter"> | bigint | number
     result_folio?: StringNullableFilter<"Parameter"> | string | null
     equipment_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
+    parameter_dictionary_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     description?: StringNullableFilter<"Parameter"> | string | null
     value?: StringNullableFilter<"Parameter"> | string | null
     unit_measurement?: StringNullableFilter<"Parameter"> | string | null
     max_range?: StringNullableFilter<"Parameter"> | string | null
     min_range?: StringNullableFilter<"Parameter"> | string | null
     created_at?: DateTimeNullableFilter<"Parameter"> | Date | string | null
-    modified_at?: DateTimeNullableFilter<"Parameter"> | Date | string | null
-    equipments?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
-    results?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    active?: BoolNullableFilter<"Parameter"> | boolean | null
+    equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
+    parameterDictionary?: XOR<ParameterDictionaryNullableScalarRelationFilter, ParameterDictionaryWhereInput> | null
+    result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
   }
 
   export type ParameterOrderByWithRelationInput = {
     id?: SortOrder
     result_folio?: SortOrderInput | SortOrder
     equipment_id?: SortOrderInput | SortOrder
+    parameter_dictionary_id?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     value?: SortOrderInput | SortOrder
     unit_measurement?: SortOrderInput | SortOrder
     max_range?: SortOrderInput | SortOrder
     min_range?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
-    modified_at?: SortOrderInput | SortOrder
-    equipments?: EquipmentOrderByWithRelationInput
-    results?: ResultOrderByWithRelationInput
+    active?: SortOrderInput | SortOrder
+    equipment?: EquipmentOrderByWithRelationInput
+    parameterDictionary?: ParameterDictionaryOrderByWithRelationInput
+    result?: ResultOrderByWithRelationInput
   }
 
   export type ParameterWhereUniqueInput = Prisma.AtLeast<{
@@ -9981,28 +16459,31 @@ export namespace Prisma {
     NOT?: ParameterWhereInput | ParameterWhereInput[]
     result_folio?: StringNullableFilter<"Parameter"> | string | null
     equipment_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
+    parameter_dictionary_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     description?: StringNullableFilter<"Parameter"> | string | null
     value?: StringNullableFilter<"Parameter"> | string | null
     unit_measurement?: StringNullableFilter<"Parameter"> | string | null
     max_range?: StringNullableFilter<"Parameter"> | string | null
     min_range?: StringNullableFilter<"Parameter"> | string | null
     created_at?: DateTimeNullableFilter<"Parameter"> | Date | string | null
-    modified_at?: DateTimeNullableFilter<"Parameter"> | Date | string | null
-    equipments?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
-    results?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    active?: BoolNullableFilter<"Parameter"> | boolean | null
+    equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
+    parameterDictionary?: XOR<ParameterDictionaryNullableScalarRelationFilter, ParameterDictionaryWhereInput> | null
+    result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
   }, "id">
 
   export type ParameterOrderByWithAggregationInput = {
     id?: SortOrder
     result_folio?: SortOrderInput | SortOrder
     equipment_id?: SortOrderInput | SortOrder
+    parameter_dictionary_id?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     value?: SortOrderInput | SortOrder
     unit_measurement?: SortOrderInput | SortOrder
     max_range?: SortOrderInput | SortOrder
     min_range?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
-    modified_at?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
     _count?: ParameterCountOrderByAggregateInput
     _avg?: ParameterAvgOrderByAggregateInput
     _max?: ParameterMaxOrderByAggregateInput
@@ -10017,13 +16498,14 @@ export namespace Prisma {
     id?: BigIntWithAggregatesFilter<"Parameter"> | bigint | number
     result_folio?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
     equipment_id?: BigIntNullableWithAggregatesFilter<"Parameter"> | bigint | number | null
+    parameter_dictionary_id?: BigIntNullableWithAggregatesFilter<"Parameter"> | bigint | number | null
     description?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
     value?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
     unit_measurement?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
     max_range?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
     min_range?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
     created_at?: DateTimeNullableWithAggregatesFilter<"Parameter"> | Date | string | null
-    modified_at?: DateTimeNullableWithAggregatesFilter<"Parameter"> | Date | string | null
+    active?: BoolNullableWithAggregatesFilter<"Parameter"> | boolean | null
   }
 
   export type ResultWhereInput = {
@@ -10031,24 +16513,28 @@ export namespace Prisma {
     OR?: ResultWhereInput[]
     NOT?: ResultWhereInput | ResultWhereInput[]
     folio?: StringFilter<"Result"> | string
+    created_by?: BigIntNullableFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableFilter<"Result"> | string | null
-    pacient_name?: StringNullableFilter<"Result"> | string | null
-    sex?: StringNullableFilter<"Result"> | string | null
     created_at?: DateTimeNullableFilter<"Result"> | Date | string | null
-    modified_at?: DateTimeNullableFilter<"Result"> | Date | string | null
-    histogram_results?: HistogramResultListRelationFilter
+    last_modified_at?: DateTimeNullableFilter<"Result"> | Date | string | null
+    active?: BoolNullableFilter<"Result"> | boolean | null
+    histogramResults?: HistogramResultListRelationFilter
     parameters?: ParameterListRelationFilter
+    resultSends?: ResultSendListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type ResultOrderByWithRelationInput = {
     folio?: SortOrder
+    created_by?: SortOrderInput | SortOrder
     sample_id?: SortOrderInput | SortOrder
-    pacient_name?: SortOrderInput | SortOrder
-    sex?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
-    modified_at?: SortOrderInput | SortOrder
-    histogram_results?: HistogramResultOrderByRelationAggregateInput
+    last_modified_at?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
+    histogramResults?: HistogramResultOrderByRelationAggregateInput
     parameters?: ParameterOrderByRelationAggregateInput
+    resultSends?: ResultSendOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type ResultWhereUniqueInput = Prisma.AtLeast<{
@@ -10056,25 +16542,29 @@ export namespace Prisma {
     AND?: ResultWhereInput | ResultWhereInput[]
     OR?: ResultWhereInput[]
     NOT?: ResultWhereInput | ResultWhereInput[]
+    created_by?: BigIntNullableFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableFilter<"Result"> | string | null
-    pacient_name?: StringNullableFilter<"Result"> | string | null
-    sex?: StringNullableFilter<"Result"> | string | null
     created_at?: DateTimeNullableFilter<"Result"> | Date | string | null
-    modified_at?: DateTimeNullableFilter<"Result"> | Date | string | null
-    histogram_results?: HistogramResultListRelationFilter
+    last_modified_at?: DateTimeNullableFilter<"Result"> | Date | string | null
+    active?: BoolNullableFilter<"Result"> | boolean | null
+    histogramResults?: HistogramResultListRelationFilter
     parameters?: ParameterListRelationFilter
+    resultSends?: ResultSendListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "folio">
 
   export type ResultOrderByWithAggregationInput = {
     folio?: SortOrder
+    created_by?: SortOrderInput | SortOrder
     sample_id?: SortOrderInput | SortOrder
-    pacient_name?: SortOrderInput | SortOrder
-    sex?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
-    modified_at?: SortOrderInput | SortOrder
+    last_modified_at?: SortOrderInput | SortOrder
+    active?: SortOrderInput | SortOrder
     _count?: ResultCountOrderByAggregateInput
+    _avg?: ResultAvgOrderByAggregateInput
     _max?: ResultMaxOrderByAggregateInput
     _min?: ResultMinOrderByAggregateInput
+    _sum?: ResultSumOrderByAggregateInput
   }
 
   export type ResultScalarWhereWithAggregatesInput = {
@@ -10082,62 +16572,329 @@ export namespace Prisma {
     OR?: ResultScalarWhereWithAggregatesInput[]
     NOT?: ResultScalarWhereWithAggregatesInput | ResultScalarWhereWithAggregatesInput[]
     folio?: StringWithAggregatesFilter<"Result"> | string
+    created_by?: BigIntNullableWithAggregatesFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableWithAggregatesFilter<"Result"> | string | null
-    pacient_name?: StringNullableWithAggregatesFilter<"Result"> | string | null
-    sex?: StringNullableWithAggregatesFilter<"Result"> | string | null
     created_at?: DateTimeNullableWithAggregatesFilter<"Result"> | Date | string | null
-    modified_at?: DateTimeNullableWithAggregatesFilter<"Result"> | Date | string | null
+    last_modified_at?: DateTimeNullableWithAggregatesFilter<"Result"> | Date | string | null
+    active?: BoolNullableWithAggregatesFilter<"Result"> | boolean | null
+  }
+
+  export type ParameterDictionaryWhereInput = {
+    AND?: ParameterDictionaryWhereInput | ParameterDictionaryWhereInput[]
+    OR?: ParameterDictionaryWhereInput[]
+    NOT?: ParameterDictionaryWhereInput | ParameterDictionaryWhereInput[]
+    id?: BigIntFilter<"ParameterDictionary"> | bigint | number
+    system_parameter_id?: BigIntNullableFilter<"ParameterDictionary"> | bigint | number | null
+    parameter_description?: StringNullableFilter<"ParameterDictionary"> | string | null
+    systemParameter?: XOR<SystemParameterNullableScalarRelationFilter, SystemParameterWhereInput> | null
+    parameters?: ParameterListRelationFilter
+  }
+
+  export type ParameterDictionaryOrderByWithRelationInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrderInput | SortOrder
+    parameter_description?: SortOrderInput | SortOrder
+    systemParameter?: SystemParameterOrderByWithRelationInput
+    parameters?: ParameterOrderByRelationAggregateInput
+  }
+
+  export type ParameterDictionaryWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: ParameterDictionaryWhereInput | ParameterDictionaryWhereInput[]
+    OR?: ParameterDictionaryWhereInput[]
+    NOT?: ParameterDictionaryWhereInput | ParameterDictionaryWhereInput[]
+    system_parameter_id?: BigIntNullableFilter<"ParameterDictionary"> | bigint | number | null
+    parameter_description?: StringNullableFilter<"ParameterDictionary"> | string | null
+    systemParameter?: XOR<SystemParameterNullableScalarRelationFilter, SystemParameterWhereInput> | null
+    parameters?: ParameterListRelationFilter
+  }, "id">
+
+  export type ParameterDictionaryOrderByWithAggregationInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrderInput | SortOrder
+    parameter_description?: SortOrderInput | SortOrder
+    _count?: ParameterDictionaryCountOrderByAggregateInput
+    _avg?: ParameterDictionaryAvgOrderByAggregateInput
+    _max?: ParameterDictionaryMaxOrderByAggregateInput
+    _min?: ParameterDictionaryMinOrderByAggregateInput
+    _sum?: ParameterDictionarySumOrderByAggregateInput
+  }
+
+  export type ParameterDictionaryScalarWhereWithAggregatesInput = {
+    AND?: ParameterDictionaryScalarWhereWithAggregatesInput | ParameterDictionaryScalarWhereWithAggregatesInput[]
+    OR?: ParameterDictionaryScalarWhereWithAggregatesInput[]
+    NOT?: ParameterDictionaryScalarWhereWithAggregatesInput | ParameterDictionaryScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"ParameterDictionary"> | bigint | number
+    system_parameter_id?: BigIntNullableWithAggregatesFilter<"ParameterDictionary"> | bigint | number | null
+    parameter_description?: StringNullableWithAggregatesFilter<"ParameterDictionary"> | string | null
+  }
+
+  export type ResultSendWhereInput = {
+    AND?: ResultSendWhereInput | ResultSendWhereInput[]
+    OR?: ResultSendWhereInput[]
+    NOT?: ResultSendWhereInput | ResultSendWhereInput[]
+    id?: BigIntFilter<"ResultSend"> | bigint | number
+    result_folio?: StringNullableFilter<"ResultSend"> | string | null
+    send_by?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
+    send_at?: DateTimeNullableFilter<"ResultSend"> | Date | string | null
+    status?: StringNullableFilter<"ResultSend"> | string | null
+    payload?: JsonNullableFilter<"ResultSend">
+    response?: JsonNullableFilter<"ResultSend">
+    result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type ResultSendOrderByWithRelationInput = {
+    id?: SortOrder
+    result_folio?: SortOrderInput | SortOrder
+    send_by?: SortOrderInput | SortOrder
+    send_at?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    payload?: SortOrderInput | SortOrder
+    response?: SortOrderInput | SortOrder
+    result?: ResultOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ResultSendWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: ResultSendWhereInput | ResultSendWhereInput[]
+    OR?: ResultSendWhereInput[]
+    NOT?: ResultSendWhereInput | ResultSendWhereInput[]
+    result_folio?: StringNullableFilter<"ResultSend"> | string | null
+    send_by?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
+    send_at?: DateTimeNullableFilter<"ResultSend"> | Date | string | null
+    status?: StringNullableFilter<"ResultSend"> | string | null
+    payload?: JsonNullableFilter<"ResultSend">
+    response?: JsonNullableFilter<"ResultSend">
+    result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type ResultSendOrderByWithAggregationInput = {
+    id?: SortOrder
+    result_folio?: SortOrderInput | SortOrder
+    send_by?: SortOrderInput | SortOrder
+    send_at?: SortOrderInput | SortOrder
+    status?: SortOrderInput | SortOrder
+    payload?: SortOrderInput | SortOrder
+    response?: SortOrderInput | SortOrder
+    _count?: ResultSendCountOrderByAggregateInput
+    _avg?: ResultSendAvgOrderByAggregateInput
+    _max?: ResultSendMaxOrderByAggregateInput
+    _min?: ResultSendMinOrderByAggregateInput
+    _sum?: ResultSendSumOrderByAggregateInput
+  }
+
+  export type ResultSendScalarWhereWithAggregatesInput = {
+    AND?: ResultSendScalarWhereWithAggregatesInput | ResultSendScalarWhereWithAggregatesInput[]
+    OR?: ResultSendScalarWhereWithAggregatesInput[]
+    NOT?: ResultSendScalarWhereWithAggregatesInput | ResultSendScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"ResultSend"> | bigint | number
+    result_folio?: StringNullableWithAggregatesFilter<"ResultSend"> | string | null
+    send_by?: BigIntNullableWithAggregatesFilter<"ResultSend"> | bigint | number | null
+    send_at?: DateTimeNullableWithAggregatesFilter<"ResultSend"> | Date | string | null
+    status?: StringNullableWithAggregatesFilter<"ResultSend"> | string | null
+    payload?: JsonNullableWithAggregatesFilter<"ResultSend">
+    response?: JsonNullableWithAggregatesFilter<"ResultSend">
+  }
+
+  export type SystemParameterWhereInput = {
+    AND?: SystemParameterWhereInput | SystemParameterWhereInput[]
+    OR?: SystemParameterWhereInput[]
+    NOT?: SystemParameterWhereInput | SystemParameterWhereInput[]
+    id?: BigIntFilter<"SystemParameter"> | bigint | number
+    value?: StringNullableFilter<"SystemParameter"> | string | null
+    parameterDictionaries?: ParameterDictionaryListRelationFilter
+  }
+
+  export type SystemParameterOrderByWithRelationInput = {
+    id?: SortOrder
+    value?: SortOrderInput | SortOrder
+    parameterDictionaries?: ParameterDictionaryOrderByRelationAggregateInput
+  }
+
+  export type SystemParameterWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: SystemParameterWhereInput | SystemParameterWhereInput[]
+    OR?: SystemParameterWhereInput[]
+    NOT?: SystemParameterWhereInput | SystemParameterWhereInput[]
+    value?: StringNullableFilter<"SystemParameter"> | string | null
+    parameterDictionaries?: ParameterDictionaryListRelationFilter
+  }, "id">
+
+  export type SystemParameterOrderByWithAggregationInput = {
+    id?: SortOrder
+    value?: SortOrderInput | SortOrder
+    _count?: SystemParameterCountOrderByAggregateInput
+    _avg?: SystemParameterAvgOrderByAggregateInput
+    _max?: SystemParameterMaxOrderByAggregateInput
+    _min?: SystemParameterMinOrderByAggregateInput
+    _sum?: SystemParameterSumOrderByAggregateInput
+  }
+
+  export type SystemParameterScalarWhereWithAggregatesInput = {
+    AND?: SystemParameterScalarWhereWithAggregatesInput | SystemParameterScalarWhereWithAggregatesInput[]
+    OR?: SystemParameterScalarWhereWithAggregatesInput[]
+    NOT?: SystemParameterScalarWhereWithAggregatesInput | SystemParameterScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"SystemParameter"> | bigint | number
+    value?: StringNullableWithAggregatesFilter<"SystemParameter"> | string | null
+  }
+
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: BigIntFilter<"User"> | bigint | number
+    username?: StringNullableFilter<"User"> | string | null
+    password?: StringNullableFilter<"User"> | string | null
+    resultSends?: ResultSendListRelationFilter
+    createdResults?: ResultListRelationFilter
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    username?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    resultSends?: ResultSendOrderByRelationAggregateInput
+    createdResults?: ResultOrderByRelationAggregateInput
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    username?: StringNullableFilter<"User"> | string | null
+    password?: StringNullableFilter<"User"> | string | null
+    resultSends?: ResultSendListRelationFilter
+    createdResults?: ResultListRelationFilter
+  }, "id">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    username?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"User"> | bigint | number
+    username?: StringNullableWithAggregatesFilter<"User"> | string | null
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
+  }
+
+  export type EquipmentConfigurationWhereInput = {
+    AND?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
+    OR?: EquipmentConfigurationWhereInput[]
+    NOT?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
+    equipment_id?: BigIntFilter<"EquipmentConfiguration"> | bigint | number
+    port?: StringFilter<"EquipmentConfiguration"> | string
+    ip_address?: StringFilter<"EquipmentConfiguration"> | string
+    baud_rate?: IntFilter<"EquipmentConfiguration"> | number
+    mac_address?: StringFilter<"EquipmentConfiguration"> | string
+    remote_directory?: StringFilter<"EquipmentConfiguration"> | string
+    equipment?: XOR<EquipmentScalarRelationFilter, EquipmentWhereInput>
+  }
+
+  export type EquipmentConfigurationOrderByWithRelationInput = {
+    equipment_id?: SortOrder
+    port?: SortOrder
+    ip_address?: SortOrder
+    baud_rate?: SortOrder
+    mac_address?: SortOrder
+    remote_directory?: SortOrder
+    equipment?: EquipmentOrderByWithRelationInput
+  }
+
+  export type EquipmentConfigurationWhereUniqueInput = Prisma.AtLeast<{
+    equipment_id?: bigint | number
+    AND?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
+    OR?: EquipmentConfigurationWhereInput[]
+    NOT?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
+    port?: StringFilter<"EquipmentConfiguration"> | string
+    ip_address?: StringFilter<"EquipmentConfiguration"> | string
+    baud_rate?: IntFilter<"EquipmentConfiguration"> | number
+    mac_address?: StringFilter<"EquipmentConfiguration"> | string
+    remote_directory?: StringFilter<"EquipmentConfiguration"> | string
+    equipment?: XOR<EquipmentScalarRelationFilter, EquipmentWhereInput>
+  }, "equipment_id">
+
+  export type EquipmentConfigurationOrderByWithAggregationInput = {
+    equipment_id?: SortOrder
+    port?: SortOrder
+    ip_address?: SortOrder
+    baud_rate?: SortOrder
+    mac_address?: SortOrder
+    remote_directory?: SortOrder
+    _count?: EquipmentConfigurationCountOrderByAggregateInput
+    _avg?: EquipmentConfigurationAvgOrderByAggregateInput
+    _max?: EquipmentConfigurationMaxOrderByAggregateInput
+    _min?: EquipmentConfigurationMinOrderByAggregateInput
+    _sum?: EquipmentConfigurationSumOrderByAggregateInput
+  }
+
+  export type EquipmentConfigurationScalarWhereWithAggregatesInput = {
+    AND?: EquipmentConfigurationScalarWhereWithAggregatesInput | EquipmentConfigurationScalarWhereWithAggregatesInput[]
+    OR?: EquipmentConfigurationScalarWhereWithAggregatesInput[]
+    NOT?: EquipmentConfigurationScalarWhereWithAggregatesInput | EquipmentConfigurationScalarWhereWithAggregatesInput[]
+    equipment_id?: BigIntWithAggregatesFilter<"EquipmentConfiguration"> | bigint | number
+    port?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
+    ip_address?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
+    baud_rate?: IntWithAggregatesFilter<"EquipmentConfiguration"> | number
+    mac_address?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
+    remote_directory?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
   }
 
   export type CommunicationProfilesCreateInput = {
     id: string
-    name?: string | null
     checksum_regex?: string | null
     type?: string | null
-    equipment_profiles?: EquipmentProfileCreateNestedManyWithoutCommunication_profilesInput
+    equipmentProfiles?: EquipmentProfileCreateNestedManyWithoutCommunicationProfileInput
   }
 
   export type CommunicationProfilesUncheckedCreateInput = {
     id: string
-    name?: string | null
     checksum_regex?: string | null
     type?: string | null
-    equipment_profiles?: EquipmentProfileUncheckedCreateNestedManyWithoutCommunication_profilesInput
+    equipmentProfiles?: EquipmentProfileUncheckedCreateNestedManyWithoutCommunicationProfileInput
   }
 
   export type CommunicationProfilesUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
     checksum_regex?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    equipment_profiles?: EquipmentProfileUpdateManyWithoutCommunication_profilesNestedInput
+    equipmentProfiles?: EquipmentProfileUpdateManyWithoutCommunicationProfileNestedInput
   }
 
   export type CommunicationProfilesUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
     checksum_regex?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    equipment_profiles?: EquipmentProfileUncheckedUpdateManyWithoutCommunication_profilesNestedInput
+    equipmentProfiles?: EquipmentProfileUncheckedUpdateManyWithoutCommunicationProfileNestedInput
   }
 
   export type CommunicationProfilesCreateManyInput = {
     id: string
-    name?: string | null
     checksum_regex?: string | null
     type?: string | null
   }
 
   export type CommunicationProfilesUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
     checksum_regex?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CommunicationProfilesUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
     checksum_regex?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -10147,7 +16904,7 @@ export namespace Prisma {
     filename?: string | null
     filepath?: string | null
     modified_at?: bigint | number | null
-    equipments?: EquipmentCreateNestedOneWithoutDirectory_historialsInput
+    equipment?: EquipmentCreateNestedOneWithoutDirectoryHistorialsInput
   }
 
   export type DirectoryHistorialUncheckedCreateInput = {
@@ -10163,7 +16920,7 @@ export namespace Prisma {
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
     modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-    equipments?: EquipmentUpdateOneWithoutDirectory_historialsNestedInput
+    equipment?: EquipmentUpdateOneWithoutDirectoryHistorialsNestedInput
   }
 
   export type DirectoryHistorialUncheckedUpdateInput = {
@@ -10200,46 +16957,60 @@ export namespace Prisma {
   export type EquipmentProfileCreateInput = {
     id: bigint | number
     name?: string | null
-    communication_profiles?: CommunicationProfilesCreateNestedOneWithoutEquipment_profilesInput
-    equipments?: EquipmentCreateNestedManyWithoutEquipment_profilesInput
+    active?: boolean | null
+    communication_type?: string | null
+    communicationProfile?: CommunicationProfilesCreateNestedOneWithoutEquipmentProfilesInput
+    equipments?: EquipmentCreateNestedManyWithoutEquipmentProfileInput
   }
 
   export type EquipmentProfileUncheckedCreateInput = {
     id: bigint | number
     communication_profile?: string | null
     name?: string | null
-    equipments?: EquipmentUncheckedCreateNestedManyWithoutEquipment_profilesInput
+    active?: boolean | null
+    communication_type?: string | null
+    equipments?: EquipmentUncheckedCreateNestedManyWithoutEquipmentProfileInput
   }
 
   export type EquipmentProfileUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    communication_profiles?: CommunicationProfilesUpdateOneWithoutEquipment_profilesNestedInput
-    equipments?: EquipmentUpdateManyWithoutEquipment_profilesNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
+    communicationProfile?: CommunicationProfilesUpdateOneWithoutEquipmentProfilesNestedInput
+    equipments?: EquipmentUpdateManyWithoutEquipmentProfileNestedInput
   }
 
   export type EquipmentProfileUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     communication_profile?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    equipments?: EquipmentUncheckedUpdateManyWithoutEquipment_profilesNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
+    equipments?: EquipmentUncheckedUpdateManyWithoutEquipmentProfileNestedInput
   }
 
   export type EquipmentProfileCreateManyInput = {
     id: bigint | number
     communication_profile?: string | null
     name?: string | null
+    active?: boolean | null
+    communication_type?: string | null
   }
 
   export type EquipmentProfileUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentProfileUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     communication_profile?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentCreateInput = {
@@ -10249,9 +17020,11 @@ export namespace Prisma {
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    directory_historials?: DirectoryHistorialCreateNestedManyWithoutEquipmentsInput
-    equipment_profiles?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
-    parameters?: ParameterCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
+    equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
+    parameters?: ParameterCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateInput = {
@@ -10262,8 +17035,10 @@ export namespace Prisma {
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    directory_historials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentsInput
-    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUpdateInput = {
@@ -10273,9 +17048,11 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    directory_historials?: DirectoryHistorialUpdateManyWithoutEquipmentsNestedInput
-    equipment_profiles?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
-    parameters?: ParameterUpdateManyWithoutEquipmentsNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
+    equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
+    parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateInput = {
@@ -10286,8 +17063,10 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    directory_historials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentsNestedInput
-    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentsNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentCreateManyInput = {
@@ -10298,6 +17077,7 @@ export namespace Prisma {
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
+    active?: boolean | null
   }
 
   export type EquipmentUpdateManyMutationInput = {
@@ -10307,6 +17087,7 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type EquipmentUncheckedUpdateManyInput = {
@@ -10317,13 +17098,16 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type HistogramResultCreateInput = {
     id: bigint | number
     description?: string | null
     value?: string | null
-    results?: ResultCreateNestedOneWithoutHistogram_resultsInput
+    created_at?: Date | string | null
+    active?: boolean | null
+    result?: ResultCreateNestedOneWithoutHistogramResultsInput
   }
 
   export type HistogramResultUncheckedCreateInput = {
@@ -10331,13 +17115,17 @@ export namespace Prisma {
     result_folio?: string | null
     description?: string | null
     value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
   }
 
   export type HistogramResultUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
-    results?: ResultUpdateOneWithoutHistogram_resultsNestedInput
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    result?: ResultUpdateOneWithoutHistogramResultsNestedInput
   }
 
   export type HistogramResultUncheckedUpdateInput = {
@@ -10345,6 +17133,8 @@ export namespace Prisma {
     result_folio?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type HistogramResultCreateManyInput = {
@@ -10352,12 +17142,16 @@ export namespace Prisma {
     result_folio?: string | null
     description?: string | null
     value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
   }
 
   export type HistogramResultUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type HistogramResultUncheckedUpdateManyInput = {
@@ -10365,6 +17159,8 @@ export namespace Prisma {
     result_folio?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ParameterCreateInput = {
@@ -10375,22 +17171,24 @@ export namespace Prisma {
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    equipments?: EquipmentCreateNestedOneWithoutParametersInput
-    results?: ResultCreateNestedOneWithoutParametersInput
+    active?: boolean | null
+    equipment?: EquipmentCreateNestedOneWithoutParametersInput
+    parameterDictionary?: ParameterDictionaryCreateNestedOneWithoutParametersInput
+    result?: ResultCreateNestedOneWithoutParametersInput
   }
 
   export type ParameterUncheckedCreateInput = {
     id: bigint | number
     result_folio?: string | null
     equipment_id?: bigint | number | null
+    parameter_dictionary_id?: bigint | number | null
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
+    active?: boolean | null
   }
 
   export type ParameterUpdateInput = {
@@ -10401,35 +17199,38 @@ export namespace Prisma {
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    equipments?: EquipmentUpdateOneWithoutParametersNestedInput
-    results?: ResultUpdateOneWithoutParametersNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    equipment?: EquipmentUpdateOneWithoutParametersNestedInput
+    parameterDictionary?: ParameterDictionaryUpdateOneWithoutParametersNestedInput
+    result?: ResultUpdateOneWithoutParametersNestedInput
   }
 
   export type ParameterUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     result_folio?: NullableStringFieldUpdateOperationsInput | string | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
     unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ParameterCreateManyInput = {
     id: bigint | number
     result_folio?: string | null
     equipment_id?: bigint | number | null
+    parameter_dictionary_id?: bigint | number | null
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
+    active?: boolean | null
   }
 
   export type ParameterUpdateManyMutationInput = {
@@ -10440,91 +17241,359 @@ export namespace Prisma {
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ParameterUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     result_folio?: NullableStringFieldUpdateOperationsInput | string | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
     unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ResultCreateInput = {
     folio: string
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    histogram_results?: HistogramResultCreateNestedManyWithoutResultsInput
-    parameters?: ParameterCreateNestedManyWithoutResultsInput
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultCreateNestedManyWithoutResultInput
+    parameters?: ParameterCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendCreateNestedManyWithoutResultInput
+    user?: UserCreateNestedOneWithoutCreatedResultsInput
   }
 
   export type ResultUncheckedCreateInput = {
     folio: string
+    created_by?: bigint | number | null
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    histogram_results?: HistogramResultUncheckedCreateNestedManyWithoutResultsInput
-    parameters?: ParameterUncheckedCreateNestedManyWithoutResultsInput
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultUncheckedCreateNestedManyWithoutResultInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendUncheckedCreateNestedManyWithoutResultInput
   }
 
   export type ResultUpdateInput = {
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    histogram_results?: HistogramResultUpdateManyWithoutResultsNestedInput
-    parameters?: ParameterUpdateManyWithoutResultsNestedInput
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUpdateManyWithoutResultNestedInput
+    parameters?: ParameterUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUpdateManyWithoutResultNestedInput
+    user?: UserUpdateOneWithoutCreatedResultsNestedInput
   }
 
   export type ResultUncheckedUpdateInput = {
     folio?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    histogram_results?: HistogramResultUncheckedUpdateManyWithoutResultsNestedInput
-    parameters?: ParameterUncheckedUpdateManyWithoutResultsNestedInput
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUncheckedUpdateManyWithoutResultNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUncheckedUpdateManyWithoutResultNestedInput
   }
 
   export type ResultCreateManyInput = {
     folio: string
+    created_by?: bigint | number | null
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
+    last_modified_at?: Date | string | null
+    active?: boolean | null
   }
 
   export type ResultUpdateManyMutationInput = {
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type ResultUncheckedUpdateManyInput = {
     folio?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ParameterDictionaryCreateInput = {
+    id: bigint | number
+    parameter_description?: string | null
+    systemParameter?: SystemParameterCreateNestedOneWithoutParameterDictionariesInput
+    parameters?: ParameterCreateNestedManyWithoutParameterDictionaryInput
+  }
+
+  export type ParameterDictionaryUncheckedCreateInput = {
+    id: bigint | number
+    system_parameter_id?: bigint | number | null
+    parameter_description?: string | null
+    parameters?: ParameterUncheckedCreateNestedManyWithoutParameterDictionaryInput
+  }
+
+  export type ParameterDictionaryUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+    systemParameter?: SystemParameterUpdateOneWithoutParameterDictionariesNestedInput
+    parameters?: ParameterUpdateManyWithoutParameterDictionaryNestedInput
+  }
+
+  export type ParameterDictionaryUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    system_parameter_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+    parameters?: ParameterUncheckedUpdateManyWithoutParameterDictionaryNestedInput
+  }
+
+  export type ParameterDictionaryCreateManyInput = {
+    id: bigint | number
+    system_parameter_id?: bigint | number | null
+    parameter_description?: string | null
+  }
+
+  export type ParameterDictionaryUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ParameterDictionaryUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    system_parameter_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResultSendCreateInput = {
+    id: bigint | number
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+    result?: ResultCreateNestedOneWithoutResultSendsInput
+    user?: UserCreateNestedOneWithoutResultSendsInput
+  }
+
+  export type ResultSendUncheckedCreateInput = {
+    id: bigint | number
+    result_folio?: string | null
+    send_by?: bigint | number | null
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+    result?: ResultUpdateOneWithoutResultSendsNestedInput
+    user?: UserUpdateOneWithoutResultSendsNestedInput
+  }
+
+  export type ResultSendUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    send_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendCreateManyInput = {
+    id: bigint | number
+    result_folio?: string | null
+    send_by?: bigint | number | null
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    send_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type SystemParameterCreateInput = {
+    id: bigint | number
+    value?: string | null
+    parameterDictionaries?: ParameterDictionaryCreateNestedManyWithoutSystemParameterInput
+  }
+
+  export type SystemParameterUncheckedCreateInput = {
+    id: bigint | number
+    value?: string | null
+    parameterDictionaries?: ParameterDictionaryUncheckedCreateNestedManyWithoutSystemParameterInput
+  }
+
+  export type SystemParameterUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    parameterDictionaries?: ParameterDictionaryUpdateManyWithoutSystemParameterNestedInput
+  }
+
+  export type SystemParameterUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    parameterDictionaries?: ParameterDictionaryUncheckedUpdateManyWithoutSystemParameterNestedInput
+  }
+
+  export type SystemParameterCreateManyInput = {
+    id: bigint | number
+    value?: string | null
+  }
+
+  export type SystemParameterUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SystemParameterUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserCreateInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+    resultSends?: ResultSendCreateNestedManyWithoutUserInput
+    createdResults?: ResultCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+    resultSends?: ResultSendUncheckedCreateNestedManyWithoutUserInput
+    createdResults?: ResultUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    resultSends?: ResultSendUpdateManyWithoutUserNestedInput
+    createdResults?: ResultUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    resultSends?: ResultSendUncheckedUpdateManyWithoutUserNestedInput
+    createdResults?: ResultUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateManyInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+  }
+
+  export type UserUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EquipmentConfigurationCreateInput = {
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
+    equipment: EquipmentCreateNestedOneWithoutEquipmentConfigurationInput
+  }
+
+  export type EquipmentConfigurationUncheckedCreateInput = {
+    equipment_id: bigint | number
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
+  }
+
+  export type EquipmentConfigurationUpdateInput = {
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
+    equipment?: EquipmentUpdateOneRequiredWithoutEquipmentConfigurationNestedInput
+  }
+
+  export type EquipmentConfigurationUncheckedUpdateInput = {
+    equipment_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EquipmentConfigurationCreateManyInput = {
+    equipment_id: bigint | number
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
+  }
+
+  export type EquipmentConfigurationUpdateManyMutationInput = {
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EquipmentConfigurationUncheckedUpdateManyInput = {
+    equipment_id?: BigIntFieldUpdateOperationsInput | bigint | number
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -10574,21 +17643,18 @@ export namespace Prisma {
 
   export type CommunicationProfilesCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
     checksum_regex?: SortOrder
     type?: SortOrder
   }
 
   export type CommunicationProfilesMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
     checksum_regex?: SortOrder
     type?: SortOrder
   }
 
   export type CommunicationProfilesMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
     checksum_regex?: SortOrder
     type?: SortOrder
   }
@@ -10724,6 +17790,11 @@ export namespace Prisma {
     _max?: NestedBigIntNullableFilter<$PrismaModel>
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type CommunicationProfilesNullableScalarRelationFilter = {
     is?: CommunicationProfilesWhereInput | null
     isNot?: CommunicationProfilesWhereInput | null
@@ -10743,6 +17814,8 @@ export namespace Prisma {
     id?: SortOrder
     communication_profile?: SortOrder
     name?: SortOrder
+    active?: SortOrder
+    communication_type?: SortOrder
   }
 
   export type EquipmentProfileAvgOrderByAggregateInput = {
@@ -10753,16 +17826,28 @@ export namespace Prisma {
     id?: SortOrder
     communication_profile?: SortOrder
     name?: SortOrder
+    active?: SortOrder
+    communication_type?: SortOrder
   }
 
   export type EquipmentProfileMinOrderByAggregateInput = {
     id?: SortOrder
     communication_profile?: SortOrder
     name?: SortOrder
+    active?: SortOrder
+    communication_type?: SortOrder
   }
 
   export type EquipmentProfileSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -10793,11 +17878,21 @@ export namespace Prisma {
     none?: ParameterWhereInput
   }
 
+  export type EquipmentConfigurationListRelationFilter = {
+    every?: EquipmentConfigurationWhereInput
+    some?: EquipmentConfigurationWhereInput
+    none?: EquipmentConfigurationWhereInput
+  }
+
   export type DirectoryHistorialOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ParameterOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EquipmentConfigurationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10809,6 +17904,7 @@ export namespace Prisma {
     modified_at?: SortOrder
     last_connection?: SortOrder
     connection_status?: SortOrder
+    active?: SortOrder
   }
 
   export type EquipmentAvgOrderByAggregateInput = {
@@ -10824,6 +17920,7 @@ export namespace Prisma {
     modified_at?: SortOrder
     last_connection?: SortOrder
     connection_status?: SortOrder
+    active?: SortOrder
   }
 
   export type EquipmentMinOrderByAggregateInput = {
@@ -10834,6 +17931,7 @@ export namespace Prisma {
     modified_at?: SortOrder
     last_connection?: SortOrder
     connection_status?: SortOrder
+    active?: SortOrder
   }
 
   export type EquipmentSumOrderByAggregateInput = {
@@ -10865,6 +17963,8 @@ export namespace Prisma {
     result_folio?: SortOrder
     description?: SortOrder
     value?: SortOrder
+    created_at?: SortOrder
+    active?: SortOrder
   }
 
   export type HistogramResultAvgOrderByAggregateInput = {
@@ -10876,6 +17976,8 @@ export namespace Prisma {
     result_folio?: SortOrder
     description?: SortOrder
     value?: SortOrder
+    created_at?: SortOrder
+    active?: SortOrder
   }
 
   export type HistogramResultMinOrderByAggregateInput = {
@@ -10883,59 +17985,71 @@ export namespace Prisma {
     result_folio?: SortOrder
     description?: SortOrder
     value?: SortOrder
+    created_at?: SortOrder
+    active?: SortOrder
   }
 
   export type HistogramResultSumOrderByAggregateInput = {
     id?: SortOrder
   }
 
+  export type ParameterDictionaryNullableScalarRelationFilter = {
+    is?: ParameterDictionaryWhereInput | null
+    isNot?: ParameterDictionaryWhereInput | null
+  }
+
   export type ParameterCountOrderByAggregateInput = {
     id?: SortOrder
     result_folio?: SortOrder
     equipment_id?: SortOrder
+    parameter_dictionary_id?: SortOrder
     description?: SortOrder
     value?: SortOrder
     unit_measurement?: SortOrder
     max_range?: SortOrder
     min_range?: SortOrder
     created_at?: SortOrder
-    modified_at?: SortOrder
+    active?: SortOrder
   }
 
   export type ParameterAvgOrderByAggregateInput = {
     id?: SortOrder
     equipment_id?: SortOrder
+    parameter_dictionary_id?: SortOrder
   }
 
   export type ParameterMaxOrderByAggregateInput = {
     id?: SortOrder
     result_folio?: SortOrder
     equipment_id?: SortOrder
+    parameter_dictionary_id?: SortOrder
     description?: SortOrder
     value?: SortOrder
     unit_measurement?: SortOrder
     max_range?: SortOrder
     min_range?: SortOrder
     created_at?: SortOrder
-    modified_at?: SortOrder
+    active?: SortOrder
   }
 
   export type ParameterMinOrderByAggregateInput = {
     id?: SortOrder
     result_folio?: SortOrder
     equipment_id?: SortOrder
+    parameter_dictionary_id?: SortOrder
     description?: SortOrder
     value?: SortOrder
     unit_measurement?: SortOrder
     max_range?: SortOrder
     min_range?: SortOrder
     created_at?: SortOrder
-    modified_at?: SortOrder
+    active?: SortOrder
   }
 
   export type ParameterSumOrderByAggregateInput = {
     id?: SortOrder
     equipment_id?: SortOrder
+    parameter_dictionary_id?: SortOrder
   }
 
   export type HistogramResultListRelationFilter = {
@@ -10944,48 +18058,327 @@ export namespace Prisma {
     none?: HistogramResultWhereInput
   }
 
+  export type ResultSendListRelationFilter = {
+    every?: ResultSendWhereInput
+    some?: ResultSendWhereInput
+    none?: ResultSendWhereInput
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type HistogramResultOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResultSendOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ResultCountOrderByAggregateInput = {
     folio?: SortOrder
+    created_by?: SortOrder
     sample_id?: SortOrder
-    pacient_name?: SortOrder
-    sex?: SortOrder
     created_at?: SortOrder
-    modified_at?: SortOrder
+    last_modified_at?: SortOrder
+    active?: SortOrder
+  }
+
+  export type ResultAvgOrderByAggregateInput = {
+    created_by?: SortOrder
   }
 
   export type ResultMaxOrderByAggregateInput = {
     folio?: SortOrder
+    created_by?: SortOrder
     sample_id?: SortOrder
-    pacient_name?: SortOrder
-    sex?: SortOrder
     created_at?: SortOrder
-    modified_at?: SortOrder
+    last_modified_at?: SortOrder
+    active?: SortOrder
   }
 
   export type ResultMinOrderByAggregateInput = {
     folio?: SortOrder
+    created_by?: SortOrder
     sample_id?: SortOrder
-    pacient_name?: SortOrder
-    sex?: SortOrder
     created_at?: SortOrder
-    modified_at?: SortOrder
+    last_modified_at?: SortOrder
+    active?: SortOrder
   }
 
-  export type EquipmentProfileCreateNestedManyWithoutCommunication_profilesInput = {
-    create?: XOR<EquipmentProfileCreateWithoutCommunication_profilesInput, EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput> | EquipmentProfileCreateWithoutCommunication_profilesInput[] | EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput[]
-    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput | EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput[]
-    createMany?: EquipmentProfileCreateManyCommunication_profilesInputEnvelope
+  export type ResultSumOrderByAggregateInput = {
+    created_by?: SortOrder
+  }
+
+  export type SystemParameterNullableScalarRelationFilter = {
+    is?: SystemParameterWhereInput | null
+    isNot?: SystemParameterWhereInput | null
+  }
+
+  export type ParameterDictionaryCountOrderByAggregateInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrder
+    parameter_description?: SortOrder
+  }
+
+  export type ParameterDictionaryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrder
+  }
+
+  export type ParameterDictionaryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrder
+    parameter_description?: SortOrder
+  }
+
+  export type ParameterDictionaryMinOrderByAggregateInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrder
+    parameter_description?: SortOrder
+  }
+
+  export type ParameterDictionarySumOrderByAggregateInput = {
+    id?: SortOrder
+    system_parameter_id?: SortOrder
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type ResultSendCountOrderByAggregateInput = {
+    id?: SortOrder
+    result_folio?: SortOrder
+    send_by?: SortOrder
+    send_at?: SortOrder
+    status?: SortOrder
+    payload?: SortOrder
+    response?: SortOrder
+  }
+
+  export type ResultSendAvgOrderByAggregateInput = {
+    id?: SortOrder
+    send_by?: SortOrder
+  }
+
+  export type ResultSendMaxOrderByAggregateInput = {
+    id?: SortOrder
+    result_folio?: SortOrder
+    send_by?: SortOrder
+    send_at?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ResultSendMinOrderByAggregateInput = {
+    id?: SortOrder
+    result_folio?: SortOrder
+    send_by?: SortOrder
+    send_at?: SortOrder
+    status?: SortOrder
+  }
+
+  export type ResultSendSumOrderByAggregateInput = {
+    id?: SortOrder
+    send_by?: SortOrder
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
+  export type ParameterDictionaryListRelationFilter = {
+    every?: ParameterDictionaryWhereInput
+    some?: ParameterDictionaryWhereInput
+    none?: ParameterDictionaryWhereInput
+  }
+
+  export type ParameterDictionaryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SystemParameterCountOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SystemParameterAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SystemParameterMaxOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SystemParameterMinOrderByAggregateInput = {
+    id?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SystemParameterSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ResultListRelationFilter = {
+    every?: ResultWhereInput
+    some?: ResultWhereInput
+    none?: ResultWhereInput
+  }
+
+  export type ResultOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    username?: SortOrder
+    password?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type EquipmentScalarRelationFilter = {
+    is?: EquipmentWhereInput
+    isNot?: EquipmentWhereInput
+  }
+
+  export type EquipmentConfigurationCountOrderByAggregateInput = {
+    equipment_id?: SortOrder
+    port?: SortOrder
+    ip_address?: SortOrder
+    baud_rate?: SortOrder
+    mac_address?: SortOrder
+    remote_directory?: SortOrder
+  }
+
+  export type EquipmentConfigurationAvgOrderByAggregateInput = {
+    equipment_id?: SortOrder
+    baud_rate?: SortOrder
+  }
+
+  export type EquipmentConfigurationMaxOrderByAggregateInput = {
+    equipment_id?: SortOrder
+    port?: SortOrder
+    ip_address?: SortOrder
+    baud_rate?: SortOrder
+    mac_address?: SortOrder
+    remote_directory?: SortOrder
+  }
+
+  export type EquipmentConfigurationMinOrderByAggregateInput = {
+    equipment_id?: SortOrder
+    port?: SortOrder
+    ip_address?: SortOrder
+    baud_rate?: SortOrder
+    mac_address?: SortOrder
+    remote_directory?: SortOrder
+  }
+
+  export type EquipmentConfigurationSumOrderByAggregateInput = {
+    equipment_id?: SortOrder
+    baud_rate?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EquipmentProfileCreateNestedManyWithoutCommunicationProfileInput = {
+    create?: XOR<EquipmentProfileCreateWithoutCommunicationProfileInput, EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput> | EquipmentProfileCreateWithoutCommunicationProfileInput[] | EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput[]
+    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput | EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput[]
+    createMany?: EquipmentProfileCreateManyCommunicationProfileInputEnvelope
     connect?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
   }
 
-  export type EquipmentProfileUncheckedCreateNestedManyWithoutCommunication_profilesInput = {
-    create?: XOR<EquipmentProfileCreateWithoutCommunication_profilesInput, EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput> | EquipmentProfileCreateWithoutCommunication_profilesInput[] | EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput[]
-    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput | EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput[]
-    createMany?: EquipmentProfileCreateManyCommunication_profilesInputEnvelope
+  export type EquipmentProfileUncheckedCreateNestedManyWithoutCommunicationProfileInput = {
+    create?: XOR<EquipmentProfileCreateWithoutCommunicationProfileInput, EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput> | EquipmentProfileCreateWithoutCommunicationProfileInput[] | EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput[]
+    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput | EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput[]
+    createMany?: EquipmentProfileCreateManyCommunicationProfileInputEnvelope
     connect?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
   }
 
@@ -10997,37 +18390,37 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type EquipmentProfileUpdateManyWithoutCommunication_profilesNestedInput = {
-    create?: XOR<EquipmentProfileCreateWithoutCommunication_profilesInput, EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput> | EquipmentProfileCreateWithoutCommunication_profilesInput[] | EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput[]
-    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput | EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput[]
-    upsert?: EquipmentProfileUpsertWithWhereUniqueWithoutCommunication_profilesInput | EquipmentProfileUpsertWithWhereUniqueWithoutCommunication_profilesInput[]
-    createMany?: EquipmentProfileCreateManyCommunication_profilesInputEnvelope
+  export type EquipmentProfileUpdateManyWithoutCommunicationProfileNestedInput = {
+    create?: XOR<EquipmentProfileCreateWithoutCommunicationProfileInput, EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput> | EquipmentProfileCreateWithoutCommunicationProfileInput[] | EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput[]
+    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput | EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput[]
+    upsert?: EquipmentProfileUpsertWithWhereUniqueWithoutCommunicationProfileInput | EquipmentProfileUpsertWithWhereUniqueWithoutCommunicationProfileInput[]
+    createMany?: EquipmentProfileCreateManyCommunicationProfileInputEnvelope
     set?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
     disconnect?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
     delete?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
     connect?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
-    update?: EquipmentProfileUpdateWithWhereUniqueWithoutCommunication_profilesInput | EquipmentProfileUpdateWithWhereUniqueWithoutCommunication_profilesInput[]
-    updateMany?: EquipmentProfileUpdateManyWithWhereWithoutCommunication_profilesInput | EquipmentProfileUpdateManyWithWhereWithoutCommunication_profilesInput[]
+    update?: EquipmentProfileUpdateWithWhereUniqueWithoutCommunicationProfileInput | EquipmentProfileUpdateWithWhereUniqueWithoutCommunicationProfileInput[]
+    updateMany?: EquipmentProfileUpdateManyWithWhereWithoutCommunicationProfileInput | EquipmentProfileUpdateManyWithWhereWithoutCommunicationProfileInput[]
     deleteMany?: EquipmentProfileScalarWhereInput | EquipmentProfileScalarWhereInput[]
   }
 
-  export type EquipmentProfileUncheckedUpdateManyWithoutCommunication_profilesNestedInput = {
-    create?: XOR<EquipmentProfileCreateWithoutCommunication_profilesInput, EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput> | EquipmentProfileCreateWithoutCommunication_profilesInput[] | EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput[]
-    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput | EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput[]
-    upsert?: EquipmentProfileUpsertWithWhereUniqueWithoutCommunication_profilesInput | EquipmentProfileUpsertWithWhereUniqueWithoutCommunication_profilesInput[]
-    createMany?: EquipmentProfileCreateManyCommunication_profilesInputEnvelope
+  export type EquipmentProfileUncheckedUpdateManyWithoutCommunicationProfileNestedInput = {
+    create?: XOR<EquipmentProfileCreateWithoutCommunicationProfileInput, EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput> | EquipmentProfileCreateWithoutCommunicationProfileInput[] | EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput[]
+    connectOrCreate?: EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput | EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput[]
+    upsert?: EquipmentProfileUpsertWithWhereUniqueWithoutCommunicationProfileInput | EquipmentProfileUpsertWithWhereUniqueWithoutCommunicationProfileInput[]
+    createMany?: EquipmentProfileCreateManyCommunicationProfileInputEnvelope
     set?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
     disconnect?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
     delete?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
     connect?: EquipmentProfileWhereUniqueInput | EquipmentProfileWhereUniqueInput[]
-    update?: EquipmentProfileUpdateWithWhereUniqueWithoutCommunication_profilesInput | EquipmentProfileUpdateWithWhereUniqueWithoutCommunication_profilesInput[]
-    updateMany?: EquipmentProfileUpdateManyWithWhereWithoutCommunication_profilesInput | EquipmentProfileUpdateManyWithWhereWithoutCommunication_profilesInput[]
+    update?: EquipmentProfileUpdateWithWhereUniqueWithoutCommunicationProfileInput | EquipmentProfileUpdateWithWhereUniqueWithoutCommunicationProfileInput[]
+    updateMany?: EquipmentProfileUpdateManyWithWhereWithoutCommunicationProfileInput | EquipmentProfileUpdateManyWithWhereWithoutCommunicationProfileInput[]
     deleteMany?: EquipmentProfileScalarWhereInput | EquipmentProfileScalarWhereInput[]
   }
 
-  export type EquipmentCreateNestedOneWithoutDirectory_historialsInput = {
-    create?: XOR<EquipmentCreateWithoutDirectory_historialsInput, EquipmentUncheckedCreateWithoutDirectory_historialsInput>
-    connectOrCreate?: EquipmentCreateOrConnectWithoutDirectory_historialsInput
+  export type EquipmentCreateNestedOneWithoutDirectoryHistorialsInput = {
+    create?: XOR<EquipmentCreateWithoutDirectoryHistorialsInput, EquipmentUncheckedCreateWithoutDirectoryHistorialsInput>
+    connectOrCreate?: EquipmentCreateOrConnectWithoutDirectoryHistorialsInput
     connect?: EquipmentWhereUniqueInput
   }
 
@@ -11047,78 +18440,82 @@ export namespace Prisma {
     divide?: bigint | number
   }
 
-  export type EquipmentUpdateOneWithoutDirectory_historialsNestedInput = {
-    create?: XOR<EquipmentCreateWithoutDirectory_historialsInput, EquipmentUncheckedCreateWithoutDirectory_historialsInput>
-    connectOrCreate?: EquipmentCreateOrConnectWithoutDirectory_historialsInput
-    upsert?: EquipmentUpsertWithoutDirectory_historialsInput
+  export type EquipmentUpdateOneWithoutDirectoryHistorialsNestedInput = {
+    create?: XOR<EquipmentCreateWithoutDirectoryHistorialsInput, EquipmentUncheckedCreateWithoutDirectoryHistorialsInput>
+    connectOrCreate?: EquipmentCreateOrConnectWithoutDirectoryHistorialsInput
+    upsert?: EquipmentUpsertWithoutDirectoryHistorialsInput
     disconnect?: EquipmentWhereInput | boolean
     delete?: EquipmentWhereInput | boolean
     connect?: EquipmentWhereUniqueInput
-    update?: XOR<XOR<EquipmentUpdateToOneWithWhereWithoutDirectory_historialsInput, EquipmentUpdateWithoutDirectory_historialsInput>, EquipmentUncheckedUpdateWithoutDirectory_historialsInput>
+    update?: XOR<XOR<EquipmentUpdateToOneWithWhereWithoutDirectoryHistorialsInput, EquipmentUpdateWithoutDirectoryHistorialsInput>, EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput>
   }
 
-  export type CommunicationProfilesCreateNestedOneWithoutEquipment_profilesInput = {
-    create?: XOR<CommunicationProfilesCreateWithoutEquipment_profilesInput, CommunicationProfilesUncheckedCreateWithoutEquipment_profilesInput>
-    connectOrCreate?: CommunicationProfilesCreateOrConnectWithoutEquipment_profilesInput
+  export type CommunicationProfilesCreateNestedOneWithoutEquipmentProfilesInput = {
+    create?: XOR<CommunicationProfilesCreateWithoutEquipmentProfilesInput, CommunicationProfilesUncheckedCreateWithoutEquipmentProfilesInput>
+    connectOrCreate?: CommunicationProfilesCreateOrConnectWithoutEquipmentProfilesInput
     connect?: CommunicationProfilesWhereUniqueInput
   }
 
-  export type EquipmentCreateNestedManyWithoutEquipment_profilesInput = {
-    create?: XOR<EquipmentCreateWithoutEquipment_profilesInput, EquipmentUncheckedCreateWithoutEquipment_profilesInput> | EquipmentCreateWithoutEquipment_profilesInput[] | EquipmentUncheckedCreateWithoutEquipment_profilesInput[]
-    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipment_profilesInput | EquipmentCreateOrConnectWithoutEquipment_profilesInput[]
-    createMany?: EquipmentCreateManyEquipment_profilesInputEnvelope
+  export type EquipmentCreateNestedManyWithoutEquipmentProfileInput = {
+    create?: XOR<EquipmentCreateWithoutEquipmentProfileInput, EquipmentUncheckedCreateWithoutEquipmentProfileInput> | EquipmentCreateWithoutEquipmentProfileInput[] | EquipmentUncheckedCreateWithoutEquipmentProfileInput[]
+    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipmentProfileInput | EquipmentCreateOrConnectWithoutEquipmentProfileInput[]
+    createMany?: EquipmentCreateManyEquipmentProfileInputEnvelope
     connect?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
   }
 
-  export type EquipmentUncheckedCreateNestedManyWithoutEquipment_profilesInput = {
-    create?: XOR<EquipmentCreateWithoutEquipment_profilesInput, EquipmentUncheckedCreateWithoutEquipment_profilesInput> | EquipmentCreateWithoutEquipment_profilesInput[] | EquipmentUncheckedCreateWithoutEquipment_profilesInput[]
-    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipment_profilesInput | EquipmentCreateOrConnectWithoutEquipment_profilesInput[]
-    createMany?: EquipmentCreateManyEquipment_profilesInputEnvelope
+  export type EquipmentUncheckedCreateNestedManyWithoutEquipmentProfileInput = {
+    create?: XOR<EquipmentCreateWithoutEquipmentProfileInput, EquipmentUncheckedCreateWithoutEquipmentProfileInput> | EquipmentCreateWithoutEquipmentProfileInput[] | EquipmentUncheckedCreateWithoutEquipmentProfileInput[]
+    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipmentProfileInput | EquipmentCreateOrConnectWithoutEquipmentProfileInput[]
+    createMany?: EquipmentCreateManyEquipmentProfileInputEnvelope
     connect?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
   }
 
-  export type CommunicationProfilesUpdateOneWithoutEquipment_profilesNestedInput = {
-    create?: XOR<CommunicationProfilesCreateWithoutEquipment_profilesInput, CommunicationProfilesUncheckedCreateWithoutEquipment_profilesInput>
-    connectOrCreate?: CommunicationProfilesCreateOrConnectWithoutEquipment_profilesInput
-    upsert?: CommunicationProfilesUpsertWithoutEquipment_profilesInput
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type CommunicationProfilesUpdateOneWithoutEquipmentProfilesNestedInput = {
+    create?: XOR<CommunicationProfilesCreateWithoutEquipmentProfilesInput, CommunicationProfilesUncheckedCreateWithoutEquipmentProfilesInput>
+    connectOrCreate?: CommunicationProfilesCreateOrConnectWithoutEquipmentProfilesInput
+    upsert?: CommunicationProfilesUpsertWithoutEquipmentProfilesInput
     disconnect?: CommunicationProfilesWhereInput | boolean
     delete?: CommunicationProfilesWhereInput | boolean
     connect?: CommunicationProfilesWhereUniqueInput
-    update?: XOR<XOR<CommunicationProfilesUpdateToOneWithWhereWithoutEquipment_profilesInput, CommunicationProfilesUpdateWithoutEquipment_profilesInput>, CommunicationProfilesUncheckedUpdateWithoutEquipment_profilesInput>
+    update?: XOR<XOR<CommunicationProfilesUpdateToOneWithWhereWithoutEquipmentProfilesInput, CommunicationProfilesUpdateWithoutEquipmentProfilesInput>, CommunicationProfilesUncheckedUpdateWithoutEquipmentProfilesInput>
   }
 
-  export type EquipmentUpdateManyWithoutEquipment_profilesNestedInput = {
-    create?: XOR<EquipmentCreateWithoutEquipment_profilesInput, EquipmentUncheckedCreateWithoutEquipment_profilesInput> | EquipmentCreateWithoutEquipment_profilesInput[] | EquipmentUncheckedCreateWithoutEquipment_profilesInput[]
-    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipment_profilesInput | EquipmentCreateOrConnectWithoutEquipment_profilesInput[]
-    upsert?: EquipmentUpsertWithWhereUniqueWithoutEquipment_profilesInput | EquipmentUpsertWithWhereUniqueWithoutEquipment_profilesInput[]
-    createMany?: EquipmentCreateManyEquipment_profilesInputEnvelope
+  export type EquipmentUpdateManyWithoutEquipmentProfileNestedInput = {
+    create?: XOR<EquipmentCreateWithoutEquipmentProfileInput, EquipmentUncheckedCreateWithoutEquipmentProfileInput> | EquipmentCreateWithoutEquipmentProfileInput[] | EquipmentUncheckedCreateWithoutEquipmentProfileInput[]
+    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipmentProfileInput | EquipmentCreateOrConnectWithoutEquipmentProfileInput[]
+    upsert?: EquipmentUpsertWithWhereUniqueWithoutEquipmentProfileInput | EquipmentUpsertWithWhereUniqueWithoutEquipmentProfileInput[]
+    createMany?: EquipmentCreateManyEquipmentProfileInputEnvelope
     set?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
     disconnect?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
     delete?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
     connect?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
-    update?: EquipmentUpdateWithWhereUniqueWithoutEquipment_profilesInput | EquipmentUpdateWithWhereUniqueWithoutEquipment_profilesInput[]
-    updateMany?: EquipmentUpdateManyWithWhereWithoutEquipment_profilesInput | EquipmentUpdateManyWithWhereWithoutEquipment_profilesInput[]
+    update?: EquipmentUpdateWithWhereUniqueWithoutEquipmentProfileInput | EquipmentUpdateWithWhereUniqueWithoutEquipmentProfileInput[]
+    updateMany?: EquipmentUpdateManyWithWhereWithoutEquipmentProfileInput | EquipmentUpdateManyWithWhereWithoutEquipmentProfileInput[]
     deleteMany?: EquipmentScalarWhereInput | EquipmentScalarWhereInput[]
   }
 
-  export type EquipmentUncheckedUpdateManyWithoutEquipment_profilesNestedInput = {
-    create?: XOR<EquipmentCreateWithoutEquipment_profilesInput, EquipmentUncheckedCreateWithoutEquipment_profilesInput> | EquipmentCreateWithoutEquipment_profilesInput[] | EquipmentUncheckedCreateWithoutEquipment_profilesInput[]
-    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipment_profilesInput | EquipmentCreateOrConnectWithoutEquipment_profilesInput[]
-    upsert?: EquipmentUpsertWithWhereUniqueWithoutEquipment_profilesInput | EquipmentUpsertWithWhereUniqueWithoutEquipment_profilesInput[]
-    createMany?: EquipmentCreateManyEquipment_profilesInputEnvelope
+  export type EquipmentUncheckedUpdateManyWithoutEquipmentProfileNestedInput = {
+    create?: XOR<EquipmentCreateWithoutEquipmentProfileInput, EquipmentUncheckedCreateWithoutEquipmentProfileInput> | EquipmentCreateWithoutEquipmentProfileInput[] | EquipmentUncheckedCreateWithoutEquipmentProfileInput[]
+    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipmentProfileInput | EquipmentCreateOrConnectWithoutEquipmentProfileInput[]
+    upsert?: EquipmentUpsertWithWhereUniqueWithoutEquipmentProfileInput | EquipmentUpsertWithWhereUniqueWithoutEquipmentProfileInput[]
+    createMany?: EquipmentCreateManyEquipmentProfileInputEnvelope
     set?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
     disconnect?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
     delete?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
     connect?: EquipmentWhereUniqueInput | EquipmentWhereUniqueInput[]
-    update?: EquipmentUpdateWithWhereUniqueWithoutEquipment_profilesInput | EquipmentUpdateWithWhereUniqueWithoutEquipment_profilesInput[]
-    updateMany?: EquipmentUpdateManyWithWhereWithoutEquipment_profilesInput | EquipmentUpdateManyWithWhereWithoutEquipment_profilesInput[]
+    update?: EquipmentUpdateWithWhereUniqueWithoutEquipmentProfileInput | EquipmentUpdateWithWhereUniqueWithoutEquipmentProfileInput[]
+    updateMany?: EquipmentUpdateManyWithWhereWithoutEquipmentProfileInput | EquipmentUpdateManyWithWhereWithoutEquipmentProfileInput[]
     deleteMany?: EquipmentScalarWhereInput | EquipmentScalarWhereInput[]
   }
 
-  export type DirectoryHistorialCreateNestedManyWithoutEquipmentsInput = {
-    create?: XOR<DirectoryHistorialCreateWithoutEquipmentsInput, DirectoryHistorialUncheckedCreateWithoutEquipmentsInput> | DirectoryHistorialCreateWithoutEquipmentsInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentsInput | DirectoryHistorialCreateOrConnectWithoutEquipmentsInput[]
-    createMany?: DirectoryHistorialCreateManyEquipmentsInputEnvelope
+  export type DirectoryHistorialCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput> | DirectoryHistorialCreateWithoutEquipmentInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentInput | DirectoryHistorialCreateOrConnectWithoutEquipmentInput[]
+    createMany?: DirectoryHistorialCreateManyEquipmentInputEnvelope
     connect?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
   }
 
@@ -11128,42 +18525,56 @@ export namespace Prisma {
     connect?: EquipmentProfileWhereUniqueInput
   }
 
-  export type ParameterCreateNestedManyWithoutEquipmentsInput = {
-    create?: XOR<ParameterCreateWithoutEquipmentsInput, ParameterUncheckedCreateWithoutEquipmentsInput> | ParameterCreateWithoutEquipmentsInput[] | ParameterUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentsInput | ParameterCreateOrConnectWithoutEquipmentsInput[]
-    createMany?: ParameterCreateManyEquipmentsInputEnvelope
+  export type ParameterCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<ParameterCreateWithoutEquipmentInput, ParameterUncheckedCreateWithoutEquipmentInput> | ParameterCreateWithoutEquipmentInput[] | ParameterUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentInput | ParameterCreateOrConnectWithoutEquipmentInput[]
+    createMany?: ParameterCreateManyEquipmentInputEnvelope
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
   }
 
-  export type DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentsInput = {
-    create?: XOR<DirectoryHistorialCreateWithoutEquipmentsInput, DirectoryHistorialUncheckedCreateWithoutEquipmentsInput> | DirectoryHistorialCreateWithoutEquipmentsInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentsInput | DirectoryHistorialCreateOrConnectWithoutEquipmentsInput[]
-    createMany?: DirectoryHistorialCreateManyEquipmentsInputEnvelope
+  export type EquipmentConfigurationCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<EquipmentConfigurationCreateWithoutEquipmentInput, EquipmentConfigurationUncheckedCreateWithoutEquipmentInput> | EquipmentConfigurationCreateWithoutEquipmentInput[] | EquipmentConfigurationUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: EquipmentConfigurationCreateOrConnectWithoutEquipmentInput | EquipmentConfigurationCreateOrConnectWithoutEquipmentInput[]
+    createMany?: EquipmentConfigurationCreateManyEquipmentInputEnvelope
+    connect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+  }
+
+  export type DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput> | DirectoryHistorialCreateWithoutEquipmentInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentInput | DirectoryHistorialCreateOrConnectWithoutEquipmentInput[]
+    createMany?: DirectoryHistorialCreateManyEquipmentInputEnvelope
     connect?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
   }
 
-  export type ParameterUncheckedCreateNestedManyWithoutEquipmentsInput = {
-    create?: XOR<ParameterCreateWithoutEquipmentsInput, ParameterUncheckedCreateWithoutEquipmentsInput> | ParameterCreateWithoutEquipmentsInput[] | ParameterUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentsInput | ParameterCreateOrConnectWithoutEquipmentsInput[]
-    createMany?: ParameterCreateManyEquipmentsInputEnvelope
+  export type ParameterUncheckedCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<ParameterCreateWithoutEquipmentInput, ParameterUncheckedCreateWithoutEquipmentInput> | ParameterCreateWithoutEquipmentInput[] | ParameterUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentInput | ParameterCreateOrConnectWithoutEquipmentInput[]
+    createMany?: ParameterCreateManyEquipmentInputEnvelope
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+  }
+
+  export type EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<EquipmentConfigurationCreateWithoutEquipmentInput, EquipmentConfigurationUncheckedCreateWithoutEquipmentInput> | EquipmentConfigurationCreateWithoutEquipmentInput[] | EquipmentConfigurationUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: EquipmentConfigurationCreateOrConnectWithoutEquipmentInput | EquipmentConfigurationCreateOrConnectWithoutEquipmentInput[]
+    createMany?: EquipmentConfigurationCreateManyEquipmentInputEnvelope
+    connect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
 
-  export type DirectoryHistorialUpdateManyWithoutEquipmentsNestedInput = {
-    create?: XOR<DirectoryHistorialCreateWithoutEquipmentsInput, DirectoryHistorialUncheckedCreateWithoutEquipmentsInput> | DirectoryHistorialCreateWithoutEquipmentsInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentsInput | DirectoryHistorialCreateOrConnectWithoutEquipmentsInput[]
-    upsert?: DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentsInput | DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentsInput[]
-    createMany?: DirectoryHistorialCreateManyEquipmentsInputEnvelope
+  export type DirectoryHistorialUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput> | DirectoryHistorialCreateWithoutEquipmentInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentInput | DirectoryHistorialCreateOrConnectWithoutEquipmentInput[]
+    upsert?: DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentInput | DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: DirectoryHistorialCreateManyEquipmentInputEnvelope
     set?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
     disconnect?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
     delete?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
     connect?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
-    update?: DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentsInput | DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentsInput[]
-    updateMany?: DirectoryHistorialUpdateManyWithWhereWithoutEquipmentsInput | DirectoryHistorialUpdateManyWithWhereWithoutEquipmentsInput[]
+    update?: DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentInput | DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: DirectoryHistorialUpdateManyWithWhereWithoutEquipmentInput | DirectoryHistorialUpdateManyWithWhereWithoutEquipmentInput[]
     deleteMany?: DirectoryHistorialScalarWhereInput | DirectoryHistorialScalarWhereInput[]
   }
 
@@ -11177,68 +18588,102 @@ export namespace Prisma {
     update?: XOR<XOR<EquipmentProfileUpdateToOneWithWhereWithoutEquipmentsInput, EquipmentProfileUpdateWithoutEquipmentsInput>, EquipmentProfileUncheckedUpdateWithoutEquipmentsInput>
   }
 
-  export type ParameterUpdateManyWithoutEquipmentsNestedInput = {
-    create?: XOR<ParameterCreateWithoutEquipmentsInput, ParameterUncheckedCreateWithoutEquipmentsInput> | ParameterCreateWithoutEquipmentsInput[] | ParameterUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentsInput | ParameterCreateOrConnectWithoutEquipmentsInput[]
-    upsert?: ParameterUpsertWithWhereUniqueWithoutEquipmentsInput | ParameterUpsertWithWhereUniqueWithoutEquipmentsInput[]
-    createMany?: ParameterCreateManyEquipmentsInputEnvelope
+  export type ParameterUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<ParameterCreateWithoutEquipmentInput, ParameterUncheckedCreateWithoutEquipmentInput> | ParameterCreateWithoutEquipmentInput[] | ParameterUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentInput | ParameterCreateOrConnectWithoutEquipmentInput[]
+    upsert?: ParameterUpsertWithWhereUniqueWithoutEquipmentInput | ParameterUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: ParameterCreateManyEquipmentInputEnvelope
     set?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     disconnect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     delete?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
-    update?: ParameterUpdateWithWhereUniqueWithoutEquipmentsInput | ParameterUpdateWithWhereUniqueWithoutEquipmentsInput[]
-    updateMany?: ParameterUpdateManyWithWhereWithoutEquipmentsInput | ParameterUpdateManyWithWhereWithoutEquipmentsInput[]
+    update?: ParameterUpdateWithWhereUniqueWithoutEquipmentInput | ParameterUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: ParameterUpdateManyWithWhereWithoutEquipmentInput | ParameterUpdateManyWithWhereWithoutEquipmentInput[]
     deleteMany?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
   }
 
-  export type DirectoryHistorialUncheckedUpdateManyWithoutEquipmentsNestedInput = {
-    create?: XOR<DirectoryHistorialCreateWithoutEquipmentsInput, DirectoryHistorialUncheckedCreateWithoutEquipmentsInput> | DirectoryHistorialCreateWithoutEquipmentsInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentsInput | DirectoryHistorialCreateOrConnectWithoutEquipmentsInput[]
-    upsert?: DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentsInput | DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentsInput[]
-    createMany?: DirectoryHistorialCreateManyEquipmentsInputEnvelope
+  export type EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<EquipmentConfigurationCreateWithoutEquipmentInput, EquipmentConfigurationUncheckedCreateWithoutEquipmentInput> | EquipmentConfigurationCreateWithoutEquipmentInput[] | EquipmentConfigurationUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: EquipmentConfigurationCreateOrConnectWithoutEquipmentInput | EquipmentConfigurationCreateOrConnectWithoutEquipmentInput[]
+    upsert?: EquipmentConfigurationUpsertWithWhereUniqueWithoutEquipmentInput | EquipmentConfigurationUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: EquipmentConfigurationCreateManyEquipmentInputEnvelope
+    set?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    disconnect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    delete?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    connect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    update?: EquipmentConfigurationUpdateWithWhereUniqueWithoutEquipmentInput | EquipmentConfigurationUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: EquipmentConfigurationUpdateManyWithWhereWithoutEquipmentInput | EquipmentConfigurationUpdateManyWithWhereWithoutEquipmentInput[]
+    deleteMany?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
+  }
+
+  export type DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput> | DirectoryHistorialCreateWithoutEquipmentInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentInput | DirectoryHistorialCreateOrConnectWithoutEquipmentInput[]
+    upsert?: DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentInput | DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: DirectoryHistorialCreateManyEquipmentInputEnvelope
     set?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
     disconnect?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
     delete?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
     connect?: DirectoryHistorialWhereUniqueInput | DirectoryHistorialWhereUniqueInput[]
-    update?: DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentsInput | DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentsInput[]
-    updateMany?: DirectoryHistorialUpdateManyWithWhereWithoutEquipmentsInput | DirectoryHistorialUpdateManyWithWhereWithoutEquipmentsInput[]
+    update?: DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentInput | DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: DirectoryHistorialUpdateManyWithWhereWithoutEquipmentInput | DirectoryHistorialUpdateManyWithWhereWithoutEquipmentInput[]
     deleteMany?: DirectoryHistorialScalarWhereInput | DirectoryHistorialScalarWhereInput[]
   }
 
-  export type ParameterUncheckedUpdateManyWithoutEquipmentsNestedInput = {
-    create?: XOR<ParameterCreateWithoutEquipmentsInput, ParameterUncheckedCreateWithoutEquipmentsInput> | ParameterCreateWithoutEquipmentsInput[] | ParameterUncheckedCreateWithoutEquipmentsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentsInput | ParameterCreateOrConnectWithoutEquipmentsInput[]
-    upsert?: ParameterUpsertWithWhereUniqueWithoutEquipmentsInput | ParameterUpsertWithWhereUniqueWithoutEquipmentsInput[]
-    createMany?: ParameterCreateManyEquipmentsInputEnvelope
+  export type ParameterUncheckedUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<ParameterCreateWithoutEquipmentInput, ParameterUncheckedCreateWithoutEquipmentInput> | ParameterCreateWithoutEquipmentInput[] | ParameterUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutEquipmentInput | ParameterCreateOrConnectWithoutEquipmentInput[]
+    upsert?: ParameterUpsertWithWhereUniqueWithoutEquipmentInput | ParameterUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: ParameterCreateManyEquipmentInputEnvelope
     set?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     disconnect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     delete?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
-    update?: ParameterUpdateWithWhereUniqueWithoutEquipmentsInput | ParameterUpdateWithWhereUniqueWithoutEquipmentsInput[]
-    updateMany?: ParameterUpdateManyWithWhereWithoutEquipmentsInput | ParameterUpdateManyWithWhereWithoutEquipmentsInput[]
+    update?: ParameterUpdateWithWhereUniqueWithoutEquipmentInput | ParameterUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: ParameterUpdateManyWithWhereWithoutEquipmentInput | ParameterUpdateManyWithWhereWithoutEquipmentInput[]
     deleteMany?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
   }
 
-  export type ResultCreateNestedOneWithoutHistogram_resultsInput = {
-    create?: XOR<ResultCreateWithoutHistogram_resultsInput, ResultUncheckedCreateWithoutHistogram_resultsInput>
-    connectOrCreate?: ResultCreateOrConnectWithoutHistogram_resultsInput
+  export type EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<EquipmentConfigurationCreateWithoutEquipmentInput, EquipmentConfigurationUncheckedCreateWithoutEquipmentInput> | EquipmentConfigurationCreateWithoutEquipmentInput[] | EquipmentConfigurationUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: EquipmentConfigurationCreateOrConnectWithoutEquipmentInput | EquipmentConfigurationCreateOrConnectWithoutEquipmentInput[]
+    upsert?: EquipmentConfigurationUpsertWithWhereUniqueWithoutEquipmentInput | EquipmentConfigurationUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: EquipmentConfigurationCreateManyEquipmentInputEnvelope
+    set?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    disconnect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    delete?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    connect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+    update?: EquipmentConfigurationUpdateWithWhereUniqueWithoutEquipmentInput | EquipmentConfigurationUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: EquipmentConfigurationUpdateManyWithWhereWithoutEquipmentInput | EquipmentConfigurationUpdateManyWithWhereWithoutEquipmentInput[]
+    deleteMany?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
+  }
+
+  export type ResultCreateNestedOneWithoutHistogramResultsInput = {
+    create?: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
+    connectOrCreate?: ResultCreateOrConnectWithoutHistogramResultsInput
     connect?: ResultWhereUniqueInput
   }
 
-  export type ResultUpdateOneWithoutHistogram_resultsNestedInput = {
-    create?: XOR<ResultCreateWithoutHistogram_resultsInput, ResultUncheckedCreateWithoutHistogram_resultsInput>
-    connectOrCreate?: ResultCreateOrConnectWithoutHistogram_resultsInput
-    upsert?: ResultUpsertWithoutHistogram_resultsInput
+  export type ResultUpdateOneWithoutHistogramResultsNestedInput = {
+    create?: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
+    connectOrCreate?: ResultCreateOrConnectWithoutHistogramResultsInput
+    upsert?: ResultUpsertWithoutHistogramResultsInput
     disconnect?: ResultWhereInput | boolean
     delete?: ResultWhereInput | boolean
     connect?: ResultWhereUniqueInput
-    update?: XOR<XOR<ResultUpdateToOneWithWhereWithoutHistogram_resultsInput, ResultUpdateWithoutHistogram_resultsInput>, ResultUncheckedUpdateWithoutHistogram_resultsInput>
+    update?: XOR<XOR<ResultUpdateToOneWithWhereWithoutHistogramResultsInput, ResultUpdateWithoutHistogramResultsInput>, ResultUncheckedUpdateWithoutHistogramResultsInput>
   }
 
   export type EquipmentCreateNestedOneWithoutParametersInput = {
     create?: XOR<EquipmentCreateWithoutParametersInput, EquipmentUncheckedCreateWithoutParametersInput>
     connectOrCreate?: EquipmentCreateOrConnectWithoutParametersInput
     connect?: EquipmentWhereUniqueInput
+  }
+
+  export type ParameterDictionaryCreateNestedOneWithoutParametersInput = {
+    create?: XOR<ParameterDictionaryCreateWithoutParametersInput, ParameterDictionaryUncheckedCreateWithoutParametersInput>
+    connectOrCreate?: ParameterDictionaryCreateOrConnectWithoutParametersInput
+    connect?: ParameterDictionaryWhereUniqueInput
   }
 
   export type ResultCreateNestedOneWithoutParametersInput = {
@@ -11257,6 +18702,16 @@ export namespace Prisma {
     update?: XOR<XOR<EquipmentUpdateToOneWithWhereWithoutParametersInput, EquipmentUpdateWithoutParametersInput>, EquipmentUncheckedUpdateWithoutParametersInput>
   }
 
+  export type ParameterDictionaryUpdateOneWithoutParametersNestedInput = {
+    create?: XOR<ParameterDictionaryCreateWithoutParametersInput, ParameterDictionaryUncheckedCreateWithoutParametersInput>
+    connectOrCreate?: ParameterDictionaryCreateOrConnectWithoutParametersInput
+    upsert?: ParameterDictionaryUpsertWithoutParametersInput
+    disconnect?: ParameterDictionaryWhereInput | boolean
+    delete?: ParameterDictionaryWhereInput | boolean
+    connect?: ParameterDictionaryWhereUniqueInput
+    update?: XOR<XOR<ParameterDictionaryUpdateToOneWithWhereWithoutParametersInput, ParameterDictionaryUpdateWithoutParametersInput>, ParameterDictionaryUncheckedUpdateWithoutParametersInput>
+  }
+
   export type ResultUpdateOneWithoutParametersNestedInput = {
     create?: XOR<ResultCreateWithoutParametersInput, ResultUncheckedCreateWithoutParametersInput>
     connectOrCreate?: ResultCreateOrConnectWithoutParametersInput
@@ -11267,88 +18722,384 @@ export namespace Prisma {
     update?: XOR<XOR<ResultUpdateToOneWithWhereWithoutParametersInput, ResultUpdateWithoutParametersInput>, ResultUncheckedUpdateWithoutParametersInput>
   }
 
-  export type HistogramResultCreateNestedManyWithoutResultsInput = {
-    create?: XOR<HistogramResultCreateWithoutResultsInput, HistogramResultUncheckedCreateWithoutResultsInput> | HistogramResultCreateWithoutResultsInput[] | HistogramResultUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultsInput | HistogramResultCreateOrConnectWithoutResultsInput[]
-    createMany?: HistogramResultCreateManyResultsInputEnvelope
+  export type HistogramResultCreateNestedManyWithoutResultInput = {
+    create?: XOR<HistogramResultCreateWithoutResultInput, HistogramResultUncheckedCreateWithoutResultInput> | HistogramResultCreateWithoutResultInput[] | HistogramResultUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultInput | HistogramResultCreateOrConnectWithoutResultInput[]
+    createMany?: HistogramResultCreateManyResultInputEnvelope
     connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
   }
 
-  export type ParameterCreateNestedManyWithoutResultsInput = {
-    create?: XOR<ParameterCreateWithoutResultsInput, ParameterUncheckedCreateWithoutResultsInput> | ParameterCreateWithoutResultsInput[] | ParameterUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutResultsInput | ParameterCreateOrConnectWithoutResultsInput[]
-    createMany?: ParameterCreateManyResultsInputEnvelope
+  export type ParameterCreateNestedManyWithoutResultInput = {
+    create?: XOR<ParameterCreateWithoutResultInput, ParameterUncheckedCreateWithoutResultInput> | ParameterCreateWithoutResultInput[] | ParameterUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutResultInput | ParameterCreateOrConnectWithoutResultInput[]
+    createMany?: ParameterCreateManyResultInputEnvelope
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
   }
 
-  export type HistogramResultUncheckedCreateNestedManyWithoutResultsInput = {
-    create?: XOR<HistogramResultCreateWithoutResultsInput, HistogramResultUncheckedCreateWithoutResultsInput> | HistogramResultCreateWithoutResultsInput[] | HistogramResultUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultsInput | HistogramResultCreateOrConnectWithoutResultsInput[]
-    createMany?: HistogramResultCreateManyResultsInputEnvelope
+  export type ResultSendCreateNestedManyWithoutResultInput = {
+    create?: XOR<ResultSendCreateWithoutResultInput, ResultSendUncheckedCreateWithoutResultInput> | ResultSendCreateWithoutResultInput[] | ResultSendUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutResultInput | ResultSendCreateOrConnectWithoutResultInput[]
+    createMany?: ResultSendCreateManyResultInputEnvelope
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCreatedResultsInput = {
+    create?: XOR<UserCreateWithoutCreatedResultsInput, UserUncheckedCreateWithoutCreatedResultsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedResultsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type HistogramResultUncheckedCreateNestedManyWithoutResultInput = {
+    create?: XOR<HistogramResultCreateWithoutResultInput, HistogramResultUncheckedCreateWithoutResultInput> | HistogramResultCreateWithoutResultInput[] | HistogramResultUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultInput | HistogramResultCreateOrConnectWithoutResultInput[]
+    createMany?: HistogramResultCreateManyResultInputEnvelope
     connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
   }
 
-  export type ParameterUncheckedCreateNestedManyWithoutResultsInput = {
-    create?: XOR<ParameterCreateWithoutResultsInput, ParameterUncheckedCreateWithoutResultsInput> | ParameterCreateWithoutResultsInput[] | ParameterUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutResultsInput | ParameterCreateOrConnectWithoutResultsInput[]
-    createMany?: ParameterCreateManyResultsInputEnvelope
+  export type ParameterUncheckedCreateNestedManyWithoutResultInput = {
+    create?: XOR<ParameterCreateWithoutResultInput, ParameterUncheckedCreateWithoutResultInput> | ParameterCreateWithoutResultInput[] | ParameterUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutResultInput | ParameterCreateOrConnectWithoutResultInput[]
+    createMany?: ParameterCreateManyResultInputEnvelope
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
   }
 
-  export type HistogramResultUpdateManyWithoutResultsNestedInput = {
-    create?: XOR<HistogramResultCreateWithoutResultsInput, HistogramResultUncheckedCreateWithoutResultsInput> | HistogramResultCreateWithoutResultsInput[] | HistogramResultUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultsInput | HistogramResultCreateOrConnectWithoutResultsInput[]
-    upsert?: HistogramResultUpsertWithWhereUniqueWithoutResultsInput | HistogramResultUpsertWithWhereUniqueWithoutResultsInput[]
-    createMany?: HistogramResultCreateManyResultsInputEnvelope
+  export type ResultSendUncheckedCreateNestedManyWithoutResultInput = {
+    create?: XOR<ResultSendCreateWithoutResultInput, ResultSendUncheckedCreateWithoutResultInput> | ResultSendCreateWithoutResultInput[] | ResultSendUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutResultInput | ResultSendCreateOrConnectWithoutResultInput[]
+    createMany?: ResultSendCreateManyResultInputEnvelope
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+  }
+
+  export type HistogramResultUpdateManyWithoutResultNestedInput = {
+    create?: XOR<HistogramResultCreateWithoutResultInput, HistogramResultUncheckedCreateWithoutResultInput> | HistogramResultCreateWithoutResultInput[] | HistogramResultUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultInput | HistogramResultCreateOrConnectWithoutResultInput[]
+    upsert?: HistogramResultUpsertWithWhereUniqueWithoutResultInput | HistogramResultUpsertWithWhereUniqueWithoutResultInput[]
+    createMany?: HistogramResultCreateManyResultInputEnvelope
     set?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
     disconnect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
     delete?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
     connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
-    update?: HistogramResultUpdateWithWhereUniqueWithoutResultsInput | HistogramResultUpdateWithWhereUniqueWithoutResultsInput[]
-    updateMany?: HistogramResultUpdateManyWithWhereWithoutResultsInput | HistogramResultUpdateManyWithWhereWithoutResultsInput[]
+    update?: HistogramResultUpdateWithWhereUniqueWithoutResultInput | HistogramResultUpdateWithWhereUniqueWithoutResultInput[]
+    updateMany?: HistogramResultUpdateManyWithWhereWithoutResultInput | HistogramResultUpdateManyWithWhereWithoutResultInput[]
     deleteMany?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
   }
 
-  export type ParameterUpdateManyWithoutResultsNestedInput = {
-    create?: XOR<ParameterCreateWithoutResultsInput, ParameterUncheckedCreateWithoutResultsInput> | ParameterCreateWithoutResultsInput[] | ParameterUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutResultsInput | ParameterCreateOrConnectWithoutResultsInput[]
-    upsert?: ParameterUpsertWithWhereUniqueWithoutResultsInput | ParameterUpsertWithWhereUniqueWithoutResultsInput[]
-    createMany?: ParameterCreateManyResultsInputEnvelope
+  export type ParameterUpdateManyWithoutResultNestedInput = {
+    create?: XOR<ParameterCreateWithoutResultInput, ParameterUncheckedCreateWithoutResultInput> | ParameterCreateWithoutResultInput[] | ParameterUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutResultInput | ParameterCreateOrConnectWithoutResultInput[]
+    upsert?: ParameterUpsertWithWhereUniqueWithoutResultInput | ParameterUpsertWithWhereUniqueWithoutResultInput[]
+    createMany?: ParameterCreateManyResultInputEnvelope
     set?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     disconnect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     delete?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
-    update?: ParameterUpdateWithWhereUniqueWithoutResultsInput | ParameterUpdateWithWhereUniqueWithoutResultsInput[]
-    updateMany?: ParameterUpdateManyWithWhereWithoutResultsInput | ParameterUpdateManyWithWhereWithoutResultsInput[]
+    update?: ParameterUpdateWithWhereUniqueWithoutResultInput | ParameterUpdateWithWhereUniqueWithoutResultInput[]
+    updateMany?: ParameterUpdateManyWithWhereWithoutResultInput | ParameterUpdateManyWithWhereWithoutResultInput[]
     deleteMany?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
   }
 
-  export type HistogramResultUncheckedUpdateManyWithoutResultsNestedInput = {
-    create?: XOR<HistogramResultCreateWithoutResultsInput, HistogramResultUncheckedCreateWithoutResultsInput> | HistogramResultCreateWithoutResultsInput[] | HistogramResultUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultsInput | HistogramResultCreateOrConnectWithoutResultsInput[]
-    upsert?: HistogramResultUpsertWithWhereUniqueWithoutResultsInput | HistogramResultUpsertWithWhereUniqueWithoutResultsInput[]
-    createMany?: HistogramResultCreateManyResultsInputEnvelope
+  export type ResultSendUpdateManyWithoutResultNestedInput = {
+    create?: XOR<ResultSendCreateWithoutResultInput, ResultSendUncheckedCreateWithoutResultInput> | ResultSendCreateWithoutResultInput[] | ResultSendUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutResultInput | ResultSendCreateOrConnectWithoutResultInput[]
+    upsert?: ResultSendUpsertWithWhereUniqueWithoutResultInput | ResultSendUpsertWithWhereUniqueWithoutResultInput[]
+    createMany?: ResultSendCreateManyResultInputEnvelope
+    set?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    disconnect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    delete?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    update?: ResultSendUpdateWithWhereUniqueWithoutResultInput | ResultSendUpdateWithWhereUniqueWithoutResultInput[]
+    updateMany?: ResultSendUpdateManyWithWhereWithoutResultInput | ResultSendUpdateManyWithWhereWithoutResultInput[]
+    deleteMany?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutCreatedResultsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedResultsInput, UserUncheckedCreateWithoutCreatedResultsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedResultsInput
+    upsert?: UserUpsertWithoutCreatedResultsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedResultsInput, UserUpdateWithoutCreatedResultsInput>, UserUncheckedUpdateWithoutCreatedResultsInput>
+  }
+
+  export type HistogramResultUncheckedUpdateManyWithoutResultNestedInput = {
+    create?: XOR<HistogramResultCreateWithoutResultInput, HistogramResultUncheckedCreateWithoutResultInput> | HistogramResultCreateWithoutResultInput[] | HistogramResultUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutResultInput | HistogramResultCreateOrConnectWithoutResultInput[]
+    upsert?: HistogramResultUpsertWithWhereUniqueWithoutResultInput | HistogramResultUpsertWithWhereUniqueWithoutResultInput[]
+    createMany?: HistogramResultCreateManyResultInputEnvelope
     set?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
     disconnect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
     delete?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
     connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
-    update?: HistogramResultUpdateWithWhereUniqueWithoutResultsInput | HistogramResultUpdateWithWhereUniqueWithoutResultsInput[]
-    updateMany?: HistogramResultUpdateManyWithWhereWithoutResultsInput | HistogramResultUpdateManyWithWhereWithoutResultsInput[]
+    update?: HistogramResultUpdateWithWhereUniqueWithoutResultInput | HistogramResultUpdateWithWhereUniqueWithoutResultInput[]
+    updateMany?: HistogramResultUpdateManyWithWhereWithoutResultInput | HistogramResultUpdateManyWithWhereWithoutResultInput[]
     deleteMany?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
   }
 
-  export type ParameterUncheckedUpdateManyWithoutResultsNestedInput = {
-    create?: XOR<ParameterCreateWithoutResultsInput, ParameterUncheckedCreateWithoutResultsInput> | ParameterCreateWithoutResultsInput[] | ParameterUncheckedCreateWithoutResultsInput[]
-    connectOrCreate?: ParameterCreateOrConnectWithoutResultsInput | ParameterCreateOrConnectWithoutResultsInput[]
-    upsert?: ParameterUpsertWithWhereUniqueWithoutResultsInput | ParameterUpsertWithWhereUniqueWithoutResultsInput[]
-    createMany?: ParameterCreateManyResultsInputEnvelope
+  export type ParameterUncheckedUpdateManyWithoutResultNestedInput = {
+    create?: XOR<ParameterCreateWithoutResultInput, ParameterUncheckedCreateWithoutResultInput> | ParameterCreateWithoutResultInput[] | ParameterUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutResultInput | ParameterCreateOrConnectWithoutResultInput[]
+    upsert?: ParameterUpsertWithWhereUniqueWithoutResultInput | ParameterUpsertWithWhereUniqueWithoutResultInput[]
+    createMany?: ParameterCreateManyResultInputEnvelope
     set?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     disconnect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     delete?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
     connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
-    update?: ParameterUpdateWithWhereUniqueWithoutResultsInput | ParameterUpdateWithWhereUniqueWithoutResultsInput[]
-    updateMany?: ParameterUpdateManyWithWhereWithoutResultsInput | ParameterUpdateManyWithWhereWithoutResultsInput[]
+    update?: ParameterUpdateWithWhereUniqueWithoutResultInput | ParameterUpdateWithWhereUniqueWithoutResultInput[]
+    updateMany?: ParameterUpdateManyWithWhereWithoutResultInput | ParameterUpdateManyWithWhereWithoutResultInput[]
     deleteMany?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
+  }
+
+  export type ResultSendUncheckedUpdateManyWithoutResultNestedInput = {
+    create?: XOR<ResultSendCreateWithoutResultInput, ResultSendUncheckedCreateWithoutResultInput> | ResultSendCreateWithoutResultInput[] | ResultSendUncheckedCreateWithoutResultInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutResultInput | ResultSendCreateOrConnectWithoutResultInput[]
+    upsert?: ResultSendUpsertWithWhereUniqueWithoutResultInput | ResultSendUpsertWithWhereUniqueWithoutResultInput[]
+    createMany?: ResultSendCreateManyResultInputEnvelope
+    set?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    disconnect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    delete?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    update?: ResultSendUpdateWithWhereUniqueWithoutResultInput | ResultSendUpdateWithWhereUniqueWithoutResultInput[]
+    updateMany?: ResultSendUpdateManyWithWhereWithoutResultInput | ResultSendUpdateManyWithWhereWithoutResultInput[]
+    deleteMany?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
+  }
+
+  export type SystemParameterCreateNestedOneWithoutParameterDictionariesInput = {
+    create?: XOR<SystemParameterCreateWithoutParameterDictionariesInput, SystemParameterUncheckedCreateWithoutParameterDictionariesInput>
+    connectOrCreate?: SystemParameterCreateOrConnectWithoutParameterDictionariesInput
+    connect?: SystemParameterWhereUniqueInput
+  }
+
+  export type ParameterCreateNestedManyWithoutParameterDictionaryInput = {
+    create?: XOR<ParameterCreateWithoutParameterDictionaryInput, ParameterUncheckedCreateWithoutParameterDictionaryInput> | ParameterCreateWithoutParameterDictionaryInput[] | ParameterUncheckedCreateWithoutParameterDictionaryInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutParameterDictionaryInput | ParameterCreateOrConnectWithoutParameterDictionaryInput[]
+    createMany?: ParameterCreateManyParameterDictionaryInputEnvelope
+    connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+  }
+
+  export type ParameterUncheckedCreateNestedManyWithoutParameterDictionaryInput = {
+    create?: XOR<ParameterCreateWithoutParameterDictionaryInput, ParameterUncheckedCreateWithoutParameterDictionaryInput> | ParameterCreateWithoutParameterDictionaryInput[] | ParameterUncheckedCreateWithoutParameterDictionaryInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutParameterDictionaryInput | ParameterCreateOrConnectWithoutParameterDictionaryInput[]
+    createMany?: ParameterCreateManyParameterDictionaryInputEnvelope
+    connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+  }
+
+  export type SystemParameterUpdateOneWithoutParameterDictionariesNestedInput = {
+    create?: XOR<SystemParameterCreateWithoutParameterDictionariesInput, SystemParameterUncheckedCreateWithoutParameterDictionariesInput>
+    connectOrCreate?: SystemParameterCreateOrConnectWithoutParameterDictionariesInput
+    upsert?: SystemParameterUpsertWithoutParameterDictionariesInput
+    disconnect?: SystemParameterWhereInput | boolean
+    delete?: SystemParameterWhereInput | boolean
+    connect?: SystemParameterWhereUniqueInput
+    update?: XOR<XOR<SystemParameterUpdateToOneWithWhereWithoutParameterDictionariesInput, SystemParameterUpdateWithoutParameterDictionariesInput>, SystemParameterUncheckedUpdateWithoutParameterDictionariesInput>
+  }
+
+  export type ParameterUpdateManyWithoutParameterDictionaryNestedInput = {
+    create?: XOR<ParameterCreateWithoutParameterDictionaryInput, ParameterUncheckedCreateWithoutParameterDictionaryInput> | ParameterCreateWithoutParameterDictionaryInput[] | ParameterUncheckedCreateWithoutParameterDictionaryInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutParameterDictionaryInput | ParameterCreateOrConnectWithoutParameterDictionaryInput[]
+    upsert?: ParameterUpsertWithWhereUniqueWithoutParameterDictionaryInput | ParameterUpsertWithWhereUniqueWithoutParameterDictionaryInput[]
+    createMany?: ParameterCreateManyParameterDictionaryInputEnvelope
+    set?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    disconnect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    delete?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    update?: ParameterUpdateWithWhereUniqueWithoutParameterDictionaryInput | ParameterUpdateWithWhereUniqueWithoutParameterDictionaryInput[]
+    updateMany?: ParameterUpdateManyWithWhereWithoutParameterDictionaryInput | ParameterUpdateManyWithWhereWithoutParameterDictionaryInput[]
+    deleteMany?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
+  }
+
+  export type ParameterUncheckedUpdateManyWithoutParameterDictionaryNestedInput = {
+    create?: XOR<ParameterCreateWithoutParameterDictionaryInput, ParameterUncheckedCreateWithoutParameterDictionaryInput> | ParameterCreateWithoutParameterDictionaryInput[] | ParameterUncheckedCreateWithoutParameterDictionaryInput[]
+    connectOrCreate?: ParameterCreateOrConnectWithoutParameterDictionaryInput | ParameterCreateOrConnectWithoutParameterDictionaryInput[]
+    upsert?: ParameterUpsertWithWhereUniqueWithoutParameterDictionaryInput | ParameterUpsertWithWhereUniqueWithoutParameterDictionaryInput[]
+    createMany?: ParameterCreateManyParameterDictionaryInputEnvelope
+    set?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    disconnect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    delete?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    connect?: ParameterWhereUniqueInput | ParameterWhereUniqueInput[]
+    update?: ParameterUpdateWithWhereUniqueWithoutParameterDictionaryInput | ParameterUpdateWithWhereUniqueWithoutParameterDictionaryInput[]
+    updateMany?: ParameterUpdateManyWithWhereWithoutParameterDictionaryInput | ParameterUpdateManyWithWhereWithoutParameterDictionaryInput[]
+    deleteMany?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
+  }
+
+  export type ResultCreateNestedOneWithoutResultSendsInput = {
+    create?: XOR<ResultCreateWithoutResultSendsInput, ResultUncheckedCreateWithoutResultSendsInput>
+    connectOrCreate?: ResultCreateOrConnectWithoutResultSendsInput
+    connect?: ResultWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutResultSendsInput = {
+    create?: XOR<UserCreateWithoutResultSendsInput, UserUncheckedCreateWithoutResultSendsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResultSendsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ResultUpdateOneWithoutResultSendsNestedInput = {
+    create?: XOR<ResultCreateWithoutResultSendsInput, ResultUncheckedCreateWithoutResultSendsInput>
+    connectOrCreate?: ResultCreateOrConnectWithoutResultSendsInput
+    upsert?: ResultUpsertWithoutResultSendsInput
+    disconnect?: ResultWhereInput | boolean
+    delete?: ResultWhereInput | boolean
+    connect?: ResultWhereUniqueInput
+    update?: XOR<XOR<ResultUpdateToOneWithWhereWithoutResultSendsInput, ResultUpdateWithoutResultSendsInput>, ResultUncheckedUpdateWithoutResultSendsInput>
+  }
+
+  export type UserUpdateOneWithoutResultSendsNestedInput = {
+    create?: XOR<UserCreateWithoutResultSendsInput, UserUncheckedCreateWithoutResultSendsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutResultSendsInput
+    upsert?: UserUpsertWithoutResultSendsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutResultSendsInput, UserUpdateWithoutResultSendsInput>, UserUncheckedUpdateWithoutResultSendsInput>
+  }
+
+  export type ParameterDictionaryCreateNestedManyWithoutSystemParameterInput = {
+    create?: XOR<ParameterDictionaryCreateWithoutSystemParameterInput, ParameterDictionaryUncheckedCreateWithoutSystemParameterInput> | ParameterDictionaryCreateWithoutSystemParameterInput[] | ParameterDictionaryUncheckedCreateWithoutSystemParameterInput[]
+    connectOrCreate?: ParameterDictionaryCreateOrConnectWithoutSystemParameterInput | ParameterDictionaryCreateOrConnectWithoutSystemParameterInput[]
+    createMany?: ParameterDictionaryCreateManySystemParameterInputEnvelope
+    connect?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+  }
+
+  export type ParameterDictionaryUncheckedCreateNestedManyWithoutSystemParameterInput = {
+    create?: XOR<ParameterDictionaryCreateWithoutSystemParameterInput, ParameterDictionaryUncheckedCreateWithoutSystemParameterInput> | ParameterDictionaryCreateWithoutSystemParameterInput[] | ParameterDictionaryUncheckedCreateWithoutSystemParameterInput[]
+    connectOrCreate?: ParameterDictionaryCreateOrConnectWithoutSystemParameterInput | ParameterDictionaryCreateOrConnectWithoutSystemParameterInput[]
+    createMany?: ParameterDictionaryCreateManySystemParameterInputEnvelope
+    connect?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+  }
+
+  export type ParameterDictionaryUpdateManyWithoutSystemParameterNestedInput = {
+    create?: XOR<ParameterDictionaryCreateWithoutSystemParameterInput, ParameterDictionaryUncheckedCreateWithoutSystemParameterInput> | ParameterDictionaryCreateWithoutSystemParameterInput[] | ParameterDictionaryUncheckedCreateWithoutSystemParameterInput[]
+    connectOrCreate?: ParameterDictionaryCreateOrConnectWithoutSystemParameterInput | ParameterDictionaryCreateOrConnectWithoutSystemParameterInput[]
+    upsert?: ParameterDictionaryUpsertWithWhereUniqueWithoutSystemParameterInput | ParameterDictionaryUpsertWithWhereUniqueWithoutSystemParameterInput[]
+    createMany?: ParameterDictionaryCreateManySystemParameterInputEnvelope
+    set?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    disconnect?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    delete?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    connect?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    update?: ParameterDictionaryUpdateWithWhereUniqueWithoutSystemParameterInput | ParameterDictionaryUpdateWithWhereUniqueWithoutSystemParameterInput[]
+    updateMany?: ParameterDictionaryUpdateManyWithWhereWithoutSystemParameterInput | ParameterDictionaryUpdateManyWithWhereWithoutSystemParameterInput[]
+    deleteMany?: ParameterDictionaryScalarWhereInput | ParameterDictionaryScalarWhereInput[]
+  }
+
+  export type ParameterDictionaryUncheckedUpdateManyWithoutSystemParameterNestedInput = {
+    create?: XOR<ParameterDictionaryCreateWithoutSystemParameterInput, ParameterDictionaryUncheckedCreateWithoutSystemParameterInput> | ParameterDictionaryCreateWithoutSystemParameterInput[] | ParameterDictionaryUncheckedCreateWithoutSystemParameterInput[]
+    connectOrCreate?: ParameterDictionaryCreateOrConnectWithoutSystemParameterInput | ParameterDictionaryCreateOrConnectWithoutSystemParameterInput[]
+    upsert?: ParameterDictionaryUpsertWithWhereUniqueWithoutSystemParameterInput | ParameterDictionaryUpsertWithWhereUniqueWithoutSystemParameterInput[]
+    createMany?: ParameterDictionaryCreateManySystemParameterInputEnvelope
+    set?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    disconnect?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    delete?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    connect?: ParameterDictionaryWhereUniqueInput | ParameterDictionaryWhereUniqueInput[]
+    update?: ParameterDictionaryUpdateWithWhereUniqueWithoutSystemParameterInput | ParameterDictionaryUpdateWithWhereUniqueWithoutSystemParameterInput[]
+    updateMany?: ParameterDictionaryUpdateManyWithWhereWithoutSystemParameterInput | ParameterDictionaryUpdateManyWithWhereWithoutSystemParameterInput[]
+    deleteMany?: ParameterDictionaryScalarWhereInput | ParameterDictionaryScalarWhereInput[]
+  }
+
+  export type ResultSendCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResultSendCreateWithoutUserInput, ResultSendUncheckedCreateWithoutUserInput> | ResultSendCreateWithoutUserInput[] | ResultSendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutUserInput | ResultSendCreateOrConnectWithoutUserInput[]
+    createMany?: ResultSendCreateManyUserInputEnvelope
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+  }
+
+  export type ResultCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResultCreateWithoutUserInput, ResultUncheckedCreateWithoutUserInput> | ResultCreateWithoutUserInput[] | ResultUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutUserInput | ResultCreateOrConnectWithoutUserInput[]
+    createMany?: ResultCreateManyUserInputEnvelope
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+  }
+
+  export type ResultSendUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResultSendCreateWithoutUserInput, ResultSendUncheckedCreateWithoutUserInput> | ResultSendCreateWithoutUserInput[] | ResultSendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutUserInput | ResultSendCreateOrConnectWithoutUserInput[]
+    createMany?: ResultSendCreateManyUserInputEnvelope
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+  }
+
+  export type ResultUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ResultCreateWithoutUserInput, ResultUncheckedCreateWithoutUserInput> | ResultCreateWithoutUserInput[] | ResultUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutUserInput | ResultCreateOrConnectWithoutUserInput[]
+    createMany?: ResultCreateManyUserInputEnvelope
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+  }
+
+  export type ResultSendUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResultSendCreateWithoutUserInput, ResultSendUncheckedCreateWithoutUserInput> | ResultSendCreateWithoutUserInput[] | ResultSendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutUserInput | ResultSendCreateOrConnectWithoutUserInput[]
+    upsert?: ResultSendUpsertWithWhereUniqueWithoutUserInput | ResultSendUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResultSendCreateManyUserInputEnvelope
+    set?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    disconnect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    delete?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    update?: ResultSendUpdateWithWhereUniqueWithoutUserInput | ResultSendUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResultSendUpdateManyWithWhereWithoutUserInput | ResultSendUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
+  }
+
+  export type ResultUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResultCreateWithoutUserInput, ResultUncheckedCreateWithoutUserInput> | ResultCreateWithoutUserInput[] | ResultUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutUserInput | ResultCreateOrConnectWithoutUserInput[]
+    upsert?: ResultUpsertWithWhereUniqueWithoutUserInput | ResultUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResultCreateManyUserInputEnvelope
+    set?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    disconnect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    delete?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    update?: ResultUpdateWithWhereUniqueWithoutUserInput | ResultUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResultUpdateManyWithWhereWithoutUserInput | ResultUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
+  }
+
+  export type ResultSendUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResultSendCreateWithoutUserInput, ResultSendUncheckedCreateWithoutUserInput> | ResultSendCreateWithoutUserInput[] | ResultSendUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultSendCreateOrConnectWithoutUserInput | ResultSendCreateOrConnectWithoutUserInput[]
+    upsert?: ResultSendUpsertWithWhereUniqueWithoutUserInput | ResultSendUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResultSendCreateManyUserInputEnvelope
+    set?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    disconnect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    delete?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    connect?: ResultSendWhereUniqueInput | ResultSendWhereUniqueInput[]
+    update?: ResultSendUpdateWithWhereUniqueWithoutUserInput | ResultSendUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResultSendUpdateManyWithWhereWithoutUserInput | ResultSendUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
+  }
+
+  export type ResultUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ResultCreateWithoutUserInput, ResultUncheckedCreateWithoutUserInput> | ResultCreateWithoutUserInput[] | ResultUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ResultCreateOrConnectWithoutUserInput | ResultCreateOrConnectWithoutUserInput[]
+    upsert?: ResultUpsertWithWhereUniqueWithoutUserInput | ResultUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ResultCreateManyUserInputEnvelope
+    set?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    disconnect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    delete?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    connect?: ResultWhereUniqueInput | ResultWhereUniqueInput[]
+    update?: ResultUpdateWithWhereUniqueWithoutUserInput | ResultUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ResultUpdateManyWithWhereWithoutUserInput | ResultUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ResultScalarWhereInput | ResultScalarWhereInput[]
+  }
+
+  export type EquipmentCreateNestedOneWithoutEquipmentConfigurationInput = {
+    create?: XOR<EquipmentCreateWithoutEquipmentConfigurationInput, EquipmentUncheckedCreateWithoutEquipmentConfigurationInput>
+    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipmentConfigurationInput
+    connect?: EquipmentWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type EquipmentUpdateOneRequiredWithoutEquipmentConfigurationNestedInput = {
+    create?: XOR<EquipmentCreateWithoutEquipmentConfigurationInput, EquipmentUncheckedCreateWithoutEquipmentConfigurationInput>
+    connectOrCreate?: EquipmentCreateOrConnectWithoutEquipmentConfigurationInput
+    upsert?: EquipmentUpsertWithoutEquipmentConfigurationInput
+    connect?: EquipmentWhereUniqueInput
+    update?: XOR<XOR<EquipmentUpdateToOneWithWhereWithoutEquipmentConfigurationInput, EquipmentUpdateWithoutEquipmentConfigurationInput>, EquipmentUncheckedUpdateWithoutEquipmentConfigurationInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -11511,6 +19262,19 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -11535,43 +19299,86 @@ export namespace Prisma {
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type EquipmentProfileCreateWithoutCommunication_profilesInput = {
-    id: bigint | number
-    name?: string | null
-    equipments?: EquipmentCreateNestedManyWithoutEquipment_profilesInput
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput = {
-    id: bigint | number
-    name?: string | null
-    equipments?: EquipmentUncheckedCreateNestedManyWithoutEquipment_profilesInput
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type EquipmentProfileCreateOrConnectWithoutCommunication_profilesInput = {
+  export type EquipmentProfileCreateWithoutCommunicationProfileInput = {
+    id: bigint | number
+    name?: string | null
+    active?: boolean | null
+    communication_type?: string | null
+    equipments?: EquipmentCreateNestedManyWithoutEquipmentProfileInput
+  }
+
+  export type EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput = {
+    id: bigint | number
+    name?: string | null
+    active?: boolean | null
+    communication_type?: string | null
+    equipments?: EquipmentUncheckedCreateNestedManyWithoutEquipmentProfileInput
+  }
+
+  export type EquipmentProfileCreateOrConnectWithoutCommunicationProfileInput = {
     where: EquipmentProfileWhereUniqueInput
-    create: XOR<EquipmentProfileCreateWithoutCommunication_profilesInput, EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput>
+    create: XOR<EquipmentProfileCreateWithoutCommunicationProfileInput, EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput>
   }
 
-  export type EquipmentProfileCreateManyCommunication_profilesInputEnvelope = {
-    data: EquipmentProfileCreateManyCommunication_profilesInput | EquipmentProfileCreateManyCommunication_profilesInput[]
+  export type EquipmentProfileCreateManyCommunicationProfileInputEnvelope = {
+    data: EquipmentProfileCreateManyCommunicationProfileInput | EquipmentProfileCreateManyCommunicationProfileInput[]
     skipDuplicates?: boolean
   }
 
-  export type EquipmentProfileUpsertWithWhereUniqueWithoutCommunication_profilesInput = {
+  export type EquipmentProfileUpsertWithWhereUniqueWithoutCommunicationProfileInput = {
     where: EquipmentProfileWhereUniqueInput
-    update: XOR<EquipmentProfileUpdateWithoutCommunication_profilesInput, EquipmentProfileUncheckedUpdateWithoutCommunication_profilesInput>
-    create: XOR<EquipmentProfileCreateWithoutCommunication_profilesInput, EquipmentProfileUncheckedCreateWithoutCommunication_profilesInput>
+    update: XOR<EquipmentProfileUpdateWithoutCommunicationProfileInput, EquipmentProfileUncheckedUpdateWithoutCommunicationProfileInput>
+    create: XOR<EquipmentProfileCreateWithoutCommunicationProfileInput, EquipmentProfileUncheckedCreateWithoutCommunicationProfileInput>
   }
 
-  export type EquipmentProfileUpdateWithWhereUniqueWithoutCommunication_profilesInput = {
+  export type EquipmentProfileUpdateWithWhereUniqueWithoutCommunicationProfileInput = {
     where: EquipmentProfileWhereUniqueInput
-    data: XOR<EquipmentProfileUpdateWithoutCommunication_profilesInput, EquipmentProfileUncheckedUpdateWithoutCommunication_profilesInput>
+    data: XOR<EquipmentProfileUpdateWithoutCommunicationProfileInput, EquipmentProfileUncheckedUpdateWithoutCommunicationProfileInput>
   }
 
-  export type EquipmentProfileUpdateManyWithWhereWithoutCommunication_profilesInput = {
+  export type EquipmentProfileUpdateManyWithWhereWithoutCommunicationProfileInput = {
     where: EquipmentProfileScalarWhereInput
-    data: XOR<EquipmentProfileUpdateManyMutationInput, EquipmentProfileUncheckedUpdateManyWithoutCommunication_profilesInput>
+    data: XOR<EquipmentProfileUpdateManyMutationInput, EquipmentProfileUncheckedUpdateManyWithoutCommunicationProfileInput>
   }
 
   export type EquipmentProfileScalarWhereInput = {
@@ -11581,20 +19388,24 @@ export namespace Prisma {
     id?: BigIntFilter<"EquipmentProfile"> | bigint | number
     communication_profile?: StringNullableFilter<"EquipmentProfile"> | string | null
     name?: StringNullableFilter<"EquipmentProfile"> | string | null
+    active?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
+    communication_type?: StringNullableFilter<"EquipmentProfile"> | string | null
   }
 
-  export type EquipmentCreateWithoutDirectory_historialsInput = {
+  export type EquipmentCreateWithoutDirectoryHistorialsInput = {
     id: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    equipment_profiles?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
-    parameters?: ParameterCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
+    parameters?: ParameterCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
-  export type EquipmentUncheckedCreateWithoutDirectory_historialsInput = {
+  export type EquipmentUncheckedCreateWithoutDirectoryHistorialsInput = {
     id: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
@@ -11602,37 +19413,41 @@ export namespace Prisma {
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
-  export type EquipmentCreateOrConnectWithoutDirectory_historialsInput = {
+  export type EquipmentCreateOrConnectWithoutDirectoryHistorialsInput = {
     where: EquipmentWhereUniqueInput
-    create: XOR<EquipmentCreateWithoutDirectory_historialsInput, EquipmentUncheckedCreateWithoutDirectory_historialsInput>
+    create: XOR<EquipmentCreateWithoutDirectoryHistorialsInput, EquipmentUncheckedCreateWithoutDirectoryHistorialsInput>
   }
 
-  export type EquipmentUpsertWithoutDirectory_historialsInput = {
-    update: XOR<EquipmentUpdateWithoutDirectory_historialsInput, EquipmentUncheckedUpdateWithoutDirectory_historialsInput>
-    create: XOR<EquipmentCreateWithoutDirectory_historialsInput, EquipmentUncheckedCreateWithoutDirectory_historialsInput>
+  export type EquipmentUpsertWithoutDirectoryHistorialsInput = {
+    update: XOR<EquipmentUpdateWithoutDirectoryHistorialsInput, EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput>
+    create: XOR<EquipmentCreateWithoutDirectoryHistorialsInput, EquipmentUncheckedCreateWithoutDirectoryHistorialsInput>
     where?: EquipmentWhereInput
   }
 
-  export type EquipmentUpdateToOneWithWhereWithoutDirectory_historialsInput = {
+  export type EquipmentUpdateToOneWithWhereWithoutDirectoryHistorialsInput = {
     where?: EquipmentWhereInput
-    data: XOR<EquipmentUpdateWithoutDirectory_historialsInput, EquipmentUncheckedUpdateWithoutDirectory_historialsInput>
+    data: XOR<EquipmentUpdateWithoutDirectoryHistorialsInput, EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput>
   }
 
-  export type EquipmentUpdateWithoutDirectory_historialsInput = {
+  export type EquipmentUpdateWithoutDirectoryHistorialsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    equipment_profiles?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
-    parameters?: ParameterUpdateManyWithoutEquipmentsNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
+    parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
-  export type EquipmentUncheckedUpdateWithoutDirectory_historialsInput = {
+  export type EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     profile_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
@@ -11640,99 +19455,101 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentsNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
-  export type CommunicationProfilesCreateWithoutEquipment_profilesInput = {
+  export type CommunicationProfilesCreateWithoutEquipmentProfilesInput = {
     id: string
-    name?: string | null
     checksum_regex?: string | null
     type?: string | null
   }
 
-  export type CommunicationProfilesUncheckedCreateWithoutEquipment_profilesInput = {
+  export type CommunicationProfilesUncheckedCreateWithoutEquipmentProfilesInput = {
     id: string
-    name?: string | null
     checksum_regex?: string | null
     type?: string | null
   }
 
-  export type CommunicationProfilesCreateOrConnectWithoutEquipment_profilesInput = {
+  export type CommunicationProfilesCreateOrConnectWithoutEquipmentProfilesInput = {
     where: CommunicationProfilesWhereUniqueInput
-    create: XOR<CommunicationProfilesCreateWithoutEquipment_profilesInput, CommunicationProfilesUncheckedCreateWithoutEquipment_profilesInput>
+    create: XOR<CommunicationProfilesCreateWithoutEquipmentProfilesInput, CommunicationProfilesUncheckedCreateWithoutEquipmentProfilesInput>
   }
 
-  export type EquipmentCreateWithoutEquipment_profilesInput = {
+  export type EquipmentCreateWithoutEquipmentProfileInput = {
     id: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    directory_historials?: DirectoryHistorialCreateNestedManyWithoutEquipmentsInput
-    parameters?: ParameterCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
+    parameters?: ParameterCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
-  export type EquipmentUncheckedCreateWithoutEquipment_profilesInput = {
+  export type EquipmentUncheckedCreateWithoutEquipmentProfileInput = {
     id: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    directory_historials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentsInput
-    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
-  export type EquipmentCreateOrConnectWithoutEquipment_profilesInput = {
+  export type EquipmentCreateOrConnectWithoutEquipmentProfileInput = {
     where: EquipmentWhereUniqueInput
-    create: XOR<EquipmentCreateWithoutEquipment_profilesInput, EquipmentUncheckedCreateWithoutEquipment_profilesInput>
+    create: XOR<EquipmentCreateWithoutEquipmentProfileInput, EquipmentUncheckedCreateWithoutEquipmentProfileInput>
   }
 
-  export type EquipmentCreateManyEquipment_profilesInputEnvelope = {
-    data: EquipmentCreateManyEquipment_profilesInput | EquipmentCreateManyEquipment_profilesInput[]
+  export type EquipmentCreateManyEquipmentProfileInputEnvelope = {
+    data: EquipmentCreateManyEquipmentProfileInput | EquipmentCreateManyEquipmentProfileInput[]
     skipDuplicates?: boolean
   }
 
-  export type CommunicationProfilesUpsertWithoutEquipment_profilesInput = {
-    update: XOR<CommunicationProfilesUpdateWithoutEquipment_profilesInput, CommunicationProfilesUncheckedUpdateWithoutEquipment_profilesInput>
-    create: XOR<CommunicationProfilesCreateWithoutEquipment_profilesInput, CommunicationProfilesUncheckedCreateWithoutEquipment_profilesInput>
+  export type CommunicationProfilesUpsertWithoutEquipmentProfilesInput = {
+    update: XOR<CommunicationProfilesUpdateWithoutEquipmentProfilesInput, CommunicationProfilesUncheckedUpdateWithoutEquipmentProfilesInput>
+    create: XOR<CommunicationProfilesCreateWithoutEquipmentProfilesInput, CommunicationProfilesUncheckedCreateWithoutEquipmentProfilesInput>
     where?: CommunicationProfilesWhereInput
   }
 
-  export type CommunicationProfilesUpdateToOneWithWhereWithoutEquipment_profilesInput = {
+  export type CommunicationProfilesUpdateToOneWithWhereWithoutEquipmentProfilesInput = {
     where?: CommunicationProfilesWhereInput
-    data: XOR<CommunicationProfilesUpdateWithoutEquipment_profilesInput, CommunicationProfilesUncheckedUpdateWithoutEquipment_profilesInput>
+    data: XOR<CommunicationProfilesUpdateWithoutEquipmentProfilesInput, CommunicationProfilesUncheckedUpdateWithoutEquipmentProfilesInput>
   }
 
-  export type CommunicationProfilesUpdateWithoutEquipment_profilesInput = {
+  export type CommunicationProfilesUpdateWithoutEquipmentProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
     checksum_regex?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type CommunicationProfilesUncheckedUpdateWithoutEquipment_profilesInput = {
+  export type CommunicationProfilesUncheckedUpdateWithoutEquipmentProfilesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
     checksum_regex?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type EquipmentUpsertWithWhereUniqueWithoutEquipment_profilesInput = {
+  export type EquipmentUpsertWithWhereUniqueWithoutEquipmentProfileInput = {
     where: EquipmentWhereUniqueInput
-    update: XOR<EquipmentUpdateWithoutEquipment_profilesInput, EquipmentUncheckedUpdateWithoutEquipment_profilesInput>
-    create: XOR<EquipmentCreateWithoutEquipment_profilesInput, EquipmentUncheckedCreateWithoutEquipment_profilesInput>
+    update: XOR<EquipmentUpdateWithoutEquipmentProfileInput, EquipmentUncheckedUpdateWithoutEquipmentProfileInput>
+    create: XOR<EquipmentCreateWithoutEquipmentProfileInput, EquipmentUncheckedCreateWithoutEquipmentProfileInput>
   }
 
-  export type EquipmentUpdateWithWhereUniqueWithoutEquipment_profilesInput = {
+  export type EquipmentUpdateWithWhereUniqueWithoutEquipmentProfileInput = {
     where: EquipmentWhereUniqueInput
-    data: XOR<EquipmentUpdateWithoutEquipment_profilesInput, EquipmentUncheckedUpdateWithoutEquipment_profilesInput>
+    data: XOR<EquipmentUpdateWithoutEquipmentProfileInput, EquipmentUncheckedUpdateWithoutEquipmentProfileInput>
   }
 
-  export type EquipmentUpdateManyWithWhereWithoutEquipment_profilesInput = {
+  export type EquipmentUpdateManyWithWhereWithoutEquipmentProfileInput = {
     where: EquipmentScalarWhereInput
-    data: XOR<EquipmentUpdateManyMutationInput, EquipmentUncheckedUpdateManyWithoutEquipment_profilesInput>
+    data: XOR<EquipmentUpdateManyMutationInput, EquipmentUncheckedUpdateManyWithoutEquipmentProfileInput>
   }
 
   export type EquipmentScalarWhereInput = {
@@ -11746,42 +19563,47 @@ export namespace Prisma {
     modified_at?: DateTimeNullableFilter<"Equipment"> | Date | string | null
     last_connection?: DateTimeNullableFilter<"Equipment"> | Date | string | null
     connection_status?: StringNullableFilter<"Equipment"> | string | null
+    active?: BoolNullableFilter<"Equipment"> | boolean | null
   }
 
-  export type DirectoryHistorialCreateWithoutEquipmentsInput = {
+  export type DirectoryHistorialCreateWithoutEquipmentInput = {
     id: bigint | number
     filename?: string | null
     filepath?: string | null
     modified_at?: bigint | number | null
   }
 
-  export type DirectoryHistorialUncheckedCreateWithoutEquipmentsInput = {
+  export type DirectoryHistorialUncheckedCreateWithoutEquipmentInput = {
     id: bigint | number
     filename?: string | null
     filepath?: string | null
     modified_at?: bigint | number | null
   }
 
-  export type DirectoryHistorialCreateOrConnectWithoutEquipmentsInput = {
+  export type DirectoryHistorialCreateOrConnectWithoutEquipmentInput = {
     where: DirectoryHistorialWhereUniqueInput
-    create: XOR<DirectoryHistorialCreateWithoutEquipmentsInput, DirectoryHistorialUncheckedCreateWithoutEquipmentsInput>
+    create: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput>
   }
 
-  export type DirectoryHistorialCreateManyEquipmentsInputEnvelope = {
-    data: DirectoryHistorialCreateManyEquipmentsInput | DirectoryHistorialCreateManyEquipmentsInput[]
+  export type DirectoryHistorialCreateManyEquipmentInputEnvelope = {
+    data: DirectoryHistorialCreateManyEquipmentInput | DirectoryHistorialCreateManyEquipmentInput[]
     skipDuplicates?: boolean
   }
 
   export type EquipmentProfileCreateWithoutEquipmentsInput = {
     id: bigint | number
     name?: string | null
-    communication_profiles?: CommunicationProfilesCreateNestedOneWithoutEquipment_profilesInput
+    active?: boolean | null
+    communication_type?: string | null
+    communicationProfile?: CommunicationProfilesCreateNestedOneWithoutEquipmentProfilesInput
   }
 
   export type EquipmentProfileUncheckedCreateWithoutEquipmentsInput = {
     id: bigint | number
     communication_profile?: string | null
     name?: string | null
+    active?: boolean | null
+    communication_type?: string | null
   }
 
   export type EquipmentProfileCreateOrConnectWithoutEquipmentsInput = {
@@ -11789,7 +19611,7 @@ export namespace Prisma {
     create: XOR<EquipmentProfileCreateWithoutEquipmentsInput, EquipmentProfileUncheckedCreateWithoutEquipmentsInput>
   }
 
-  export type ParameterCreateWithoutEquipmentsInput = {
+  export type ParameterCreateWithoutEquipmentInput = {
     id: bigint | number
     description?: string | null
     value?: string | null
@@ -11797,46 +19619,74 @@ export namespace Prisma {
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    results?: ResultCreateNestedOneWithoutParametersInput
+    active?: boolean | null
+    parameterDictionary?: ParameterDictionaryCreateNestedOneWithoutParametersInput
+    result?: ResultCreateNestedOneWithoutParametersInput
   }
 
-  export type ParameterUncheckedCreateWithoutEquipmentsInput = {
+  export type ParameterUncheckedCreateWithoutEquipmentInput = {
     id: bigint | number
     result_folio?: string | null
+    parameter_dictionary_id?: bigint | number | null
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
+    active?: boolean | null
   }
 
-  export type ParameterCreateOrConnectWithoutEquipmentsInput = {
+  export type ParameterCreateOrConnectWithoutEquipmentInput = {
     where: ParameterWhereUniqueInput
-    create: XOR<ParameterCreateWithoutEquipmentsInput, ParameterUncheckedCreateWithoutEquipmentsInput>
+    create: XOR<ParameterCreateWithoutEquipmentInput, ParameterUncheckedCreateWithoutEquipmentInput>
   }
 
-  export type ParameterCreateManyEquipmentsInputEnvelope = {
-    data: ParameterCreateManyEquipmentsInput | ParameterCreateManyEquipmentsInput[]
+  export type ParameterCreateManyEquipmentInputEnvelope = {
+    data: ParameterCreateManyEquipmentInput | ParameterCreateManyEquipmentInput[]
     skipDuplicates?: boolean
   }
 
-  export type DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentsInput = {
-    where: DirectoryHistorialWhereUniqueInput
-    update: XOR<DirectoryHistorialUpdateWithoutEquipmentsInput, DirectoryHistorialUncheckedUpdateWithoutEquipmentsInput>
-    create: XOR<DirectoryHistorialCreateWithoutEquipmentsInput, DirectoryHistorialUncheckedCreateWithoutEquipmentsInput>
+  export type EquipmentConfigurationCreateWithoutEquipmentInput = {
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
   }
 
-  export type DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentsInput = {
-    where: DirectoryHistorialWhereUniqueInput
-    data: XOR<DirectoryHistorialUpdateWithoutEquipmentsInput, DirectoryHistorialUncheckedUpdateWithoutEquipmentsInput>
+  export type EquipmentConfigurationUncheckedCreateWithoutEquipmentInput = {
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
   }
 
-  export type DirectoryHistorialUpdateManyWithWhereWithoutEquipmentsInput = {
+  export type EquipmentConfigurationCreateOrConnectWithoutEquipmentInput = {
+    where: EquipmentConfigurationWhereUniqueInput
+    create: XOR<EquipmentConfigurationCreateWithoutEquipmentInput, EquipmentConfigurationUncheckedCreateWithoutEquipmentInput>
+  }
+
+  export type EquipmentConfigurationCreateManyEquipmentInputEnvelope = {
+    data: EquipmentConfigurationCreateManyEquipmentInput | EquipmentConfigurationCreateManyEquipmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DirectoryHistorialUpsertWithWhereUniqueWithoutEquipmentInput = {
+    where: DirectoryHistorialWhereUniqueInput
+    update: XOR<DirectoryHistorialUpdateWithoutEquipmentInput, DirectoryHistorialUncheckedUpdateWithoutEquipmentInput>
+    create: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput>
+  }
+
+  export type DirectoryHistorialUpdateWithWhereUniqueWithoutEquipmentInput = {
+    where: DirectoryHistorialWhereUniqueInput
+    data: XOR<DirectoryHistorialUpdateWithoutEquipmentInput, DirectoryHistorialUncheckedUpdateWithoutEquipmentInput>
+  }
+
+  export type DirectoryHistorialUpdateManyWithWhereWithoutEquipmentInput = {
     where: DirectoryHistorialScalarWhereInput
-    data: XOR<DirectoryHistorialUpdateManyMutationInput, DirectoryHistorialUncheckedUpdateManyWithoutEquipmentsInput>
+    data: XOR<DirectoryHistorialUpdateManyMutationInput, DirectoryHistorialUncheckedUpdateManyWithoutEquipmentInput>
   }
 
   export type DirectoryHistorialScalarWhereInput = {
@@ -11864,29 +19714,33 @@ export namespace Prisma {
   export type EquipmentProfileUpdateWithoutEquipmentsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     name?: NullableStringFieldUpdateOperationsInput | string | null
-    communication_profiles?: CommunicationProfilesUpdateOneWithoutEquipment_profilesNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
+    communicationProfile?: CommunicationProfilesUpdateOneWithoutEquipmentProfilesNestedInput
   }
 
   export type EquipmentProfileUncheckedUpdateWithoutEquipmentsInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     communication_profile?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ParameterUpsertWithWhereUniqueWithoutEquipmentsInput = {
+  export type ParameterUpsertWithWhereUniqueWithoutEquipmentInput = {
     where: ParameterWhereUniqueInput
-    update: XOR<ParameterUpdateWithoutEquipmentsInput, ParameterUncheckedUpdateWithoutEquipmentsInput>
-    create: XOR<ParameterCreateWithoutEquipmentsInput, ParameterUncheckedCreateWithoutEquipmentsInput>
+    update: XOR<ParameterUpdateWithoutEquipmentInput, ParameterUncheckedUpdateWithoutEquipmentInput>
+    create: XOR<ParameterCreateWithoutEquipmentInput, ParameterUncheckedCreateWithoutEquipmentInput>
   }
 
-  export type ParameterUpdateWithWhereUniqueWithoutEquipmentsInput = {
+  export type ParameterUpdateWithWhereUniqueWithoutEquipmentInput = {
     where: ParameterWhereUniqueInput
-    data: XOR<ParameterUpdateWithoutEquipmentsInput, ParameterUncheckedUpdateWithoutEquipmentsInput>
+    data: XOR<ParameterUpdateWithoutEquipmentInput, ParameterUncheckedUpdateWithoutEquipmentInput>
   }
 
-  export type ParameterUpdateManyWithWhereWithoutEquipmentsInput = {
+  export type ParameterUpdateManyWithWhereWithoutEquipmentInput = {
     where: ParameterScalarWhereInput
-    data: XOR<ParameterUpdateManyMutationInput, ParameterUncheckedUpdateManyWithoutEquipmentsInput>
+    data: XOR<ParameterUpdateManyMutationInput, ParameterUncheckedUpdateManyWithoutEquipmentInput>
   }
 
   export type ParameterScalarWhereInput = {
@@ -11896,69 +19750,102 @@ export namespace Prisma {
     id?: BigIntFilter<"Parameter"> | bigint | number
     result_folio?: StringNullableFilter<"Parameter"> | string | null
     equipment_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
+    parameter_dictionary_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     description?: StringNullableFilter<"Parameter"> | string | null
     value?: StringNullableFilter<"Parameter"> | string | null
     unit_measurement?: StringNullableFilter<"Parameter"> | string | null
     max_range?: StringNullableFilter<"Parameter"> | string | null
     min_range?: StringNullableFilter<"Parameter"> | string | null
     created_at?: DateTimeNullableFilter<"Parameter"> | Date | string | null
-    modified_at?: DateTimeNullableFilter<"Parameter"> | Date | string | null
+    active?: BoolNullableFilter<"Parameter"> | boolean | null
   }
 
-  export type ResultCreateWithoutHistogram_resultsInput = {
+  export type EquipmentConfigurationUpsertWithWhereUniqueWithoutEquipmentInput = {
+    where: EquipmentConfigurationWhereUniqueInput
+    update: XOR<EquipmentConfigurationUpdateWithoutEquipmentInput, EquipmentConfigurationUncheckedUpdateWithoutEquipmentInput>
+    create: XOR<EquipmentConfigurationCreateWithoutEquipmentInput, EquipmentConfigurationUncheckedCreateWithoutEquipmentInput>
+  }
+
+  export type EquipmentConfigurationUpdateWithWhereUniqueWithoutEquipmentInput = {
+    where: EquipmentConfigurationWhereUniqueInput
+    data: XOR<EquipmentConfigurationUpdateWithoutEquipmentInput, EquipmentConfigurationUncheckedUpdateWithoutEquipmentInput>
+  }
+
+  export type EquipmentConfigurationUpdateManyWithWhereWithoutEquipmentInput = {
+    where: EquipmentConfigurationScalarWhereInput
+    data: XOR<EquipmentConfigurationUpdateManyMutationInput, EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentInput>
+  }
+
+  export type EquipmentConfigurationScalarWhereInput = {
+    AND?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
+    OR?: EquipmentConfigurationScalarWhereInput[]
+    NOT?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
+    equipment_id?: BigIntFilter<"EquipmentConfiguration"> | bigint | number
+    port?: StringFilter<"EquipmentConfiguration"> | string
+    ip_address?: StringFilter<"EquipmentConfiguration"> | string
+    baud_rate?: IntFilter<"EquipmentConfiguration"> | number
+    mac_address?: StringFilter<"EquipmentConfiguration"> | string
+    remote_directory?: StringFilter<"EquipmentConfiguration"> | string
+  }
+
+  export type ResultCreateWithoutHistogramResultsInput = {
     folio: string
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    parameters?: ParameterCreateNestedManyWithoutResultsInput
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    parameters?: ParameterCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendCreateNestedManyWithoutResultInput
+    user?: UserCreateNestedOneWithoutCreatedResultsInput
   }
 
-  export type ResultUncheckedCreateWithoutHistogram_resultsInput = {
+  export type ResultUncheckedCreateWithoutHistogramResultsInput = {
     folio: string
+    created_by?: bigint | number | null
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    parameters?: ParameterUncheckedCreateNestedManyWithoutResultsInput
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    parameters?: ParameterUncheckedCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendUncheckedCreateNestedManyWithoutResultInput
   }
 
-  export type ResultCreateOrConnectWithoutHistogram_resultsInput = {
+  export type ResultCreateOrConnectWithoutHistogramResultsInput = {
     where: ResultWhereUniqueInput
-    create: XOR<ResultCreateWithoutHistogram_resultsInput, ResultUncheckedCreateWithoutHistogram_resultsInput>
+    create: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
   }
 
-  export type ResultUpsertWithoutHistogram_resultsInput = {
-    update: XOR<ResultUpdateWithoutHistogram_resultsInput, ResultUncheckedUpdateWithoutHistogram_resultsInput>
-    create: XOR<ResultCreateWithoutHistogram_resultsInput, ResultUncheckedCreateWithoutHistogram_resultsInput>
+  export type ResultUpsertWithoutHistogramResultsInput = {
+    update: XOR<ResultUpdateWithoutHistogramResultsInput, ResultUncheckedUpdateWithoutHistogramResultsInput>
+    create: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
     where?: ResultWhereInput
   }
 
-  export type ResultUpdateToOneWithWhereWithoutHistogram_resultsInput = {
+  export type ResultUpdateToOneWithWhereWithoutHistogramResultsInput = {
     where?: ResultWhereInput
-    data: XOR<ResultUpdateWithoutHistogram_resultsInput, ResultUncheckedUpdateWithoutHistogram_resultsInput>
+    data: XOR<ResultUpdateWithoutHistogramResultsInput, ResultUncheckedUpdateWithoutHistogramResultsInput>
   }
 
-  export type ResultUpdateWithoutHistogram_resultsInput = {
+  export type ResultUpdateWithoutHistogramResultsInput = {
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    parameters?: ParameterUpdateManyWithoutResultsNestedInput
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    parameters?: ParameterUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUpdateManyWithoutResultNestedInput
+    user?: UserUpdateOneWithoutCreatedResultsNestedInput
   }
 
-  export type ResultUncheckedUpdateWithoutHistogram_resultsInput = {
+  export type ResultUncheckedUpdateWithoutHistogramResultsInput = {
     folio?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    parameters?: ParameterUncheckedUpdateManyWithoutResultsNestedInput
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    parameters?: ParameterUncheckedUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUncheckedUpdateManyWithoutResultNestedInput
   }
 
   export type EquipmentCreateWithoutParametersInput = {
@@ -11968,8 +19855,10 @@ export namespace Prisma {
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    directory_historials?: DirectoryHistorialCreateNestedManyWithoutEquipmentsInput
-    equipment_profiles?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
+    equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
+    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutParametersInput = {
@@ -11980,7 +19869,9 @@ export namespace Prisma {
     modified_at?: Date | string | null
     last_connection?: Date | string | null
     connection_status?: string | null
-    directory_historials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentsInput
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutParametersInput = {
@@ -11988,24 +19879,43 @@ export namespace Prisma {
     create: XOR<EquipmentCreateWithoutParametersInput, EquipmentUncheckedCreateWithoutParametersInput>
   }
 
+  export type ParameterDictionaryCreateWithoutParametersInput = {
+    id: bigint | number
+    parameter_description?: string | null
+    systemParameter?: SystemParameterCreateNestedOneWithoutParameterDictionariesInput
+  }
+
+  export type ParameterDictionaryUncheckedCreateWithoutParametersInput = {
+    id: bigint | number
+    system_parameter_id?: bigint | number | null
+    parameter_description?: string | null
+  }
+
+  export type ParameterDictionaryCreateOrConnectWithoutParametersInput = {
+    where: ParameterDictionaryWhereUniqueInput
+    create: XOR<ParameterDictionaryCreateWithoutParametersInput, ParameterDictionaryUncheckedCreateWithoutParametersInput>
+  }
+
   export type ResultCreateWithoutParametersInput = {
     folio: string
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    histogram_results?: HistogramResultCreateNestedManyWithoutResultsInput
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendCreateNestedManyWithoutResultInput
+    user?: UserCreateNestedOneWithoutCreatedResultsInput
   }
 
   export type ResultUncheckedCreateWithoutParametersInput = {
     folio: string
+    created_by?: bigint | number | null
     sample_id?: string | null
-    pacient_name?: string | null
-    sex?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    histogram_results?: HistogramResultUncheckedCreateNestedManyWithoutResultsInput
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultUncheckedCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendUncheckedCreateNestedManyWithoutResultInput
   }
 
   export type ResultCreateOrConnectWithoutParametersInput = {
@@ -12031,8 +19941,10 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    directory_historials?: DirectoryHistorialUpdateManyWithoutEquipmentsNestedInput
-    equipment_profiles?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
+    equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutParametersInput = {
@@ -12043,7 +19955,32 @@ export namespace Prisma {
     modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    directory_historials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentsNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+  }
+
+  export type ParameterDictionaryUpsertWithoutParametersInput = {
+    update: XOR<ParameterDictionaryUpdateWithoutParametersInput, ParameterDictionaryUncheckedUpdateWithoutParametersInput>
+    create: XOR<ParameterDictionaryCreateWithoutParametersInput, ParameterDictionaryUncheckedCreateWithoutParametersInput>
+    where?: ParameterDictionaryWhereInput
+  }
+
+  export type ParameterDictionaryUpdateToOneWithWhereWithoutParametersInput = {
+    where?: ParameterDictionaryWhereInput
+    data: XOR<ParameterDictionaryUpdateWithoutParametersInput, ParameterDictionaryUncheckedUpdateWithoutParametersInput>
+  }
+
+  export type ParameterDictionaryUpdateWithoutParametersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+    systemParameter?: SystemParameterUpdateOneWithoutParameterDictionariesNestedInput
+  }
+
+  export type ParameterDictionaryUncheckedUpdateWithoutParametersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    system_parameter_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ResultUpsertWithoutParametersInput = {
@@ -12060,46 +19997,52 @@ export namespace Prisma {
   export type ResultUpdateWithoutParametersInput = {
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    histogram_results?: HistogramResultUpdateManyWithoutResultsNestedInput
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUpdateManyWithoutResultNestedInput
+    user?: UserUpdateOneWithoutCreatedResultsNestedInput
   }
 
   export type ResultUncheckedUpdateWithoutParametersInput = {
     folio?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
-    pacient_name?: NullableStringFieldUpdateOperationsInput | string | null
-    sex?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    histogram_results?: HistogramResultUncheckedUpdateManyWithoutResultsNestedInput
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUncheckedUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUncheckedUpdateManyWithoutResultNestedInput
   }
 
-  export type HistogramResultCreateWithoutResultsInput = {
+  export type HistogramResultCreateWithoutResultInput = {
     id: bigint | number
     description?: string | null
     value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
   }
 
-  export type HistogramResultUncheckedCreateWithoutResultsInput = {
+  export type HistogramResultUncheckedCreateWithoutResultInput = {
     id: bigint | number
     description?: string | null
     value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
   }
 
-  export type HistogramResultCreateOrConnectWithoutResultsInput = {
+  export type HistogramResultCreateOrConnectWithoutResultInput = {
     where: HistogramResultWhereUniqueInput
-    create: XOR<HistogramResultCreateWithoutResultsInput, HistogramResultUncheckedCreateWithoutResultsInput>
+    create: XOR<HistogramResultCreateWithoutResultInput, HistogramResultUncheckedCreateWithoutResultInput>
   }
 
-  export type HistogramResultCreateManyResultsInputEnvelope = {
-    data: HistogramResultCreateManyResultsInput | HistogramResultCreateManyResultsInput[]
+  export type HistogramResultCreateManyResultInputEnvelope = {
+    data: HistogramResultCreateManyResultInput | HistogramResultCreateManyResultInput[]
     skipDuplicates?: boolean
   }
 
-  export type ParameterCreateWithoutResultsInput = {
+  export type ParameterCreateWithoutResultInput = {
     id: bigint | number
     description?: string | null
     value?: string | null
@@ -12107,46 +20050,95 @@ export namespace Prisma {
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
-    equipments?: EquipmentCreateNestedOneWithoutParametersInput
+    active?: boolean | null
+    equipment?: EquipmentCreateNestedOneWithoutParametersInput
+    parameterDictionary?: ParameterDictionaryCreateNestedOneWithoutParametersInput
   }
 
-  export type ParameterUncheckedCreateWithoutResultsInput = {
+  export type ParameterUncheckedCreateWithoutResultInput = {
     id: bigint | number
     equipment_id?: bigint | number | null
+    parameter_dictionary_id?: bigint | number | null
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
+    active?: boolean | null
   }
 
-  export type ParameterCreateOrConnectWithoutResultsInput = {
+  export type ParameterCreateOrConnectWithoutResultInput = {
     where: ParameterWhereUniqueInput
-    create: XOR<ParameterCreateWithoutResultsInput, ParameterUncheckedCreateWithoutResultsInput>
+    create: XOR<ParameterCreateWithoutResultInput, ParameterUncheckedCreateWithoutResultInput>
   }
 
-  export type ParameterCreateManyResultsInputEnvelope = {
-    data: ParameterCreateManyResultsInput | ParameterCreateManyResultsInput[]
+  export type ParameterCreateManyResultInputEnvelope = {
+    data: ParameterCreateManyResultInput | ParameterCreateManyResultInput[]
     skipDuplicates?: boolean
   }
 
-  export type HistogramResultUpsertWithWhereUniqueWithoutResultsInput = {
-    where: HistogramResultWhereUniqueInput
-    update: XOR<HistogramResultUpdateWithoutResultsInput, HistogramResultUncheckedUpdateWithoutResultsInput>
-    create: XOR<HistogramResultCreateWithoutResultsInput, HistogramResultUncheckedCreateWithoutResultsInput>
+  export type ResultSendCreateWithoutResultInput = {
+    id: bigint | number
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserCreateNestedOneWithoutResultSendsInput
   }
 
-  export type HistogramResultUpdateWithWhereUniqueWithoutResultsInput = {
-    where: HistogramResultWhereUniqueInput
-    data: XOR<HistogramResultUpdateWithoutResultsInput, HistogramResultUncheckedUpdateWithoutResultsInput>
+  export type ResultSendUncheckedCreateWithoutResultInput = {
+    id: bigint | number
+    send_by?: bigint | number | null
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
   }
 
-  export type HistogramResultUpdateManyWithWhereWithoutResultsInput = {
+  export type ResultSendCreateOrConnectWithoutResultInput = {
+    where: ResultSendWhereUniqueInput
+    create: XOR<ResultSendCreateWithoutResultInput, ResultSendUncheckedCreateWithoutResultInput>
+  }
+
+  export type ResultSendCreateManyResultInputEnvelope = {
+    data: ResultSendCreateManyResultInput | ResultSendCreateManyResultInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutCreatedResultsInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+    resultSends?: ResultSendCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedResultsInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+    resultSends?: ResultSendUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedResultsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedResultsInput, UserUncheckedCreateWithoutCreatedResultsInput>
+  }
+
+  export type HistogramResultUpsertWithWhereUniqueWithoutResultInput = {
+    where: HistogramResultWhereUniqueInput
+    update: XOR<HistogramResultUpdateWithoutResultInput, HistogramResultUncheckedUpdateWithoutResultInput>
+    create: XOR<HistogramResultCreateWithoutResultInput, HistogramResultUncheckedCreateWithoutResultInput>
+  }
+
+  export type HistogramResultUpdateWithWhereUniqueWithoutResultInput = {
+    where: HistogramResultWhereUniqueInput
+    data: XOR<HistogramResultUpdateWithoutResultInput, HistogramResultUncheckedUpdateWithoutResultInput>
+  }
+
+  export type HistogramResultUpdateManyWithWhereWithoutResultInput = {
     where: HistogramResultScalarWhereInput
-    data: XOR<HistogramResultUpdateManyMutationInput, HistogramResultUncheckedUpdateManyWithoutResultsInput>
+    data: XOR<HistogramResultUpdateManyMutationInput, HistogramResultUncheckedUpdateManyWithoutResultInput>
   }
 
   export type HistogramResultScalarWhereInput = {
@@ -12157,170 +20149,111 @@ export namespace Prisma {
     result_folio?: StringNullableFilter<"HistogramResult"> | string | null
     description?: StringNullableFilter<"HistogramResult"> | string | null
     value?: StringNullableFilter<"HistogramResult"> | string | null
+    created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
+    active?: BoolNullableFilter<"HistogramResult"> | boolean | null
   }
 
-  export type ParameterUpsertWithWhereUniqueWithoutResultsInput = {
+  export type ParameterUpsertWithWhereUniqueWithoutResultInput = {
     where: ParameterWhereUniqueInput
-    update: XOR<ParameterUpdateWithoutResultsInput, ParameterUncheckedUpdateWithoutResultsInput>
-    create: XOR<ParameterCreateWithoutResultsInput, ParameterUncheckedCreateWithoutResultsInput>
+    update: XOR<ParameterUpdateWithoutResultInput, ParameterUncheckedUpdateWithoutResultInput>
+    create: XOR<ParameterCreateWithoutResultInput, ParameterUncheckedCreateWithoutResultInput>
   }
 
-  export type ParameterUpdateWithWhereUniqueWithoutResultsInput = {
+  export type ParameterUpdateWithWhereUniqueWithoutResultInput = {
     where: ParameterWhereUniqueInput
-    data: XOR<ParameterUpdateWithoutResultsInput, ParameterUncheckedUpdateWithoutResultsInput>
+    data: XOR<ParameterUpdateWithoutResultInput, ParameterUncheckedUpdateWithoutResultInput>
   }
 
-  export type ParameterUpdateManyWithWhereWithoutResultsInput = {
+  export type ParameterUpdateManyWithWhereWithoutResultInput = {
     where: ParameterScalarWhereInput
-    data: XOR<ParameterUpdateManyMutationInput, ParameterUncheckedUpdateManyWithoutResultsInput>
+    data: XOR<ParameterUpdateManyMutationInput, ParameterUncheckedUpdateManyWithoutResultInput>
   }
 
-  export type EquipmentProfileCreateManyCommunication_profilesInput = {
+  export type ResultSendUpsertWithWhereUniqueWithoutResultInput = {
+    where: ResultSendWhereUniqueInput
+    update: XOR<ResultSendUpdateWithoutResultInput, ResultSendUncheckedUpdateWithoutResultInput>
+    create: XOR<ResultSendCreateWithoutResultInput, ResultSendUncheckedCreateWithoutResultInput>
+  }
+
+  export type ResultSendUpdateWithWhereUniqueWithoutResultInput = {
+    where: ResultSendWhereUniqueInput
+    data: XOR<ResultSendUpdateWithoutResultInput, ResultSendUncheckedUpdateWithoutResultInput>
+  }
+
+  export type ResultSendUpdateManyWithWhereWithoutResultInput = {
+    where: ResultSendScalarWhereInput
+    data: XOR<ResultSendUpdateManyMutationInput, ResultSendUncheckedUpdateManyWithoutResultInput>
+  }
+
+  export type ResultSendScalarWhereInput = {
+    AND?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
+    OR?: ResultSendScalarWhereInput[]
+    NOT?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
+    id?: BigIntFilter<"ResultSend"> | bigint | number
+    result_folio?: StringNullableFilter<"ResultSend"> | string | null
+    send_by?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
+    send_at?: DateTimeNullableFilter<"ResultSend"> | Date | string | null
+    status?: StringNullableFilter<"ResultSend"> | string | null
+    payload?: JsonNullableFilter<"ResultSend">
+    response?: JsonNullableFilter<"ResultSend">
+  }
+
+  export type UserUpsertWithoutCreatedResultsInput = {
+    update: XOR<UserUpdateWithoutCreatedResultsInput, UserUncheckedUpdateWithoutCreatedResultsInput>
+    create: XOR<UserCreateWithoutCreatedResultsInput, UserUncheckedCreateWithoutCreatedResultsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedResultsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedResultsInput, UserUncheckedUpdateWithoutCreatedResultsInput>
+  }
+
+  export type UserUpdateWithoutCreatedResultsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    resultSends?: ResultSendUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedResultsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    resultSends?: ResultSendUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SystemParameterCreateWithoutParameterDictionariesInput = {
     id: bigint | number
-    name?: string | null
+    value?: string | null
   }
 
-  export type EquipmentProfileUpdateWithoutCommunication_profilesInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    equipments?: EquipmentUpdateManyWithoutEquipment_profilesNestedInput
-  }
-
-  export type EquipmentProfileUncheckedUpdateWithoutCommunication_profilesInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    equipments?: EquipmentUncheckedUpdateManyWithoutEquipment_profilesNestedInput
-  }
-
-  export type EquipmentProfileUncheckedUpdateManyWithoutCommunication_profilesInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type EquipmentCreateManyEquipment_profilesInput = {
+  export type SystemParameterUncheckedCreateWithoutParameterDictionariesInput = {
     id: bigint | number
-    name?: string | null
-    created_at?: Date | string | null
-    modified_at?: Date | string | null
-    last_connection?: Date | string | null
-    connection_status?: string | null
+    value?: string | null
   }
 
-  export type EquipmentUpdateWithoutEquipment_profilesInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    directory_historials?: DirectoryHistorialUpdateManyWithoutEquipmentsNestedInput
-    parameters?: ParameterUpdateManyWithoutEquipmentsNestedInput
+  export type SystemParameterCreateOrConnectWithoutParameterDictionariesInput = {
+    where: SystemParameterWhereUniqueInput
+    create: XOR<SystemParameterCreateWithoutParameterDictionariesInput, SystemParameterUncheckedCreateWithoutParameterDictionariesInput>
   }
 
-  export type EquipmentUncheckedUpdateWithoutEquipment_profilesInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-    directory_historials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentsNestedInput
-    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentsNestedInput
-  }
-
-  export type EquipmentUncheckedUpdateManyWithoutEquipment_profilesInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type DirectoryHistorialCreateManyEquipmentsInput = {
+  export type ParameterCreateWithoutParameterDictionaryInput = {
     id: bigint | number
-    filename?: string | null
-    filepath?: string | null
-    modified_at?: bigint | number | null
-  }
-
-  export type ParameterCreateManyEquipmentsInput = {
-    id: bigint | number
-    result_folio?: string | null
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
-    modified_at?: Date | string | null
+    active?: boolean | null
+    equipment?: EquipmentCreateNestedOneWithoutParametersInput
+    result?: ResultCreateNestedOneWithoutParametersInput
   }
 
-  export type DirectoryHistorialUpdateWithoutEquipmentsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    filename?: NullableStringFieldUpdateOperationsInput | string | null
-    filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  }
-
-  export type DirectoryHistorialUncheckedUpdateWithoutEquipmentsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    filename?: NullableStringFieldUpdateOperationsInput | string | null
-    filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  }
-
-  export type DirectoryHistorialUncheckedUpdateManyWithoutEquipmentsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    filename?: NullableStringFieldUpdateOperationsInput | string | null
-    filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
-  }
-
-  export type ParameterUpdateWithoutEquipmentsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    value?: NullableStringFieldUpdateOperationsInput | string | null
-    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
-    max_range?: NullableStringFieldUpdateOperationsInput | string | null
-    min_range?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    results?: ResultUpdateOneWithoutParametersNestedInput
-  }
-
-  export type ParameterUncheckedUpdateWithoutEquipmentsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    value?: NullableStringFieldUpdateOperationsInput | string | null
-    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
-    max_range?: NullableStringFieldUpdateOperationsInput | string | null
-    min_range?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type ParameterUncheckedUpdateManyWithoutEquipmentsInput = {
-    id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    value?: NullableStringFieldUpdateOperationsInput | string | null
-    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
-    max_range?: NullableStringFieldUpdateOperationsInput | string | null
-    min_range?: NullableStringFieldUpdateOperationsInput | string | null
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  }
-
-  export type HistogramResultCreateManyResultsInput = {
+  export type ParameterUncheckedCreateWithoutParameterDictionaryInput = {
     id: bigint | number
-    description?: string | null
-    value?: string | null
-  }
-
-  export type ParameterCreateManyResultsInput = {
-    id: bigint | number
+    result_folio?: string | null
     equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -12328,28 +20261,505 @@ export namespace Prisma {
     max_range?: string | null
     min_range?: string | null
     created_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type ParameterCreateOrConnectWithoutParameterDictionaryInput = {
+    where: ParameterWhereUniqueInput
+    create: XOR<ParameterCreateWithoutParameterDictionaryInput, ParameterUncheckedCreateWithoutParameterDictionaryInput>
+  }
+
+  export type ParameterCreateManyParameterDictionaryInputEnvelope = {
+    data: ParameterCreateManyParameterDictionaryInput | ParameterCreateManyParameterDictionaryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SystemParameterUpsertWithoutParameterDictionariesInput = {
+    update: XOR<SystemParameterUpdateWithoutParameterDictionariesInput, SystemParameterUncheckedUpdateWithoutParameterDictionariesInput>
+    create: XOR<SystemParameterCreateWithoutParameterDictionariesInput, SystemParameterUncheckedCreateWithoutParameterDictionariesInput>
+    where?: SystemParameterWhereInput
+  }
+
+  export type SystemParameterUpdateToOneWithWhereWithoutParameterDictionariesInput = {
+    where?: SystemParameterWhereInput
+    data: XOR<SystemParameterUpdateWithoutParameterDictionariesInput, SystemParameterUncheckedUpdateWithoutParameterDictionariesInput>
+  }
+
+  export type SystemParameterUpdateWithoutParameterDictionariesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SystemParameterUncheckedUpdateWithoutParameterDictionariesInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ParameterUpsertWithWhereUniqueWithoutParameterDictionaryInput = {
+    where: ParameterWhereUniqueInput
+    update: XOR<ParameterUpdateWithoutParameterDictionaryInput, ParameterUncheckedUpdateWithoutParameterDictionaryInput>
+    create: XOR<ParameterCreateWithoutParameterDictionaryInput, ParameterUncheckedCreateWithoutParameterDictionaryInput>
+  }
+
+  export type ParameterUpdateWithWhereUniqueWithoutParameterDictionaryInput = {
+    where: ParameterWhereUniqueInput
+    data: XOR<ParameterUpdateWithoutParameterDictionaryInput, ParameterUncheckedUpdateWithoutParameterDictionaryInput>
+  }
+
+  export type ParameterUpdateManyWithWhereWithoutParameterDictionaryInput = {
+    where: ParameterScalarWhereInput
+    data: XOR<ParameterUpdateManyMutationInput, ParameterUncheckedUpdateManyWithoutParameterDictionaryInput>
+  }
+
+  export type ResultCreateWithoutResultSendsInput = {
+    folio: string
+    sample_id?: string | null
+    created_at?: Date | string | null
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultCreateNestedManyWithoutResultInput
+    parameters?: ParameterCreateNestedManyWithoutResultInput
+    user?: UserCreateNestedOneWithoutCreatedResultsInput
+  }
+
+  export type ResultUncheckedCreateWithoutResultSendsInput = {
+    folio: string
+    created_by?: bigint | number | null
+    sample_id?: string | null
+    created_at?: Date | string | null
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultUncheckedCreateNestedManyWithoutResultInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutResultInput
+  }
+
+  export type ResultCreateOrConnectWithoutResultSendsInput = {
+    where: ResultWhereUniqueInput
+    create: XOR<ResultCreateWithoutResultSendsInput, ResultUncheckedCreateWithoutResultSendsInput>
+  }
+
+  export type UserCreateWithoutResultSendsInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+    createdResults?: ResultCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutResultSendsInput = {
+    id: bigint | number
+    username?: string | null
+    password?: string | null
+    createdResults?: ResultUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutResultSendsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutResultSendsInput, UserUncheckedCreateWithoutResultSendsInput>
+  }
+
+  export type ResultUpsertWithoutResultSendsInput = {
+    update: XOR<ResultUpdateWithoutResultSendsInput, ResultUncheckedUpdateWithoutResultSendsInput>
+    create: XOR<ResultCreateWithoutResultSendsInput, ResultUncheckedCreateWithoutResultSendsInput>
+    where?: ResultWhereInput
+  }
+
+  export type ResultUpdateToOneWithWhereWithoutResultSendsInput = {
+    where?: ResultWhereInput
+    data: XOR<ResultUpdateWithoutResultSendsInput, ResultUncheckedUpdateWithoutResultSendsInput>
+  }
+
+  export type ResultUpdateWithoutResultSendsInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    sample_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUpdateManyWithoutResultNestedInput
+    parameters?: ParameterUpdateManyWithoutResultNestedInput
+    user?: UserUpdateOneWithoutCreatedResultsNestedInput
+  }
+
+  export type ResultUncheckedUpdateWithoutResultSendsInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    sample_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUncheckedUpdateManyWithoutResultNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutResultNestedInput
+  }
+
+  export type UserUpsertWithoutResultSendsInput = {
+    update: XOR<UserUpdateWithoutResultSendsInput, UserUncheckedUpdateWithoutResultSendsInput>
+    create: XOR<UserCreateWithoutResultSendsInput, UserUncheckedCreateWithoutResultSendsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutResultSendsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutResultSendsInput, UserUncheckedUpdateWithoutResultSendsInput>
+  }
+
+  export type UserUpdateWithoutResultSendsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdResults?: ResultUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutResultSendsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    username?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdResults?: ResultUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ParameterDictionaryCreateWithoutSystemParameterInput = {
+    id: bigint | number
+    parameter_description?: string | null
+    parameters?: ParameterCreateNestedManyWithoutParameterDictionaryInput
+  }
+
+  export type ParameterDictionaryUncheckedCreateWithoutSystemParameterInput = {
+    id: bigint | number
+    parameter_description?: string | null
+    parameters?: ParameterUncheckedCreateNestedManyWithoutParameterDictionaryInput
+  }
+
+  export type ParameterDictionaryCreateOrConnectWithoutSystemParameterInput = {
+    where: ParameterDictionaryWhereUniqueInput
+    create: XOR<ParameterDictionaryCreateWithoutSystemParameterInput, ParameterDictionaryUncheckedCreateWithoutSystemParameterInput>
+  }
+
+  export type ParameterDictionaryCreateManySystemParameterInputEnvelope = {
+    data: ParameterDictionaryCreateManySystemParameterInput | ParameterDictionaryCreateManySystemParameterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ParameterDictionaryUpsertWithWhereUniqueWithoutSystemParameterInput = {
+    where: ParameterDictionaryWhereUniqueInput
+    update: XOR<ParameterDictionaryUpdateWithoutSystemParameterInput, ParameterDictionaryUncheckedUpdateWithoutSystemParameterInput>
+    create: XOR<ParameterDictionaryCreateWithoutSystemParameterInput, ParameterDictionaryUncheckedCreateWithoutSystemParameterInput>
+  }
+
+  export type ParameterDictionaryUpdateWithWhereUniqueWithoutSystemParameterInput = {
+    where: ParameterDictionaryWhereUniqueInput
+    data: XOR<ParameterDictionaryUpdateWithoutSystemParameterInput, ParameterDictionaryUncheckedUpdateWithoutSystemParameterInput>
+  }
+
+  export type ParameterDictionaryUpdateManyWithWhereWithoutSystemParameterInput = {
+    where: ParameterDictionaryScalarWhereInput
+    data: XOR<ParameterDictionaryUpdateManyMutationInput, ParameterDictionaryUncheckedUpdateManyWithoutSystemParameterInput>
+  }
+
+  export type ParameterDictionaryScalarWhereInput = {
+    AND?: ParameterDictionaryScalarWhereInput | ParameterDictionaryScalarWhereInput[]
+    OR?: ParameterDictionaryScalarWhereInput[]
+    NOT?: ParameterDictionaryScalarWhereInput | ParameterDictionaryScalarWhereInput[]
+    id?: BigIntFilter<"ParameterDictionary"> | bigint | number
+    system_parameter_id?: BigIntNullableFilter<"ParameterDictionary"> | bigint | number | null
+    parameter_description?: StringNullableFilter<"ParameterDictionary"> | string | null
+  }
+
+  export type ResultSendCreateWithoutUserInput = {
+    id: bigint | number
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+    result?: ResultCreateNestedOneWithoutResultSendsInput
+  }
+
+  export type ResultSendUncheckedCreateWithoutUserInput = {
+    id: bigint | number
+    result_folio?: string | null
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendCreateOrConnectWithoutUserInput = {
+    where: ResultSendWhereUniqueInput
+    create: XOR<ResultSendCreateWithoutUserInput, ResultSendUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResultSendCreateManyUserInputEnvelope = {
+    data: ResultSendCreateManyUserInput | ResultSendCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResultCreateWithoutUserInput = {
+    folio: string
+    sample_id?: string | null
+    created_at?: Date | string | null
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultCreateNestedManyWithoutResultInput
+    parameters?: ParameterCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendCreateNestedManyWithoutResultInput
+  }
+
+  export type ResultUncheckedCreateWithoutUserInput = {
+    folio: string
+    sample_id?: string | null
+    created_at?: Date | string | null
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+    histogramResults?: HistogramResultUncheckedCreateNestedManyWithoutResultInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutResultInput
+    resultSends?: ResultSendUncheckedCreateNestedManyWithoutResultInput
+  }
+
+  export type ResultCreateOrConnectWithoutUserInput = {
+    where: ResultWhereUniqueInput
+    create: XOR<ResultCreateWithoutUserInput, ResultUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResultCreateManyUserInputEnvelope = {
+    data: ResultCreateManyUserInput | ResultCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResultSendUpsertWithWhereUniqueWithoutUserInput = {
+    where: ResultSendWhereUniqueInput
+    update: XOR<ResultSendUpdateWithoutUserInput, ResultSendUncheckedUpdateWithoutUserInput>
+    create: XOR<ResultSendCreateWithoutUserInput, ResultSendUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResultSendUpdateWithWhereUniqueWithoutUserInput = {
+    where: ResultSendWhereUniqueInput
+    data: XOR<ResultSendUpdateWithoutUserInput, ResultSendUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ResultSendUpdateManyWithWhereWithoutUserInput = {
+    where: ResultSendScalarWhereInput
+    data: XOR<ResultSendUpdateManyMutationInput, ResultSendUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ResultUpsertWithWhereUniqueWithoutUserInput = {
+    where: ResultWhereUniqueInput
+    update: XOR<ResultUpdateWithoutUserInput, ResultUncheckedUpdateWithoutUserInput>
+    create: XOR<ResultCreateWithoutUserInput, ResultUncheckedCreateWithoutUserInput>
+  }
+
+  export type ResultUpdateWithWhereUniqueWithoutUserInput = {
+    where: ResultWhereUniqueInput
+    data: XOR<ResultUpdateWithoutUserInput, ResultUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ResultUpdateManyWithWhereWithoutUserInput = {
+    where: ResultScalarWhereInput
+    data: XOR<ResultUpdateManyMutationInput, ResultUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ResultScalarWhereInput = {
+    AND?: ResultScalarWhereInput | ResultScalarWhereInput[]
+    OR?: ResultScalarWhereInput[]
+    NOT?: ResultScalarWhereInput | ResultScalarWhereInput[]
+    folio?: StringFilter<"Result"> | string
+    created_by?: BigIntNullableFilter<"Result"> | bigint | number | null
+    sample_id?: StringNullableFilter<"Result"> | string | null
+    created_at?: DateTimeNullableFilter<"Result"> | Date | string | null
+    last_modified_at?: DateTimeNullableFilter<"Result"> | Date | string | null
+    active?: BoolNullableFilter<"Result"> | boolean | null
+  }
+
+  export type EquipmentCreateWithoutEquipmentConfigurationInput = {
+    id: bigint | number
+    name?: string | null
+    created_at?: Date | string | null
     modified_at?: Date | string | null
+    last_connection?: Date | string | null
+    connection_status?: string | null
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
+    equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
+    parameters?: ParameterCreateNestedManyWithoutEquipmentInput
   }
 
-  export type HistogramResultUpdateWithoutResultsInput = {
+  export type EquipmentUncheckedCreateWithoutEquipmentConfigurationInput = {
+    id: bigint | number
+    profile_id?: bigint | number | null
+    name?: string | null
+    created_at?: Date | string | null
+    modified_at?: Date | string | null
+    last_connection?: Date | string | null
+    connection_status?: string | null
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
+  }
+
+  export type EquipmentCreateOrConnectWithoutEquipmentConfigurationInput = {
+    where: EquipmentWhereUniqueInput
+    create: XOR<EquipmentCreateWithoutEquipmentConfigurationInput, EquipmentUncheckedCreateWithoutEquipmentConfigurationInput>
+  }
+
+  export type EquipmentUpsertWithoutEquipmentConfigurationInput = {
+    update: XOR<EquipmentUpdateWithoutEquipmentConfigurationInput, EquipmentUncheckedUpdateWithoutEquipmentConfigurationInput>
+    create: XOR<EquipmentCreateWithoutEquipmentConfigurationInput, EquipmentUncheckedCreateWithoutEquipmentConfigurationInput>
+    where?: EquipmentWhereInput
+  }
+
+  export type EquipmentUpdateToOneWithWhereWithoutEquipmentConfigurationInput = {
+    where?: EquipmentWhereInput
+    data: XOR<EquipmentUpdateWithoutEquipmentConfigurationInput, EquipmentUncheckedUpdateWithoutEquipmentConfigurationInput>
+  }
+
+  export type EquipmentUpdateWithoutEquipmentConfigurationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    value?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
+    equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
+    parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
   }
 
-  export type HistogramResultUncheckedUpdateWithoutResultsInput = {
+  export type EquipmentUncheckedUpdateWithoutEquipmentConfigurationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    value?: NullableStringFieldUpdateOperationsInput | string | null
+    profile_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
-  export type HistogramResultUncheckedUpdateManyWithoutResultsInput = {
+  export type EquipmentProfileCreateManyCommunicationProfileInput = {
+    id: bigint | number
+    name?: string | null
+    active?: boolean | null
+    communication_type?: string | null
+  }
+
+  export type EquipmentProfileUpdateWithoutCommunicationProfileInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    value?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
+    equipments?: EquipmentUpdateManyWithoutEquipmentProfileNestedInput
   }
 
-  export type ParameterUpdateWithoutResultsInput = {
+  export type EquipmentProfileUncheckedUpdateWithoutCommunicationProfileInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
+    equipments?: EquipmentUncheckedUpdateManyWithoutEquipmentProfileNestedInput
+  }
+
+  export type EquipmentProfileUncheckedUpdateManyWithoutCommunicationProfileInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    communication_type?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type EquipmentCreateManyEquipmentProfileInput = {
+    id: bigint | number
+    name?: string | null
+    created_at?: Date | string | null
+    modified_at?: Date | string | null
+    last_connection?: Date | string | null
+    connection_status?: string | null
+    active?: boolean | null
+  }
+
+  export type EquipmentUpdateWithoutEquipmentProfileInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
+    parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+  }
+
+  export type EquipmentUncheckedUpdateWithoutEquipmentProfileInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
+    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+  }
+
+  export type EquipmentUncheckedUpdateManyWithoutEquipmentProfileInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type DirectoryHistorialCreateManyEquipmentInput = {
+    id: bigint | number
+    filename?: string | null
+    filepath?: string | null
+    modified_at?: bigint | number | null
+  }
+
+  export type ParameterCreateManyEquipmentInput = {
+    id: bigint | number
+    result_folio?: string | null
+    parameter_dictionary_id?: bigint | number | null
+    description?: string | null
+    value?: string | null
+    unit_measurement?: string | null
+    max_range?: string | null
+    min_range?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type EquipmentConfigurationCreateManyEquipmentInput = {
+    port: string
+    ip_address: string
+    baud_rate: number
+    mac_address: string
+    remote_directory: string
+  }
+
+  export type DirectoryHistorialUpdateWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    filepath?: NullableStringFieldUpdateOperationsInput | string | null
+    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type DirectoryHistorialUncheckedUpdateWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    filepath?: NullableStringFieldUpdateOperationsInput | string | null
+    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type DirectoryHistorialUncheckedUpdateManyWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    filename?: NullableStringFieldUpdateOperationsInput | string | null
+    filepath?: NullableStringFieldUpdateOperationsInput | string | null
+    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type ParameterUpdateWithoutEquipmentInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12357,12 +20767,210 @@ export namespace Prisma {
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    equipments?: EquipmentUpdateOneWithoutParametersNestedInput
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    parameterDictionary?: ParameterDictionaryUpdateOneWithoutParametersNestedInput
+    result?: ResultUpdateOneWithoutParametersNestedInput
   }
 
-  export type ParameterUncheckedUpdateWithoutResultsInput = {
+  export type ParameterUncheckedUpdateWithoutEquipmentInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
+    max_range?: NullableStringFieldUpdateOperationsInput | string | null
+    min_range?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ParameterUncheckedUpdateManyWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
+    max_range?: NullableStringFieldUpdateOperationsInput | string | null
+    min_range?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type EquipmentConfigurationUpdateWithoutEquipmentInput = {
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EquipmentConfigurationUncheckedUpdateWithoutEquipmentInput = {
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentInput = {
+    port?: StringFieldUpdateOperationsInput | string
+    ip_address?: StringFieldUpdateOperationsInput | string
+    baud_rate?: IntFieldUpdateOperationsInput | number
+    mac_address?: StringFieldUpdateOperationsInput | string
+    remote_directory?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type HistogramResultCreateManyResultInput = {
+    id: bigint | number
+    description?: string | null
+    value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type ParameterCreateManyResultInput = {
+    id: bigint | number
+    equipment_id?: bigint | number | null
+    parameter_dictionary_id?: bigint | number | null
+    description?: string | null
+    value?: string | null
+    unit_measurement?: string | null
+    max_range?: string | null
+    min_range?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type ResultSendCreateManyResultInput = {
+    id: bigint | number
+    send_by?: bigint | number | null
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type HistogramResultUpdateWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type HistogramResultUncheckedUpdateWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type HistogramResultUncheckedUpdateManyWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ParameterUpdateWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
+    max_range?: NullableStringFieldUpdateOperationsInput | string | null
+    min_range?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    equipment?: EquipmentUpdateOneWithoutParametersNestedInput
+    parameterDictionary?: ParameterDictionaryUpdateOneWithoutParametersNestedInput
+  }
+
+  export type ParameterUncheckedUpdateWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
+    max_range?: NullableStringFieldUpdateOperationsInput | string | null
+    min_range?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ParameterUncheckedUpdateManyWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
+    max_range?: NullableStringFieldUpdateOperationsInput | string | null
+    min_range?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ResultSendUpdateWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+    user?: UserUpdateOneWithoutResultSendsNestedInput
+  }
+
+  export type ResultSendUncheckedUpdateWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    send_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendUncheckedUpdateManyWithoutResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    send_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ParameterCreateManyParameterDictionaryInput = {
+    id: bigint | number
+    result_folio?: string | null
+    equipment_id?: bigint | number | null
+    description?: string | null
+    value?: string | null
+    unit_measurement?: string | null
+    max_range?: string | null
+    min_range?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type ParameterUpdateWithoutParameterDictionaryInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    unit_measurement?: NullableStringFieldUpdateOperationsInput | string | null
+    max_range?: NullableStringFieldUpdateOperationsInput | string | null
+    min_range?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    equipment?: EquipmentUpdateOneWithoutParametersNestedInput
+    result?: ResultUpdateOneWithoutParametersNestedInput
+  }
+
+  export type ParameterUncheckedUpdateWithoutParameterDictionaryInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12370,11 +20978,12 @@ export namespace Prisma {
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
-  export type ParameterUncheckedUpdateManyWithoutResultsInput = {
+  export type ParameterUncheckedUpdateManyWithoutParameterDictionaryInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12382,7 +20991,103 @@ export namespace Prisma {
     max_range?: NullableStringFieldUpdateOperationsInput | string | null
     min_range?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type ParameterDictionaryCreateManySystemParameterInput = {
+    id: bigint | number
+    parameter_description?: string | null
+  }
+
+  export type ParameterDictionaryUpdateWithoutSystemParameterInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+    parameters?: ParameterUpdateManyWithoutParameterDictionaryNestedInput
+  }
+
+  export type ParameterDictionaryUncheckedUpdateWithoutSystemParameterInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+    parameters?: ParameterUncheckedUpdateManyWithoutParameterDictionaryNestedInput
+  }
+
+  export type ParameterDictionaryUncheckedUpdateManyWithoutSystemParameterInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    parameter_description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResultSendCreateManyUserInput = {
+    id: bigint | number
+    result_folio?: string | null
+    send_at?: Date | string | null
+    status?: string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultCreateManyUserInput = {
+    folio: string
+    sample_id?: string | null
+    created_at?: Date | string | null
+    last_modified_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type ResultSendUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+    result?: ResultUpdateOneWithoutResultSendsNestedInput
+  }
+
+  export type ResultSendUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultSendUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: NullableStringFieldUpdateOperationsInput | string | null
+    payload?: NullableJsonNullValueInput | InputJsonValue
+    response?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type ResultUpdateWithoutUserInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    sample_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUpdateManyWithoutResultNestedInput
+    parameters?: ParameterUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUpdateManyWithoutResultNestedInput
+  }
+
+  export type ResultUncheckedUpdateWithoutUserInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    sample_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    histogramResults?: HistogramResultUncheckedUpdateManyWithoutResultNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutResultNestedInput
+    resultSends?: ResultSendUncheckedUpdateManyWithoutResultNestedInput
+  }
+
+  export type ResultUncheckedUpdateManyWithoutUserInput = {
+    folio?: StringFieldUpdateOperationsInput | string
+    sample_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
 

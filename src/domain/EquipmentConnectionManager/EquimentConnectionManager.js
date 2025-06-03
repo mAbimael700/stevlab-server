@@ -29,7 +29,7 @@ class EquipmentConnectionManager {
         const result = EquipmentSchema.validate(e);
         if (result.success) {
           await this.setEquipmentConnection(result.data); // Actualiza la lista en equipment-helpers
-        }
+        } 
       });
     } catch (error) {
       console.error("Error al leer el archivo de dispositivos:", error.message);
@@ -37,13 +37,12 @@ class EquipmentConnectionManager {
   }
 
   async setEquipmentConnection(equipment) {
-    const equipmentProfile = new EquipmentProfileConfiguration(equipment.profile);
+    const equipmentProfile = new EquipmentProfileConfiguration(equipment.communicationProfile);
     const equipmentConnection = new EquipmentConnection(
       equipment,
       equipmentProfile
     );
     this.equipmentsOnServer.set(equipment.id, equipmentConnection);
-    return this.equipmentsOnServer.get(equipment.id);
   }
   /**
    *
