@@ -7,7 +7,7 @@ if (process.env.PRODUCTION_MODE == "development") {
   currentWorkDirectory = process.cwd();
   ENV_DEPLOY = path.join(currentWorkDirectory, ".env");
 } else {
-  currentWorkDirectory = process.resourcesPath;
+  currentWorkDirectory = process.resourcesPath ?? process.cwd();
   ENV_DEPLOY = path.join(currentWorkDirectory, "app", ".env");
 }
 

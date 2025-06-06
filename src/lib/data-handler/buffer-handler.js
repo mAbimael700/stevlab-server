@@ -45,6 +45,7 @@ function handleBuffer(data, parsingData) {
     return null;
   } catch (error) {
     console.error("Error al manejar el stream del buffer", error.message);
+    return null; // IMPORTANTE: Asegurarse de retornar null en caso de error
   }
 }
 /**

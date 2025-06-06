@@ -15,7 +15,11 @@ const { ErrorHandler } = require("../middlewares/error-handler.js");
 const {
   initializeEquipmentManager,
 } = require("../middlewares/equipment/equiment-manager.js");
-const { PRODUCTION_MODE, currentWorkDirectory, ENV_DEPLOY } = require("../constants/CONSTANTS.js");
+const {
+  PRODUCTION_MODE,
+  currentWorkDirectory,
+  ENV_DEPLOY,
+} = require("../constants/CONSTANTS.js");
 const { getIO } = require("../middlewares/servers/Websocket.js");
 
 // Definición de los puertos de cada servidor
@@ -57,7 +61,7 @@ function LisServerApplication() {
   try {
     ErrorHandler();
     configurationManager();
-    process.loadEnvFile(ENV_DEPLOY)
+    //    process.loadEnvFile(ENV_DEPLOY)
     const serverInitializer = ServerFactory.create(PRODUCTION_MODE ?? "local");
     serverInitializer();
     initializeEquipmentManager();

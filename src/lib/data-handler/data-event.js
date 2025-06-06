@@ -11,6 +11,7 @@ const {
   finalizeResultsOnTimeout,
 } = require("./results-handler");
 const { setupTimeout } = require("./timeout-handler");
+const { saveFile } = require("../save-file");
 
 const MAX_DATA_SIZE = 1e6; // 1MB máximo por paquete
 
@@ -41,7 +42,7 @@ async function dataEvent(socket, data, parsingData, bufferList) {
     bufferList.append(data); // Acumula los datos recibidos
 
     const { sendsBySingleParameter, ackMessageFunction } = parsingData;
-    
+
     while (true) {
       const accumulatedData = bufferList.toString("utf-8");
       const bufferResults = handleBuffer(accumulatedData, parsingData);

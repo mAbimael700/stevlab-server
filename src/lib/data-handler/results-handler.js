@@ -34,8 +34,8 @@ function handleResults(results, sendsBySingleParameter = false) {
   } catch (e) {
     console.error(
       "Error al manejar el resultado parseado:",
-      error.message,
-      error.cause || ""
+      e.message,
+      e.cause || ""
     );
   }
 }
