@@ -1,13 +1,11 @@
 const { BufferList } = require("bl/BufferList");
-const {
-  EquipmentCommunicationProfileConfiguration,
-} = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration");
+const EquipmentProfile = require("../EquipmentProfile/EquipmentProfile");
 const { IBufferParser } = require("../BufferParser/IBufferParser");
 
 class BufferStreamHandler {
   /**
    *
-   * @param {EquipmentCommunicationProfileConfiguration} configuration
+   * @param {EquipmentProfile} configuration
    * @param {IBufferParser} parser
    */
   constructor(configuration) {
@@ -22,7 +20,7 @@ class BufferStreamHandler {
    * @param {string} data
    */
   handle(data) {
-   const delimiterMatch = this.delimiterChecksumRegex.exec(data);
+    const delimiterMatch = this.delimiterChecksumRegex.exec(data);
     this.delimiterChecksumRegex.lastIndex = 0; // Reset regex state
 
     if (!delimiterMatch) return null;
@@ -32,7 +30,7 @@ class BufferStreamHandler {
     const completeMessage = data.slice(0, delimiterIndex + matchLength);
     const consumedBytes = Buffer.byteLength(completeMessage, this.bufferEncoding);
 
-    return { 
+    return {
       completeMessage: completeMessage.trim(),
       consumedBytes
     };

@@ -14,7 +14,7 @@ class ClientConnection {
     this.closing = false;
     this.destroyed = false;
   }
-  async disconnect() {}
+  async disconnect() { }
 
   /**
    *
@@ -25,8 +25,8 @@ class ClientConnection {
   }
 }
 
-module.exports = { ClientConnection };
 
-module.exports = {
-  ClientConnection,
-};
+
+module.exports =
+  ClientConnection
+  ;

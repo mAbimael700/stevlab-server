@@ -2,12 +2,19 @@ const net = require("node:net");
 const {
   ConnectionValidator,
 } = require("../Connections/Tcp/ConnectionValidator");
-const { TcpInBoundClient } = require("../Connections/Tcp/TcpInBoundClient");
+const  TcpInBoundClient  = require("../Connections/Tcp/TcpInBoundClient");
 
 class TcpServer {
-  constructor(port = 3000, equipmentService) {
+  /**
+   * 
+   * @param {*} port 
+   * @param {*} equipmentService 
+   * @param {*} equipmentConnectionManager 
+   */
+  constructor(port = 3000, equipmentService, equipmentConnectionManager) {
     this.port = port;
     this.connectionValidator = new ConnectionValidator(equipmentService);
+    this.equipmentConnectionManager = equipmentConnectionManager
     this.server = null;
     this.options = {
       allowHalfOpen: true, // Permite conexiones a medias en caso de ser necesario
@@ -18,7 +25,7 @@ class TcpServer {
 
   build() {
     this.server = net.createServer(this.options, (socket) => {
-      new TcpInBoundClient(socket, this.connectionValidator);
+      new TcpInBoundClient(socket, this.connectionValidator, this.equipmentConnectionManager);
     });
   }
 

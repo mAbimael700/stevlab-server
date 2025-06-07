@@ -1,12 +1,7 @@
 const {
   EquipmentConnection,
 } = require("../EquipmentConnection/EquipmentConnection");
-const {
-  EquipmentProfileConfiguration,
-} = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration");
 const EquipmentSchema = require("../Equipment/EquipmentSchema");
-const equipmentService = require("../Equipment/Memory/EquipmentService");
-const EquipmentProfileConfigurationService = require("../EquipmentProfileConfiguration/Memory/EquipmentProfileConfigurationService");
 
 class EquipmentConnectionManager {
   constructor(equipmentService) {
@@ -29,7 +24,7 @@ class EquipmentConnectionManager {
         const result = EquipmentSchema.validate(e);
         if (result.success) {
           await this.setEquipmentConnection(result.data); // Actualiza la lista en equipment-helpers
-        } 
+        }
       });
     } catch (error) {
       console.error("Error al leer el archivo de dispositivos:", error.message);
@@ -37,11 +32,7 @@ class EquipmentConnectionManager {
   }
 
   async setEquipmentConnection(equipment) {
-    const equipmentProfile = new EquipmentProfileConfiguration(equipment.communicationProfile);
-    const equipmentConnection = new EquipmentConnection(
-      equipment,
-      equipmentProfile
-    );
+    const equipmentConnection = new EquipmentConnection(equipment);
     this.equipmentsOnServer.set(equipment.id, equipmentConnection);
   }
   /**
@@ -65,8 +56,6 @@ class EquipmentConnectionManager {
   }
 }
 
-const equipmentConnectionManager = new EquipmentConnectionManager(
-  equipmentService
-);
 
-module.exports = equipmentConnectionManager;
+
+module.exports = EquipmentConnectionManager;

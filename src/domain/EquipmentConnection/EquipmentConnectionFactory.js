@@ -1,0 +1,50 @@
+const ClientOutBoundConnection = require("../ClientConnection/ClientOutBoundConnection");
+const FtpClient = require("../Connections/Ftp/FtpClient");
+const SerialClient = require("../Connections/Serial/SerialClient");
+const TcpOutBoundClient = require("../Connections/Tcp/TcpOutBoundClient");
+
+class EquipmentConnectionFactory {
+    constructor() {
+        /**
+         * @type {Map<string, ClientOutBoundConnection> }
+         */
+        this.clientConnections = new Map();
+        this.registerClientConnections();
+    }
+
+    registerClientConnections() {
+        //this.register("TcpInbound", TcpInBoundClient);
+        this.register("TcpOutbound", TcpOutBoundClient);
+        this.register("Ftp", FtpClient);
+        this.register("Serial", SerialClient);
+
+    }
+
+    register(type, ParserClass) {
+        if (typeof ParserClass !== "function") {
+            throw new Error("El parser debe ser una clase o función constructora");
+        }
+        this.clientConnections.set(type, ParserClass);
+        return this; // Permite method chaining
+    }
+
+    get supportedParsers() {
+        return Array.from(this.clientConnections.keys());
+    }
+
+    /**
+     *
+     * @param {string} type
+     * @returns {ClientOutBoundConnection}
+     */
+    create(type) {
+        if (!this.clientConnections.has(type)) {
+            throw new Error(`Tipo de parser no soportado: ${type}`);
+        }
+        return new (this.clientConnections.get(type))();
+    }
+}
+
+const equipmentConnectionFactory = new EquipmentConnectionFactory()
+
+module.exports = equipmentConnectionFactory

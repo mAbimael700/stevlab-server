@@ -17,7 +17,9 @@ class ConnectionValidator {
         ipAddress = ipAddress.split("::ffff:")[1];
       }
 
-      if (!this.equipmentService.findByIpAddress(ipAddress)) {
+      const equipmentWithIpAddress = await this.equipmentService.findByIpAddress(ipAddress)
+
+      if (equipmentWithIpAddress) {
         throw new Error(
           `No se encontró la dirección IPv4 en la lista de direcciones permitidos en el whitelist. Cerrando conexión.`
         );
@@ -33,7 +35,7 @@ class ConnectionValidator {
       }
 
       let foundEquipment =
-        this.equipmentService.findByMacAddress(macAddress);
+        await this.equipmentService.findByMacAddress(macAddress);
 
       if (!foundEquipment) {
         throw new Error(
@@ -42,7 +44,7 @@ class ConnectionValidator {
       }
 
       return foundEquipment;
-      
+
     } catch (error) {
 
       throw error;

@@ -2,21 +2,21 @@ const { initializeEquipmentManager } = require("../../../middlewares/equipment/e
 const {
   getEquipments,
 } = require("../../../middlewares/equipment/equipment-helpers");
-const EquipmentProfileConfigurationService = require("../../EquipmentProfileConfiguration/Memory/EquipmentProfileConfigurationService");
+const EquipmentProfileConfigurationService = require("../../EquipmentProfile/Memory/EquipmentProfileConfigurationService");
 
 class EquipmentService {
   constructor() {
-    this.profileConfigurationService =new EquipmentProfileConfigurationService();
+    this.profileConfigurationService = new EquipmentProfileConfigurationService();
     initializeEquipmentManager()
     this.equimentRepository = {
       getAll: getEquipments,
-      findByIpAddress(ipAddress){
+      findByIpAddress(ipAddress) {
         return getEquipments().find((e) => e.configuration?.ipAddress === ipAddress);
       },
-      findByMacAddress(macAddress){
-        
+      findByMacAddress(macAddress) {
+
         return getEquipments().find((e) => e.configuration?.macAddress === macAddress);
-    
+
       }
     }
   }

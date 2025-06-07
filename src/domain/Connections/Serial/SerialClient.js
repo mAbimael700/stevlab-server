@@ -1,9 +1,9 @@
 const { SerialPort } = require("serialport");
 const { SerialPortListener } = require("./SerialPortListener");
-const { ClientConnection } = require("../../ClientConnection/ClientConnection");
 const { SerialEventsHandler } = require("./SerialEventsHandler");
+const ClientOutBoundConnection = require("../../ClientConnection/ClientOutBoundConnection");
 
-class SerialClient extends ClientConnection {
+class SerialClient extends ClientOutBoundConnection {
   constructor(equipment) {
     super("Serial");
     this.equipment = equipment;
@@ -19,7 +19,7 @@ class SerialClient extends ClientConnection {
     );
   }
 
-  build() {}
+  build() { }
 }
 
-module.exports = { RS232Client };
+module.exports = SerialClient;

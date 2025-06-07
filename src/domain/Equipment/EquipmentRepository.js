@@ -46,6 +46,62 @@ class EquipmentRepository extends BaseRepository {
     const equipment = await super.findById(options);
     return equipment
   }
+
+
+  // Función para buscar por MAC Address
+  async findByMacAddress(macAddress, { includeRelations = false } = {}) {
+    const options = {
+      where: {
+        equipmentConfiguration: {
+          some: {
+            mac_address: macAddress
+          }
+        }
+      }
+    };
+
+    if (includeRelations) {
+      options.include = {
+        equipmentProfile: {
+          include: {
+            communicationProfile: true, // Incluir la relación anidada
+          },
+        },
+        equipmentConfiguration: true
+      };
+    }
+
+    const equipment = await this.prisma.equipment.findFirst(options);
+    return equipment;
+  }
+
+  // Función para buscar por IP Address
+  async findByIpAddress(ipAddress, { includeRelations = false } = {}) {
+    const options = {
+      where: {
+        equipmentConfiguration: {
+          some: {
+            ip_address: ipAddress
+          }
+        }
+      }
+    };
+
+    if (includeRelations) {
+      options.include = {
+        equipmentProfile: {
+          include: {
+            communicationProfile: true, // Incluir la relación anidada
+          },
+        },
+        equipmentConfiguration: true
+      };
+    }
+
+    const equipment = await this.prisma.equipment.findFirst(options);
+    return equipment;
+  }
+
 }
 
 module.exports = EquipmentRepository;

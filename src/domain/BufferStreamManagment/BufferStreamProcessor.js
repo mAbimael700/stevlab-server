@@ -1,12 +1,10 @@
 const BufferList = require("bl");
-const {
-  EquipmentParsingConfiguration,
-} = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration");
+const EquipmentProfile = require("../EquipmentProfile/EquipmentProfile");
 const { BufferStreamHandler } = require("./BufferStreamHandler");
 
 class BufferStreamProcessor {
   /**
-    @param {EquipmentParsingConfiguration} configuration 
+    @param {EquipmentProfile} configuration 
    */
   constructor(configuration, maxDataSize = 1e6) {
     this.maxDataSize = maxDataSize; // 1MB máximo por paquete
@@ -22,7 +20,7 @@ class BufferStreamProcessor {
     try {
       this.validateDataSize(data);
       this.bufferList.append(data);
-      
+
       const extractedResults = [];
 
       while (true) {

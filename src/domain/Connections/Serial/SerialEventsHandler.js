@@ -1,7 +1,7 @@
 const { SerialPort } = require("serialport");
 const {
   BufferDataEmitter,
-} = require("../../BufferStreamManagment/BufferStreamDataEmitter");
+} = require("../../BufferDataHandler/BufferDataEmitter");
 
 class SerialEventsHandler {
   /**

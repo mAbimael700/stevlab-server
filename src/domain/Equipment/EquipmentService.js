@@ -31,7 +31,7 @@ class EquipmentService {
     const result = this.equipmentRepository.findById(id);
 
     if (result) {
-      return result;
+      return new EquipmentDto(result);
     }
 
     return null;
@@ -50,6 +50,25 @@ class EquipmentService {
         cause: resultValidation.error.errors,
       });
     }
+  }
+
+  async findByIpAddress(ipAddress) {
+    const result = await this.equipmentRepository.findByIpAddress(ipAddress, { includeRelations: true });
+    
+    if (result) {
+      return new EquipmentDto(result);
+    }
+
+    return null;
+  }
+  async findByMacAddress(macAddress) {
+    const result = await this.equipmentRepository.findByMacAddress(macAddress, { includeRelations: true });
+
+    if (result) {
+      return new EquipmentDto(result);
+    }
+
+    return null;
   }
 }
 

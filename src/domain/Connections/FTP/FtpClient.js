@@ -4,7 +4,7 @@ const { FtpEventsListener } = require("./FtpEventListener");
 const { FtpEventsHandler } = require("./FtpEventsHandler");
 const { FtpDirectoryMonitor } = require("../../FtpDirectoryMonitor/FtpDirectoryMonitor");
 const { FtpDirectoryFileManager } = require("../../FtpDirectoryMonitor/FtpDirectoryFileManager");
-const { ClientOutBoundConnection } = require("../../ClientConnection/ClientOutBoundConnection");
+const ClientOutBoundConnection = require("../../ClientConnection/ClientOutBoundConnection");
 
 class FtpClient extends ClientOutBoundConnection {
   constructor(equipment) {
@@ -104,4 +104,4 @@ class FtpClient extends ClientOutBoundConnection {
   }
 }
 
-module.exports = { FtpClient };
+module.exports = FtpClient;

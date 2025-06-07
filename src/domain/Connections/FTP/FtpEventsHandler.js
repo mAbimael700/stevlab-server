@@ -1,5 +1,4 @@
 const { FileInfo } = require("basic-ftp");
-const { FtpClient } = require("./FtpClient");
 
 class FtpEventsHandler {
   /**

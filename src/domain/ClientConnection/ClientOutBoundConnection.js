@@ -1,4 +1,4 @@
-const { ClientConnection } = require("./ClientConnection");
+const ClientConnection = require("./ClientConnection");
 
 class ClientOutBoundConnection extends ClientConnection {
     /**
@@ -16,4 +16,4 @@ class ClientOutBoundConnection extends ClientConnection {
     reconnect() { }
 }
 
-module.exports = { ClientOutBoundConnection }
+module.exports = ClientOutBoundConnection 

@@ -1,6 +1,5 @@
 const { Socket } = require("node:net");
 const { TcpClient } = require("./TcpClient");
-const EquipmentConnectionManager = require("../../EquipmentConnectionManager/EquimentConnectionManager");
 const TcpEventsHandler = require("./TcpEventHandler");
 const { TcpSocketListener } = require("./TcpSocketListener");
 const {
@@ -11,10 +10,12 @@ class TcpInBoundClient extends TcpClient {
   /**
    *
    * @param {Socket} socket
+   * @param {*} connectionValidator 
+   * @param {*} equipmentConnectionManager 
    */
-  constructor(socket, connectionValidator) {
+  constructor(socket, connectionValidator, equipmentConnectionManager) {
     super(socket, "TcpInBound");
-    this.equipmentManager = EquipmentConnectionManager;
+    this.equipmentManager = equipmentConnectionManager;
     this.connectionValidator = connectionValidator;
     this.socketListener = null;
     this.initializeSocket();
@@ -64,6 +65,7 @@ class TcpInBoundClient extends TcpClient {
     try {
       // Valida el socket entrante
       const response = await this.validateInboundSocket();
+
       await this.configureSocketEquipment(response);
     } catch (error) {
       throw new Error(
@@ -73,4 +75,4 @@ class TcpInBoundClient extends TcpClient {
   }
 }
 
-module.exports = { TcpInBoundClient };
+module.exports = TcpInBoundClient;

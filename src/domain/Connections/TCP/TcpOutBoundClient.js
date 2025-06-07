@@ -40,7 +40,7 @@ class TcpOutBoundClient extends TcpClient {
           this.client.off("connect", onConnect);
           this.client.off("error", onError);
         };
-        
+
         this.client.connect({ port, host });
       });
     } catch (error) {
@@ -52,4 +52,4 @@ class TcpOutBoundClient extends TcpClient {
   }
 }
 
-module.exports = { TcpOutBoundClient };
+module.exports = TcpOutBoundClient;
