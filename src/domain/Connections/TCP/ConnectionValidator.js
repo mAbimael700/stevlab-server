@@ -19,7 +19,7 @@ class ConnectionValidator {
 
       const equipmentWithIpAddress = await this.equipmentService.findByIpAddress(ipAddress)
 
-      if (equipmentWithIpAddress) {
+      if (!equipmentWithIpAddress) {
         throw new Error(
           `No se encontró la dirección IPv4 en la lista de direcciones permitidos en el whitelist. Cerrando conexión.`
         );
@@ -33,7 +33,7 @@ class ConnectionValidator {
           `No se encontró la dirección MAC para el equipo con la dirección IP ${ipAddress}. Cerrando conexión.`
         );
       }
-
+      
       let foundEquipment =
         await this.equipmentService.findByMacAddress(macAddress);
 
@@ -74,7 +74,7 @@ class ConnectionValidator {
         if (macAddressMatch) {
           const macAddress = macAddressMatch[0]
             .toUpperCase()
-            .replace(/[:-]/g, ""); // Convertir a mayúsculas y quitar separadores
+            .replace(/[:]/g, "-"); // Convertir a mayúsculas y quitar separadores
           resolve(macAddress);
         } else {
           const localMacAddress = this.getLocalMacAddress();

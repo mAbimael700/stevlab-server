@@ -14883,11 +14883,11 @@ export namespace Prisma {
 
   export type EquipmentConfigurationGroupByOutputType = {
     equipment_id: bigint
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port: string | null
+    ip_address: string | null
+    baud_rate: number | null
+    mac_address: string | null
+    remote_directory: string | null
     _count: EquipmentConfigurationCountAggregateOutputType | null
     _avg: EquipmentConfigurationAvgAggregateOutputType | null
     _sum: EquipmentConfigurationSumAggregateOutputType | null
@@ -14966,11 +14966,11 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       equipment_id: bigint
-      port: string
-      ip_address: string
-      baud_rate: number
-      mac_address: string
-      remote_directory: string
+      port: string | null
+      ip_address: string | null
+      baud_rate: number | null
+      mac_address: string | null
+      remote_directory: string | null
     }, ExtArgs["result"]["equipmentConfiguration"]>
     composites: {}
   }
@@ -16792,21 +16792,21 @@ export namespace Prisma {
     OR?: EquipmentConfigurationWhereInput[]
     NOT?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
     equipment_id?: BigIntFilter<"EquipmentConfiguration"> | bigint | number
-    port?: StringFilter<"EquipmentConfiguration"> | string
-    ip_address?: StringFilter<"EquipmentConfiguration"> | string
-    baud_rate?: IntFilter<"EquipmentConfiguration"> | number
-    mac_address?: StringFilter<"EquipmentConfiguration"> | string
-    remote_directory?: StringFilter<"EquipmentConfiguration"> | string
+    port?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    ip_address?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    baud_rate?: IntNullableFilter<"EquipmentConfiguration"> | number | null
+    mac_address?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    remote_directory?: StringNullableFilter<"EquipmentConfiguration"> | string | null
     equipment?: XOR<EquipmentScalarRelationFilter, EquipmentWhereInput>
   }
 
   export type EquipmentConfigurationOrderByWithRelationInput = {
     equipment_id?: SortOrder
-    port?: SortOrder
-    ip_address?: SortOrder
-    baud_rate?: SortOrder
-    mac_address?: SortOrder
-    remote_directory?: SortOrder
+    port?: SortOrderInput | SortOrder
+    ip_address?: SortOrderInput | SortOrder
+    baud_rate?: SortOrderInput | SortOrder
+    mac_address?: SortOrderInput | SortOrder
+    remote_directory?: SortOrderInput | SortOrder
     equipment?: EquipmentOrderByWithRelationInput
   }
 
@@ -16815,21 +16815,21 @@ export namespace Prisma {
     AND?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
     OR?: EquipmentConfigurationWhereInput[]
     NOT?: EquipmentConfigurationWhereInput | EquipmentConfigurationWhereInput[]
-    port?: StringFilter<"EquipmentConfiguration"> | string
-    ip_address?: StringFilter<"EquipmentConfiguration"> | string
-    baud_rate?: IntFilter<"EquipmentConfiguration"> | number
-    mac_address?: StringFilter<"EquipmentConfiguration"> | string
-    remote_directory?: StringFilter<"EquipmentConfiguration"> | string
+    port?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    ip_address?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    baud_rate?: IntNullableFilter<"EquipmentConfiguration"> | number | null
+    mac_address?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    remote_directory?: StringNullableFilter<"EquipmentConfiguration"> | string | null
     equipment?: XOR<EquipmentScalarRelationFilter, EquipmentWhereInput>
   }, "equipment_id">
 
   export type EquipmentConfigurationOrderByWithAggregationInput = {
     equipment_id?: SortOrder
-    port?: SortOrder
-    ip_address?: SortOrder
-    baud_rate?: SortOrder
-    mac_address?: SortOrder
-    remote_directory?: SortOrder
+    port?: SortOrderInput | SortOrder
+    ip_address?: SortOrderInput | SortOrder
+    baud_rate?: SortOrderInput | SortOrder
+    mac_address?: SortOrderInput | SortOrder
+    remote_directory?: SortOrderInput | SortOrder
     _count?: EquipmentConfigurationCountOrderByAggregateInput
     _avg?: EquipmentConfigurationAvgOrderByAggregateInput
     _max?: EquipmentConfigurationMaxOrderByAggregateInput
@@ -16842,11 +16842,11 @@ export namespace Prisma {
     OR?: EquipmentConfigurationScalarWhereWithAggregatesInput[]
     NOT?: EquipmentConfigurationScalarWhereWithAggregatesInput | EquipmentConfigurationScalarWhereWithAggregatesInput[]
     equipment_id?: BigIntWithAggregatesFilter<"EquipmentConfiguration"> | bigint | number
-    port?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
-    ip_address?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
-    baud_rate?: IntWithAggregatesFilter<"EquipmentConfiguration"> | number
-    mac_address?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
-    remote_directory?: StringWithAggregatesFilter<"EquipmentConfiguration"> | string
+    port?: StringNullableWithAggregatesFilter<"EquipmentConfiguration"> | string | null
+    ip_address?: StringNullableWithAggregatesFilter<"EquipmentConfiguration"> | string | null
+    baud_rate?: IntNullableWithAggregatesFilter<"EquipmentConfiguration"> | number | null
+    mac_address?: StringNullableWithAggregatesFilter<"EquipmentConfiguration"> | string | null
+    remote_directory?: StringNullableWithAggregatesFilter<"EquipmentConfiguration"> | string | null
   }
 
   export type CommunicationProfilesCreateInput = {
@@ -17531,65 +17531,65 @@ export namespace Prisma {
   }
 
   export type EquipmentConfigurationCreateInput = {
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port?: string | null
+    ip_address?: string | null
+    baud_rate?: number | null
+    mac_address?: string | null
+    remote_directory?: string | null
     equipment: EquipmentCreateNestedOneWithoutEquipmentConfigurationInput
   }
 
   export type EquipmentConfigurationUncheckedCreateInput = {
     equipment_id: bigint | number
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port?: string | null
+    ip_address?: string | null
+    baud_rate?: number | null
+    mac_address?: string | null
+    remote_directory?: string | null
   }
 
   export type EquipmentConfigurationUpdateInput = {
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
     equipment?: EquipmentUpdateOneRequiredWithoutEquipmentConfigurationNestedInput
   }
 
   export type EquipmentConfigurationUncheckedUpdateInput = {
     equipment_id?: BigIntFieldUpdateOperationsInput | bigint | number
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentConfigurationCreateManyInput = {
     equipment_id: bigint | number
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port?: string | null
+    ip_address?: string | null
+    baud_rate?: number | null
+    mac_address?: string | null
+    remote_directory?: string | null
   }
 
   export type EquipmentConfigurationUpdateManyMutationInput = {
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentConfigurationUncheckedUpdateManyInput = {
     equipment_id?: BigIntFieldUpdateOperationsInput | bigint | number
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -18318,15 +18318,15 @@ export namespace Prisma {
     id?: SortOrder
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type EquipmentScalarRelationFilter = {
@@ -18371,20 +18371,20 @@ export namespace Prisma {
     baud_rate?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EquipmentProfileCreateNestedManyWithoutCommunicationProfileInput = {
@@ -19109,8 +19109,8 @@ export namespace Prisma {
     connect?: EquipmentWhereUniqueInput
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -19371,20 +19371,20 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EquipmentProfileCreateWithoutCommunicationProfileInput = {
@@ -19696,19 +19696,19 @@ export namespace Prisma {
   }
 
   export type EquipmentConfigurationCreateWithoutEquipmentInput = {
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port?: string | null
+    ip_address?: string | null
+    baud_rate?: number | null
+    mac_address?: string | null
+    remote_directory?: string | null
   }
 
   export type EquipmentConfigurationUncheckedCreateWithoutEquipmentInput = {
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port?: string | null
+    ip_address?: string | null
+    baud_rate?: number | null
+    mac_address?: string | null
+    remote_directory?: string | null
   }
 
   export type EquipmentConfigurationCreateOrConnectWithoutEquipmentInput = {
@@ -19829,11 +19829,11 @@ export namespace Prisma {
     OR?: EquipmentConfigurationScalarWhereInput[]
     NOT?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
     equipment_id?: BigIntFilter<"EquipmentConfiguration"> | bigint | number
-    port?: StringFilter<"EquipmentConfiguration"> | string
-    ip_address?: StringFilter<"EquipmentConfiguration"> | string
-    baud_rate?: IntFilter<"EquipmentConfiguration"> | number
-    mac_address?: StringFilter<"EquipmentConfiguration"> | string
-    remote_directory?: StringFilter<"EquipmentConfiguration"> | string
+    port?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    ip_address?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    baud_rate?: IntNullableFilter<"EquipmentConfiguration"> | number | null
+    mac_address?: StringNullableFilter<"EquipmentConfiguration"> | string | null
+    remote_directory?: StringNullableFilter<"EquipmentConfiguration"> | string | null
   }
 
   export type ResultCreateWithoutHistogramResultsInput = {
@@ -20779,11 +20779,11 @@ export namespace Prisma {
   }
 
   export type EquipmentConfigurationCreateManyEquipmentInput = {
-    port: string
-    ip_address: string
-    baud_rate: number
-    mac_address: string
-    remote_directory: string
+    port?: string | null
+    ip_address?: string | null
+    baud_rate?: number | null
+    mac_address?: string | null
+    remote_directory?: string | null
   }
 
   export type DirectoryHistorialUpdateWithoutEquipmentInput = {
@@ -20847,27 +20847,27 @@ export namespace Prisma {
   }
 
   export type EquipmentConfigurationUpdateWithoutEquipmentInput = {
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentConfigurationUncheckedUpdateWithoutEquipmentInput = {
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentInput = {
-    port?: StringFieldUpdateOperationsInput | string
-    ip_address?: StringFieldUpdateOperationsInput | string
-    baud_rate?: IntFieldUpdateOperationsInput | number
-    mac_address?: StringFieldUpdateOperationsInput | string
-    remote_directory?: StringFieldUpdateOperationsInput | string
+    port?: NullableStringFieldUpdateOperationsInput | string | null
+    ip_address?: NullableStringFieldUpdateOperationsInput | string | null
+    baud_rate?: NullableIntFieldUpdateOperationsInput | number | null
+    mac_address?: NullableStringFieldUpdateOperationsInput | string | null
+    remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HistogramResultCreateManyResultInput = {

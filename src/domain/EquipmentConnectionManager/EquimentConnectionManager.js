@@ -2,6 +2,7 @@ const {
   EquipmentConnection,
 } = require("../EquipmentConnection/EquipmentConnection");
 const EquipmentSchema = require("../Equipment/EquipmentSchema");
+const EquipmentDto = require("../Equipment/EquipmentDto");
 
 class EquipmentConnectionManager {
   constructor(equipmentService) {
@@ -31,9 +32,15 @@ class EquipmentConnectionManager {
     }
   }
 
+  /**
+   * 
+   * @param {EquipmentDto} equipment 
+   * @returns 
+   */
   async setEquipmentConnection(equipment) {
     const equipmentConnection = new EquipmentConnection(equipment);
     this.equipmentsOnServer.set(equipment.id, equipmentConnection);
+    return this.equipmentsOnServer.get(equipment.id)
   }
   /**
    *

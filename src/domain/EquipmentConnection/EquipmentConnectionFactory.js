@@ -38,8 +38,12 @@ class EquipmentConnectionFactory {
      * @returns {ClientOutBoundConnection}
      */
     create(type) {
+        if (type == 'TcpInbound') {
+            return
+        }
+
         if (!this.clientConnections.has(type)) {
-            throw new Error(`Tipo de parser no soportado: ${type}`);
+            throw new Error(`Tipo de cliente de conexión no soportado: ${type}`);
         }
         return new (this.clientConnections.get(type))();
     }
