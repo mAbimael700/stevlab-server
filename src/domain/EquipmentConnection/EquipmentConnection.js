@@ -1,18 +1,17 @@
 const { ClientConnection } = require("../ClientConnection/ClientConnection.js");
-const { EquipmentConfiguration } = require("../Equipment/EquipmentConfiguration.js");
 const { EquipmentConnectionStatus } = require("../EquipmentConnectionStatus/EquipmentConnectionStatus.js");
-const { EquipmentProfileConfiguration } = require("../EquipmentProfileConfiguration/EquipmentProfileConfiguration.js");
+const { EquipmentProfile } = require("../EquipmentProfile/EquipmentProfile.js");
 
 class EquipmentConnection {
 
     /**
      * 
      * @param {*} equipment 
-     * @param {EquipmentProfileConfiguration} profileConfiguration 
+     * @param {EquipmentProfile} equipmentProfile 
      */
-    constructor(equipment, profileConfiguration) {
+    constructor(equipment, equipmentProfile) {
 
-        if (!equipment || !profileConfiguration) {
+        if (!equipment || !equipmentProfile) {
             throw new Error("Invalid parameters provided to Equipment constructor");
         }
 
@@ -20,7 +19,7 @@ class EquipmentConnection {
         this.name = equipment.name
         this.connectionStatus = new EquipmentConnectionStatus(equipment.connectionStatus)
         this.connection = null
-        this.profileConfiguration = profileConfiguration
+        this.profile = equipmentProfile
     }
 
     /**

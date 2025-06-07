@@ -22,7 +22,7 @@ model DirectoryHistorial {
   equipment_id BigInt?
   filename     String?    @db.VarChar(250)
   filepath     String?    @db.VarChar(500)
-  modified_at  BigInt?
+  modified_at  DateTime
   equipment    Equipment? @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_directory_historials_equipment_id_equipments_id")
 
   @@map("directory_historials")
@@ -52,7 +52,7 @@ model Equipment {
   directoryHistorials    DirectoryHistorial[]
   equipmentProfile       EquipmentProfile?        @relation(fields: [profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipments_profile_id_equipment_profiles_id")
   parameters             Parameter[]
-  EquipmentConfiguration EquipmentConfiguration[]
+  equipmentConfiguration EquipmentConfiguration[]
 
   @@map("equipments")
 }

@@ -1934,13 +1934,13 @@ export namespace Prisma {
   export type EquipmentCountOutputType = {
     directoryHistorials: number
     parameters: number
-    EquipmentConfiguration: number
+    equipmentConfiguration: number
   }
 
   export type EquipmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     directoryHistorials?: boolean | EquipmentCountOutputTypeCountDirectoryHistorialsArgs
     parameters?: boolean | EquipmentCountOutputTypeCountParametersArgs
-    EquipmentConfiguration?: boolean | EquipmentCountOutputTypeCountEquipmentConfigurationArgs
+    equipmentConfiguration?: boolean | EquipmentCountOutputTypeCountEquipmentConfigurationArgs
   }
 
   // Custom InputTypes
@@ -3190,13 +3190,11 @@ export namespace Prisma {
   export type DirectoryHistorialAvgAggregateOutputType = {
     id: number | null
     equipment_id: number | null
-    modified_at: number | null
   }
 
   export type DirectoryHistorialSumAggregateOutputType = {
     id: bigint | null
     equipment_id: bigint | null
-    modified_at: bigint | null
   }
 
   export type DirectoryHistorialMinAggregateOutputType = {
@@ -3204,7 +3202,7 @@ export namespace Prisma {
     equipment_id: bigint | null
     filename: string | null
     filepath: string | null
-    modified_at: bigint | null
+    modified_at: Date | null
   }
 
   export type DirectoryHistorialMaxAggregateOutputType = {
@@ -3212,7 +3210,7 @@ export namespace Prisma {
     equipment_id: bigint | null
     filename: string | null
     filepath: string | null
-    modified_at: bigint | null
+    modified_at: Date | null
   }
 
   export type DirectoryHistorialCountAggregateOutputType = {
@@ -3228,13 +3226,11 @@ export namespace Prisma {
   export type DirectoryHistorialAvgAggregateInputType = {
     id?: true
     equipment_id?: true
-    modified_at?: true
   }
 
   export type DirectoryHistorialSumAggregateInputType = {
     id?: true
     equipment_id?: true
-    modified_at?: true
   }
 
   export type DirectoryHistorialMinAggregateInputType = {
@@ -3353,7 +3349,7 @@ export namespace Prisma {
     equipment_id: bigint | null
     filename: string | null
     filepath: string | null
-    modified_at: bigint | null
+    modified_at: Date
     _count: DirectoryHistorialCountAggregateOutputType | null
     _avg: DirectoryHistorialAvgAggregateOutputType | null
     _sum: DirectoryHistorialSumAggregateOutputType | null
@@ -3431,7 +3427,7 @@ export namespace Prisma {
       equipment_id: bigint | null
       filename: string | null
       filepath: string | null
-      modified_at: bigint | null
+      modified_at: Date
     }, ExtArgs["result"]["directoryHistorial"]>
     composites: {}
   }
@@ -3860,7 +3856,7 @@ export namespace Prisma {
     readonly equipment_id: FieldRef<"DirectoryHistorial", 'BigInt'>
     readonly filename: FieldRef<"DirectoryHistorial", 'String'>
     readonly filepath: FieldRef<"DirectoryHistorial", 'String'>
-    readonly modified_at: FieldRef<"DirectoryHistorial", 'BigInt'>
+    readonly modified_at: FieldRef<"DirectoryHistorial", 'DateTime'>
   }
     
 
@@ -5664,7 +5660,7 @@ export namespace Prisma {
     directoryHistorials?: boolean | Equipment$directoryHistorialsArgs<ExtArgs>
     equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
     parameters?: boolean | Equipment$parametersArgs<ExtArgs>
-    EquipmentConfiguration?: boolean | Equipment$EquipmentConfigurationArgs<ExtArgs>
+    equipmentConfiguration?: boolean | Equipment$equipmentConfigurationArgs<ExtArgs>
     _count?: boolean | EquipmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["equipment"]>
 
@@ -5708,7 +5704,7 @@ export namespace Prisma {
     directoryHistorials?: boolean | Equipment$directoryHistorialsArgs<ExtArgs>
     equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
     parameters?: boolean | Equipment$parametersArgs<ExtArgs>
-    EquipmentConfiguration?: boolean | Equipment$EquipmentConfigurationArgs<ExtArgs>
+    equipmentConfiguration?: boolean | Equipment$equipmentConfigurationArgs<ExtArgs>
     _count?: boolean | EquipmentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EquipmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5724,7 +5720,7 @@ export namespace Prisma {
       directoryHistorials: Prisma.$DirectoryHistorialPayload<ExtArgs>[]
       equipmentProfile: Prisma.$EquipmentProfilePayload<ExtArgs> | null
       parameters: Prisma.$ParameterPayload<ExtArgs>[]
-      EquipmentConfiguration: Prisma.$EquipmentConfigurationPayload<ExtArgs>[]
+      equipmentConfiguration: Prisma.$EquipmentConfigurationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -6132,7 +6128,7 @@ export namespace Prisma {
     directoryHistorials<T extends Equipment$directoryHistorialsArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$directoryHistorialsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DirectoryHistorialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     equipmentProfile<T extends Equipment$equipmentProfileArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$equipmentProfileArgs<ExtArgs>>): Prisma__EquipmentProfileClient<$Result.GetResult<Prisma.$EquipmentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     parameters<T extends Equipment$parametersArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$parametersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    EquipmentConfiguration<T extends Equipment$EquipmentConfigurationArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$EquipmentConfigurationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    equipmentConfiguration<T extends Equipment$equipmentConfigurationArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$equipmentConfigurationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6633,9 +6629,9 @@ export namespace Prisma {
   }
 
   /**
-   * Equipment.EquipmentConfiguration
+   * Equipment.equipmentConfiguration
    */
-  export type Equipment$EquipmentConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Equipment$equipmentConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the EquipmentConfiguration
      */
@@ -16045,13 +16041,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -16062,6 +16051,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -16163,7 +16159,7 @@ export namespace Prisma {
     equipment_id?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
     filename?: StringNullableFilter<"DirectoryHistorial"> | string | null
     filepath?: StringNullableFilter<"DirectoryHistorial"> | string | null
-    modified_at?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
+    modified_at?: DateTimeFilter<"DirectoryHistorial"> | Date | string
     equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
   }
 
@@ -16172,7 +16168,7 @@ export namespace Prisma {
     equipment_id?: SortOrderInput | SortOrder
     filename?: SortOrderInput | SortOrder
     filepath?: SortOrderInput | SortOrder
-    modified_at?: SortOrderInput | SortOrder
+    modified_at?: SortOrder
     equipment?: EquipmentOrderByWithRelationInput
   }
 
@@ -16184,7 +16180,7 @@ export namespace Prisma {
     equipment_id?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
     filename?: StringNullableFilter<"DirectoryHistorial"> | string | null
     filepath?: StringNullableFilter<"DirectoryHistorial"> | string | null
-    modified_at?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
+    modified_at?: DateTimeFilter<"DirectoryHistorial"> | Date | string
     equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
   }, "id">
 
@@ -16193,7 +16189,7 @@ export namespace Prisma {
     equipment_id?: SortOrderInput | SortOrder
     filename?: SortOrderInput | SortOrder
     filepath?: SortOrderInput | SortOrder
-    modified_at?: SortOrderInput | SortOrder
+    modified_at?: SortOrder
     _count?: DirectoryHistorialCountOrderByAggregateInput
     _avg?: DirectoryHistorialAvgOrderByAggregateInput
     _max?: DirectoryHistorialMaxOrderByAggregateInput
@@ -16209,7 +16205,7 @@ export namespace Prisma {
     equipment_id?: BigIntNullableWithAggregatesFilter<"DirectoryHistorial"> | bigint | number | null
     filename?: StringNullableWithAggregatesFilter<"DirectoryHistorial"> | string | null
     filepath?: StringNullableWithAggregatesFilter<"DirectoryHistorial"> | string | null
-    modified_at?: BigIntNullableWithAggregatesFilter<"DirectoryHistorial"> | bigint | number | null
+    modified_at?: DateTimeWithAggregatesFilter<"DirectoryHistorial"> | Date | string
   }
 
   export type EquipmentProfileWhereInput = {
@@ -16287,7 +16283,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialListRelationFilter
     equipmentProfile?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
     parameters?: ParameterListRelationFilter
-    EquipmentConfiguration?: EquipmentConfigurationListRelationFilter
+    equipmentConfiguration?: EquipmentConfigurationListRelationFilter
   }
 
   export type EquipmentOrderByWithRelationInput = {
@@ -16302,7 +16298,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialOrderByRelationAggregateInput
     equipmentProfile?: EquipmentProfileOrderByWithRelationInput
     parameters?: ParameterOrderByRelationAggregateInput
-    EquipmentConfiguration?: EquipmentConfigurationOrderByRelationAggregateInput
+    equipmentConfiguration?: EquipmentConfigurationOrderByRelationAggregateInput
   }
 
   export type EquipmentWhereUniqueInput = Prisma.AtLeast<{
@@ -16320,7 +16316,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialListRelationFilter
     equipmentProfile?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
     parameters?: ParameterListRelationFilter
-    EquipmentConfiguration?: EquipmentConfigurationListRelationFilter
+    equipmentConfiguration?: EquipmentConfigurationListRelationFilter
   }, "id">
 
   export type EquipmentOrderByWithAggregationInput = {
@@ -16903,7 +16899,7 @@ export namespace Prisma {
     id: bigint | number
     filename?: string | null
     filepath?: string | null
-    modified_at?: bigint | number | null
+    modified_at: Date | string
     equipment?: EquipmentCreateNestedOneWithoutDirectoryHistorialsInput
   }
 
@@ -16912,14 +16908,14 @@ export namespace Prisma {
     equipment_id?: bigint | number | null
     filename?: string | null
     filepath?: string | null
-    modified_at?: bigint | number | null
+    modified_at: Date | string
   }
 
   export type DirectoryHistorialUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
     equipment?: EquipmentUpdateOneWithoutDirectoryHistorialsNestedInput
   }
 
@@ -16928,7 +16924,7 @@ export namespace Prisma {
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DirectoryHistorialCreateManyInput = {
@@ -16936,14 +16932,14 @@ export namespace Prisma {
     equipment_id?: bigint | number | null
     filename?: string | null
     filepath?: string | null
-    modified_at?: bigint | number | null
+    modified_at: Date | string
   }
 
   export type DirectoryHistorialUpdateManyMutationInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DirectoryHistorialUncheckedUpdateManyInput = {
@@ -16951,7 +16947,7 @@ export namespace Prisma {
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type EquipmentProfileCreateInput = {
@@ -17024,7 +17020,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateInput = {
@@ -17038,7 +17034,7 @@ export namespace Prisma {
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUpdateInput = {
@@ -17052,7 +17048,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateInput = {
@@ -17066,7 +17062,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentCreateManyInput = {
@@ -17717,6 +17713,17 @@ export namespace Prisma {
     not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type EquipmentNullableScalarRelationFilter = {
     is?: EquipmentWhereInput | null
     isNot?: EquipmentWhereInput | null
@@ -17733,7 +17740,6 @@ export namespace Prisma {
   export type DirectoryHistorialAvgOrderByAggregateInput = {
     id?: SortOrder
     equipment_id?: SortOrder
-    modified_at?: SortOrder
   }
 
   export type DirectoryHistorialMaxOrderByAggregateInput = {
@@ -17755,7 +17761,6 @@ export namespace Prisma {
   export type DirectoryHistorialSumOrderByAggregateInput = {
     id?: SortOrder
     equipment_id?: SortOrder
-    modified_at?: SortOrder
   }
 
   export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -17788,6 +17793,20 @@ export namespace Prisma {
     _sum?: NestedBigIntNullableFilter<$PrismaModel>
     _min?: NestedBigIntNullableFilter<$PrismaModel>
     _max?: NestedBigIntNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -18432,12 +18451,8 @@ export namespace Prisma {
     divide?: bigint | number
   }
 
-  export type NullableBigIntFieldUpdateOperationsInput = {
-    set?: bigint | number | null
-    increment?: bigint | number
-    decrement?: bigint | number
-    multiply?: bigint | number
-    divide?: bigint | number
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type EquipmentUpdateOneWithoutDirectoryHistorialsNestedInput = {
@@ -18448,6 +18463,14 @@ export namespace Prisma {
     delete?: EquipmentWhereInput | boolean
     connect?: EquipmentWhereUniqueInput
     update?: XOR<XOR<EquipmentUpdateToOneWithWhereWithoutDirectoryHistorialsInput, EquipmentUpdateWithoutDirectoryHistorialsInput>, EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput>
+  }
+
+  export type NullableBigIntFieldUpdateOperationsInput = {
+    set?: bigint | number | null
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
   }
 
   export type CommunicationProfilesCreateNestedOneWithoutEquipmentProfilesInput = {
@@ -19208,6 +19231,17 @@ export namespace Prisma {
     not?: NestedBigIntNullableFilter<$PrismaModel> | bigint | number | null
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
     in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
@@ -19260,6 +19294,20 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
@@ -19402,7 +19450,7 @@ export namespace Prisma {
     active?: boolean | null
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutDirectoryHistorialsInput = {
@@ -19415,7 +19463,7 @@ export namespace Prisma {
     connection_status?: string | null
     active?: boolean | null
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutDirectoryHistorialsInput = {
@@ -19444,7 +19492,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput = {
@@ -19457,7 +19505,7 @@ export namespace Prisma {
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type CommunicationProfilesCreateWithoutEquipmentProfilesInput = {
@@ -19487,7 +19535,7 @@ export namespace Prisma {
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutEquipmentProfileInput = {
@@ -19500,7 +19548,7 @@ export namespace Prisma {
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutEquipmentProfileInput = {
@@ -19570,14 +19618,14 @@ export namespace Prisma {
     id: bigint | number
     filename?: string | null
     filepath?: string | null
-    modified_at?: bigint | number | null
+    modified_at: Date | string
   }
 
   export type DirectoryHistorialUncheckedCreateWithoutEquipmentInput = {
     id: bigint | number
     filename?: string | null
     filepath?: string | null
-    modified_at?: bigint | number | null
+    modified_at: Date | string
   }
 
   export type DirectoryHistorialCreateOrConnectWithoutEquipmentInput = {
@@ -19697,7 +19745,7 @@ export namespace Prisma {
     equipment_id?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
     filename?: StringNullableFilter<"DirectoryHistorial"> | string | null
     filepath?: StringNullableFilter<"DirectoryHistorial"> | string | null
-    modified_at?: BigIntNullableFilter<"DirectoryHistorial"> | bigint | number | null
+    modified_at?: DateTimeFilter<"DirectoryHistorial"> | Date | string
   }
 
   export type EquipmentProfileUpsertWithoutEquipmentsInput = {
@@ -19858,7 +19906,7 @@ export namespace Prisma {
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
-    EquipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutParametersInput = {
@@ -19871,7 +19919,7 @@ export namespace Prisma {
     connection_status?: string | null
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutParametersInput = {
@@ -19944,7 +19992,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutParametersInput = {
@@ -19957,7 +20005,7 @@ export namespace Prisma {
     connection_status?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type ParameterDictionaryUpsertWithoutParametersInput = {
@@ -20684,7 +20732,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutEquipmentProfileInput = {
@@ -20697,7 +20745,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
-    EquipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateManyWithoutEquipmentProfileInput = {
@@ -20714,7 +20762,7 @@ export namespace Prisma {
     id: bigint | number
     filename?: string | null
     filepath?: string | null
-    modified_at?: bigint | number | null
+    modified_at: Date | string
   }
 
   export type ParameterCreateManyEquipmentInput = {
@@ -20742,21 +20790,21 @@ export namespace Prisma {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DirectoryHistorialUncheckedUpdateWithoutEquipmentInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DirectoryHistorialUncheckedUpdateManyWithoutEquipmentInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
     filename?: NullableStringFieldUpdateOperationsInput | string | null
     filepath?: NullableStringFieldUpdateOperationsInput | string | null
-    modified_at?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    modified_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ParameterUpdateWithoutEquipmentInput = {

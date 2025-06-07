@@ -7,7 +7,7 @@ const service = new EquipmentService(repository);
 async function getAll() {
   try {
     const equipments = await service.getAll();
-    console.log(equipments);
+    console.log(equipments)
   } catch (error) {
     console.log(error);
   }

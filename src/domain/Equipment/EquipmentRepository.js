@@ -1,6 +1,5 @@
 const { PrismaClient } = require("@prisma/client/extension");
 const BaseRepository = require("../../Repositories/BaseRepositories");
-const EquipmentSchema = require("./EquipmentSchema");
 
 class EquipmentRepository extends BaseRepository {
   /**
@@ -11,23 +10,41 @@ class EquipmentRepository extends BaseRepository {
     super("Equipment", prisma);
   }
 
-  async findAll({ includeRelations = false }) {
+  async findAll({ includeRelations = false, }) {
     const options = {};
 
     if (includeRelations) {
       options.include = {
-        directoryHistorials: true,
         equipmentProfile: {
           include: {
             communicationProfile: true, // Incluir la relación anidada
           },
         },
-        parameters: true,
+        equipmentConfiguration: true
       };
+
     }
 
     const equipments = await super.findAll(options);
-    return equipments.map(EquipmentSchema.toDomain);
+    return equipments
+  }
+
+
+  async findById({ includeRelations = false, }) {
+    const options = {};
+
+    if (includeRelations) {
+      options.include = {
+        equipmentProfile: {
+          include: {
+            communicationProfile: true, // Incluir la relación anidada
+          },
+        },
+        equipmentConfiguration: true
+      };
+    }
+    const equipment = await super.findById(options);
+    return equipment
   }
 }
 

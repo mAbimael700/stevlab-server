@@ -28,9 +28,6 @@ class FtpDirectoryFileManager {
     );
   }
 
-  generateFilePath(macAddress) {
-    return path.join(STATES, `${macAddress}-previous-state.json`);
-  }
 
   /**
    * Helpers para manejo de archivos
@@ -38,7 +35,7 @@ class FtpDirectoryFileManager {
    * @returns {FileInfo[]}
    */
   loadEquipmentDirectoryState(equipmentId) {
-    const filePath = generateFilePath(equipmentId);
+    const filePath = path.join(STATES, `${equipmentId}-previous-state.json`);
 
     if (fs.existsSync(filePath)) {
       return JSON.parse(fs.readFileSync(filePath));

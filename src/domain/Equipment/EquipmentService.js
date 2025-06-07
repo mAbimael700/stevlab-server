@@ -1,3 +1,4 @@
+const EquipmentDto = require("./EquipmentDto");
 const EquipmentRepository = require("./EquipmentRepository");
 const EquipmentSchema = require("./EquipmentSchema");
 
@@ -16,7 +17,7 @@ class EquipmentService {
     });
 
     if (equipments.length > 0) {
-      return equipments;
+      return equipments.map(e => new EquipmentDto(e));
     }
 
     return null;
