@@ -246,7 +246,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "c:\\www\\stevlab-server\\src\\infra\\Prisma\\Generated",
+      "value": "C:\\Users\\abima\\ListeningServer\\src\\infra\\Prisma\\Generated",
       "fromEnvVar": null
     },
     "config": {
@@ -260,7 +260,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "c:\\www\\stevlab-server\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\abima\\ListeningServer\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -274,7 +274,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

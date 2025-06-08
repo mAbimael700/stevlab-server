@@ -3,6 +3,7 @@ const {
 } = require("../EquipmentConnection/EquipmentConnection");
 const EquipmentSchema = require("../Equipment/EquipmentSchema");
 const EquipmentDto = require("../Equipment/EquipmentDto");
+const ClientConnectionFactory = require("../ClientConnection/EquipmentConnectionFactory.js");
 
 class EquipmentConnectionManager {
   constructor(equipmentService) {
@@ -24,7 +25,7 @@ class EquipmentConnectionManager {
       equipments.forEach(async (e) => {
         const result = EquipmentSchema.validate(e);
         if (result.success) {
-          await this.setEquipmentConnection(result.data); // Actualiza la lista en equipment-helpers
+          await this.setEquipmentConnection(result.data); 
         }
       });
     } catch (error) {
@@ -38,7 +39,8 @@ class EquipmentConnectionManager {
    * @returns 
    */
   async setEquipmentConnection(equipment) {
-    const equipmentConnection = new EquipmentConnection(equipment);
+    const clientConnection = ClientConnectionFactory.create(equipment.equipmentProfile.communicationType)
+    const equipmentConnection = new EquipmentConnection(equipment, clientConnection);
     this.equipmentsOnServer.set(equipment.id, equipmentConnection);
     return this.equipmentsOnServer.get(equipment.id)
   }
