@@ -2,11 +2,12 @@ const { Socket } = require("node:net");
 const {
   BufferDataHandler,
 } = require("../../BufferDataHandler/BufferDataHandler");
+const EquipmentDto = require("../../Equipment/EquipmentDto");
 class TcpEventsHandler {
   /**
    *
    * @param {Socket} socket
-   * @param {*} equipment
+   * @param {EquipmentDto} equipment
    * @param {BufferDataHandler} dataHandler
    */
   constructor(socket, equipment, dataHandler) {
@@ -19,7 +20,7 @@ class TcpEventsHandler {
 
   connect() {
     console.log(
-      `Conexión TCP/IP entrante del equipo ${this.equipment.name} con la dirección IPv4: ${this.ipAddress}:${this.port}`
+      `Conexión TCP/IP entrante del equipo ${this.equipment.name} con la dirección IPv4: ${this.equipment.equipmentConfiguration.ipAddress}`
     );
   }
   /**
@@ -43,7 +44,7 @@ class TcpEventsHandler {
    * @param {*} scheduleReconnect
    */
   error(err) {
-    const errorMessage = TcpEventsHandler.generateErrorMessage(err);
+    const errorMessage = this.generateErrorMessage(err);
   }
 
   close() {}

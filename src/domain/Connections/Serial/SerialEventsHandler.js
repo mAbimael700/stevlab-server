@@ -61,4 +61,4 @@ class SerialEventsHandler {
   }
 }
 
-module.exports = { SerialEventsHandler };
+module.exports = SerialEventsHandler;

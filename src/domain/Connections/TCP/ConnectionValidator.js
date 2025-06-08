@@ -1,5 +1,6 @@
 const { exec } = require("node:child_process");
 const os = require("os");
+const EquipmentDto = require("../../Equipment/EquipmentDto");
 class ConnectionValidator {
   constructor(equipmentService) {
     this.equipmentService = equipmentService;
@@ -8,7 +9,7 @@ class ConnectionValidator {
   /**
    * Valida si el equipo está registrado en el servidor LIS.
    * @param {string} ipAddress - El socket de conexión TCP/IP del equipo.
-   * @returns {Promise<Equipment | null>}
+   * @returns {Promise<EquipmentDto | null>}
    */
   async validate(ipAddress) {
     try {

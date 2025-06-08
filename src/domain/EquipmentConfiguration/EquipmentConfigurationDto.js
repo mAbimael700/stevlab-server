@@ -1,9 +1,11 @@
 class EquipmentConfigurationDto {
-    constructor(equipmentConfiguration) {
-        this.ipAddress = equipmentConfiguration.ip_address
-        this.macAddress = equipmentConfiguration.mac_address
-        this.baudRate = equipmentConfiguration.baud_rate
-    }
+  constructor(equipmentConfiguration) {
+    const [configuration] = equipmentConfiguration;
+    this.ipAddress = configuration.ip_address;
+    this.macAddress = configuration.mac_address;
+    this.baudRate = configuration.baud_rate;
+    this.port = configuration.port;
+  }
 }
 
-module.exports = EquipmentConfigurationDto
+module.exports = EquipmentConfigurationDto;

@@ -1,8 +1,7 @@
-const Hl7ClinicalDataModel = require("../ClinicalDataModel/Hl7ClinicalDataModel");
-const IClinicalDataModel = require("../ClinicalDataModel/IClinicalDataModel");
+const Hl7ClinicalDataModel = require("./Hl7ClinicalDataModel");
+const IClinicalDataModel = require("./IClinicalDataModel");
 
-
-class ParserFactory {
+class ClinicalDataModelFactory {
   constructor() {
     /**
      * @type {Map<string, IClinicalDataModel> }
@@ -42,10 +41,10 @@ class ParserFactory {
     if (!this.parsers.has(type)) {
       throw new Error(`Tipo de parser no soportado: ${type}`);
     }
-    return new (this.parsers.get(type))();
+    return this.parsers.get(type);
   }
 }
 
-const parserFactory = new ParserFactory();
+const clinicalDataModelFactory = new ClinicalDataModelFactory();
 
-module.exports = parserFactory;
+module.exports = clinicalDataModelFactory;

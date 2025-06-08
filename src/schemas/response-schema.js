@@ -1,5 +1,4 @@
 const { z } = require("zod");
-const { transformData } = require("../lib/transform-result/transform-result");
 
 const parameterSchema = z.object({
   clave: z.string().optional(),
@@ -71,25 +70,10 @@ function validateResponse(parsedResult) {
       JSON.stringify(parsedResult, null, 2),
       JSON.stringify(validation.error.errors, null, 2)
     );
-    //return { success: false, errors: validation.error.errors };
+
   }
 
   return validation;
-
-  /* const results = await Promise.all(
-    validation.data.map(async (obj) => {
-      try {
-        return await transformData(obj);
-      } catch (error) {
-        console.warn(
-          `Error transformando el resultado con el folio ${obj.folio}: ${error.message}`
-        );
-        return obj; // Retorna el objeto original si falla la transformación
-      }
-    })
-  ); 
-
-  return { success: true, data: validation.data }; // Siempre retorna success */
 }
 
 module.exports = {

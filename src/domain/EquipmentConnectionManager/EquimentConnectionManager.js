@@ -3,7 +3,7 @@ const {
 } = require("../EquipmentConnection/EquipmentConnection");
 const EquipmentSchema = require("../Equipment/EquipmentSchema");
 const EquipmentDto = require("../Equipment/EquipmentDto");
-const ClientConnectionFactory = require("../ClientConnection/EquipmentConnectionFactory.js");
+const ClientConnectionFactory = require("../ClientConnection/ClientConnectionFactory.js");
 
 class EquipmentConnectionManager {
   constructor(equipmentService) {
@@ -22,10 +22,11 @@ class EquipmentConnectionManager {
   async initialize() {
     try {
       const equipments = await this.equipmentService.getAll();
+
       equipments.forEach(async (e) => {
         const result = EquipmentSchema.validate(e);
         if (result.success) {
-          await this.setEquipmentConnection(result.data); 
+          await this.setEquipmentConnection(result.data);
         }
       });
     } catch (error) {
@@ -34,15 +35,26 @@ class EquipmentConnectionManager {
   }
 
   /**
-   * 
-   * @param {EquipmentDto} equipment 
-   * @returns 
+   *
+   * @param {EquipmentDto} equipment
+   * @returns
    */
   async setEquipmentConnection(equipment) {
-    const clientConnection = ClientConnectionFactory.create(equipment.equipmentProfile.communicationType)
-    const equipmentConnection = new EquipmentConnection(equipment, clientConnection);
-    this.equipmentsOnServer.set(equipment.id, equipmentConnection);
-    return this.equipmentsOnServer.get(equipment.id)
+    try {
+      const clientConnection = ClientConnectionFactory.create(
+        equipment.equipmentProfile.communicationType,
+        equipment
+      );
+      const equipmentConnection = new EquipmentConnection(
+        equipment,
+        clientConnection
+      );
+      this.equipmentsOnServer.set(equipment.id, equipmentConnection);
+      return this.equipmentsOnServer.get(equipment.id);
+    } catch (error) {
+      console.error(`Error al crear conexión para equipo ${equipment.id}:`, error.message);
+      throw error;
+    }
   }
   /**
    *
@@ -64,7 +76,5 @@ class EquipmentConnectionManager {
     return EquipmentConnectionManager.instance;
   }
 }
-
-
 
 module.exports = EquipmentConnectionManager;

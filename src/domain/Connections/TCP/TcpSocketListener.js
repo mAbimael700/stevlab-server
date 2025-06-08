@@ -12,6 +12,7 @@ class TcpSocketListener {
     this.eventsHandler = tcpEventsHandler;
     // Bind handlers para mantener el contexto
     this._bindHandlers();
+    this.setup()
   }
 
   setup() {

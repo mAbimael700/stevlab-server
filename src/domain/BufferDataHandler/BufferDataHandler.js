@@ -34,10 +34,7 @@ class BufferDataHandler {
               equipment: this.equipment,
               message: bm,
             })
-          ); // Emitimos solo los mensajes procesados  
-
-          console.log(bufferMessages);
-          
+          ); // Emitimos solo los mensajes procesados            
       }
     } catch (error) {
       this.emit("error", {

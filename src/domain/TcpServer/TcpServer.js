@@ -2,30 +2,36 @@ const net = require("node:net");
 const {
   ConnectionValidator,
 } = require("../Connections/Tcp/ConnectionValidator");
-const  TcpInBoundClient  = require("../Connections/Tcp/TcpInBoundClient");
+const TcpInBoundClient = require("../Connections/Tcp/TcpInboundClient/TcpInBoundClient");
+const TcpInBoundClientFactory = require("../Connections/Tcp/TcpInboundClient/TcpInBoundClientFactory");
 
 class TcpServer {
   /**
-   * 
-   * @param {*} port 
-   * @param {*} equipmentService 
-   * @param {*} equipmentConnectionManager 
+   *
+   * @param {*} port
+   * @param {TcpInBoundClientFactory} clientFactory
    */
-  constructor(port = 3000, equipmentService, equipmentConnectionManager) {
+  constructor(port = 3000, clientFactory) {
     this.port = port;
-    this.connectionValidator = new ConnectionValidator(equipmentService);
-    this.equipmentConnectionManager = equipmentConnectionManager
+    this.clientFactory = clientFactory;
     this.server = null;
     this.options = {
-      allowHalfOpen: true, // Permite conexiones a medias en caso de ser necesario
-      keepAlive: true, // Envia paquetes keep-alive cada 30 segundos
+      allowHalfOpen: true,
+      keepAlive: true,
       keepAliveInitialDelay: 1000,
     };
   }
 
   build() {
-    this.server = net.createServer(this.options, (socket) => {
-      new TcpInBoundClient(socket, this.connectionValidator, this.equipmentConnectionManager);
+    this.server = net.createServer(this.options, async (socket) => {
+      try {
+        await this.clientFactory.createAndInitialize(socket);
+      } catch (error) {
+        console.error(`Error al crear cliente TCP: ${error.message}`);
+        if (!socket.destroyed) {
+          socket.destroy();
+        }
+      }
     });
   }
 
@@ -50,6 +56,4 @@ class TcpServer {
   }
 }
 
-module.exports = {
-  TcpServer,
-};
+module.exports = TcpServer;

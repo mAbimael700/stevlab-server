@@ -1,9 +1,5 @@
 const { ClientConnection } = require("../ClientConnection/ClientConnection.js");
 const EquipmentDto = require("../Equipment/EquipmentDto.js");
-const {
-  EquipmentConnectionStatus,
-} = require("../EquipmentConnectionStatus/EquipmentConnectionStatus.js");
-const EquipmentProfile = require("../EquipmentProfile/EquipmentProfile.js");
 
 class EquipmentConnection {
   /**
@@ -17,10 +13,6 @@ class EquipmentConnection {
     }
 
     this.equipment = equipment;
-    this.connectionStatus = new EquipmentConnectionStatus(
-      equipment.connectionStatus
-    );
-    this.profile = new EquipmentProfile(equipment.equipmentProfile);
     this.clientConnection = clientConnection;
   }
 

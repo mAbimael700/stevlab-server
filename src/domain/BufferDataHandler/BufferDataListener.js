@@ -1,16 +1,13 @@
 const { BufferDataEmitter } = require("./BufferDataEmitter");
 
 class BufferDataListener {
-
-  constructor() {
-    this.dataEmitter = new BufferDataEmitter();
-    this.dataEvents = new BufferDataEvents();
+  constructor(bufferDataEmitter, bufferDataEvents) {
+    this.dataEmitter = bufferDataEmitter;
+    this.dataEvents = bufferDataEvents;
   }
 
   setup() {
-    this.dataEmitter.on("receivedMessage", ({ equipment, message }) => {
-      this.r
-    });
+    this.dataEmitter.on("receivedMessage", this.dataEvents.receivedMessage);
   }
 }
 

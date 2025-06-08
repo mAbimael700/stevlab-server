@@ -1,4 +1,5 @@
 const { EventEmitter } = require("node:events");
+const EquipmentDto = require("../Equipment/EquipmentDto");
 
 class BufferDataEmitter extends EventEmitter {
   constructor() {
@@ -12,7 +13,7 @@ class BufferDataEmitter extends EventEmitter {
   /**
    *
    * @param {'receivedMessage'} event
-   * @param {AnyRest} args
+   * @param {*} args
    */
   emitEvent(event, ...args) {
     this.emit(event, ...args);
@@ -20,11 +21,12 @@ class BufferDataEmitter extends EventEmitter {
 
   /**
    *
-   * @param {*} param0
+   * @param {{message:string, equipment:EquipmentDto}} param0
    */
   emitReceivedMessage({ message, equipment }) {
     this.emitEvent("receivedMessage", { message, equipment });
   }
+  
 }
 
 // Inicializar la instancia singleton

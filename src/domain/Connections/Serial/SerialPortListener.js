@@ -1,5 +1,5 @@
 const { SerialPort, ReadlineParser } = require("serialport");
-const { SerialEventsHandler } = require("./SerialEventsHandler");
+const SerialEventsHandler = require("./SerialEventsHandler");
 
 class SerialPortListener {
   /**
@@ -11,7 +11,7 @@ class SerialPortListener {
     this.serialPort = port;
     this.parser = this.serialPort.pipe(new ReadlineParser({ delimiter: "\n" }));
     this.eventsHandler = eventsHandler;
-    this._bindHandlers()
+    this._bindHandlers();
   }
 
   setup() {
@@ -41,6 +41,4 @@ class SerialPortListener {
   }
 }
 
-module.exports = {
-  SerialPortListener,
-};
+module.exports = SerialPortListener;
