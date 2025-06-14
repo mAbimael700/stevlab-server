@@ -6,13 +6,18 @@ const {
 const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
 
 class TcpClientConnectionCoreFactory {
+
+  constructor(bufferDataEmitter) {
+    this.bufferDataEmitter = bufferDataEmitter
+  }
+
   /**
    * Crea una instancia de BufferDataHandler
    * @param {EquipmentDto} equipment
    * @returns {BufferDataHandler}
    */
   createBufferDataHandler(equipment) {
-    return new BufferDataHandler(equipment);
+    return new BufferDataHandler(equipment, this.bufferDataEmitter);
   }
 
   /**

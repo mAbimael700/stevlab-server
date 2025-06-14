@@ -1,4 +1,3 @@
-const { BufferDataEmitter } = require("./BufferDataEmitter");
 
 class BufferDataListener {
   constructor(bufferDataEmitter, bufferDataEvents) {

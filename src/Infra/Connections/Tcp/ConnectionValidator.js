@@ -34,7 +34,7 @@ class ConnectionValidator {
           `No se encontró la dirección MAC para el equipo con la dirección IP ${ipAddress}. Cerrando conexión.`
         );
       }
-      
+
       let foundEquipment =
         await this.equipmentService.findByMacAddress(macAddress);
 
@@ -136,6 +136,4 @@ class ConnectionValidator {
   }
 }
 
-module.exports = {
-  ConnectionValidator,
-};
+module.exports = ConnectionValidator;

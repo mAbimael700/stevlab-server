@@ -26,10 +26,10 @@ class BufferDataEmitter extends EventEmitter {
   emitReceivedMessage({ message, equipment }) {
     this.emitEvent("receivedMessage", { message, equipment });
   }
-  
+
 }
 
 // Inicializar la instancia singleton
 BufferDataEmitter.instance = null;
 
-module.exports = { BufferDataEmitter };
+module.exports = BufferDataEmitter;
