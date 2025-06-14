@@ -1,10 +1,10 @@
 const BufferList = require("bl");
-const EquipmentProfile = require("../EquipmentProfile/EquipmentProfile");
+const EquipmentProfileDto = require("../EquipmentProfile/EquipmentProfileDto");
 const { BufferStreamHandler } = require("./BufferStreamHandler");
 
 class BufferStreamProcessor {
   /**
-    @param {EquipmentProfile} configuration 
+    @param {EquipmentProfileDto} configuration 
    */
   constructor(configuration, maxDataSize = 1e6) {
     this.maxDataSize = maxDataSize; // 1MB máximo por paquete
@@ -24,7 +24,7 @@ class BufferStreamProcessor {
       const extractedResults = [];
 
       while (true) {
-        const bufferListData = this.getBufferedData()
+        const bufferListData = this.getBufferedData();
         const bufferMessageResult = this.bufferHandler.handle(bufferListData);
 
         if (bufferMessageResult) {
@@ -74,7 +74,7 @@ class BufferStreamProcessor {
    * @returns {string}
    */
   getBufferedData() {
-    return this.bufferList.toString('utf-8');
+    return this.bufferList.toString("utf-8");
   }
 }
 
