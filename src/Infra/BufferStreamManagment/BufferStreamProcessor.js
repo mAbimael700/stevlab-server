@@ -1,5 +1,5 @@
 const BufferList = require("bl");
-const EquipmentProfileDto = require("../EquipmentProfile/EquipmentProfileDto");
+const EquipmentProfileDto = require("../../domain/EquipmentProfile/EquipmentProfileDto");
 const { BufferStreamHandler } = require("./BufferStreamHandler");
 
 class BufferStreamProcessor {

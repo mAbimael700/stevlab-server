@@ -1,5 +1,5 @@
 const { ClientConnection } = require("../ClientConnection/ClientConnection.js");
-const EquipmentDto = require("../Equipment/EquipmentDto.js");
+const EquipmentDto = require("../../domain/Equipment/EquipmentDto.js");
 
 class EquipmentConnection {
   /**

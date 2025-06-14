@@ -1,12 +1,12 @@
 const {
   ConnectionValidator,
-} = require("../src/domain/Connections/Tcp/ConnectionValidator");
-const TcpClientConnectionCoreFactory = require("../src/domain/Connections/Tcp/TcpClientConnectionCoreFactory");
-const TcpInBoundClientFactory = require("../src/domain/Connections/Tcp/TcpInboundClient/TcpInBoundClientFactory");
+} = require("../src/Infra/Connections/Tcp/ConnectionValidator");
+const TcpClientConnectionCoreFactory = require("../src/Infra/Connections/Tcp/TcpClientConnectionCoreFactory");
+const TcpInBoundClientFactory = require("../src/Infra/Connections/Tcp/TcpInboundClient/TcpInBoundClientFactory");
 const EquipmentRepository = require("../src/domain/Equipment/EquipmentRepository");
 const EquipmentService = require("../src/domain/Equipment/EquipmentService");
-const EquipmentConnectionManager = require("../src/domain/EquipmentConnectionManager/EquimentConnectionManager");
-const TcpServer = require("../src/domain/TcpServer/TcpServer");
+const EquipmentConnectionManager = require("../src/Infra/EquipmentConnectionManager/EquimentConnectionManager");
+const TcpServer = require("../src/Infra/TcpServer/TcpServer");
 const prisma = require("../src/Infra/PrismaClient/PrismaClient");
 
 const repository = new EquipmentRepository(prisma);

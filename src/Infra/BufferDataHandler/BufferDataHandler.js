@@ -1,21 +1,22 @@
 const {
   BufferStreamProcessor,
 } = require("../BufferStreamManagment/BufferStreamProcessor");
-const EquipmentDto = require("../Equipment/EquipmentDto");
+const EquipmentDto = require("../../domain/Equipment/EquipmentDto");
 const { BufferDataEmitter } = require("./BufferDataEmitter");
 
 class BufferDataHandler {
   /**
    *
    * @param {EquipmentDto} equipment
+   * @param {*} bufferDataEmitter 
    */
-  constructor(equipment) {
+  constructor(equipment, bufferDataEmitter) {
     this.equipment = equipment;
     this.bufferStreamProcessor = new BufferStreamProcessor(
       equipment
         .equipmentProfile
         .communicationProfile);
-    this.bufferEmitter = new BufferDataEmitter()
+    this.bufferEmitter = bufferDataEmitter
   }
 
   /**

@@ -1,4 +1,4 @@
-const { EquipmentRepository } = require("../Equipment/EquipmentRepository")
+const { EquipmentRepository } = require("../../domain/Equipment/EquipmentRepository")
 
 class ConnectionStatusEmitter {
     constructor(equipment, equipmentRepository) {

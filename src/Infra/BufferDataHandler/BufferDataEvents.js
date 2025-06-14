@@ -1,5 +1,5 @@
-const ClinicalDataModelFactory = require("../ClinicalDataModel/ClinicalDataModelFactory");
-const EquipmentDto = require("../Equipment/EquipmentDto");
+const ClinicalDataModelFactory = require("../../domain/ClinicalDataModel/ClinicalDataModelFactory");
+const EquipmentDto = require("../../domain/Equipment/EquipmentDto");
 
 class BufferDataEvents {
   constructor(resultService) {

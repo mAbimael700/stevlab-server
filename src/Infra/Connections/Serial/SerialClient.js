@@ -1,5 +1,5 @@
 const ClientOutBoundConnection = require("../../ClientConnection/ClientOutBoundConnection");
-const EquipmentDto = require("../../Equipment/EquipmentDto");
+const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
 const SerialClientCoreFactory = require("./SerialClientCoreFactory");
 
 class SerialClient extends ClientOutBoundConnection {

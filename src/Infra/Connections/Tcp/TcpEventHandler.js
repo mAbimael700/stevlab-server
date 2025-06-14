@@ -2,7 +2,7 @@ const { Socket } = require("node:net");
 const {
   BufferDataHandler,
 } = require("../../BufferDataHandler/BufferDataHandler");
-const EquipmentDto = require("../../Equipment/EquipmentDto");
+const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
 class TcpEventsHandler {
   /**
    *
