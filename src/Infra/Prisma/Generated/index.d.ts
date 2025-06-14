@@ -1935,12 +1935,14 @@ export namespace Prisma {
     directoryHistorials: number
     parameters: number
     equipmentConfiguration: number
+    HistogramResult: number
   }
 
   export type EquipmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     directoryHistorials?: boolean | EquipmentCountOutputTypeCountDirectoryHistorialsArgs
     parameters?: boolean | EquipmentCountOutputTypeCountParametersArgs
     equipmentConfiguration?: boolean | EquipmentCountOutputTypeCountEquipmentConfigurationArgs
+    HistogramResult?: boolean | EquipmentCountOutputTypeCountHistogramResultArgs
   }
 
   // Custom InputTypes
@@ -1973,6 +1975,13 @@ export namespace Prisma {
    */
   export type EquipmentCountOutputTypeCountEquipmentConfigurationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EquipmentConfigurationWhereInput
+  }
+
+  /**
+   * EquipmentCountOutputType without action
+   */
+  export type EquipmentCountOutputTypeCountHistogramResultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistogramResultWhereInput
   }
 
 
@@ -5661,6 +5670,7 @@ export namespace Prisma {
     equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
     parameters?: boolean | Equipment$parametersArgs<ExtArgs>
     equipmentConfiguration?: boolean | Equipment$equipmentConfigurationArgs<ExtArgs>
+    HistogramResult?: boolean | Equipment$HistogramResultArgs<ExtArgs>
     _count?: boolean | EquipmentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["equipment"]>
 
@@ -5705,6 +5715,7 @@ export namespace Prisma {
     equipmentProfile?: boolean | Equipment$equipmentProfileArgs<ExtArgs>
     parameters?: boolean | Equipment$parametersArgs<ExtArgs>
     equipmentConfiguration?: boolean | Equipment$equipmentConfigurationArgs<ExtArgs>
+    HistogramResult?: boolean | Equipment$HistogramResultArgs<ExtArgs>
     _count?: boolean | EquipmentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EquipmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5721,6 +5732,7 @@ export namespace Prisma {
       equipmentProfile: Prisma.$EquipmentProfilePayload<ExtArgs> | null
       parameters: Prisma.$ParameterPayload<ExtArgs>[]
       equipmentConfiguration: Prisma.$EquipmentConfigurationPayload<ExtArgs>[]
+      HistogramResult: Prisma.$HistogramResultPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
@@ -6129,6 +6141,7 @@ export namespace Prisma {
     equipmentProfile<T extends Equipment$equipmentProfileArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$equipmentProfileArgs<ExtArgs>>): Prisma__EquipmentProfileClient<$Result.GetResult<Prisma.$EquipmentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     parameters<T extends Equipment$parametersArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$parametersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParameterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     equipmentConfiguration<T extends Equipment$equipmentConfigurationArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$equipmentConfigurationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EquipmentConfigurationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    HistogramResult<T extends Equipment$HistogramResultArgs<ExtArgs> = {}>(args?: Subset<T, Equipment$HistogramResultArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistogramResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6653,6 +6666,30 @@ export namespace Prisma {
   }
 
   /**
+   * Equipment.HistogramResult
+   */
+  export type Equipment$HistogramResultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HistogramResult
+     */
+    select?: HistogramResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HistogramResult
+     */
+    omit?: HistogramResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistogramResultInclude<ExtArgs> | null
+    where?: HistogramResultWhereInput
+    orderBy?: HistogramResultOrderByWithRelationInput | HistogramResultOrderByWithRelationInput[]
+    cursor?: HistogramResultWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HistogramResultScalarFieldEnum | HistogramResultScalarFieldEnum[]
+  }
+
+  /**
    * Equipment without action
    */
   export type EquipmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6685,15 +6722,20 @@ export namespace Prisma {
 
   export type HistogramResultAvgAggregateOutputType = {
     id: number | null
+    result_folio: number | null
+    equipment_id: number | null
   }
 
   export type HistogramResultSumAggregateOutputType = {
     id: bigint | null
+    result_folio: bigint | null
+    equipment_id: bigint | null
   }
 
   export type HistogramResultMinAggregateOutputType = {
     id: bigint | null
-    result_folio: string | null
+    result_folio: bigint | null
+    equipment_id: bigint | null
     description: string | null
     value: string | null
     created_at: Date | null
@@ -6702,7 +6744,8 @@ export namespace Prisma {
 
   export type HistogramResultMaxAggregateOutputType = {
     id: bigint | null
-    result_folio: string | null
+    result_folio: bigint | null
+    equipment_id: bigint | null
     description: string | null
     value: string | null
     created_at: Date | null
@@ -6712,6 +6755,7 @@ export namespace Prisma {
   export type HistogramResultCountAggregateOutputType = {
     id: number
     result_folio: number
+    equipment_id: number
     description: number
     value: number
     created_at: number
@@ -6722,15 +6766,20 @@ export namespace Prisma {
 
   export type HistogramResultAvgAggregateInputType = {
     id?: true
+    result_folio?: true
+    equipment_id?: true
   }
 
   export type HistogramResultSumAggregateInputType = {
     id?: true
+    result_folio?: true
+    equipment_id?: true
   }
 
   export type HistogramResultMinAggregateInputType = {
     id?: true
     result_folio?: true
+    equipment_id?: true
     description?: true
     value?: true
     created_at?: true
@@ -6740,6 +6789,7 @@ export namespace Prisma {
   export type HistogramResultMaxAggregateInputType = {
     id?: true
     result_folio?: true
+    equipment_id?: true
     description?: true
     value?: true
     created_at?: true
@@ -6749,6 +6799,7 @@ export namespace Prisma {
   export type HistogramResultCountAggregateInputType = {
     id?: true
     result_folio?: true
+    equipment_id?: true
     description?: true
     value?: true
     created_at?: true
@@ -6844,7 +6895,8 @@ export namespace Prisma {
 
   export type HistogramResultGroupByOutputType = {
     id: bigint
-    result_folio: string | null
+    result_folio: bigint | null
+    equipment_id: bigint | null
     description: string | null
     value: string | null
     created_at: Date | null
@@ -6873,61 +6925,73 @@ export namespace Prisma {
   export type HistogramResultSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     result_folio?: boolean
+    equipment_id?: boolean
     description?: boolean
     value?: boolean
     created_at?: boolean
     active?: boolean
     result?: boolean | HistogramResult$resultArgs<ExtArgs>
+    equipment?: boolean | HistogramResult$equipmentArgs<ExtArgs>
   }, ExtArgs["result"]["histogramResult"]>
 
   export type HistogramResultSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     result_folio?: boolean
+    equipment_id?: boolean
     description?: boolean
     value?: boolean
     created_at?: boolean
     active?: boolean
     result?: boolean | HistogramResult$resultArgs<ExtArgs>
+    equipment?: boolean | HistogramResult$equipmentArgs<ExtArgs>
   }, ExtArgs["result"]["histogramResult"]>
 
   export type HistogramResultSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     result_folio?: boolean
+    equipment_id?: boolean
     description?: boolean
     value?: boolean
     created_at?: boolean
     active?: boolean
     result?: boolean | HistogramResult$resultArgs<ExtArgs>
+    equipment?: boolean | HistogramResult$equipmentArgs<ExtArgs>
   }, ExtArgs["result"]["histogramResult"]>
 
   export type HistogramResultSelectScalar = {
     id?: boolean
     result_folio?: boolean
+    equipment_id?: boolean
     description?: boolean
     value?: boolean
     created_at?: boolean
     active?: boolean
   }
 
-  export type HistogramResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "description" | "value" | "created_at" | "active", ExtArgs["result"]["histogramResult"]>
+  export type HistogramResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "equipment_id" | "description" | "value" | "created_at" | "active", ExtArgs["result"]["histogramResult"]>
   export type HistogramResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     result?: boolean | HistogramResult$resultArgs<ExtArgs>
+    equipment?: boolean | HistogramResult$equipmentArgs<ExtArgs>
   }
   export type HistogramResultIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     result?: boolean | HistogramResult$resultArgs<ExtArgs>
+    equipment?: boolean | HistogramResult$equipmentArgs<ExtArgs>
   }
   export type HistogramResultIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     result?: boolean | HistogramResult$resultArgs<ExtArgs>
+    equipment?: boolean | HistogramResult$equipmentArgs<ExtArgs>
   }
 
   export type $HistogramResultPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "HistogramResult"
     objects: {
       result: Prisma.$ResultPayload<ExtArgs> | null
+      equipment: Prisma.$EquipmentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
-      result_folio: string | null
+      result_folio: bigint | null
+      equipment_id: bigint | null
       description: string | null
       value: string | null
       created_at: Date | null
@@ -7327,6 +7391,7 @@ export namespace Prisma {
   export interface Prisma__HistogramResultClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     result<T extends HistogramResult$resultArgs<ExtArgs> = {}>(args?: Subset<T, HistogramResult$resultArgs<ExtArgs>>): Prisma__ResultClient<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    equipment<T extends HistogramResult$equipmentArgs<ExtArgs> = {}>(args?: Subset<T, HistogramResult$equipmentArgs<ExtArgs>>): Prisma__EquipmentClient<$Result.GetResult<Prisma.$EquipmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7357,7 +7422,8 @@ export namespace Prisma {
    */
   interface HistogramResultFieldRefs {
     readonly id: FieldRef<"HistogramResult", 'BigInt'>
-    readonly result_folio: FieldRef<"HistogramResult", 'String'>
+    readonly result_folio: FieldRef<"HistogramResult", 'BigInt'>
+    readonly equipment_id: FieldRef<"HistogramResult", 'BigInt'>
     readonly description: FieldRef<"HistogramResult", 'String'>
     readonly value: FieldRef<"HistogramResult", 'String'>
     readonly created_at: FieldRef<"HistogramResult", 'DateTime'>
@@ -7777,6 +7843,25 @@ export namespace Prisma {
   }
 
   /**
+   * HistogramResult.equipment
+   */
+  export type HistogramResult$equipmentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Equipment
+     */
+    select?: EquipmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Equipment
+     */
+    omit?: EquipmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EquipmentInclude<ExtArgs> | null
+    where?: EquipmentWhereInput
+  }
+
+  /**
    * HistogramResult without action
    */
   export type HistogramResultDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7809,19 +7894,21 @@ export namespace Prisma {
 
   export type ParameterAvgAggregateOutputType = {
     id: number | null
+    result_id: number | null
     equipment_id: number | null
     parameter_dictionary_id: number | null
   }
 
   export type ParameterSumAggregateOutputType = {
     id: bigint | null
+    result_id: bigint | null
     equipment_id: bigint | null
     parameter_dictionary_id: bigint | null
   }
 
   export type ParameterMinAggregateOutputType = {
     id: bigint | null
-    result_folio: string | null
+    result_id: bigint | null
     equipment_id: bigint | null
     parameter_dictionary_id: bigint | null
     description: string | null
@@ -7835,7 +7922,7 @@ export namespace Prisma {
 
   export type ParameterMaxAggregateOutputType = {
     id: bigint | null
-    result_folio: string | null
+    result_id: bigint | null
     equipment_id: bigint | null
     parameter_dictionary_id: bigint | null
     description: string | null
@@ -7849,7 +7936,7 @@ export namespace Prisma {
 
   export type ParameterCountAggregateOutputType = {
     id: number
-    result_folio: number
+    result_id: number
     equipment_id: number
     parameter_dictionary_id: number
     description: number
@@ -7865,19 +7952,21 @@ export namespace Prisma {
 
   export type ParameterAvgAggregateInputType = {
     id?: true
+    result_id?: true
     equipment_id?: true
     parameter_dictionary_id?: true
   }
 
   export type ParameterSumAggregateInputType = {
     id?: true
+    result_id?: true
     equipment_id?: true
     parameter_dictionary_id?: true
   }
 
   export type ParameterMinAggregateInputType = {
     id?: true
-    result_folio?: true
+    result_id?: true
     equipment_id?: true
     parameter_dictionary_id?: true
     description?: true
@@ -7891,7 +7980,7 @@ export namespace Prisma {
 
   export type ParameterMaxAggregateInputType = {
     id?: true
-    result_folio?: true
+    result_id?: true
     equipment_id?: true
     parameter_dictionary_id?: true
     description?: true
@@ -7905,7 +7994,7 @@ export namespace Prisma {
 
   export type ParameterCountAggregateInputType = {
     id?: true
-    result_folio?: true
+    result_id?: true
     equipment_id?: true
     parameter_dictionary_id?: true
     description?: true
@@ -8006,7 +8095,7 @@ export namespace Prisma {
 
   export type ParameterGroupByOutputType = {
     id: bigint
-    result_folio: string | null
+    result_id: bigint | null
     equipment_id: bigint | null
     parameter_dictionary_id: bigint | null
     description: string | null
@@ -8039,7 +8128,7 @@ export namespace Prisma {
 
   export type ParameterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    result_folio?: boolean
+    result_id?: boolean
     equipment_id?: boolean
     parameter_dictionary_id?: boolean
     description?: boolean
@@ -8056,7 +8145,7 @@ export namespace Prisma {
 
   export type ParameterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    result_folio?: boolean
+    result_id?: boolean
     equipment_id?: boolean
     parameter_dictionary_id?: boolean
     description?: boolean
@@ -8073,7 +8162,7 @@ export namespace Prisma {
 
   export type ParameterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    result_folio?: boolean
+    result_id?: boolean
     equipment_id?: boolean
     parameter_dictionary_id?: boolean
     description?: boolean
@@ -8090,7 +8179,7 @@ export namespace Prisma {
 
   export type ParameterSelectScalar = {
     id?: boolean
-    result_folio?: boolean
+    result_id?: boolean
     equipment_id?: boolean
     parameter_dictionary_id?: boolean
     description?: boolean
@@ -8102,7 +8191,7 @@ export namespace Prisma {
     active?: boolean
   }
 
-  export type ParameterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_folio" | "equipment_id" | "parameter_dictionary_id" | "description" | "value" | "unit_measurement" | "max_range" | "min_range" | "created_at" | "active", ExtArgs["result"]["parameter"]>
+  export type ParameterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "result_id" | "equipment_id" | "parameter_dictionary_id" | "description" | "value" | "unit_measurement" | "max_range" | "min_range" | "created_at" | "active", ExtArgs["result"]["parameter"]>
   export type ParameterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     equipment?: boolean | Parameter$equipmentArgs<ExtArgs>
     parameterDictionary?: boolean | Parameter$parameterDictionaryArgs<ExtArgs>
@@ -8128,7 +8217,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
-      result_folio: string | null
+      result_id: bigint | null
       equipment_id: bigint | null
       parameter_dictionary_id: bigint | null
       description: string | null
@@ -8565,7 +8654,7 @@ export namespace Prisma {
    */
   interface ParameterFieldRefs {
     readonly id: FieldRef<"Parameter", 'BigInt'>
-    readonly result_folio: FieldRef<"Parameter", 'String'>
+    readonly result_id: FieldRef<"Parameter", 'BigInt'>
     readonly equipment_id: FieldRef<"Parameter", 'BigInt'>
     readonly parameter_dictionary_id: FieldRef<"Parameter", 'BigInt'>
     readonly description: FieldRef<"Parameter", 'String'>
@@ -9059,14 +9148,17 @@ export namespace Prisma {
   }
 
   export type ResultAvgAggregateOutputType = {
+    id: number | null
     created_by: number | null
   }
 
   export type ResultSumAggregateOutputType = {
+    id: bigint | null
     created_by: bigint | null
   }
 
   export type ResultMinAggregateOutputType = {
+    id: bigint | null
     folio: string | null
     created_by: bigint | null
     sample_id: string | null
@@ -9076,6 +9168,7 @@ export namespace Prisma {
   }
 
   export type ResultMaxAggregateOutputType = {
+    id: bigint | null
     folio: string | null
     created_by: bigint | null
     sample_id: string | null
@@ -9085,6 +9178,7 @@ export namespace Prisma {
   }
 
   export type ResultCountAggregateOutputType = {
+    id: number
     folio: number
     created_by: number
     sample_id: number
@@ -9096,14 +9190,17 @@ export namespace Prisma {
 
 
   export type ResultAvgAggregateInputType = {
+    id?: true
     created_by?: true
   }
 
   export type ResultSumAggregateInputType = {
+    id?: true
     created_by?: true
   }
 
   export type ResultMinAggregateInputType = {
+    id?: true
     folio?: true
     created_by?: true
     sample_id?: true
@@ -9113,6 +9210,7 @@ export namespace Prisma {
   }
 
   export type ResultMaxAggregateInputType = {
+    id?: true
     folio?: true
     created_by?: true
     sample_id?: true
@@ -9122,6 +9220,7 @@ export namespace Prisma {
   }
 
   export type ResultCountAggregateInputType = {
+    id?: true
     folio?: true
     created_by?: true
     sample_id?: true
@@ -9218,6 +9317,7 @@ export namespace Prisma {
   }
 
   export type ResultGroupByOutputType = {
+    id: bigint
     folio: string
     created_by: bigint | null
     sample_id: string | null
@@ -9246,6 +9346,7 @@ export namespace Prisma {
 
 
   export type ResultSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     folio?: boolean
     created_by?: boolean
     sample_id?: boolean
@@ -9260,6 +9361,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     folio?: boolean
     created_by?: boolean
     sample_id?: boolean
@@ -9270,6 +9372,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
     folio?: boolean
     created_by?: boolean
     sample_id?: boolean
@@ -9280,6 +9383,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["result"]>
 
   export type ResultSelectScalar = {
+    id?: boolean
     folio?: boolean
     created_by?: boolean
     sample_id?: boolean
@@ -9288,7 +9392,7 @@ export namespace Prisma {
     active?: boolean
   }
 
-  export type ResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"folio" | "created_by" | "sample_id" | "created_at" | "last_modified_at" | "active", ExtArgs["result"]["result"]>
+  export type ResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "folio" | "created_by" | "sample_id" | "created_at" | "last_modified_at" | "active", ExtArgs["result"]["result"]>
   export type ResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     histogramResults?: boolean | Result$histogramResultsArgs<ExtArgs>
     parameters?: boolean | Result$parametersArgs<ExtArgs>
@@ -9312,6 +9416,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
+      id: bigint
       folio: string
       created_by: bigint | null
       sample_id: string | null
@@ -9401,8 +9506,8 @@ export namespace Prisma {
      * // Get first 10 Results
      * const results = await prisma.result.findMany({ take: 10 })
      * 
-     * // Only select the `folio`
-     * const resultWithFolioOnly = await prisma.result.findMany({ select: { folio: true } })
+     * // Only select the `id`
+     * const resultWithIdOnly = await prisma.result.findMany({ select: { id: true } })
      * 
      */
     findMany<T extends ResultFindManyArgs>(args?: SelectSubset<T, ResultFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -9446,9 +9551,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Results and only return the `folio`
-     * const resultWithFolioOnly = await prisma.result.createManyAndReturn({
-     *   select: { folio: true },
+     * // Create many Results and only return the `id`
+     * const resultWithIdOnly = await prisma.result.createManyAndReturn({
+     *   select: { id: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -9537,9 +9642,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Results and only return the `folio`
-     * const resultWithFolioOnly = await prisma.result.updateManyAndReturn({
-     *   select: { folio: true },
+     * // Update zero or more Results and only return the `id`
+     * const resultWithIdOnly = await prisma.result.updateManyAndReturn({
+     *   select: { id: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9745,6 +9850,7 @@ export namespace Prisma {
    * Fields of the Result model
    */
   interface ResultFieldRefs {
+    readonly id: FieldRef<"Result", 'BigInt'>
     readonly folio: FieldRef<"Result", 'String'>
     readonly created_by: FieldRef<"Result", 'BigInt'>
     readonly sample_id: FieldRef<"Result", 'String'>
@@ -11389,17 +11495,19 @@ export namespace Prisma {
 
   export type ResultSendAvgAggregateOutputType = {
     id: number | null
+    result_folio: number | null
     send_by: number | null
   }
 
   export type ResultSendSumAggregateOutputType = {
     id: bigint | null
+    result_folio: bigint | null
     send_by: bigint | null
   }
 
   export type ResultSendMinAggregateOutputType = {
     id: bigint | null
-    result_folio: string | null
+    result_folio: bigint | null
     send_by: bigint | null
     send_at: Date | null
     status: string | null
@@ -11407,7 +11515,7 @@ export namespace Prisma {
 
   export type ResultSendMaxAggregateOutputType = {
     id: bigint | null
-    result_folio: string | null
+    result_folio: bigint | null
     send_by: bigint | null
     send_at: Date | null
     status: string | null
@@ -11427,11 +11535,13 @@ export namespace Prisma {
 
   export type ResultSendAvgAggregateInputType = {
     id?: true
+    result_folio?: true
     send_by?: true
   }
 
   export type ResultSendSumAggregateInputType = {
     id?: true
+    result_folio?: true
     send_by?: true
   }
 
@@ -11550,7 +11660,7 @@ export namespace Prisma {
 
   export type ResultSendGroupByOutputType = {
     id: bigint
-    result_folio: string | null
+    result_folio: bigint | null
     send_by: bigint | null
     send_at: Date | null
     status: string | null
@@ -11645,7 +11755,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: bigint
-      result_folio: string | null
+      result_folio: bigint | null
       send_by: bigint | null
       send_at: Date | null
       status: string | null
@@ -12077,7 +12187,7 @@ export namespace Prisma {
    */
   interface ResultSendFieldRefs {
     readonly id: FieldRef<"ResultSend", 'BigInt'>
-    readonly result_folio: FieldRef<"ResultSend", 'String'>
+    readonly result_folio: FieldRef<"ResultSend", 'BigInt'>
     readonly send_by: FieldRef<"ResultSend", 'BigInt'>
     readonly send_at: FieldRef<"ResultSend", 'DateTime'>
     readonly status: FieldRef<"ResultSend", 'String'>
@@ -15877,6 +15987,7 @@ export namespace Prisma {
   export const HistogramResultScalarFieldEnum: {
     id: 'id',
     result_folio: 'result_folio',
+    equipment_id: 'equipment_id',
     description: 'description',
     value: 'value',
     created_at: 'created_at',
@@ -15888,7 +15999,7 @@ export namespace Prisma {
 
   export const ParameterScalarFieldEnum: {
     id: 'id',
-    result_folio: 'result_folio',
+    result_id: 'result_id',
     equipment_id: 'equipment_id',
     parameter_dictionary_id: 'parameter_dictionary_id',
     description: 'description',
@@ -15904,6 +16015,7 @@ export namespace Prisma {
 
 
   export const ResultScalarFieldEnum: {
+    id: 'id',
     folio: 'folio',
     created_by: 'created_by',
     sample_id: 'sample_id',
@@ -16284,6 +16396,7 @@ export namespace Prisma {
     equipmentProfile?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
     parameters?: ParameterListRelationFilter
     equipmentConfiguration?: EquipmentConfigurationListRelationFilter
+    HistogramResult?: HistogramResultListRelationFilter
   }
 
   export type EquipmentOrderByWithRelationInput = {
@@ -16299,6 +16412,7 @@ export namespace Prisma {
     equipmentProfile?: EquipmentProfileOrderByWithRelationInput
     parameters?: ParameterOrderByRelationAggregateInput
     equipmentConfiguration?: EquipmentConfigurationOrderByRelationAggregateInput
+    HistogramResult?: HistogramResultOrderByRelationAggregateInput
   }
 
   export type EquipmentWhereUniqueInput = Prisma.AtLeast<{
@@ -16317,6 +16431,7 @@ export namespace Prisma {
     equipmentProfile?: XOR<EquipmentProfileNullableScalarRelationFilter, EquipmentProfileWhereInput> | null
     parameters?: ParameterListRelationFilter
     equipmentConfiguration?: EquipmentConfigurationListRelationFilter
+    HistogramResult?: HistogramResultListRelationFilter
   }, "id">
 
   export type EquipmentOrderByWithAggregationInput = {
@@ -16354,22 +16469,26 @@ export namespace Prisma {
     OR?: HistogramResultWhereInput[]
     NOT?: HistogramResultWhereInput | HistogramResultWhereInput[]
     id?: BigIntFilter<"HistogramResult"> | bigint | number
-    result_folio?: StringNullableFilter<"HistogramResult"> | string | null
+    result_folio?: BigIntNullableFilter<"HistogramResult"> | bigint | number | null
+    equipment_id?: BigIntNullableFilter<"HistogramResult"> | bigint | number | null
     description?: StringNullableFilter<"HistogramResult"> | string | null
     value?: StringNullableFilter<"HistogramResult"> | string | null
     created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
     active?: BoolNullableFilter<"HistogramResult"> | boolean | null
     result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
   }
 
   export type HistogramResultOrderByWithRelationInput = {
     id?: SortOrder
     result_folio?: SortOrderInput | SortOrder
+    equipment_id?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     value?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
     active?: SortOrderInput | SortOrder
     result?: ResultOrderByWithRelationInput
+    equipment?: EquipmentOrderByWithRelationInput
   }
 
   export type HistogramResultWhereUniqueInput = Prisma.AtLeast<{
@@ -16377,17 +16496,20 @@ export namespace Prisma {
     AND?: HistogramResultWhereInput | HistogramResultWhereInput[]
     OR?: HistogramResultWhereInput[]
     NOT?: HistogramResultWhereInput | HistogramResultWhereInput[]
-    result_folio?: StringNullableFilter<"HistogramResult"> | string | null
+    result_folio?: BigIntNullableFilter<"HistogramResult"> | bigint | number | null
+    equipment_id?: BigIntNullableFilter<"HistogramResult"> | bigint | number | null
     description?: StringNullableFilter<"HistogramResult"> | string | null
     value?: StringNullableFilter<"HistogramResult"> | string | null
     created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
     active?: BoolNullableFilter<"HistogramResult"> | boolean | null
     result?: XOR<ResultNullableScalarRelationFilter, ResultWhereInput> | null
+    equipment?: XOR<EquipmentNullableScalarRelationFilter, EquipmentWhereInput> | null
   }, "id">
 
   export type HistogramResultOrderByWithAggregationInput = {
     id?: SortOrder
     result_folio?: SortOrderInput | SortOrder
+    equipment_id?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     value?: SortOrderInput | SortOrder
     created_at?: SortOrderInput | SortOrder
@@ -16404,7 +16526,8 @@ export namespace Prisma {
     OR?: HistogramResultScalarWhereWithAggregatesInput[]
     NOT?: HistogramResultScalarWhereWithAggregatesInput | HistogramResultScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"HistogramResult"> | bigint | number
-    result_folio?: StringNullableWithAggregatesFilter<"HistogramResult"> | string | null
+    result_folio?: BigIntNullableWithAggregatesFilter<"HistogramResult"> | bigint | number | null
+    equipment_id?: BigIntNullableWithAggregatesFilter<"HistogramResult"> | bigint | number | null
     description?: StringNullableWithAggregatesFilter<"HistogramResult"> | string | null
     value?: StringNullableWithAggregatesFilter<"HistogramResult"> | string | null
     created_at?: DateTimeNullableWithAggregatesFilter<"HistogramResult"> | Date | string | null
@@ -16416,7 +16539,7 @@ export namespace Prisma {
     OR?: ParameterWhereInput[]
     NOT?: ParameterWhereInput | ParameterWhereInput[]
     id?: BigIntFilter<"Parameter"> | bigint | number
-    result_folio?: StringNullableFilter<"Parameter"> | string | null
+    result_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     equipment_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     parameter_dictionary_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     description?: StringNullableFilter<"Parameter"> | string | null
@@ -16433,7 +16556,7 @@ export namespace Prisma {
 
   export type ParameterOrderByWithRelationInput = {
     id?: SortOrder
-    result_folio?: SortOrderInput | SortOrder
+    result_id?: SortOrderInput | SortOrder
     equipment_id?: SortOrderInput | SortOrder
     parameter_dictionary_id?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
@@ -16453,7 +16576,7 @@ export namespace Prisma {
     AND?: ParameterWhereInput | ParameterWhereInput[]
     OR?: ParameterWhereInput[]
     NOT?: ParameterWhereInput | ParameterWhereInput[]
-    result_folio?: StringNullableFilter<"Parameter"> | string | null
+    result_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     equipment_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     parameter_dictionary_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     description?: StringNullableFilter<"Parameter"> | string | null
@@ -16470,7 +16593,7 @@ export namespace Prisma {
 
   export type ParameterOrderByWithAggregationInput = {
     id?: SortOrder
-    result_folio?: SortOrderInput | SortOrder
+    result_id?: SortOrderInput | SortOrder
     equipment_id?: SortOrderInput | SortOrder
     parameter_dictionary_id?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
@@ -16492,7 +16615,7 @@ export namespace Prisma {
     OR?: ParameterScalarWhereWithAggregatesInput[]
     NOT?: ParameterScalarWhereWithAggregatesInput | ParameterScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"Parameter"> | bigint | number
-    result_folio?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
+    result_id?: BigIntNullableWithAggregatesFilter<"Parameter"> | bigint | number | null
     equipment_id?: BigIntNullableWithAggregatesFilter<"Parameter"> | bigint | number | null
     parameter_dictionary_id?: BigIntNullableWithAggregatesFilter<"Parameter"> | bigint | number | null
     description?: StringNullableWithAggregatesFilter<"Parameter"> | string | null
@@ -16508,6 +16631,7 @@ export namespace Prisma {
     AND?: ResultWhereInput | ResultWhereInput[]
     OR?: ResultWhereInput[]
     NOT?: ResultWhereInput | ResultWhereInput[]
+    id?: BigIntFilter<"Result"> | bigint | number
     folio?: StringFilter<"Result"> | string
     created_by?: BigIntNullableFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableFilter<"Result"> | string | null
@@ -16521,6 +16645,7 @@ export namespace Prisma {
   }
 
   export type ResultOrderByWithRelationInput = {
+    id?: SortOrder
     folio?: SortOrder
     created_by?: SortOrderInput | SortOrder
     sample_id?: SortOrderInput | SortOrder
@@ -16534,10 +16659,11 @@ export namespace Prisma {
   }
 
   export type ResultWhereUniqueInput = Prisma.AtLeast<{
-    folio?: string
+    id?: bigint | number
     AND?: ResultWhereInput | ResultWhereInput[]
     OR?: ResultWhereInput[]
     NOT?: ResultWhereInput | ResultWhereInput[]
+    folio?: StringFilter<"Result"> | string
     created_by?: BigIntNullableFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableFilter<"Result"> | string | null
     created_at?: DateTimeNullableFilter<"Result"> | Date | string | null
@@ -16547,9 +16673,10 @@ export namespace Prisma {
     parameters?: ParameterListRelationFilter
     resultSends?: ResultSendListRelationFilter
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "folio">
+  }, "id">
 
   export type ResultOrderByWithAggregationInput = {
+    id?: SortOrder
     folio?: SortOrder
     created_by?: SortOrderInput | SortOrder
     sample_id?: SortOrderInput | SortOrder
@@ -16567,6 +16694,7 @@ export namespace Prisma {
     AND?: ResultScalarWhereWithAggregatesInput | ResultScalarWhereWithAggregatesInput[]
     OR?: ResultScalarWhereWithAggregatesInput[]
     NOT?: ResultScalarWhereWithAggregatesInput | ResultScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"Result"> | bigint | number
     folio?: StringWithAggregatesFilter<"Result"> | string
     created_by?: BigIntNullableWithAggregatesFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableWithAggregatesFilter<"Result"> | string | null
@@ -16630,7 +16758,7 @@ export namespace Prisma {
     OR?: ResultSendWhereInput[]
     NOT?: ResultSendWhereInput | ResultSendWhereInput[]
     id?: BigIntFilter<"ResultSend"> | bigint | number
-    result_folio?: StringNullableFilter<"ResultSend"> | string | null
+    result_folio?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
     send_by?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
     send_at?: DateTimeNullableFilter<"ResultSend"> | Date | string | null
     status?: StringNullableFilter<"ResultSend"> | string | null
@@ -16657,7 +16785,7 @@ export namespace Prisma {
     AND?: ResultSendWhereInput | ResultSendWhereInput[]
     OR?: ResultSendWhereInput[]
     NOT?: ResultSendWhereInput | ResultSendWhereInput[]
-    result_folio?: StringNullableFilter<"ResultSend"> | string | null
+    result_folio?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
     send_by?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
     send_at?: DateTimeNullableFilter<"ResultSend"> | Date | string | null
     status?: StringNullableFilter<"ResultSend"> | string | null
@@ -16687,7 +16815,7 @@ export namespace Prisma {
     OR?: ResultSendScalarWhereWithAggregatesInput[]
     NOT?: ResultSendScalarWhereWithAggregatesInput | ResultSendScalarWhereWithAggregatesInput[]
     id?: BigIntWithAggregatesFilter<"ResultSend"> | bigint | number
-    result_folio?: StringNullableWithAggregatesFilter<"ResultSend"> | string | null
+    result_folio?: BigIntNullableWithAggregatesFilter<"ResultSend"> | bigint | number | null
     send_by?: BigIntNullableWithAggregatesFilter<"ResultSend"> | bigint | number | null
     send_at?: DateTimeNullableWithAggregatesFilter<"ResultSend"> | Date | string | null
     status?: StringNullableWithAggregatesFilter<"ResultSend"> | string | null
@@ -17021,6 +17149,7 @@ export namespace Prisma {
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateInput = {
@@ -17035,6 +17164,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUpdateInput = {
@@ -17049,6 +17179,7 @@ export namespace Prisma {
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateInput = {
@@ -17063,6 +17194,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentCreateManyInput = {
@@ -17104,11 +17236,13 @@ export namespace Prisma {
     created_at?: Date | string | null
     active?: boolean | null
     result?: ResultCreateNestedOneWithoutHistogramResultsInput
+    equipment?: EquipmentCreateNestedOneWithoutHistogramResultInput
   }
 
   export type HistogramResultUncheckedCreateInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_folio?: bigint | number | null
+    equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -17122,11 +17256,13 @@ export namespace Prisma {
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     result?: ResultUpdateOneWithoutHistogramResultsNestedInput
+    equipment?: EquipmentUpdateOneWithoutHistogramResultNestedInput
   }
 
   export type HistogramResultUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17135,7 +17271,8 @@ export namespace Prisma {
 
   export type HistogramResultCreateManyInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_folio?: bigint | number | null
+    equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -17152,7 +17289,8 @@ export namespace Prisma {
 
   export type HistogramResultUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17175,7 +17313,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedCreateInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
@@ -17203,7 +17341,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17217,7 +17355,7 @@ export namespace Prisma {
 
   export type ParameterCreateManyInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
@@ -17242,7 +17380,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17255,6 +17393,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -17267,6 +17406,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateInput = {
+    id: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -17279,6 +17419,7 @@ export namespace Prisma {
   }
 
   export type ResultUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17291,6 +17432,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17303,6 +17445,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateManyInput = {
+    id: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -17312,6 +17455,7 @@ export namespace Prisma {
   }
 
   export type ResultUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17320,6 +17464,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17385,7 +17530,7 @@ export namespace Prisma {
 
   export type ResultSendUncheckedCreateInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_folio?: bigint | number | null
     send_by?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
@@ -17405,7 +17550,7 @@ export namespace Prisma {
 
   export type ResultSendUncheckedUpdateInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     send_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17415,7 +17560,7 @@ export namespace Prisma {
 
   export type ResultSendCreateManyInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_folio?: bigint | number | null
     send_by?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
@@ -17433,7 +17578,7 @@ export namespace Prisma {
 
   export type ResultSendUncheckedUpdateManyInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     send_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17903,6 +18048,12 @@ export namespace Prisma {
     none?: EquipmentConfigurationWhereInput
   }
 
+  export type HistogramResultListRelationFilter = {
+    every?: HistogramResultWhereInput
+    some?: HistogramResultWhereInput
+    none?: HistogramResultWhereInput
+  }
+
   export type DirectoryHistorialOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -17912,6 +18063,10 @@ export namespace Prisma {
   }
 
   export type EquipmentConfigurationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HistogramResultOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17980,6 +18135,7 @@ export namespace Prisma {
   export type HistogramResultCountOrderByAggregateInput = {
     id?: SortOrder
     result_folio?: SortOrder
+    equipment_id?: SortOrder
     description?: SortOrder
     value?: SortOrder
     created_at?: SortOrder
@@ -17988,11 +18144,14 @@ export namespace Prisma {
 
   export type HistogramResultAvgOrderByAggregateInput = {
     id?: SortOrder
+    result_folio?: SortOrder
+    equipment_id?: SortOrder
   }
 
   export type HistogramResultMaxOrderByAggregateInput = {
     id?: SortOrder
     result_folio?: SortOrder
+    equipment_id?: SortOrder
     description?: SortOrder
     value?: SortOrder
     created_at?: SortOrder
@@ -18002,6 +18161,7 @@ export namespace Prisma {
   export type HistogramResultMinOrderByAggregateInput = {
     id?: SortOrder
     result_folio?: SortOrder
+    equipment_id?: SortOrder
     description?: SortOrder
     value?: SortOrder
     created_at?: SortOrder
@@ -18010,6 +18170,8 @@ export namespace Prisma {
 
   export type HistogramResultSumOrderByAggregateInput = {
     id?: SortOrder
+    result_folio?: SortOrder
+    equipment_id?: SortOrder
   }
 
   export type ParameterDictionaryNullableScalarRelationFilter = {
@@ -18019,7 +18181,7 @@ export namespace Prisma {
 
   export type ParameterCountOrderByAggregateInput = {
     id?: SortOrder
-    result_folio?: SortOrder
+    result_id?: SortOrder
     equipment_id?: SortOrder
     parameter_dictionary_id?: SortOrder
     description?: SortOrder
@@ -18033,13 +18195,14 @@ export namespace Prisma {
 
   export type ParameterAvgOrderByAggregateInput = {
     id?: SortOrder
+    result_id?: SortOrder
     equipment_id?: SortOrder
     parameter_dictionary_id?: SortOrder
   }
 
   export type ParameterMaxOrderByAggregateInput = {
     id?: SortOrder
-    result_folio?: SortOrder
+    result_id?: SortOrder
     equipment_id?: SortOrder
     parameter_dictionary_id?: SortOrder
     description?: SortOrder
@@ -18053,7 +18216,7 @@ export namespace Prisma {
 
   export type ParameterMinOrderByAggregateInput = {
     id?: SortOrder
-    result_folio?: SortOrder
+    result_id?: SortOrder
     equipment_id?: SortOrder
     parameter_dictionary_id?: SortOrder
     description?: SortOrder
@@ -18067,14 +18230,9 @@ export namespace Prisma {
 
   export type ParameterSumOrderByAggregateInput = {
     id?: SortOrder
+    result_id?: SortOrder
     equipment_id?: SortOrder
     parameter_dictionary_id?: SortOrder
-  }
-
-  export type HistogramResultListRelationFilter = {
-    every?: HistogramResultWhereInput
-    some?: HistogramResultWhereInput
-    none?: HistogramResultWhereInput
   }
 
   export type ResultSendListRelationFilter = {
@@ -18088,15 +18246,12 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
-  export type HistogramResultOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type ResultSendOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type ResultCountOrderByAggregateInput = {
+    id?: SortOrder
     folio?: SortOrder
     created_by?: SortOrder
     sample_id?: SortOrder
@@ -18106,10 +18261,12 @@ export namespace Prisma {
   }
 
   export type ResultAvgOrderByAggregateInput = {
+    id?: SortOrder
     created_by?: SortOrder
   }
 
   export type ResultMaxOrderByAggregateInput = {
+    id?: SortOrder
     folio?: SortOrder
     created_by?: SortOrder
     sample_id?: SortOrder
@@ -18119,6 +18276,7 @@ export namespace Prisma {
   }
 
   export type ResultMinOrderByAggregateInput = {
+    id?: SortOrder
     folio?: SortOrder
     created_by?: SortOrder
     sample_id?: SortOrder
@@ -18128,6 +18286,7 @@ export namespace Prisma {
   }
 
   export type ResultSumOrderByAggregateInput = {
+    id?: SortOrder
     created_by?: SortOrder
   }
 
@@ -18199,6 +18358,7 @@ export namespace Prisma {
 
   export type ResultSendAvgOrderByAggregateInput = {
     id?: SortOrder
+    result_folio?: SortOrder
     send_by?: SortOrder
   }
 
@@ -18220,6 +18380,7 @@ export namespace Prisma {
 
   export type ResultSendSumOrderByAggregateInput = {
     id?: SortOrder
+    result_folio?: SortOrder
     send_by?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
@@ -18562,6 +18723,13 @@ export namespace Prisma {
     connect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
   }
 
+  export type HistogramResultCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<HistogramResultCreateWithoutEquipmentInput, HistogramResultUncheckedCreateWithoutEquipmentInput> | HistogramResultCreateWithoutEquipmentInput[] | HistogramResultUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutEquipmentInput | HistogramResultCreateOrConnectWithoutEquipmentInput[]
+    createMany?: HistogramResultCreateManyEquipmentInputEnvelope
+    connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+  }
+
   export type DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput = {
     create?: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput> | DirectoryHistorialCreateWithoutEquipmentInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentInput[]
     connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentInput | DirectoryHistorialCreateOrConnectWithoutEquipmentInput[]
@@ -18581,6 +18749,13 @@ export namespace Prisma {
     connectOrCreate?: EquipmentConfigurationCreateOrConnectWithoutEquipmentInput | EquipmentConfigurationCreateOrConnectWithoutEquipmentInput[]
     createMany?: EquipmentConfigurationCreateManyEquipmentInputEnvelope
     connect?: EquipmentConfigurationWhereUniqueInput | EquipmentConfigurationWhereUniqueInput[]
+  }
+
+  export type HistogramResultUncheckedCreateNestedManyWithoutEquipmentInput = {
+    create?: XOR<HistogramResultCreateWithoutEquipmentInput, HistogramResultUncheckedCreateWithoutEquipmentInput> | HistogramResultCreateWithoutEquipmentInput[] | HistogramResultUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutEquipmentInput | HistogramResultCreateOrConnectWithoutEquipmentInput[]
+    createMany?: HistogramResultCreateManyEquipmentInputEnvelope
+    connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -18639,6 +18814,20 @@ export namespace Prisma {
     deleteMany?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
   }
 
+  export type HistogramResultUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<HistogramResultCreateWithoutEquipmentInput, HistogramResultUncheckedCreateWithoutEquipmentInput> | HistogramResultCreateWithoutEquipmentInput[] | HistogramResultUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutEquipmentInput | HistogramResultCreateOrConnectWithoutEquipmentInput[]
+    upsert?: HistogramResultUpsertWithWhereUniqueWithoutEquipmentInput | HistogramResultUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: HistogramResultCreateManyEquipmentInputEnvelope
+    set?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    disconnect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    delete?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    update?: HistogramResultUpdateWithWhereUniqueWithoutEquipmentInput | HistogramResultUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: HistogramResultUpdateManyWithWhereWithoutEquipmentInput | HistogramResultUpdateManyWithWhereWithoutEquipmentInput[]
+    deleteMany?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
+  }
+
   export type DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput = {
     create?: XOR<DirectoryHistorialCreateWithoutEquipmentInput, DirectoryHistorialUncheckedCreateWithoutEquipmentInput> | DirectoryHistorialCreateWithoutEquipmentInput[] | DirectoryHistorialUncheckedCreateWithoutEquipmentInput[]
     connectOrCreate?: DirectoryHistorialCreateOrConnectWithoutEquipmentInput | DirectoryHistorialCreateOrConnectWithoutEquipmentInput[]
@@ -18681,10 +18870,30 @@ export namespace Prisma {
     deleteMany?: EquipmentConfigurationScalarWhereInput | EquipmentConfigurationScalarWhereInput[]
   }
 
+  export type HistogramResultUncheckedUpdateManyWithoutEquipmentNestedInput = {
+    create?: XOR<HistogramResultCreateWithoutEquipmentInput, HistogramResultUncheckedCreateWithoutEquipmentInput> | HistogramResultCreateWithoutEquipmentInput[] | HistogramResultUncheckedCreateWithoutEquipmentInput[]
+    connectOrCreate?: HistogramResultCreateOrConnectWithoutEquipmentInput | HistogramResultCreateOrConnectWithoutEquipmentInput[]
+    upsert?: HistogramResultUpsertWithWhereUniqueWithoutEquipmentInput | HistogramResultUpsertWithWhereUniqueWithoutEquipmentInput[]
+    createMany?: HistogramResultCreateManyEquipmentInputEnvelope
+    set?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    disconnect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    delete?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    connect?: HistogramResultWhereUniqueInput | HistogramResultWhereUniqueInput[]
+    update?: HistogramResultUpdateWithWhereUniqueWithoutEquipmentInput | HistogramResultUpdateWithWhereUniqueWithoutEquipmentInput[]
+    updateMany?: HistogramResultUpdateManyWithWhereWithoutEquipmentInput | HistogramResultUpdateManyWithWhereWithoutEquipmentInput[]
+    deleteMany?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
+  }
+
   export type ResultCreateNestedOneWithoutHistogramResultsInput = {
     create?: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
     connectOrCreate?: ResultCreateOrConnectWithoutHistogramResultsInput
     connect?: ResultWhereUniqueInput
+  }
+
+  export type EquipmentCreateNestedOneWithoutHistogramResultInput = {
+    create?: XOR<EquipmentCreateWithoutHistogramResultInput, EquipmentUncheckedCreateWithoutHistogramResultInput>
+    connectOrCreate?: EquipmentCreateOrConnectWithoutHistogramResultInput
+    connect?: EquipmentWhereUniqueInput
   }
 
   export type ResultUpdateOneWithoutHistogramResultsNestedInput = {
@@ -18695,6 +18904,16 @@ export namespace Prisma {
     delete?: ResultWhereInput | boolean
     connect?: ResultWhereUniqueInput
     update?: XOR<XOR<ResultUpdateToOneWithWhereWithoutHistogramResultsInput, ResultUpdateWithoutHistogramResultsInput>, ResultUncheckedUpdateWithoutHistogramResultsInput>
+  }
+
+  export type EquipmentUpdateOneWithoutHistogramResultNestedInput = {
+    create?: XOR<EquipmentCreateWithoutHistogramResultInput, EquipmentUncheckedCreateWithoutHistogramResultInput>
+    connectOrCreate?: EquipmentCreateOrConnectWithoutHistogramResultInput
+    upsert?: EquipmentUpsertWithoutHistogramResultInput
+    disconnect?: EquipmentWhereInput | boolean
+    delete?: EquipmentWhereInput | boolean
+    connect?: EquipmentWhereUniqueInput
+    update?: XOR<XOR<EquipmentUpdateToOneWithWhereWithoutHistogramResultInput, EquipmentUpdateWithoutHistogramResultInput>, EquipmentUncheckedUpdateWithoutHistogramResultInput>
   }
 
   export type EquipmentCreateNestedOneWithoutParametersInput = {
@@ -19451,6 +19670,7 @@ export namespace Prisma {
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutDirectoryHistorialsInput = {
@@ -19464,6 +19684,7 @@ export namespace Prisma {
     active?: boolean | null
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutDirectoryHistorialsInput = {
@@ -19493,6 +19714,7 @@ export namespace Prisma {
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutDirectoryHistorialsInput = {
@@ -19506,6 +19728,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type CommunicationProfilesCreateWithoutEquipmentProfilesInput = {
@@ -19536,6 +19759,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutEquipmentProfileInput = {
@@ -19549,6 +19773,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutEquipmentProfileInput = {
@@ -19674,7 +19899,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedCreateWithoutEquipmentInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -19718,6 +19943,34 @@ export namespace Prisma {
 
   export type EquipmentConfigurationCreateManyEquipmentInputEnvelope = {
     data: EquipmentConfigurationCreateManyEquipmentInput | EquipmentConfigurationCreateManyEquipmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type HistogramResultCreateWithoutEquipmentInput = {
+    id: bigint | number
+    description?: string | null
+    value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
+    result?: ResultCreateNestedOneWithoutHistogramResultsInput
+  }
+
+  export type HistogramResultUncheckedCreateWithoutEquipmentInput = {
+    id: bigint | number
+    result_folio?: bigint | number | null
+    description?: string | null
+    value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
+  }
+
+  export type HistogramResultCreateOrConnectWithoutEquipmentInput = {
+    where: HistogramResultWhereUniqueInput
+    create: XOR<HistogramResultCreateWithoutEquipmentInput, HistogramResultUncheckedCreateWithoutEquipmentInput>
+  }
+
+  export type HistogramResultCreateManyEquipmentInputEnvelope = {
+    data: HistogramResultCreateManyEquipmentInput | HistogramResultCreateManyEquipmentInput[]
     skipDuplicates?: boolean
   }
 
@@ -19796,7 +20049,7 @@ export namespace Prisma {
     OR?: ParameterScalarWhereInput[]
     NOT?: ParameterScalarWhereInput | ParameterScalarWhereInput[]
     id?: BigIntFilter<"Parameter"> | bigint | number
-    result_folio?: StringNullableFilter<"Parameter"> | string | null
+    result_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     equipment_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     parameter_dictionary_id?: BigIntNullableFilter<"Parameter"> | bigint | number | null
     description?: StringNullableFilter<"Parameter"> | string | null
@@ -19836,7 +20089,37 @@ export namespace Prisma {
     remote_directory?: StringNullableFilter<"EquipmentConfiguration"> | string | null
   }
 
+  export type HistogramResultUpsertWithWhereUniqueWithoutEquipmentInput = {
+    where: HistogramResultWhereUniqueInput
+    update: XOR<HistogramResultUpdateWithoutEquipmentInput, HistogramResultUncheckedUpdateWithoutEquipmentInput>
+    create: XOR<HistogramResultCreateWithoutEquipmentInput, HistogramResultUncheckedCreateWithoutEquipmentInput>
+  }
+
+  export type HistogramResultUpdateWithWhereUniqueWithoutEquipmentInput = {
+    where: HistogramResultWhereUniqueInput
+    data: XOR<HistogramResultUpdateWithoutEquipmentInput, HistogramResultUncheckedUpdateWithoutEquipmentInput>
+  }
+
+  export type HistogramResultUpdateManyWithWhereWithoutEquipmentInput = {
+    where: HistogramResultScalarWhereInput
+    data: XOR<HistogramResultUpdateManyMutationInput, HistogramResultUncheckedUpdateManyWithoutEquipmentInput>
+  }
+
+  export type HistogramResultScalarWhereInput = {
+    AND?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
+    OR?: HistogramResultScalarWhereInput[]
+    NOT?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
+    id?: BigIntFilter<"HistogramResult"> | bigint | number
+    result_folio?: BigIntNullableFilter<"HistogramResult"> | bigint | number | null
+    equipment_id?: BigIntNullableFilter<"HistogramResult"> | bigint | number | null
+    description?: StringNullableFilter<"HistogramResult"> | string | null
+    value?: StringNullableFilter<"HistogramResult"> | string | null
+    created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
+    active?: BoolNullableFilter<"HistogramResult"> | boolean | null
+  }
+
   export type ResultCreateWithoutHistogramResultsInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -19848,6 +20131,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutHistogramResultsInput = {
+    id: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -19863,6 +20147,39 @@ export namespace Prisma {
     create: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
   }
 
+  export type EquipmentCreateWithoutHistogramResultInput = {
+    id: bigint | number
+    name?: string | null
+    created_at?: Date | string | null
+    modified_at?: Date | string | null
+    last_connection?: Date | string | null
+    connection_status?: string | null
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
+    equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
+    parameters?: ParameterCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+  }
+
+  export type EquipmentUncheckedCreateWithoutHistogramResultInput = {
+    id: bigint | number
+    profile_id?: bigint | number | null
+    name?: string | null
+    created_at?: Date | string | null
+    modified_at?: Date | string | null
+    last_connection?: Date | string | null
+    connection_status?: string | null
+    active?: boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
+    parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+  }
+
+  export type EquipmentCreateOrConnectWithoutHistogramResultInput = {
+    where: EquipmentWhereUniqueInput
+    create: XOR<EquipmentCreateWithoutHistogramResultInput, EquipmentUncheckedCreateWithoutHistogramResultInput>
+  }
+
   export type ResultUpsertWithoutHistogramResultsInput = {
     update: XOR<ResultUpdateWithoutHistogramResultsInput, ResultUncheckedUpdateWithoutHistogramResultsInput>
     create: XOR<ResultCreateWithoutHistogramResultsInput, ResultUncheckedCreateWithoutHistogramResultsInput>
@@ -19875,6 +20192,7 @@ export namespace Prisma {
   }
 
   export type ResultUpdateWithoutHistogramResultsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19886,6 +20204,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateWithoutHistogramResultsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19894,6 +20213,45 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     parameters?: ParameterUncheckedUpdateManyWithoutResultNestedInput
     resultSends?: ResultSendUncheckedUpdateManyWithoutResultNestedInput
+  }
+
+  export type EquipmentUpsertWithoutHistogramResultInput = {
+    update: XOR<EquipmentUpdateWithoutHistogramResultInput, EquipmentUncheckedUpdateWithoutHistogramResultInput>
+    create: XOR<EquipmentCreateWithoutHistogramResultInput, EquipmentUncheckedCreateWithoutHistogramResultInput>
+    where?: EquipmentWhereInput
+  }
+
+  export type EquipmentUpdateToOneWithWhereWithoutHistogramResultInput = {
+    where?: EquipmentWhereInput
+    data: XOR<EquipmentUpdateWithoutHistogramResultInput, EquipmentUncheckedUpdateWithoutHistogramResultInput>
+  }
+
+  export type EquipmentUpdateWithoutHistogramResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
+    equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
+    parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+  }
+
+  export type EquipmentUncheckedUpdateWithoutHistogramResultInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    profile_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    modified_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    last_connection?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    connection_status?: NullableStringFieldUpdateOperationsInput | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
+    parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
+    equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentCreateWithoutParametersInput = {
@@ -19907,6 +20265,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
     equipmentConfiguration?: EquipmentConfigurationCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutParametersInput = {
@@ -19920,6 +20279,7 @@ export namespace Prisma {
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutParametersInput = {
@@ -19945,6 +20305,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutParametersInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -19956,6 +20317,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutParametersInput = {
+    id: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -19993,6 +20355,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
     equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutParametersInput = {
@@ -20006,6 +20369,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type ParameterDictionaryUpsertWithoutParametersInput = {
@@ -20043,6 +20407,7 @@ export namespace Prisma {
   }
 
   export type ResultUpdateWithoutParametersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20054,6 +20419,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateWithoutParametersInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20070,10 +20436,12 @@ export namespace Prisma {
     value?: string | null
     created_at?: Date | string | null
     active?: boolean | null
+    equipment?: EquipmentCreateNestedOneWithoutHistogramResultInput
   }
 
   export type HistogramResultUncheckedCreateWithoutResultInput = {
     id: bigint | number
+    equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -20189,18 +20557,6 @@ export namespace Prisma {
     data: XOR<HistogramResultUpdateManyMutationInput, HistogramResultUncheckedUpdateManyWithoutResultInput>
   }
 
-  export type HistogramResultScalarWhereInput = {
-    AND?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
-    OR?: HistogramResultScalarWhereInput[]
-    NOT?: HistogramResultScalarWhereInput | HistogramResultScalarWhereInput[]
-    id?: BigIntFilter<"HistogramResult"> | bigint | number
-    result_folio?: StringNullableFilter<"HistogramResult"> | string | null
-    description?: StringNullableFilter<"HistogramResult"> | string | null
-    value?: StringNullableFilter<"HistogramResult"> | string | null
-    created_at?: DateTimeNullableFilter<"HistogramResult"> | Date | string | null
-    active?: BoolNullableFilter<"HistogramResult"> | boolean | null
-  }
-
   export type ParameterUpsertWithWhereUniqueWithoutResultInput = {
     where: ParameterWhereUniqueInput
     update: XOR<ParameterUpdateWithoutResultInput, ParameterUncheckedUpdateWithoutResultInput>
@@ -20238,7 +20594,7 @@ export namespace Prisma {
     OR?: ResultSendScalarWhereInput[]
     NOT?: ResultSendScalarWhereInput | ResultSendScalarWhereInput[]
     id?: BigIntFilter<"ResultSend"> | bigint | number
-    result_folio?: StringNullableFilter<"ResultSend"> | string | null
+    result_folio?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
     send_by?: BigIntNullableFilter<"ResultSend"> | bigint | number | null
     send_at?: DateTimeNullableFilter<"ResultSend"> | Date | string | null
     status?: StringNullableFilter<"ResultSend"> | string | null
@@ -20301,7 +20657,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedCreateWithoutParameterDictionaryInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -20360,6 +20716,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutResultSendsInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20371,6 +20728,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutResultSendsInput = {
+    id: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -20417,6 +20775,7 @@ export namespace Prisma {
   }
 
   export type ResultUpdateWithoutResultSendsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20428,6 +20787,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateWithoutResultSendsInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     created_by?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20521,7 +20881,7 @@ export namespace Prisma {
 
   export type ResultSendUncheckedCreateWithoutUserInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_folio?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -20539,6 +20899,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutUserInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20550,6 +20911,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutUserInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20606,6 +20968,7 @@ export namespace Prisma {
     AND?: ResultScalarWhereInput | ResultScalarWhereInput[]
     OR?: ResultScalarWhereInput[]
     NOT?: ResultScalarWhereInput | ResultScalarWhereInput[]
+    id?: BigIntFilter<"Result"> | bigint | number
     folio?: StringFilter<"Result"> | string
     created_by?: BigIntNullableFilter<"Result"> | bigint | number | null
     sample_id?: StringNullableFilter<"Result"> | string | null
@@ -20625,6 +20988,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialCreateNestedManyWithoutEquipmentInput
     equipmentProfile?: EquipmentProfileCreateNestedOneWithoutEquipmentsInput
     parameters?: ParameterCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentUncheckedCreateWithoutEquipmentConfigurationInput = {
@@ -20638,6 +21002,7 @@ export namespace Prisma {
     active?: boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedCreateNestedManyWithoutEquipmentInput
     parameters?: ParameterUncheckedCreateNestedManyWithoutEquipmentInput
+    HistogramResult?: HistogramResultUncheckedCreateNestedManyWithoutEquipmentInput
   }
 
   export type EquipmentCreateOrConnectWithoutEquipmentConfigurationInput = {
@@ -20667,6 +21032,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
     equipmentProfile?: EquipmentProfileUpdateOneWithoutEquipmentsNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutEquipmentConfigurationInput = {
@@ -20680,6 +21046,7 @@ export namespace Prisma {
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentProfileCreateManyCommunicationProfileInput = {
@@ -20733,6 +21100,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateWithoutEquipmentProfileInput = {
@@ -20746,6 +21114,7 @@ export namespace Prisma {
     directoryHistorials?: DirectoryHistorialUncheckedUpdateManyWithoutEquipmentNestedInput
     parameters?: ParameterUncheckedUpdateManyWithoutEquipmentNestedInput
     equipmentConfiguration?: EquipmentConfigurationUncheckedUpdateManyWithoutEquipmentNestedInput
+    HistogramResult?: HistogramResultUncheckedUpdateManyWithoutEquipmentNestedInput
   }
 
   export type EquipmentUncheckedUpdateManyWithoutEquipmentProfileInput = {
@@ -20767,7 +21136,7 @@ export namespace Prisma {
 
   export type ParameterCreateManyEquipmentInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -20784,6 +21153,15 @@ export namespace Prisma {
     baud_rate?: number | null
     mac_address?: string | null
     remote_directory?: string | null
+  }
+
+  export type HistogramResultCreateManyEquipmentInput = {
+    id: bigint | number
+    result_folio?: bigint | number | null
+    description?: string | null
+    value?: string | null
+    created_at?: Date | string | null
+    active?: boolean | null
   }
 
   export type DirectoryHistorialUpdateWithoutEquipmentInput = {
@@ -20822,7 +21200,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedUpdateWithoutEquipmentInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20835,7 +21213,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedUpdateManyWithoutEquipmentInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     parameter_dictionary_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20870,8 +21248,36 @@ export namespace Prisma {
     remote_directory?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type HistogramResultUpdateWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    result?: ResultUpdateOneWithoutHistogramResultsNestedInput
+  }
+
+  export type HistogramResultUncheckedUpdateWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type HistogramResultUncheckedUpdateManyWithoutEquipmentInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
   export type HistogramResultCreateManyResultInput = {
     id: bigint | number
+    equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -20906,10 +21312,12 @@ export namespace Prisma {
     value?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    equipment?: EquipmentUpdateOneWithoutHistogramResultNestedInput
   }
 
   export type HistogramResultUncheckedUpdateWithoutResultInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
+    equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20918,6 +21326,7 @@ export namespace Prisma {
 
   export type HistogramResultUncheckedUpdateManyWithoutResultInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
+    equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -20992,7 +21401,7 @@ export namespace Prisma {
 
   export type ParameterCreateManyParameterDictionaryInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -21018,7 +21427,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedUpdateWithoutParameterDictionaryInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21031,7 +21440,7 @@ export namespace Prisma {
 
   export type ParameterUncheckedUpdateManyWithoutParameterDictionaryInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     equipment_id?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     value?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21066,7 +21475,7 @@ export namespace Prisma {
 
   export type ResultSendCreateManyUserInput = {
     id: bigint | number
-    result_folio?: string | null
+    result_folio?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -21074,6 +21483,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateManyUserInput = {
+    id: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -21092,7 +21502,7 @@ export namespace Prisma {
 
   export type ResultSendUncheckedUpdateWithoutUserInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -21101,7 +21511,7 @@ export namespace Prisma {
 
   export type ResultSendUncheckedUpdateManyWithoutUserInput = {
     id?: BigIntFieldUpdateOperationsInput | bigint | number
-    result_folio?: NullableStringFieldUpdateOperationsInput | string | null
+    result_folio?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
     send_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     status?: NullableStringFieldUpdateOperationsInput | string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -21109,6 +21519,7 @@ export namespace Prisma {
   }
 
   export type ResultUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21120,6 +21531,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21131,6 +21543,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
     folio?: StringFieldUpdateOperationsInput | string
     sample_id?: NullableStringFieldUpdateOperationsInput | string | null
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

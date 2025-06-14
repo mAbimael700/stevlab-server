@@ -53,25 +53,28 @@ model Equipment {
   equipmentProfile       EquipmentProfile?        @relation(fields: [profile_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipments_profile_id_equipment_profiles_id")
   parameters             Parameter[]
   equipmentConfiguration EquipmentConfiguration[]
+  HistogramResult        HistogramResult[]
 
   @@map("equipments")
 }
 
 model HistogramResult {
-  id           BigInt    @id
-  result_folio String?   @db.VarChar(20)
-  description  String?   @db.VarChar(25)
-  value        String?   @db.VarChar(10)
-  created_at   DateTime? @db.Timestamp(6)
+  id           BigInt     @id
+  result_folio BigInt?
+  equipment_id BigInt?
+  description  String?    @db.VarChar(25)
+  value        String?    @db.VarChar(10)
+  created_at   DateTime?  @db.Timestamp(6)
   active       Boolean?
-  result       Result?   @relation(fields: [result_folio], references: [folio], onDelete: NoAction, onUpdate: NoAction, map: "fk_histogram_results_result_folio_results_folio")
+  result       Result?    @relation(fields: [result_folio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_histogram_results_result_folio_results_folio")
+  equipment    Equipment? @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_histogram_results_references_equipment_id")
 
   @@map("histogram_results")
 }
 
 model Parameter {
   id                      BigInt               @id
-  result_folio            String?              @db.VarChar(15)
+  result_id               BigInt?
   equipment_id            BigInt?
   parameter_dictionary_id BigInt?
   description             String?              @db.VarChar(25)
@@ -83,13 +86,14 @@ model Parameter {
   active                  Boolean?
   equipment               Equipment?           @relation(fields: [equipment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameters_equipment_id_equipments_id")
   parameterDictionary     ParameterDictionary? @relation(fields: [parameter_dictionary_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameters_parameter_dictionary_id_parameter_dictionaries")
-  result                  Result?              @relation(fields: [result_folio], references: [folio], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameters_result_folio_results_folio")
+  result                  Result?              @relation(fields: [result_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameters_result_folio_results_folio")
 
   @@map("parameters")
 }
 
 model Result {
-  folio            String            @id @db.VarChar(20)
+  id               BigInt            @id
+  folio            String            @db.VarChar(20)
   created_by       BigInt?
   sample_id        String?           @db.VarChar(12)
   created_at       DateTime?         @db.Timestamp(6)
@@ -115,13 +119,13 @@ model ParameterDictionary {
 
 model ResultSend {
   id           BigInt    @id
-  result_folio String?   @db.VarChar
+  result_folio BigInt?
   send_by      BigInt?
   send_at      DateTime? @db.Timestamp(6)
   status       String?   @db.VarChar(20)
   payload      Json?     @db.Json
   response     Json?     @db.Json
-  result       Result?   @relation(fields: [result_folio], references: [folio], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_result_folio_results_folio")
+  result       Result?   @relation(fields: [result_folio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_result_folio_results_folio")
   user         User?     @relation(fields: [send_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_send_by_users_id")
 
   @@map("result_sends")

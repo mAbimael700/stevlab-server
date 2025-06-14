@@ -9,7 +9,9 @@ class Hl7ClinicalDataModel extends IClinicalDataModel {
    *
    * @param {string} data
    */
-  transform(data) {}
+  static transform(data) {
+   
+   }
 }
 
 module.exports = Hl7ClinicalDataModel;

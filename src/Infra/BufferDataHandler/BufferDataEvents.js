@@ -10,12 +10,14 @@ class BufferDataEvents {
    *
    * @param {{mesage:string, equipment:EquipmentDto}} param0
    */
-  receivedMessage({ mesage, equipment }) {
-    const clinicalModel = ClinicalDataModelFactory.create(
-      equipment.equipmentProfile.communicationProfile.type
-    );
-    const result = clinicalModel.transform(mesage);
-    this.resultService.add(result, equipment.id);
+  receivedMessage({ message, equipment }) {
+    const type = equipment.equipmentProfile.communicationProfile.type
+    console.log(type);
+    
+    const clinicalModel = ClinicalDataModelFactory.create(type);
+
+    const result = clinicalModel.transform(message);
+    this.resultService.saveStreamReceivedResult(result, equipment.id);
   }
 }
 module.exports = BufferDataEvents;

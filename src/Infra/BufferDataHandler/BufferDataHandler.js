@@ -38,10 +38,13 @@ class BufferDataHandler {
           ); // Emitimos solo los mensajes procesados            
       }
     } catch (error) {
-      this.emit("error", {
+      /* this.emit("error", {
         equipment: this.equipment,
         error: new Error(`Error procesando datos: ${error.message}`),
-      });
+      }); */
+
+      throw new Error(`Error procesando datos: ${error.message}`, error);
+
     }
   }
 }

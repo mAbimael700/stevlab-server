@@ -1,0 +1,5 @@
+class ClinicalDataModelDto {
+    constructor(data) {
+
+    }
+}

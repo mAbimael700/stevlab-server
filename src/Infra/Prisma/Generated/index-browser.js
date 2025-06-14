@@ -156,6 +156,7 @@ exports.Prisma.EquipmentScalarFieldEnum = {
 exports.Prisma.HistogramResultScalarFieldEnum = {
   id: 'id',
   result_folio: 'result_folio',
+  equipment_id: 'equipment_id',
   description: 'description',
   value: 'value',
   created_at: 'created_at',
@@ -164,7 +165,7 @@ exports.Prisma.HistogramResultScalarFieldEnum = {
 
 exports.Prisma.ParameterScalarFieldEnum = {
   id: 'id',
-  result_folio: 'result_folio',
+  result_id: 'result_id',
   equipment_id: 'equipment_id',
   parameter_dictionary_id: 'parameter_dictionary_id',
   description: 'description',
@@ -177,6 +178,7 @@ exports.Prisma.ParameterScalarFieldEnum = {
 };
 
 exports.Prisma.ResultScalarFieldEnum = {
+  id: 'id',
   folio: 'folio',
   created_by: 'created_by',
   sample_id: 'sample_id',

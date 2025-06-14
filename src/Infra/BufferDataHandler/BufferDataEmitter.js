@@ -3,15 +3,17 @@ const EquipmentDto = require("../../domain/Equipment/EquipmentDto");
 
 class BufferDataEmitter extends EventEmitter {
   constructor() {
-    if (BufferDataEmitter.instance) {
-      return BufferDataEmitter.instance;
-    }
     super();
-    BufferDataEmitter.instance = this;
+  }
+
+  static getInstance() {
+    if (!BufferDataEmitter.instance) {
+      BufferDataEmitter.instance = new BufferDataEmitter();
+    }
+    return BufferDataEmitter.instance;
   }
 
   /**
-   *
    * @param {'receivedMessage'} event
    * @param {*} args
    */
@@ -20,16 +22,13 @@ class BufferDataEmitter extends EventEmitter {
   }
 
   /**
-   *
    * @param {{message:string, equipment:EquipmentDto}} param0
    */
   emitReceivedMessage({ message, equipment }) {
     this.emitEvent("receivedMessage", { message, equipment });
   }
-
 }
 
-// Inicializar la instancia singleton
 BufferDataEmitter.instance = null;
 
 module.exports = BufferDataEmitter;

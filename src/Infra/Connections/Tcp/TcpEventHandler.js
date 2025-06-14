@@ -32,7 +32,7 @@ class TcpEventsHandler {
       this.dataHandler.processBufferData(data);
     } catch (error) {
       throw new Error(
-        `Hubó un error al procesar la información recibida del equipo con dirección Ipv4 ${this.ipAddress}:${this.port}:`,
+        `Hubó un error al procesar la información recibida del equipo con dirección Ipv4 ${this.ipAddress}:${this.port}: ${error.message}`,
         error
       );
     }
@@ -47,7 +47,7 @@ class TcpEventsHandler {
     const errorMessage = this.generateErrorMessage(err);
   }
 
-  close() {}
+  close() { }
 
   end() {
     console.log(
