@@ -18,7 +18,7 @@ model CommunicationProfiles {
 }
 
 model DirectoryHistorial {
-  id           BigInt     @id
+  id           BigInt     @id @default(autoincrement())
   equipment_id BigInt?
   filename     String?    @db.VarChar(250)
   filepath     String?    @db.VarChar(500)
@@ -29,7 +29,7 @@ model DirectoryHistorial {
 }
 
 model EquipmentProfile {
-  id                    BigInt                 @id
+  id                    BigInt                 @id 
   communication_profile String?                @db.VarChar(10)
   name                  String?                @db.VarChar(25)
   active                Boolean?
@@ -41,7 +41,7 @@ model EquipmentProfile {
 }
 
 model Equipment {
-  id                     BigInt                   @id
+  id                     BigInt                   @id @default(autoincrement())
   profile_id             BigInt?
   name                   String?                  @db.VarChar(25)
   created_at             DateTime?                @db.Timestamp(6)
@@ -59,7 +59,7 @@ model Equipment {
 }
 
 model HistogramResult {
-  id           BigInt     @id
+  id           BigInt     @id @default(autoincrement())
   result_folio BigInt?
   equipment_id BigInt?
   description  String?    @db.VarChar(25)
@@ -73,7 +73,7 @@ model HistogramResult {
 }
 
 model Parameter {
-  id                      BigInt               @id
+  id                      BigInt               @id @default(autoincrement())
   result_id               BigInt?
   equipment_id            BigInt?
   parameter_dictionary_id BigInt?
@@ -92,7 +92,7 @@ model Parameter {
 }
 
 model Result {
-  id               BigInt            @id
+  id               BigInt            @id @default(autoincrement())
   folio            String            @db.VarChar(20)
   created_by       BigInt?
   sample_id        String?           @db.VarChar(12)
@@ -108,7 +108,7 @@ model Result {
 }
 
 model ParameterDictionary {
-  id                    BigInt           @id
+  id                    BigInt           @id 
   system_parameter_id   BigInt?
   parameter_description String?          @db.VarChar(100)
   systemParameter       SystemParameter? @relation(fields: [system_parameter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameter_dictionaries_system_parameter_id_system_paramet")
@@ -118,7 +118,7 @@ model ParameterDictionary {
 }
 
 model ResultSend {
-  id           BigInt    @id
+  id           BigInt    @id @default(autoincrement())
   result_folio BigInt?
   send_by      BigInt?
   send_at      DateTime? @db.Timestamp(6)
@@ -140,7 +140,7 @@ model SystemParameter {
 }
 
 model User {
-  id             BigInt       @id
+  id             BigInt       @id @default(autoincrement())
   username       String?      @db.VarChar(20)
   password       String?      @db.VarChar(255)
   resultSends    ResultSend[]
