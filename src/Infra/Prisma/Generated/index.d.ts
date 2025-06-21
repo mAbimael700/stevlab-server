@@ -6397,7 +6397,7 @@ export namespace Prisma {
     /**
      * The data needed to create a Equipment.
      */
-    data: XOR<EquipmentCreateInput, EquipmentUncheckedCreateInput>
+    data?: XOR<EquipmentCreateInput, EquipmentUncheckedCreateInput>
   }
 
   /**
@@ -7646,7 +7646,7 @@ export namespace Prisma {
     /**
      * The data needed to create a HistogramResult.
      */
-    data: XOR<HistogramResultCreateInput, HistogramResultUncheckedCreateInput>
+    data?: XOR<HistogramResultCreateInput, HistogramResultUncheckedCreateInput>
   }
 
   /**
@@ -8882,7 +8882,7 @@ export namespace Prisma {
     /**
      * The data needed to create a Parameter.
      */
-    data: XOR<ParameterCreateInput, ParameterUncheckedCreateInput>
+    data?: XOR<ParameterCreateInput, ParameterUncheckedCreateInput>
   }
 
   /**
@@ -12411,7 +12411,7 @@ export namespace Prisma {
     /**
      * The data needed to create a ResultSend.
      */
-    data: XOR<ResultSendCreateInput, ResultSendUncheckedCreateInput>
+    data?: XOR<ResultSendCreateInput, ResultSendUncheckedCreateInput>
   }
 
   /**
@@ -14580,7 +14580,7 @@ export namespace Prisma {
     /**
      * The data needed to create a User.
      */
-    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+    data?: XOR<UserCreateInput, UserUncheckedCreateInput>
   }
 
   /**
@@ -17024,7 +17024,7 @@ export namespace Prisma {
   }
 
   export type DirectoryHistorialCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     filename?: string | null
     filepath?: string | null
     modified_at: Date | string
@@ -17032,7 +17032,7 @@ export namespace Prisma {
   }
 
   export type DirectoryHistorialUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     equipment_id?: bigint | number | null
     filename?: string | null
     filepath?: string | null
@@ -17056,7 +17056,7 @@ export namespace Prisma {
   }
 
   export type DirectoryHistorialCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     equipment_id?: bigint | number | null
     filename?: string | null
     filepath?: string | null
@@ -17138,7 +17138,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -17153,7 +17153,7 @@ export namespace Prisma {
   }
 
   export type EquipmentUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
     created_at?: Date | string | null
@@ -17198,7 +17198,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
     created_at?: Date | string | null
@@ -17230,7 +17230,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -17240,7 +17240,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     equipment_id?: bigint | number | null
     description?: string | null
@@ -17270,7 +17270,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     equipment_id?: bigint | number | null
     description?: string | null
@@ -17298,7 +17298,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
@@ -17312,7 +17312,7 @@ export namespace Prisma {
   }
 
   export type ParameterUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
@@ -17354,7 +17354,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
@@ -17393,7 +17393,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -17406,7 +17406,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -17445,7 +17445,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -17519,7 +17519,7 @@ export namespace Prisma {
   }
 
   export type ResultSendCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     send_at?: Date | string | null
     status?: string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -17529,7 +17529,7 @@ export namespace Prisma {
   }
 
   export type ResultSendUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     send_by?: bigint | number | null
     send_at?: Date | string | null
@@ -17559,7 +17559,7 @@ export namespace Prisma {
   }
 
   export type ResultSendCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     send_by?: bigint | number | null
     send_at?: Date | string | null
@@ -17626,7 +17626,7 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
     resultSends?: ResultSendCreateNestedManyWithoutUserInput
@@ -17634,7 +17634,7 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
     resultSends?: ResultSendUncheckedCreateNestedManyWithoutUserInput
@@ -17658,7 +17658,7 @@ export namespace Prisma {
   }
 
   export type UserCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
   }
@@ -19660,7 +19660,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateWithoutDirectoryHistorialsInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -19674,7 +19674,7 @@ export namespace Prisma {
   }
 
   export type EquipmentUncheckedCreateWithoutDirectoryHistorialsInput = {
-    id: bigint | number
+    id?: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
     created_at?: Date | string | null
@@ -19749,7 +19749,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateWithoutEquipmentProfileInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -19763,7 +19763,7 @@ export namespace Prisma {
   }
 
   export type EquipmentUncheckedCreateWithoutEquipmentProfileInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -19840,14 +19840,14 @@ export namespace Prisma {
   }
 
   export type DirectoryHistorialCreateWithoutEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     filename?: string | null
     filepath?: string | null
     modified_at: Date | string
   }
 
   export type DirectoryHistorialUncheckedCreateWithoutEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     filename?: string | null
     filepath?: string | null
     modified_at: Date | string
@@ -19885,7 +19885,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateWithoutEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
@@ -19898,7 +19898,7 @@ export namespace Prisma {
   }
 
   export type ParameterUncheckedCreateWithoutEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     result_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
@@ -19947,7 +19947,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultCreateWithoutEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -19956,7 +19956,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultUncheckedCreateWithoutEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -20119,7 +20119,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutHistogramResultsInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20131,7 +20131,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutHistogramResultsInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -20148,7 +20148,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateWithoutHistogramResultInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -20162,7 +20162,7 @@ export namespace Prisma {
   }
 
   export type EquipmentUncheckedCreateWithoutHistogramResultInput = {
-    id: bigint | number
+    id?: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
     created_at?: Date | string | null
@@ -20255,7 +20255,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateWithoutParametersInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -20269,7 +20269,7 @@ export namespace Prisma {
   }
 
   export type EquipmentUncheckedCreateWithoutParametersInput = {
-    id: bigint | number
+    id?: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
     created_at?: Date | string | null
@@ -20305,7 +20305,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutParametersInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20317,7 +20317,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutParametersInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -20431,7 +20431,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultCreateWithoutResultInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     created_at?: Date | string | null
@@ -20440,7 +20440,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultUncheckedCreateWithoutResultInput = {
-    id: bigint | number
+    id?: bigint | number
     equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -20459,7 +20459,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateWithoutResultInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
@@ -20472,7 +20472,7 @@ export namespace Prisma {
   }
 
   export type ParameterUncheckedCreateWithoutResultInput = {
-    id: bigint | number
+    id?: bigint | number
     equipment_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
@@ -20495,7 +20495,7 @@ export namespace Prisma {
   }
 
   export type ResultSendCreateWithoutResultInput = {
-    id: bigint | number
+    id?: bigint | number
     send_at?: Date | string | null
     status?: string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -20504,7 +20504,7 @@ export namespace Prisma {
   }
 
   export type ResultSendUncheckedCreateWithoutResultInput = {
-    id: bigint | number
+    id?: bigint | number
     send_by?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
@@ -20523,14 +20523,14 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCreatedResultsInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
     resultSends?: ResultSendCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedResultsInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
     resultSends?: ResultSendUncheckedCreateNestedManyWithoutUserInput
@@ -20643,7 +20643,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateWithoutParameterDictionaryInput = {
-    id: bigint | number
+    id?: bigint | number
     description?: string | null
     value?: string | null
     unit_measurement?: string | null
@@ -20656,7 +20656,7 @@ export namespace Prisma {
   }
 
   export type ParameterUncheckedCreateWithoutParameterDictionaryInput = {
-    id: bigint | number
+    id?: bigint | number
     result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     description?: string | null
@@ -20716,7 +20716,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutResultSendsInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20728,7 +20728,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutResultSendsInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     created_by?: bigint | number | null
     sample_id?: string | null
@@ -20745,14 +20745,14 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutResultSendsInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
     createdResults?: ResultCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutResultSendsInput = {
-    id: bigint | number
+    id?: bigint | number
     username?: string | null
     password?: string | null
     createdResults?: ResultUncheckedCreateNestedManyWithoutUserInput
@@ -20871,7 +20871,7 @@ export namespace Prisma {
   }
 
   export type ResultSendCreateWithoutUserInput = {
-    id: bigint | number
+    id?: bigint | number
     send_at?: Date | string | null
     status?: string | null
     payload?: NullableJsonNullValueInput | InputJsonValue
@@ -20880,7 +20880,7 @@ export namespace Prisma {
   }
 
   export type ResultSendUncheckedCreateWithoutUserInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
@@ -20899,7 +20899,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateWithoutUserInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20911,7 +20911,7 @@ export namespace Prisma {
   }
 
   export type ResultUncheckedCreateWithoutUserInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null
@@ -20978,7 +20978,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateWithoutEquipmentConfigurationInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -20992,7 +20992,7 @@ export namespace Prisma {
   }
 
   export type EquipmentUncheckedCreateWithoutEquipmentConfigurationInput = {
-    id: bigint | number
+    id?: bigint | number
     profile_id?: bigint | number | null
     name?: string | null
     created_at?: Date | string | null
@@ -21080,7 +21080,7 @@ export namespace Prisma {
   }
 
   export type EquipmentCreateManyEquipmentProfileInput = {
-    id: bigint | number
+    id?: bigint | number
     name?: string | null
     created_at?: Date | string | null
     modified_at?: Date | string | null
@@ -21128,14 +21128,14 @@ export namespace Prisma {
   }
 
   export type DirectoryHistorialCreateManyEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     filename?: string | null
     filepath?: string | null
     modified_at: Date | string
   }
 
   export type ParameterCreateManyEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     result_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
@@ -21156,7 +21156,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultCreateManyEquipmentInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -21276,7 +21276,7 @@ export namespace Prisma {
   }
 
   export type HistogramResultCreateManyResultInput = {
-    id: bigint | number
+    id?: bigint | number
     equipment_id?: bigint | number | null
     description?: string | null
     value?: string | null
@@ -21285,7 +21285,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateManyResultInput = {
-    id: bigint | number
+    id?: bigint | number
     equipment_id?: bigint | number | null
     parameter_dictionary_id?: bigint | number | null
     description?: string | null
@@ -21298,7 +21298,7 @@ export namespace Prisma {
   }
 
   export type ResultSendCreateManyResultInput = {
-    id: bigint | number
+    id?: bigint | number
     send_by?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
@@ -21400,7 +21400,7 @@ export namespace Prisma {
   }
 
   export type ParameterCreateManyParameterDictionaryInput = {
-    id: bigint | number
+    id?: bigint | number
     result_id?: bigint | number | null
     equipment_id?: bigint | number | null
     description?: string | null
@@ -21474,7 +21474,7 @@ export namespace Prisma {
   }
 
   export type ResultSendCreateManyUserInput = {
-    id: bigint | number
+    id?: bigint | number
     result_folio?: bigint | number | null
     send_at?: Date | string | null
     status?: string | null
@@ -21483,7 +21483,7 @@ export namespace Prisma {
   }
 
   export type ResultCreateManyUserInput = {
-    id: bigint | number
+    id?: bigint | number
     folio: string
     sample_id?: string | null
     created_at?: Date | string | null

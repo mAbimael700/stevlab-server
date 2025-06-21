@@ -1,4 +1,4 @@
-const Hl7ParserFactory = require("../src/infra/BufferParser/HL7/Hl7ParserFactory");
+const Hl7ParserFactory = require("../src/infra/BufferParser/HL7v2/Hl7ParserFactory");
 
 const message = `
 MSH|^~\&|||||20240524133800||ORU^R01|22|P|2.3.1||||0||ASCII|||
@@ -13,3 +13,5 @@ const parser =  Hl7ParserFactory.parse(message)
 
 //console.log(parser.getObservations());
 console.log(parser.getPersonalInformation());
+console.log(parser.getMessageControlHeader());
+console.log(parser.getObservations());

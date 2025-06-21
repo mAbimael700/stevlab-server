@@ -11,7 +11,7 @@ class ParameterRepository extends BaseRepository {
     * @param {string} description - Descripción del parámetro
     * @returns {Promise<Parameter |null>}
     */
-    async existByDescription(resultId, description) {
+    async findByDescription(resultId, description) {
         return this.prisma.parameter.findFirst({
             where: {
                 result_id: resultId,

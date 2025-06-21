@@ -4,10 +4,10 @@ class ResultSchema {
     description: z.string(),
     value: z.string(),
     unit_measurement: z.string().optional(),
-    min_range: z.number().optional().nullable(),
-    max_range: z.number().optional().nullable(),
+    min_range: z.string().optional().nullable(),
+    max_range: z.string().optional().nullable(),
     created_at: z.date().optional().default(new Date()),
-    active: z.boolean().optional()
+    active: z.boolean().optional(),
   });
 
   static histogramResultSchema = z.object({
@@ -34,7 +34,7 @@ class ResultSchema {
     parameters: z.array(this.parameterSchema),
     histogramResults: z.array(this.histogramResultSchema).optional(),
     modified_at: z.date().optional().default(new Date()),
-    active: z.boolean().optional()
+    active: z.boolean().optional(),
   });
 
   /**

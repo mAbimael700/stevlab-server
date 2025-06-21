@@ -11,11 +11,10 @@ class BufferDataEvents {
    * @param {{mesage:string, equipment:EquipmentDto}} param0
    */
   receivedMessage({ message, equipment }) {
-    const type = equipment.equipmentProfile.communicationProfile.type
+    const type = equipment.equipmentProfile.communicationProfile.type;
     console.log(type);
-    
-    const clinicalModel = ClinicalDataModelFactory.create(type);
 
+    const clinicalModel = ClinicalDataModelFactory.create(type);
     const result = clinicalModel.transform(message);
     this.resultService.saveStreamReceivedResult(result, equipment.id);
   }
