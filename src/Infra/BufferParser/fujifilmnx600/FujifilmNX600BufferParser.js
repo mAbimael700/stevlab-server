@@ -42,11 +42,15 @@ class FujifilmNX600BufferParser {
     });
   }
 
+  /**
+   * Extrae los parámetros de laboratorio y sus resultados
+   * @param {string[]} fields 
+   * @returns 
+   */
   getSampleResults(fields) {
-    // Extrae los parámetros de laboratorio y sus resultados
     const results = [];
     for (let i = 12; i < fields.length; i += 7) {
-      if (fields[i]) {
+      if (fields.at(i)) {
         const unit = fields
           .at(i + 2)
           ?.trim()

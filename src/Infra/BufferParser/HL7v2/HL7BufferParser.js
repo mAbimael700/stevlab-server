@@ -14,7 +14,7 @@ class Hl7BufferParser {
     * @returns Retorna un array de los segmentos por cada tipo de mensaje
     */
     separateSegments() {
-        return this.data.trim().split(/(?=MSH|PID|PV1|OBR|OBX)/);
+        return this.data.trim().split(/(?=MSH|PID|PV1|OBR|OBX)/).map(s => s.trim());
     }
 
     /**
@@ -56,11 +56,12 @@ class Hl7BufferParser {
         messageId,
         emisor = "Mindray",
         receptor = "BS-120",
-        status = "AA"
+        status = "AA",
+        message = "Message accepted"
     ) {
         const timestamp = this.generateHl7Date(); // Formato HL7
         const mshSegment = `MSH|^~\\&|||${emisor}|${receptor}|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||`;
-        const msaSegment = `MSA|${status}|${messageId}|Message accepted|||0|`;
+        const msaSegment = `MSA|${status}|${messageId}|${message}|||0|`;
 
         const ackMessage = `\x0B${mshSegment}\r${msaSegment}\r\x1C\x0D`;
         return ackMessage;
@@ -71,8 +72,8 @@ class Hl7BufferParser {
         return date.toISOString().replace(/[-:T]/g, "").slice(0, 14); // Formato AAAAMMDDHHMMSS
     }
 
-    setup(){
-        
+    setup() {
+
     }
 }
 

@@ -1,4 +1,4 @@
-const FujifilmNX600BufferParser = require("../../Infra/BufferParser/FujifilmNX600BufferParser/FujifilmNX600BufferParser");
+const FujifilmNX600BufferParser = require("../../infra/BufferParser/FujifilmNX600/FujifilmNX600BufferParser");
 const IClinicalDataModel = require("./IClinicalDataModel");
 
 class FujifilmClinicalDataModel extends IClinicalDataModel {
@@ -15,7 +15,7 @@ class FujifilmClinicalDataModel extends IClinicalDataModel {
     const parser = new FujifilmNX600BufferParser(buffer);
     const sampleResumes = parser.getSampleResume();
 
-    return sampleResumes.map((sample) => this.transformSample(sample))?.at(0);
+    return sampleResumes.map((sample) => this.transformSample(sample));
   }
 
   /**
