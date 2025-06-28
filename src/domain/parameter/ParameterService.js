@@ -1,4 +1,11 @@
+const ParameterRepository = require("./ParameterRepository");
+
 class ParameterService {
+
+  /**
+   * 
+   * @param {ParameterRepository} parameterRepository 
+   */
   constructor(parameterRepository) {
     this.parameterRepository = parameterRepository;
   }
@@ -15,88 +22,148 @@ class ParameterService {
       // Validar entrada
       this.validateInput(parameterData, equipmentId, resultId);
 
-      const existingParameter =
-        await this.parameterRepository.findByDescription(
-          resultId,
-          parameterData.description
-        );
+      const existingParameters = await this.parameterRepository.findByDescription(
+        resultId,
+        parameterData.description
+      );
 
-      if (existingParameter) {
-        // Si no hay fecha de creación y el valor es igual, ignorar el nuevo parámetro
-        if (
-          !parameterData.creation_date &&
-          parameterData.value === existingParameter.value
-        ) {
-          return existingParameter; // Retornar el existente sin crear uno nuevo
-        }
-
-        // Determinar si el nuevo debe estar activo
-        const shouldCreateActive = this.shouldCreateAsActive(
-          parameterData,
-          existingParameter
-        );
-
-        if (
-          shouldCreateActive ||
-          this.shouldDeactivateExisting(parameterData, existingParameter)
-        ) {
-          await this.parameterRepository.update(existingParameter.id, {
-            active: false,
-          });
-        }
-
+      // Caso 1: No hay parámetros existentes con la misma descripción
+      if (!existingParameters || existingParameters.length === 0) {
         const data = {
           ...parameterData,
-          equipment_id: equipmentId,
-          result_id: resultId,
-          active: shouldCreateActive,
+          equipment: { connect: { id: equipmentId } },
+          result: { connect: { id: resultId } },
+          active: true,
+          created_at: parameterData.created_at || new Date()
         };
 
         return await this.parameterRepository.create(data);
       }
 
-      // Si no existe parámetro previo, crear como activo
-      const data = {
-        ...parameterData,
-        equipment_id: equipmentId,
-        result_id: resultId,
-        active: true,
-      };
+      // Caso 2: El parámetro recibido tiene fecha de creación
+      if (parameterData.created_at) {
+        return await this.handleParameterWithDate(
+          parameterData,
+          existingParameters,
+          equipmentId,
+          resultId
+        );
+      }
 
-      return await this.parameterRepository.create(data);
+      // Caso 3 y 4: El parámetro recibido NO tiene fecha de creación
+      return await this.handleParameterWithoutDate(
+        parameterData,
+        existingParameters,
+        equipmentId,
+        resultId
+      );
+
     } catch (error) {
       throw new Error(`Error al guardar parámetro: ${error.message}`);
     }
   }
 
   /**
-   * Determina si el nuevo parámetro debe crearse como activo
-   * @param {Object} newParameter - Nuevo parámetro
-   * @param {Object} existingParameter - Parámetro existente
-   * @returns {boolean} - True si debe crearse como activo
-   */
-  shouldCreateAsActive(newParameter, existingParameter) {
-    // Si no tiene fecha de creación, crear como activo solo si el valor es diferente
-    if (!newParameter.creation_date) {
-      return newParameter.value !== existingParameter.value;
+  * Maneja parámetros que vienen con fecha de creación
+  * @param {Object} parameterData - Datos del parámetro
+  * @param {Array} existingParameters - Parámetros existentes
+  * @param {string|number} equipmentId - ID del equipo
+  * @param {string|number} resultId - ID del resultado
+  * @returns {Promise<Object>} - Parámetro creado o existente si se ignora
+  */
+  async handleParameterWithDate(parameterData, existingParameters, equipmentId, resultId) {
+    // Encontrar el parámetro más reciente en la BD
+    const mostRecentExisting = existingParameters.reduce((latest, current) => {
+      if (!latest.created_at) return current;
+      if (!current.created_at) return latest;
+      return current.created_at > latest.created_at ? current : latest;
+    });
+
+    const receivedDate = parameterData.created_at;
+    const mostRecentDate = mostRecentExisting.created_at;
+
+    // Si las fechas son iguales
+    if (mostRecentDate && receivedDate.getTime() === mostRecentDate.getTime()) {
+      // Si el valor también es igual, ignorar completamente
+      if (parameterData.value === mostRecentExisting.value) {
+        return mostRecentExisting;
+      }
+
+      // Si el valor es distinto, guardar como inactivo
+      const data = {
+        ...parameterData,
+        equipment: { connect: { id: equipmentId } },
+        result: { connect: { id: resultId } },
+        active: false
+      };
+
+      return await this.parameterRepository.create(data);
     }
 
-    // Si tiene fecha de creación, crear como activo si es más reciente o igual
-    return newParameter.creation_date >= existingParameter.creation_date;
+    // Determinar si el parámetro recibido es más reciente
+    const isReceivedMoreRecent = !mostRecentDate || receivedDate > mostRecentDate;
+
+    // Si el recibido es más reciente, desactivar todos los existentes
+    if (isReceivedMoreRecent) {
+      await this.deactivateAllParameters(existingParameters);
+    }
+
+    // Crear el nuevo parámetro
+    const data = {
+      ...parameterData,
+      equipment: { connect: { id: equipmentId } },
+      result: { connect: { id: resultId } },
+      active: isReceivedMoreRecent
+    };
+
+    return await this.parameterRepository.create(data);
   }
 
   /**
-   * Determina si se debe desactivar el parámetro existente
-   * @param {Object} newParameter - Nuevo parámetro
-   * @param {Object} existingParameter - Parámetro existente
-   * @returns {boolean} - True si se debe desactivar el existente
+   * Maneja parámetros que vienen sin fecha de creación
+   * @param {Object} parameterData - Datos del parámetro
+   * @param {Array} existingParameters - Parámetros existentes
+   * @param {string|number} equipmentId - ID del equipo
+   * @param {string|number} resultId - ID del resultado
+   * @returns {Promise<Object>} - Parámetro creado o existente si se ignora
    */
-  shouldDeactivateExisting(newParameter, existingParameter) {
-    // Solo desactivar si el nuevo parámetro tiene fecha y es más reciente
-    return (
-      newParameter.creation_date &&
-      newParameter.creation_date > existingParameter.creation_date
+  async handleParameterWithoutDate(parameterData, existingParameters, equipmentId, resultId) {
+    // Verificar si algún parámetro existente tiene el mismo valor
+    const parameterWithSameValue = existingParameters.find(
+      param => param.value === parameterData.value
     );
+
+    // Si existe un parámetro con el mismo valor, ignorar el nuevo
+    if (parameterWithSameValue) {
+      return parameterWithSameValue;
+    }
+
+    // Si no existe uno con el mismo valor, desactivar todos los existentes
+    await this.deactivateAllParameters(existingParameters);
+
+    // Crear el nuevo parámetro como activo con fecha actual
+    const data = {
+      ...parameterData,
+      equipment: { connect: { id: equipmentId } },
+      result: { connect: { id: resultId } },
+      active: true,
+      created_at: new Date()
+    };
+
+    return await this.parameterRepository.create(data);
+  }
+
+  /**
+   * Desactiva todos los parámetros en la lista
+   * @param {Array} parameters - Lista de parámetros a desactivar
+   * @returns {Promise<void>}
+   */
+  async deactivateAllParameters(parameters) {
+    const updatePromises = parameters.map(param =>
+      this.parameterRepository.update(param.id, { active: false })
+    );
+
+    await Promise.all(updatePromises);
   }
 
   /**
@@ -129,8 +196,8 @@ class ParameterService {
 
     // Validar fecha si existe
     if (
-      parameterData.creation_date &&
-      !(parameterData.creation_date instanceof Date)
+      parameterData.created_at &&
+      !(parameterData.created_at instanceof Date)
     ) {
       throw new Error("La fecha de creación debe ser un objeto Date válido");
     }
@@ -168,17 +235,21 @@ class ParameterService {
         throw new Error("El ID del resultado y la descripción son requeridos");
       }
 
-      const parameters = await this.parameterRepository.findAllByDescription(
+      const parameters = await this.parameterRepository.findByDescription(
         resultId,
         description
       );
 
       // Ordenar por fecha de creación descendente (más reciente primero)
       return parameters.sort((a, b) => {
-        if (!a.creation_date && !b.creation_date) return 0;
-        if (!a.creation_date) return 1;
-        if (!b.creation_date) return -1;
-        return b.creation_date - a.creation_date;
+        if (!a.created_at && !b.created_at) return 0;
+        if (!a.created_at) return 1;
+        if (!b.created_at) return -1;
+
+        const dateA = new Date(a.created_at);
+        const dateB = new Date(b.created_at);
+
+        return dateB - dateA;
       });
     } catch (error) {
       throw new Error(
@@ -215,10 +286,12 @@ class ParameterService {
    */
   async updateValue(resultId, description, newValue, equipmentId) {
     try {
-      const existingParameter =
-        await this.parameterRepository.findByDescription(resultId, description);
+      const existingParameters = await this.parameterRepository.findByDescription(
+        resultId,
+        description
+      );
 
-      if (!existingParameter) {
+      if (!existingParameters || existingParameters.length === 0) {
         throw new Error("Parámetro no encontrado");
       }
 
@@ -226,7 +299,7 @@ class ParameterService {
       const parameterData = {
         description,
         value: newValue,
-        creation_date: new Date(),
+        created_at: new Date(),
       };
 
       return await this.save(parameterData, equipmentId, resultId);

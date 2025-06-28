@@ -34,9 +34,11 @@ class TcpInBoundClient extends TcpClient {
       const response = await this.validateInboundSocket();
       await this.configureSocketEquipment(response);
     } catch (error) {
+      console.error(error);
       throw new Error(
-        `Ocurrió una excepción al inicializar el socket de conexión ${this.client.remoteAddress}:${this.client.remotePort}: ${error.message}`
+        `Ocurrió una excepción al inicializar el socket de conexión ${this.client.remoteAddress}:${this.client.remotePort}: ${error.message}`, error
       );
+      
     }
   }
 
@@ -48,7 +50,7 @@ class TcpInBoundClient extends TcpClient {
       return await this.connectionValidator.validate(this.client.remoteAddress);
     } catch (error) {
       this.client.destroy(); // Cierra el socket si hay un error
-      throw new Error(`Falló la validación de conexión: ${error.message}`); // <-- Propagar el error
+      throw new Error(`Falló la validación de conexión: ${error.message}`,error); // <-- Propagar el error
     }
   }
 

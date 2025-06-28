@@ -1,3 +1,4 @@
+const TcpClientConnectionCoreFactory = require("../TcpClientConnectionCoreFactory");
 const TcpInBoundClient = require("./TcpInBoundClient");
 
 class TcpInBoundClientFactory {

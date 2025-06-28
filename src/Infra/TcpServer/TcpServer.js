@@ -27,7 +27,7 @@ class TcpServer {
       try {
         await this.clientFactory.createAndInitialize(socket);
       } catch (error) {
-        console.error(`Error al crear cliente TCP: ${error.message}`);
+        console.error(`Error al crear cliente TCP: ${error.message}`, error);
         if (!socket.destroyed) {
           socket.destroy();
         }

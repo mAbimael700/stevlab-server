@@ -77,7 +77,7 @@ model Parameter {
   result_id               BigInt?
   equipment_id            BigInt?
   parameter_dictionary_id BigInt?
-  description             String?              @db.VarChar(25)
+  description             String?              @db.VarChar(100)
   value                   String?              @db.VarChar(25)
   unit_measurement        String?              @db.VarChar(10)
   max_range               String?              @db.VarChar(10)

@@ -6,13 +6,13 @@ class ParameterRepository extends BaseRepository {
     }
 
     /**
-    * Busca un parámetro por descripción y result_id, retorna el más reciente por creation_date
+    * Busca todos los parámetros por descripción y result_id, ordenados por creation_date (más reciente primero)
     * @param {BigInt} resultId - ID del resultado
     * @param {string} description - Descripción del parámetro
-    * @returns {Promise<Parameter |null>}
+    * @returns {Promise<Parameter[]>}
     */
     async findByDescription(resultId, description) {
-        return this.prisma.parameter.findFirst({
+        return this.prisma.parameter.findMany({
             where: {
                 result_id: resultId,
                 description: description

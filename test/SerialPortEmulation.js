@@ -25,7 +25,7 @@ const XMLmsg = `
 <p><n>PMPM</n><v>24</v></p>
 </instrinfo>
 <smpinfo>
-<p><n>ID</n><v>1159</v></p>
+<p><n>ID</n><v>11593</v></p>
 <p><n>SEQ</n><v>9094</v></p>
 <p><n>DATE</n><v>2024-12-18T15:19:17</v></p>
 <p><n>OPID</n></p>
@@ -92,7 +92,7 @@ const XMLmsg = `
 <p><n>MCVX</n><v>0</v></p>
 </smpinfo>
 <smpresults>
-<p><n>RBC</n><v>7.03</v><l>3.50</l><h>5.50</h></p>
+<p><n>RBC</n><v>8.03</v><l>3.50</l><h>5.50</h></p>
 <p><n>MCV</n><v>91.5</v><l>75.0</l><h>100.0</h></p>
 <p><n>HCT</n><v>64.3</v><l>35.0</l><h>55.0</h></p>
 <p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p>
@@ -105,7 +105,7 @@ const XMLmsg = `
 <p><n>PDW</n><v>15.4</v><l>0.1</l><h>99.9</h></p>
 <p><n>LPCR</n><v>42.3</v><l>0.1</l><h>99.9</h></p>
 <p><n>HGB</n><v>21.1</v><l>11.5</l><h>16.0</h></p>
-<p><n>WBC</n><v>10.6</v><l>3.5</l><h>10.0</h></p>
+<p><n>WBC</n><v>6.9</v><l>3.5</l><h>10.0</h></p>
 <p><n>LA</n><v>1.9</v><l>0.5</l><h>5.0</h></p>
 <p><n>MA</n><v>1.0</v><l>0.1</l><h>1.5</h></p>
 <p><n>GA</n><v>7.7</v><l>1.2</l><h>8.0</h></p>
@@ -128,7 +128,7 @@ port.open((err) => {
   if (err) {
     return console.error("Error abriendo el puerto:", err.message);
   }
-  console.log("Puerto abierto en COM5");
+  console.log("Puerto abierto en COM13");
 
   // Enviar datos cada 15 segundos
   setInterval(() => {

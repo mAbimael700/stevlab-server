@@ -14,6 +14,7 @@ const ResultRepository = require("../src/domain/Result/ResultRepository");
 const ParameterRepository = require("../src/domain/parameter/ParameterRepository");
 const ParameterService = require("../src/domain/parameter/ParameterService");
 const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
+const ClientConnectionFactory = require("../src/infra/ClientConnection/ClientConnectionFactory");
 
 const equipmentRepository = new EquipmentRepository(prisma);
 const resultRepository = new ResultRepository(prisma)
@@ -30,18 +31,18 @@ const connectionValidator = new ConnectionValidator(equipmentService);
 
 
 const bufferDataEmitter = BufferDataEmitter.getInstance();
-bufferDataEmitter
 const bufferDataEvents = new BufferDataEvents(resultService)
 const connectionCoreFactory = new TcpClientConnectionCoreFactory(bufferDataEmitter);
 
-const bufferDataListener = new BufferDataListener(bufferDataEmitter, bufferDataEvents).setup()
-
+new BufferDataListener(bufferDataEmitter, bufferDataEvents).setup()
+const equipmentConnectionManager = new EquipmentConnectionManager(equipmentService, new ClientConnectionFactory(bufferDataEmitter))
 const server = new TcpServer(
   3000,
   new TcpInBoundClientFactory(
     connectionValidator,
-    new EquipmentConnectionManager(equipmentService),
+    equipmentConnectionManager,
     connectionCoreFactory
   )
 );
+equipmentConnectionManager.initialize()
 server.listen();
