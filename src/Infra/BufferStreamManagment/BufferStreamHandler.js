@@ -1,12 +1,10 @@
 const { BufferList } = require("bl/BufferList");
 const EquipmentProfile = require("../../domain/EquipmentProfile/EquipmentProfileDto");
-const { IBufferParser } = require("../BufferParser/IBufferParser");
 
 class BufferStreamHandler {
   /**
    *
    * @param {EquipmentProfile} configuration
-   * @param {IBufferParser} parser
    */
   constructor(configuration) {
     if (!configuration.checksumRegex) {

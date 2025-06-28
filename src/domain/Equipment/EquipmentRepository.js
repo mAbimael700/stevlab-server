@@ -10,54 +10,11 @@ class EquipmentRepository extends BaseRepository {
     super("Equipment", prisma);
   }
 
-  async findAll({ includeRelations = false, }) {
-    const options = {};
-
-    if (includeRelations) {
-      options.include = {
-        equipmentProfile: {
-          include: {
-            communicationProfile: true, // Incluir la relación anidada
-          },
-        },
-        equipmentConfiguration: true
-      };
-
-    }
-
-    const equipments = await super.findAll(options);
-    return equipments
-  }
-
-
-  async findById({ includeRelations = false, }) {
-    const options = {};
-
-    if (includeRelations) {
-      options.include = {
-        equipmentProfile: {
-          include: {
-            communicationProfile: true, // Incluir la relación anidada
-          },
-        },
-        equipmentConfiguration: true
-      };
-    }
-    const equipment = await super.findById(options);
-    return equipment
-  }
-
-
-  // Función para buscar por MAC Address
-  async findByMacAddress(macAddress, { includeRelations = false } = {}) {
+  async findAll({ includeRelations = false }) {
     const options = {
       where: {
-        equipmentConfiguration: {
-          some: {
-            mac_address: macAddress
-          }
-        }
-      }
+        active: true,
+      },
     };
 
     if (includeRelations) {
@@ -67,7 +24,51 @@ class EquipmentRepository extends BaseRepository {
             communicationProfile: true, // Incluir la relación anidada
           },
         },
-        equipmentConfiguration: true
+        equipmentConfiguration: true,
+      };
+    }
+
+    const equipments = await super.findAll(options);
+    return equipments;
+  }
+
+  async findById({ includeRelations = false }) {
+    const options = {};
+
+    if (includeRelations) {
+      options.include = {
+        equipmentProfile: {
+          include: {
+            communicationProfile: true, // Incluir la relación anidada
+          },
+        },
+        equipmentConfiguration: true,
+      };
+    }
+    const equipment = await super.findById(options);
+    return equipment;
+  }
+
+  // Función para buscar por MAC Address
+  async findByMacAddress(macAddress, { includeRelations = false } = {}) {
+    const options = {
+      where: {
+        equipmentConfiguration: {
+          some: {
+            mac_address: macAddress,
+          },
+        },
+      },
+    };
+
+    if (includeRelations) {
+      options.include = {
+        equipmentProfile: {
+          include: {
+            communicationProfile: true, // Incluir la relación anidada
+          },
+        },
+        equipmentConfiguration: true,
       };
     }
 
@@ -81,10 +82,10 @@ class EquipmentRepository extends BaseRepository {
       where: {
         equipmentConfiguration: {
           some: {
-            ip_address: ipAddress
-          }
-        }
-      }
+            ip_address: ipAddress,
+          },
+        },
+      },
     };
 
     if (includeRelations) {
@@ -94,14 +95,13 @@ class EquipmentRepository extends BaseRepository {
             communicationProfile: true, // Incluir la relación anidada
           },
         },
-        equipmentConfiguration: true
+        equipmentConfiguration: true,
       };
     }
 
     const equipment = await this.prisma.equipment.findFirst(options);
     return equipment;
   }
-
 }
 
 module.exports = EquipmentRepository;

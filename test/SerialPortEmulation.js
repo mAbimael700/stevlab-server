@@ -1,5 +1,13 @@
-const { XMLParser } = require("fast-xml-parser");
-const XMLBufferParser = require("../src/Infra/BufferParser/XML/XMLBufferParser");
+const { SerialPort } = require("serialport");
+const { ReadlineParser } = require("@serialport/parser-readline");
+
+// Configura el puerto serial
+const port = new SerialPort({
+  path: "COM13", // Cambia si usas otro puerto
+  baudRate: 9600,
+  autoOpen: false,
+});
+
 
 const XMLmsg = `
 <!--:Begin:Chksum:1:-->
@@ -115,11 +123,26 @@ const XMLmsg = `
 <!--:End:Chksum:1:16:118:-->
 `;
 
-const data = new XMLBufferParser(XMLmsg);
-//console.log(data.sampleData);
-//console.log(data.getSampleResults());
-console.log(data.getSampleResume());
+// Abrimos el puerto
+port.open((err) => {
+  if (err) {
+    return console.error("Error abriendo el puerto:", err.message);
+  }
+  console.log("Puerto abierto en COM5");
 
-module.exports = {
-  XMLmsg,
-};
+  // Enviar datos cada 15 segundos
+  setInterval(() => {
+    const mensaje = XMLmsg;
+    port.write(mensaje, (err) => {
+      if (err) {
+        return console.error("Error al enviar:", err.message);
+      }
+      console.log("Enviado:", mensaje.trim());
+    });
+  }, 5000); // 15000 ms = 15 s
+});
+
+// Opcional: escuchar errores del puerto
+port.on("error", (err) => {
+  console.error("Error en el puerto:", err.message);
+});

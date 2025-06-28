@@ -3,10 +3,9 @@ const {
 } = require("../EquipmentConnection/EquipmentConnection.js");
 const EquipmentSchema = require("../../domain/Equipment/EquipmentSchema.js");
 const EquipmentDto = require("../../domain/Equipment/EquipmentDto.js");
-const ClientConnectionFactory = require("../ClientConnection/ClientConnectionFactory.js");
 
 class EquipmentConnectionManager {
-  constructor(equipmentService) {
+  constructor(equipmentService, clientConnectionFactory) {
     if (EquipmentConnectionManager.instance) {
       return EquipmentConnectionManager.instance;
     }
@@ -15,6 +14,7 @@ class EquipmentConnectionManager {
      */
     this.equipmentsOnServer = new Map();
     this.equipmentService = equipmentService;
+    this.clientConnectionFactory = clientConnectionFactory;
     EquipmentConnectionManager.instance = this;
   }
 
@@ -31,6 +31,7 @@ class EquipmentConnectionManager {
       });
     } catch (error) {
       console.error("Error al leer el archivo de dispositivos:", error.message);
+      throw error
     }
   }
 
@@ -41,7 +42,7 @@ class EquipmentConnectionManager {
    */
   async setEquipmentConnection(equipment) {
     try {
-      const clientConnection = ClientConnectionFactory.create(
+      const clientConnection = this.clientConnectionFactory.create(
         equipment.equipmentProfile.communicationType,
         equipment
       );
@@ -52,7 +53,10 @@ class EquipmentConnectionManager {
       this.equipmentsOnServer.set(equipment.id, equipmentConnection);
       return this.equipmentsOnServer.get(equipment.id);
     } catch (error) {
-      console.error(`Error al crear conexión para equipo ${equipment.id}:`, error.message);
+      console.error(
+        `Error al crear conexión para equipo ${equipment.id}:`,
+        error.message
+      );
       throw error;
     }
   }

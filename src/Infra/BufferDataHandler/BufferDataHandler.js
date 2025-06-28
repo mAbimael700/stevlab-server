@@ -2,21 +2,19 @@ const {
   BufferStreamProcessor,
 } = require("../BufferStreamManagment/BufferStreamProcessor");
 const EquipmentDto = require("../../domain/Equipment/EquipmentDto");
-const { BufferDataEmitter } = require("./BufferDataEmitter");
 
 class BufferDataHandler {
   /**
    *
    * @param {EquipmentDto} equipment
-   * @param {*} bufferDataEmitter 
+   * @param {*} bufferDataEmitter
    */
   constructor(equipment, bufferDataEmitter) {
     this.equipment = equipment;
     this.bufferStreamProcessor = new BufferStreamProcessor(
-      equipment
-        .equipmentProfile
-        .communicationProfile);
-    this.bufferEmitter = bufferDataEmitter
+      equipment.equipmentProfile.communicationProfile
+    );
+    this.bufferEmitter = bufferDataEmitter;
   }
 
   /**
@@ -29,13 +27,15 @@ class BufferDataHandler {
 
       if (filteredData.trim()) {
         const bufferMessages = this.bufferStreamProcessor.process(data);
-        if (bufferMessages)
+        if (bufferMessages) {
+
           bufferMessages.forEach((bm) =>
             this.bufferEmitter.emitReceivedMessage({
               equipment: this.equipment,
               message: bm,
             })
-          ); // Emitimos solo los mensajes procesados            
+          ); // Emitimos solo los mensajes procesados
+        }
       }
     } catch (error) {
       /* this.emit("error", {
@@ -44,7 +44,6 @@ class BufferDataHandler {
       }); */
 
       throw new Error(`Error procesando datos: ${error.message}`, error);
-
     }
   }
 }

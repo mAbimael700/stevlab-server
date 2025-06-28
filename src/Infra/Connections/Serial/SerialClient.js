@@ -15,14 +15,17 @@ class SerialClient extends ClientOutBoundConnection {
 
     // Crear dependencias usando el factory
     this.client = this.clientCoreFactory.createSerialPort(this.equipment);
+    this.dataHandler =
+      this.clientCoreFactory.createBufferDataHandler(equipment);
     this.eventsHandler = this.clientCoreFactory.createEventsHandler(
       this.client,
-      this.equipment
+      this.equipment,
+      this.dataHandler
     );
     this.serialPortListener = this.clientCoreFactory.createPortListener(
       this.client,
       this.eventsHandler
-    );
+    ).setup();
   }
   /**
    * Conecta el puerto serial

@@ -6,7 +6,7 @@ const TcpClientConnectionCoreFactory = require("../Connections/Tcp/TcpClientConn
 const SerialClientCoreFactory = require("../Connections/Serial/SerialClientCoreFactory");
 
 class ClientConnectionFactory {
-  constructor() {
+  constructor(bufferDataEmitter) {
     /**
      * @type {Map<string, {clientClass: ClientOutBoundConnection, clientCoreFactory: Function} | null>}
      */
@@ -14,8 +14,8 @@ class ClientConnectionFactory {
 
     // Inicializar dependency factories
     this.clientCoreFactories = {
-      tcp: new TcpClientConnectionCoreFactory(),
-      serial: new SerialClientCoreFactory(),
+      tcp: new TcpClientConnectionCoreFactory(bufferDataEmitter),
+      serial: new SerialClientCoreFactory(bufferDataEmitter),
       //ftp: new FtpClientCoreFactory(), // Asumiendo que existe
     };
 
@@ -107,7 +107,9 @@ class ClientConnectionFactory {
         return equipment ? new clientClass(equipment) : new clientClass();
       }
     } catch (error) {
-      throw new Error(`Error al crear cliente ${type}: ${error.message}`);
+      throw new Error(
+        `Error al crear cliente ${type.toLocaleLowerCase()}: ${error.message}`
+      );
     }
   }
 
@@ -172,6 +174,4 @@ class ClientConnectionFactory {
   }
 }
 
-const clientConnectionFactory = new ClientConnectionFactory();
-
-module.exports = clientConnectionFactory;
+module.exports = ClientConnectionFactory;

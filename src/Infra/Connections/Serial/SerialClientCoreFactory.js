@@ -1,15 +1,20 @@
 const { SerialPort } = require("serialport");
 const SerialPortListener = require("./SerialPortListener");
 const SerialEventsHandler = require("./SerialEventsHandler");
+const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
+const { BufferDataHandler } = require("../../BufferDataHandler/BufferDataHandler");
 
 class SerialClientCoreFactory {
+  constructor(bufferDataEmitter) {
+    this.bufferDataEmitter = bufferDataEmitter;
+  }
   /**
    * Crea una instancia de SerialPort
-   * @param {*} equipment
+   * @param {EquipmentDto} equipment
    * @returns {SerialPort}
    */
   createSerialPort(equipment) {
-    const { port, baudRate } = equipment.configuration;
+    const { port, baudRate } = equipment.equipmentConfiguration;
     return new SerialPort({
       path: port,
       baudRate: baudRate ?? 9600,
@@ -20,10 +25,20 @@ class SerialClientCoreFactory {
    * Crea una instancia de SerialEventsHandler
    * @param {SerialPort} serialPort
    * @param {*} equipment
+   * @param {*} dataHandler
    * @returns {SerialEventsHandler}
    */
-  createEventsHandler(serialPort, equipment) {
-    return new SerialEventsHandler(serialPort, equipment);
+  createEventsHandler(serialPort, equipment, dataHandler) {
+    return new SerialEventsHandler(serialPort, equipment, dataHandler);
+  }
+
+  /**
+   * Crea una instancia de BufferDataHandler
+   * @param {EquipmentDto} equipment
+   * @returns {BufferDataHandler}
+   */
+  createBufferDataHandler(equipment) {
+    return new BufferDataHandler(equipment, this.bufferDataEmitter);
   }
 
   /**

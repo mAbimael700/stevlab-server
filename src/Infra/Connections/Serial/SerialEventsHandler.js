@@ -1,33 +1,32 @@
 const { SerialPort } = require("serialport");
-const {
-  BufferDataEmitter,
-} = require("../../BufferDataHandler/BufferDataEmitter");
+const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
 
 class SerialEventsHandler {
   /**
    *
    * @param {SerialPort<Buffer>} serialPort
-   * @param {*} equipment
+   * @param {EquipmentDto} equipment
    */
-  constructor(serialPort, equipment) {
+  constructor(serialPort, equipment, dataHandler) {
+    this.port = equipment.equipmentConfiguration.port
     this.serialPort = serialPort;
     this.equipment = equipment;
-    this.bufferDataEmitter = new BufferDataEmitter(equipment);
+    this.dataHandler = dataHandler;
   }
 
   open() {
     console.log(
-      `Puerto serial abierto para el equipo ${this.equipment.name} en el puerto ${this.equipment.configuration.port}`
+      `Puerto serial abierto para el equipo ${this.equipment.name} en el puerto ${this.port}`
     );
     // Enviar un mensaje al equipo (opcional)
     this.serialPort.write("Comando de prueba\n", (err) => {
       if (err) {
-        const msg = `Error al enviar datos al equipo ${this.equipment.name} en el puerto ${this.equipment.configuration.port}: ${err.message}`;
+        const msg = `Error al enviar datos al equipo ${this.equipment.name} en el puerto ${this.port}: ${err.message}`;
         return console.error(msg);
       }
 
       console.info(
-        `Conexión exitosa con ${this.equipment.name} en el puerto ${this.equipment.configuration.port}.`
+        `Conexión exitosa con ${this.equipment.name} en el puerto ${this.port}.`
       );
     });
   }
@@ -38,10 +37,10 @@ class SerialEventsHandler {
    */
   data(data) {
     try {
-      this.bufferDataEmitter.processBufferData(data);
+      this.dataHandler.processBufferData(data);
     } catch (error) {
       throw new Error(
-        `Hubó un error al procesar la información recibida del equipo en el puerto ${this.serialPort.path} de ${this.equipment.name}:`,
+        `Hubó un error al procesar la información recibida del equipo en el puerto ${this.serialPort.path} de ${this.equipment.name}: ${error.message}`,
         error
       );
     }

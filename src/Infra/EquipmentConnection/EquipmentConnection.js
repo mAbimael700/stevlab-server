@@ -1,11 +1,12 @@
-const { ClientConnection } = require("../ClientConnection/ClientConnection.js");
+const ClientConnection = require("../ClientConnection/ClientConnection.js");
 const EquipmentDto = require("../../domain/Equipment/EquipmentDto.js");
+const ClientOutBoundConnection = require("../ClientConnection/ClientOutBoundConnection.js");
 
 class EquipmentConnection {
   /**
    *
    * @param {EquipmentDto} equipment
-   * @param {ClientConnection | null} clientConnection
+   * @param {ClientConnection | ClientOutBoundConnection| null} clientConnection
    */
   constructor(equipment, clientConnection = null) {
     if (!equipment) {
@@ -14,6 +15,10 @@ class EquipmentConnection {
 
     this.equipment = equipment;
     this.clientConnection = clientConnection;
+
+    if (clientConnection) {
+      clientConnection?.connect();
+    }
   }
 
   /**
