@@ -1,5 +1,5 @@
 const { SerialPort } = require("serialport");
-const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
+const EquipmentDto = require("../../../domain/equipment/EquipmentDto");
 
 class SerialEventsHandler {
   /**

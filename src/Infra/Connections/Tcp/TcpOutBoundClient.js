@@ -1,7 +1,7 @@
 const { Socket } = require("node:net");
 const { TcpClient } = require("./TcpClient");
 const TcpClientConnectionCoreFactory = require("./TcpClientConnectionCoreFactory");
-const EquipmentDto = require("../../../domain/Equipment/EquipmentDto");
+const EquipmentDto = require("../../../domain/equipment/EquipmentDto");
 
 class TcpOutBoundClient extends TcpClient {
   /**

@@ -1,6 +1,6 @@
-const ClientConnection = require("../ClientConnection/ClientConnection.js");
-const EquipmentDto = require("../../domain/Equipment/EquipmentDto.js");
-const ClientOutBoundConnection = require("../ClientConnection/ClientOutBoundConnection.js");
+const ClientConnection = require("../clientconnection/ClientConnection.js");
+const EquipmentDto = require("../../domain/equipment/EquipmentDto.js");
+const ClientOutBoundConnection = require("../clientconnection/ClientOutBoundConnection.js");
 
 class EquipmentConnection {
   /**

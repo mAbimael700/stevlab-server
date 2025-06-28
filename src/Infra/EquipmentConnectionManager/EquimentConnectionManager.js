@@ -1,8 +1,8 @@
 const {
   EquipmentConnection,
-} = require("../EquipmentConnection/EquipmentConnection.js");
-const EquipmentSchema = require("../../domain/Equipment/EquipmentSchema.js");
-const EquipmentDto = require("../../domain/Equipment/EquipmentDto.js");
+} = require("../equipmentconnection/EquipmentConnection.js");
+const EquipmentSchema = require("../../domain/equipment/EquipmentSchema.js");
+const EquipmentDto = require("../../domain/equipment/EquipmentDto.js");
 
 class EquipmentConnectionManager {
   constructor(equipmentService, clientConnectionFactory) {

@@ -1,9 +1,9 @@
 const net = require("node:net");
 const {
   ConnectionValidator,
-} = require("../Connections/Tcp/ConnectionValidator");
-const TcpInBoundClient = require("../Connections/Tcp/TcpInboundClient/TcpInBoundClient");
-const TcpInBoundClientFactory = require("../Connections/Tcp/TcpInboundClient/TcpInBoundClientFactory");
+} = require("../connections/tcp/ConnectionValidator");
+const TcpInBoundClient = require("../connections/tcp/tcpinboundclient/TcpInBoundClient");
+const TcpInBoundClientFactory = require("../connections/tcp/tcpinboundclient/TcpInBoundClientFactory");
 
 class TcpServer {
   /**

@@ -1,20 +1,25 @@
-const ConnectionValidator = require("../src/Infra/Connections/Tcp/ConnectionValidator");
-const TcpClientConnectionCoreFactory = require("../src/infra/Connections/Tcp/TcpClientConnectionCoreFactory");
-const TcpInBoundClientFactory = require("../src/infra/Connections/Tcp/TcpInboundClient/TcpInBoundClientFactory");
-const EquipmentRepository = require("../src/domain/Equipment/EquipmentRepository");
-const EquipmentService = require("../src/domain/Equipment/EquipmentService");
-const EquipmentConnectionManager = require("../src/infra/EquipmentConnectionManager/EquimentConnectionManager");
-const TcpServer = require("../src/infra/TcpServer/TcpServer");
-const prisma = require("../src/infra/PrismaClient/PrismaClient");
-const BufferDataEmitter = require("../src/infra/BufferDataHandler/BufferDataEmitter");
-const BufferDataListener = require("../src/Infra/BufferDataHandler/BufferDataListener");
-const BufferDataEvents = require("../src/infra/BufferDataHandler/BufferDataEvents");
-const ResultService = require("../src/domain/Result/ResultService");
-const ResultRepository = require("../src/domain/Result/ResultRepository");
+const prisma = require("../src/infra/prismaclient/PrismaClient");
+const EquipmentRepository = require("../src/domain/equipment/EquipmentRepository");
+const ResultRepository = require("../src/domain/result/ResultRepository");
 const ParameterRepository = require("../src/domain/parameter/ParameterRepository");
+
+const EquipmentService = require("../src/domain/equipment/EquipmentService");
+const ResultService = require("../src/domain/result/ResultService");
 const ParameterService = require("../src/domain/parameter/ParameterService");
 const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
-const ClientConnectionFactory = require("../src/infra/ClientConnection/ClientConnectionFactory");
+
+
+const BufferDataEmitter = require("../src/infra/bufferdatahandler/BufferDataEmitter");
+const BufferDataListener = require("../src/infra/bufferdatahandler/BufferDataListener");
+const BufferDataEvents = require("../src/infra/bufferdatahandler/BufferDataEvents");
+
+const ClientConnectionFactory = require("../src/infra/clientconnection/ClientConnectionFactory");
+const EquipmentConnectionManager = require("../src/infra/EquipmentConnectionManager/EquimentConnectionManager");
+
+const ConnectionValidator = require("../src/infra/connections/tcp/ConnectionValidator");
+const TcpServer = require("../src/infra/tcpServer/TcpServer");
+const TcpInBoundClientFactory = require("../src/infra/connections/tcp/tcpinboundclient/TcpInBoundClientFactory");
+const TcpClientConnectionCoreFactory = require("../src/infra/connections/tcp/TcpClientConnectionCoreFactory");
 
 const equipmentRepository = new EquipmentRepository(prisma);
 const resultRepository = new ResultRepository(prisma)
@@ -27,22 +32,28 @@ const histogramService = new HistogramResultService(histogramRepository)
 const resultService = new ResultService(resultRepository, parameterService, histogramService)
 
 
-const connectionValidator = new ConnectionValidator(equipmentService);
-
-
 const bufferDataEmitter = BufferDataEmitter.getInstance();
 const bufferDataEvents = new BufferDataEvents(resultService)
-const connectionCoreFactory = new TcpClientConnectionCoreFactory(bufferDataEmitter);
 
-new BufferDataListener(bufferDataEmitter, bufferDataEvents).setup()
 const equipmentConnectionManager = new EquipmentConnectionManager(equipmentService, new ClientConnectionFactory(bufferDataEmitter))
-const server = new TcpServer(
+
+const tcpConnectionCoreFactory = new TcpClientConnectionCoreFactory(bufferDataEmitter);
+const tcpConnectionValidator = new ConnectionValidator(equipmentService);
+
+const tcpServer = new TcpServer(
   3000,
   new TcpInBoundClientFactory(
-    connectionValidator,
+    tcpConnectionValidator,
     equipmentConnectionManager,
-    connectionCoreFactory
+    tcpConnectionCoreFactory
   )
 );
+
+/** Estos son los servicios principales de mi aplicación, 
+ * también se le irán agregando mas como 
+ *  un servidor http con controladores e inyectado servicios,
+ *  servidor websocket con inyección de dependencias de emisores y receptores y estos de servicios
+*/
+new BufferDataListener(bufferDataEmitter, bufferDataEvents).setup()
 equipmentConnectionManager.initialize()
-server.listen();
+tcpServer.listen();

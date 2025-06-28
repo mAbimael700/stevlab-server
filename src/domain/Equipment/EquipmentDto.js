@@ -1,5 +1,5 @@
-const EquipmentConfigurationDto = require("../EquipmentConfiguration/EquipmentConfigurationDto")
-const EquipmentProfileDto = require("../EquipmentProfile/EquipmentProfileDto")
+const EquipmentConfigurationDto = require("../equipmentconfiguration/EquipmentConfigurationDto")
+const EquipmentProfileDto = require("../equipmentprofile/EquipmentProfileDto")
 
 class EquipmentDto {
 

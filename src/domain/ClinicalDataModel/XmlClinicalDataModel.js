@@ -1,4 +1,4 @@
-const XMLBufferParser = require("../../Infra/BufferParser/XML/XMLBufferParser");
+const XMLBufferParser = require("../../infra/bufferparser/XML/XMLBufferParser");
 const IClinicalDataModel = require("./IClinicalDataModel");
 
 class XmlClinicalDataModel extends IClinicalDataModel {

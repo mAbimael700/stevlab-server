@@ -1,4 +1,3 @@
-
 class BufferDataListener {
   constructor(bufferDataEmitter, bufferDataEvents) {
     this.dataEmitter = bufferDataEmitter;
