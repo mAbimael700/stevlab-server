@@ -31,6 +31,7 @@ class ResultRouter {
   setupDeviceRoutes() {
     // Rutas de dispositivos
     this.router.get("/", this.controller.getAll);
+    this.router.get("/lastest", this.controller.getAll);
     this.router.get("/:id", this.controller.getById);
     this.router.post("/:id/send", this.controller.getEquipmentProfiles);
   }

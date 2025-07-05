@@ -63,9 +63,7 @@ class EquipmentController {
   }
 
   configureController() {
-    this.getDevicesOnServer = this.getDevicesOnServer.bind(this);
     this.getAll = this.getAll.bind(this);
-    this.getDevicesByArea = this.getDevicesByArea.bind(this);
     this.getById = this.getById.bind(this);
     this.save = this.save.bind(this);
     this.remove = this.remove.bind(this);
