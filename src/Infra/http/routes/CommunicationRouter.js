@@ -30,12 +30,23 @@ class CommunicationRouter {
    */
   setupCommunicationRouter() {
     // Rutas de dispositivos
-    this.router.get("/", this.controller.getAll);
-    this.router.get(
-      "/equipments/profiles",
-      this.controller.getEquipmentProfiles
-    );
-    this.router.get("/:id", this.controller.getById);
+    this.router.get("/servers/tcp", this.controller.getTcpServerInformation);
+    this.router.post("/servers/tpc/start", this.controller.inicializeTcpServer);
+    this.router.delete("/servers/tcp/stop", this.controller.stopTcpServer);
+    
+    this.router.get("/networks/tcp/interfaces", this.controller.getTcpNetworkInterfaces);
+    
+    this.router.get("/com/ports",this.controller.getComPorts);
+    
+    this.router.post("/equipments", this.controller.inicialitzeAllEquipmentConnections);
+    this.router.delete("/equipments", this.controller.closeAllEquipmentConnections);
+    
+    this.router.get("/equipments/profiles", this.controller.getEquipmentProfiles);
+    
+    this.router.get("/equipments/:id", this.controller.getById);
+    this.router.post("/equipments/:id", this.controller.inicializeEquipmentConnectionById);
+    this.router.patch("/equipments/:id", this.controller.updateEquipmentConnectionById);
+    this.router.delete("/equipments/:id", this.controller.closeEquipmentConnectionById);
   }
 
   /**

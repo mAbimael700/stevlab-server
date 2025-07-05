@@ -32,8 +32,14 @@ class EquipmentRouter {
     // Rutas de dispositivos
     this.router.get("/", this.controller.getAll);
     this.router.post("/", this.controller.save);
+    
+    
     this.router.get("/:id", this.controller.getById);
-    this.router.delete("/:id", this.controller.remove);
+    this.router.patch("/:id", this.controller.updateById);
+    this.router.delete("/:id", this.controller.deactivateById);
+    
+    this.router.get("/:id/results/raw", this.controller.getRawResultsByEquipmentId);
+    this.router.get("/:id/results/raw/lastest", this.controller.getLatestRawResultsByEquipmentId);
   }
 
   /**

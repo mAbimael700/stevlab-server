@@ -3,14 +3,16 @@ class ResultController {
    *
    * @param {IEquipmentService} resultService
    */
-  constructor(resultService) {
-    this.service = resultService;
+  constructor(dependencies = {}) {
+    this.resultService = dependencies.resultService;
+    this.parameterService = dependencies.parameterService
+    this.senderService = dependencies.senderService
     this.configureController();
   }
 
   async getAll(req, res) {
     try {
-      const results = await this.service.getAll();
+      const results = await this.resultService.getAll();
       return res.status(200).json({
         content: results,
       });
@@ -21,9 +23,9 @@ class ResultController {
     }
   }
 
-async getLatests(req, res) {
+  async getLatest(req, res) {
     try {
-      const results = await this.service.getLatests();
+      const results = await this.resultService.getLatests();
       return res.status(200).json({
         content: results,
       });
@@ -36,10 +38,10 @@ async getLatests(req, res) {
 
 
   async getById(req, res) {
-    const { id } = req.params;
+    const { resultId } = req.params;
 
     try {
-      const result = await this.service.getById(id);
+      const result = await this.resultService.getById(resultId);
 
       return res.status(200).json(result);
     } catch (error) {
@@ -50,11 +52,52 @@ async getLatests(req, res) {
   }
 
 
-  async remove(req, res) {
-    const { id } = req.params;
+  async getResultParametersByResultId(req, res) {
+    const { resultId } = req.params;
 
     try {
-      await this.service.delete(id);
+      const parameters = await this.resultService.getParametersByResultId(resultId);
+
+      return res.status(200).json({ content: parameters });
+    } catch (error) {
+      return res.status(404).json({
+        message: "No se encontró el resultado con esa Id",
+      });
+    }
+  }
+
+
+  async setResultParameterActive(req, res) {
+    const { resultId } = req.params;
+
+    try {
+      await this.parameterService.activateByResultId(resultId);
+      return res.status(200);
+    } catch (error) {
+      return res.status(403).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async setResultParameterInactive(req, res) {
+    const { resultId } = req.params;
+
+    try {
+      await this.parameterService.deactivateByResultId(resultId);
+      return res.status(200);
+    } catch (error) {
+      return res.status(403).json({
+        message: error.message,
+      });
+    }
+  }
+
+  async sendResultById(req, res) {
+    const { resultId } = req.params;
+
+    try {
+      await this.senderService.sendResultById(resultId);
       return res.status(200);
     } catch (error) {
       return res.status(403).json({
@@ -66,7 +109,11 @@ async getLatests(req, res) {
   configureController() {
     this.getAll = this.getAll.bind(this);
     this.getById = this.getById.bind(this);
-    this.remove = this.remove.bind(this);
+    this.getLatest = this.getLatest.bind(this);
+    this.getResultParametersByResultId = this.getResultParametersByResultId.bind(this)
+    this.setResultParameterActive = this.setResultParameterActive.bind(this)
+    this.setResultParameterInactive = this.setResultParameterInactive.bind(this)
+    this.sendResultById = this.sendResultById.bind(this)
   }
 }
 

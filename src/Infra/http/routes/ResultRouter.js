@@ -22,18 +22,24 @@ class ResultRouter {
    * Configura todas las rutas del router
    */
   setupRoutes() {
-    this.setupDeviceRoutes();
+    this.setupResultRoutes();
   }
 
   /**
    * Configura las rutas relacionadas con dispositivos
    */
-  setupDeviceRoutes() {
+  setupResultRoutes() {
     // Rutas de dispositivos
     this.router.get("/", this.controller.getAll);
-    this.router.get("/lastest", this.controller.getAll);
-    this.router.get("/:id", this.controller.getById);
-    this.router.post("/:id/send", this.controller.getEquipmentProfiles);
+    this.router.get("/lastest", this.controller.getLatest);
+    
+    this.router.get("/:resultId", this.controller.getById);
+
+    this.router.get("/:resultId/parameters", this.controller.getResultParametersByResultId);
+    this.router.post("/:resultId/parameters/:parameterId", this.controller.setResultParameterActive);
+    this.router.delete("/:resultId/parameters/:parameterId", this.controller.setResultParameterInactive);
+
+    this.router.post("/:resultId/send", this.controller.sendResultById);
   }
 
   /**
