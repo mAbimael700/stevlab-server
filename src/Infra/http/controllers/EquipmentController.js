@@ -5,12 +5,12 @@ class EquipmentController {
    */
   constructor(equipmentService) {
     this.service = equipmentService;
-    this.configureController()
+    this.configureController();
   }
 
   async getAll(req, res) {
     try {
-      const equipments = await this.service.getAll()
+      const equipments = await this.service.getAll();
       return res.status(200).json({
         content: equipments,
       });
@@ -21,16 +21,13 @@ class EquipmentController {
     }
   }
 
-
-
   async getById(req, res) {
-    const { id } = req.params
+    const { id } = req.params;
 
     try {
-      const equipment = await this.service.getById(id)
+      const equipment = await this.service.getById(id);
 
       return res.status(200).json(equipment);
-
     } catch (error) {
       return res.status(404).json({
         message: "No se encontró el equipo con esa Id",
@@ -38,16 +35,14 @@ class EquipmentController {
     }
   }
 
-
   async save(req, res) {
     const data = req.body;
 
     try {
       const result = await this.service.save(data);
-
       return res.status(201).json(result);
     } catch (error) {
-      return res.status(400).json({
+      return res.status(403).json({
         error: error.message,
         cause: error.cause,
       });
@@ -61,13 +56,11 @@ class EquipmentController {
       await this.service.delete(id);
       return res.status(200);
     } catch (error) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(403).json({
         message: error.message,
       });
     }
   }
-
 
   configureController() {
     this.getDevicesOnServer = this.getDevicesOnServer.bind(this);

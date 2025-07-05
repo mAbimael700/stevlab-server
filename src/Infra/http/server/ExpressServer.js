@@ -5,219 +5,216 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 class ExpressServer {
-    constructor(dependencies = {}) {
-        this.app = express();
-        this.server = null;
-        this.port = null;
-        this.isInitialized = false;
+  constructor(dependencies = {}) {
+    this.app = express();
+    this.server = null;
+    this.port = null;
+    this.isInitialized = false;
 
-        // Inyección de dependencias para los routers
-        this.routers = {
-            filesRouter: dependencies.filesRouter,
-            devicesRouter: dependencies.devicesRouter,
-            serverRouter: dependencies.serverRouter,
-            equipmentCommunicationProfileRouter: dependencies.equipmentCommunicationProfileRouter,
-            messageRouter: dependencies.messageRouter
-        };
+    // Inyección de dependencias para los routers
+    this.routers = {
+      resultsRouter: dependencies.resultsRouter,
+      equipmentRouter: dependencies.equipmentRouter,
+      communicationRouter: dependencies.communicationRouter,
+    };
 
-        // Configuración por defecto
-        this.config = {
-            staticPath: dependencies.staticPath || path.join(process.cwd(), "dist"),
-            indexPath: dependencies.indexPath || path.join(process.cwd(), "dist", "index.html"),
-            loggerFormat: dependencies.loggerFormat || "dev",
-            ...dependencies.config
-        };
+    // Configuración por defecto
+    this.config = {
+      staticPath: dependencies.staticPath || path.join(process.cwd(), "dist"),
+      indexPath:
+        dependencies.indexPath ||
+        path.join(process.cwd(), "dist", "index.html"),
+      loggerFormat: dependencies.loggerFormat || "dev",
+      ...dependencies.config,
+    };
+  }
+
+  /**
+   * Configura los middlewares básicos del servidor
+   */
+  setupMiddleware() {
+    // Middleware logger de las peticiones http al servidor
+    this.app.use(morgan(this.config.loggerFormat));
+    this.app.use(express.json());
+    this.app.use(cors());
+    this.app.disable("x-powered-by");
+  }
+
+  /**
+   * Configura las rutas de la API
+   */
+  setupRoutes() {
+    const { routers } = this;
+
+    // Validar que los routers requeridos estén disponibles
+    this.validateRouters();
+
+    // Configurar rutas de la API
+    this.app.use("/api/equipments", routers.equipmentRouter);
+    this.app.use("/api/results", routers.resultsRouter);
+    this.app.use("/api/communication", routers.communicationRouter);
+  }
+
+  /**
+   * Configura el servicio de archivos estáticos y SPA routing
+   */
+  setupStaticFiles() {
+    // Sirve los archivos estáticos desde la carpeta build/dist
+    this.app.use(express.static(this.config.staticPath));
+
+    // Captura todas las rutas y redirige a index.html para que React Router DOM maneje el enrutamiento
+    this.app.get("*", (req, res) => {
+      res.sendFile(this.config.indexPath);
+    });
+  }
+
+  /**
+   * Valida que todos los routers requeridos estén disponibles
+   */
+  validateRouters() {
+    const requiredRouters = [
+      "filesRouter",
+      "devicesRouter",
+      "serverRouter",
+      "equipmentCommunicationProfileRouter",
+      "messageRouter",
+    ];
+
+    const missingRouters = requiredRouters.filter(
+      (routerName) => !this.routers[routerName]
+    );
+
+    if (missingRouters.length > 0) {
+      throw new Error(`Missing required routers: ${missingRouters.join(", ")}`);
+    }
+  }
+
+  /**
+   * Inicializa el servidor con todas sus configuraciones
+   * @param {number} port - Puerto en el que escuchará el servidor
+   * @returns {Promise<http.Server>} - Servidor HTTP creado
+   */
+  async initialize(port) {
+    if (this.isInitialized) {
+      throw new Error("Server is already initialized");
     }
 
-    /**
-     * Configura los middlewares básicos del servidor
-     */
-    setupMiddleware() {
-        // Middleware logger de las peticiones http al servidor
-        this.app.use(morgan(this.config.loggerFormat));
-        this.app.use(express.json());
-        this.app.use(cors());
-        this.app.disable('x-powered-by');
+    this.port = port;
+
+    try {
+      // Configurar middlewares
+      this.setupMiddleware();
+
+      // Configurar rutas
+      this.setupRoutes();
+
+      // Configurar archivos estáticos
+      this.setupStaticFiles();
+
+      // Crear servidor HTTP
+      this.server = http.createServer(this.app);
+
+      this.isInitialized = true;
+
+      return this.server;
+    } catch (error) {
+      throw new Error(`Failed to initialize server: ${error.message}`);
+    }
+  }
+
+  /**
+   * Inicia el servidor en el puerto especificado
+   * @returns {Promise<http.Server>} - Servidor HTTP iniciado
+   */
+  async start() {
+    if (!this.isInitialized) {
+      throw new Error("Server must be initialized before starting");
     }
 
-    /**
-     * Configura las rutas de la API
-     */
-    setupRoutes() {
-        const { routers } = this;
+    return new Promise((resolve, reject) => {
+      this.server.listen(this.port, (error) => {
+        if (error) {
+          reject(new Error(`Failed to start server: ${error.message}`));
+          return;
+        }
 
-        // Validar que los routers requeridos estén disponibles
-        this.validateRouters();
-
-        // Configurar rutas de la API
-        this.app.use("/api/files", routers.filesRouter);
-        this.app.use("/api/areas", routers.devicesRouter);
-        this.app.use("/api/communication/devices", routers.devicesRouter);
-        this.app.use("/api/communication/equipments/profiles", routers.equipmentCommunicationProfileRouter);
-        this.app.use("/api/message", routers.messageRouter);
-        this.app.use("/api/server", routers.serverRouter);
-    }
-
-    /**
-     * Configura el servicio de archivos estáticos y SPA routing
-     */
-    setupStaticFiles() {
-        // Sirve los archivos estáticos desde la carpeta build/dist
-        this.app.use(express.static(this.config.staticPath));
-
-        // Captura todas las rutas y redirige a index.html para que React Router DOM maneje el enrutamiento
-        this.app.get("*", (req, res) => {
-            res.sendFile(this.config.indexPath);
-        });
-    }
-
-    /**
-     * Valida que todos los routers requeridos estén disponibles
-     */
-    validateRouters() {
-        const requiredRouters = [
-            'filesRouter',
-            'devicesRouter',
-            'serverRouter',
-            'equipmentCommunicationProfileRouter',
-            'messageRouter'
-        ];
-
-        const missingRouters = requiredRouters.filter(
-            routerName => !this.routers[routerName]
+        console.log(
+          `Servidor Web Socket escuchando en el puerto ${this.port}`,
+          `Servidor HTTP accessible http://localhost:${this.port}/`
         );
 
-        if (missingRouters.length > 0) {
-            throw new Error(`Missing required routers: ${missingRouters.join(', ')}`);
-        }
+        resolve(this.server);
+      });
+    });
+  }
+
+  /**
+   * Detiene el servidor
+   * @returns {Promise<void>}
+   */
+  async stop() {
+    if (!this.server) {
+      return;
     }
 
-    /**
-     * Inicializa el servidor con todas sus configuraciones
-     * @param {number} port - Puerto en el que escuchará el servidor
-     * @returns {Promise<http.Server>} - Servidor HTTP creado
-     */
-    async initialize(port) {
-        if (this.isInitialized) {
-            throw new Error('Server is already initialized');
-        }
-
-        this.port = port;
-
-        try {
-            // Configurar middlewares
-            this.setupMiddleware();
-
-            // Configurar rutas
-            this.setupRoutes();
-
-            // Configurar archivos estáticos
-            this.setupStaticFiles();
-
-            // Crear servidor HTTP
-            this.server = http.createServer(this.app);
-
-            this.isInitialized = true;
-
-            return this.server;
-        } catch (error) {
-            throw new Error(`Failed to initialize server: ${error.message}`);
-        }
-    }
-
-    /**
-     * Inicia el servidor en el puerto especificado
-     * @returns {Promise<http.Server>} - Servidor HTTP iniciado
-     */
-    async start() {
-        if (!this.isInitialized) {
-            throw new Error('Server must be initialized before starting');
+    return new Promise((resolve, reject) => {
+      this.server.close((error) => {
+        if (error) {
+          reject(new Error(`Failed to stop server: ${error.message}`));
+          return;
         }
 
-        return new Promise((resolve, reject) => {
-            this.server.listen(this.port, (error) => {
-                if (error) {
-                    reject(new Error(`Failed to start server: ${error.message}`));
-                    return;
-                }
+        console.log("Servidor detenido correctamente");
+        this.isInitialized = false;
+        resolve();
+      });
+    });
+  }
 
-                console.log(
-                    `Servidor Web Socket escuchando en el puerto ${this.port}`,
-                    `Servidor HTTP accessible http://localhost:${this.port}/`
-                );
+  /**
+   * Obtiene la instancia de Express
+   * @returns {express.Application}
+   */
+  getApp() {
+    return this.app;
+  }
 
-                resolve(this.server);
-            });
-        });
-    }
+  /**
+   * Obtiene el servidor HTTP
+   * @returns {http.Server|null}
+   */
+  getServer() {
+    return this.server;
+  }
 
-    /**
-     * Detiene el servidor
-     * @returns {Promise<void>}
-     */
-    async stop() {
-        if (!this.server) {
-            return;
-        }
+  /**
+   * Obtiene el puerto del servidor
+   * @returns {number|null}
+   */
+  getPort() {
+    return this.port;
+  }
 
-        return new Promise((resolve, reject) => {
-            this.server.close((error) => {
-                if (error) {
-                    reject(new Error(`Failed to stop server: ${error.message}`));
-                    return;
-                }
+  /**
+   * Verifica si el servidor está inicializado
+   * @returns {boolean}
+   */
+  isServerInitialized() {
+    return this.isInitialized;
+  }
 
-                console.log('Servidor detenido correctamente');
-                this.isInitialized = false;
-                resolve();
-            });
-        });
-    }
-
-    /**
-     * Obtiene la instancia de Express
-     * @returns {express.Application}
-     */
-    getApp() {
-        return this.app;
-    }
-
-    /**
-     * Obtiene el servidor HTTP
-     * @returns {http.Server|null}
-     */
-    getServer() {
-        return this.server;
-    }
-
-    /**
-     * Obtiene el puerto del servidor
-     * @returns {number|null}
-     */
-    getPort() {
-        return this.port;
-    }
-
-    /**
-     * Verifica si el servidor está inicializado
-     * @returns {boolean}
-     */
-    isServerInitialized() {
-        return this.isInitialized;
-    }
-
-    /**
-     * Método estático para crear y inicializar el servidor en un solo paso
-     * @param {number} port - Puerto del servidor
-     * @param {Object} dependencies - Dependencias requeridas
-     * @returns {Promise<ExpressServer>} - Instancia del servidor inicializada
-     */
-    static async createAndStart(port, dependencies) {
-        const server = new ExpressServer(dependencies);
-        await server.initialize(port);
-        await server.start();
-        return server;
-    }
+  /**
+   * Método estático para crear y inicializar el servidor en un solo paso
+   * @param {number} port - Puerto del servidor
+   * @param {Object} dependencies - Dependencias requeridas
+   * @returns {Promise<ExpressServer>} - Instancia del servidor inicializada
+   */
+  static async createAndStart(port, dependencies) {
+    const server = new ExpressServer(dependencies);
+    await server.initialize(port);
+    await server.start();
+    return server;
+  }
 }
 
 module.exports = ExpressServer;

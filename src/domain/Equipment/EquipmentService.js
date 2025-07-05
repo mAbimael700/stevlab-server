@@ -5,10 +5,11 @@ const EquipmentSchema = require("./EquipmentSchema");
 class EquipmentService {
   /**
    *
-   * @param {EquipmentRepository} equipmentRepository
+   * @param {Object} dependencies
    */
-  constructor(equipmentRepository) {
-    this.equipmentRepository = equipmentRepository;
+  constructor(dependencies) {
+    this.equipmentRepository = dependencies.equipmentRepository;
+    this.equipmentProfileRepository = dependencies.equipmentRepository;
   }
 
   async getAll() {
@@ -17,7 +18,7 @@ class EquipmentService {
     });
 
     if (equipments.length > 0) {
-      return equipments.map(e => new EquipmentDto(e));
+      return equipments.map((e) => new EquipmentDto(e));
     }
 
     return null;
@@ -38,13 +39,23 @@ class EquipmentService {
   }
 
   async create(data) {
-    const resultValidation = EquipmentSchema.validate(data);
+    const resultValidation = EquipmentSchema.validateCreation(data);
 
     if (resultValidation.success) {
-      const result = await this.equipmentRepository.create(
-        resultValidation.data
+      const equipmentProfile = await this.equipmentProfileRepository.getById(
+        resultValidation.data.equipmentProfile
       );
-      return result;
+
+      if (equipmentProfile) {
+        const result = await this.equipmentRepository.create(
+          resultValidation.data
+        );
+
+        return result;
+      } else {
+        throw new Error("El equipment profile no existe");
+        
+      }
     } else {
       throw new Error(resultValidation.error.message, {
         cause: resultValidation.error.errors,
@@ -53,8 +64,10 @@ class EquipmentService {
   }
 
   async findByIpAddress(ipAddress) {
-    const result = await this.equipmentRepository.findByIpAddress(ipAddress, { includeRelations: true });
-    
+    const result = await this.equipmentRepository.findByIpAddress(ipAddress, {
+      includeRelations: true,
+    });
+
     if (result) {
       return new EquipmentDto(result);
     }
@@ -62,7 +75,9 @@ class EquipmentService {
     return null;
   }
   async findByMacAddress(macAddress) {
-    const result = await this.equipmentRepository.findByMacAddress(macAddress, { includeRelations: true });
+    const result = await this.equipmentRepository.findByMacAddress(macAddress, {
+      includeRelations: true,
+    });
 
     if (result) {
       return new EquipmentDto(result);

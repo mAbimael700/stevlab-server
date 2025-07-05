@@ -1,10 +1,10 @@
 const { Router } = require("express");
 
-class DevicesRouter {
+class ResultRouter {
   constructor(dependencies = {}) {
     this.router = Router();
-    this.controller = dependencies.devicesController;
-    
+    this.controller = dependencies.resultController;
+
     this.validateDependencies();
     this.setupRoutes();
   }
@@ -14,7 +14,7 @@ class DevicesRouter {
    */
   validateDependencies() {
     if (!this.controller) {
-      throw new Error('DevicesController is required');
+      throw new Error("ResultController is required");
     }
   }
 
@@ -30,11 +30,9 @@ class DevicesRouter {
    */
   setupDeviceRoutes() {
     // Rutas de dispositivos
-    this.router.get("/", this.controller.getDevicesOnServer);
-    this.router.get("/profiles", this.controller.getDeviceProfiles);
-    this.router.get("/:id", this.controller.getDeviceById);
-    this.router.patch("/", this.controller.save);
-    this.router.delete("/:id", this.controller.remove);
+    this.router.get("/", this.controller.getAll);
+    this.router.get("/:id", this.controller.getById);
+    this.router.post("/:id/send", this.controller.getEquipmentProfiles);
   }
 
   /**
@@ -51,11 +49,9 @@ class DevicesRouter {
    * @returns {Router} - Router configurado
    */
   static create(dependencies) {
-    const devicesRouter = new DevicesRouter(dependencies);
-    return devicesRouter.getRouter();
+    const communicationRouter = new ResultRouter(dependencies);
+    return communicationRouter.getRouter();
   }
 }
 
-module.exports = {
-  DevicesRouter
-};
+module.exports = ResultRouter;
