@@ -1,4 +1,4 @@
-const BaseRepository = require("../../Repositories/BaseRepositories");
+const BaseRepository = require("../repository/BaseRepositories");
 
 class ParameterRepository extends BaseRepository {
     constructor(prisma) {
