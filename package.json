@@ -5,7 +5,6 @@
   "main": "main.js",
   "bin": "src/app/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start:forge": "cross-env PRODUCTION_MODE=development electron-forge start",
     "start:local": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true node ./src/app/app.js",
     "start:trace-warning": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true node --trace-warnings ./src/app/app.js",
@@ -30,7 +29,7 @@
     "outputPath": "build"
   },
   "build": {
-    "appId": "com.stevlab.stevlablisserver",
+    "appId": "com.stevlab.lis",
     "productName": "Stevlab Lis Server",
     "directories": {
       "output": "electron"
