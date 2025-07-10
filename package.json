@@ -1,0 +1,134 @@
+{
+  "name": "stevlab-lis-server",
+  "version": "1.0.0",
+  "description": "A LIS Server for laboratory equipments for clinical areas",
+  "main": "main.js",
+  "bin": "src/app/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:forge": "cross-env PRODUCTION_MODE=development electron-forge start",
+    "start:local": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true node ./src/app/app.js",
+    "start:trace-warning": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true node --trace-warnings ./src/app/app.js",
+    "dev:local": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true nodemon ./src/app/app.js",
+    "start:electron": "cross-env PRODUCTION_MODE=development DEVELOPMENT=true electron ./main.js",
+    "build:electron": "npx electron-builder",
+    "build:pkg": "pkg . --targets node18-win-x64 --output build/app",
+    "git:update": "git pull && npm i",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish"
+  },
+  "pkg": {
+    "assets": [
+      "dist/**/*",
+      "src/**/*",
+      ".env",
+      "node_modules/ffi-napi/**/*",
+      "node_modules/ref-napi/**/*",
+      "node_modules/@serialport/**/*"
+    ],
+    "outputPath": "build"
+  },
+  "build": {
+    "appId": "com.stevlab.stevlablisserver",
+    "productName": "Stevlab Lis Server",
+    "directories": {
+      "output": "electron"
+    },
+    "files": [
+      "**/*",
+      "!src/domain/**/*",
+      "!src/lib/DataManagment/**/*",
+      "!src/lib/connections/**/*"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "asar": true,
+        "ignore": [
+          "/data",
+          "/config",
+          "/file_uploads",
+          "/logs"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "electron_quick_start"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "keywords": [],
+  "author": "Abimael Alexander Méndez Landero",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "basic-ftp": "5.0.5",
+    "bl": "6.0.16",
+    "cheerio": "^1.0.0",
+    "console-table-printer": "2.12.1",
+    "cors": "2.8.5",
+    "date-fns": "4.1.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "express": "4.21.0",
+    "fast-xml-parser": "^4.5.1",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.2",
+    "morgan": "1.10.0",
+    "multer": "1.4.5-lts.1",
+    "node-machine-id": "1.1.12",
+    "nodemon": "3.1.7",
+    "ref-napi": "3.0.3",
+    "serialport": "12.0.0",
+    "socket.io": "4.8.0",
+    "systray": "1.0.5",
+    "winston": "3.15.0",
+    "winston-daily-rotate-file": "5.0.0",
+    "xml2js": "^0.6.2",
+    "xmlbuilder2": "3.1.1",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.7.0",
+    "@electron-forge/maker-deb": "^7.7.0",
+    "@electron-forge/maker-rpm": "^7.7.0",
+    "@electron-forge/maker-squirrel": "^7.7.0",
+    "@electron-forge/maker-zip": "^7.7.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.7.0",
+    "@electron-forge/plugin-fuses": "^7.7.0",
+    "@electron/fuses": "^1.8.0",
+    "cross-env": "7.0.3",
+    "electron": "33.2.1",
+    "electron-packager": "17.1.2",
+    "pkg": "5.8.1",
+    "prisma": "^6.8.2"
+  }
+}
