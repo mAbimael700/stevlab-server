@@ -14,8 +14,8 @@ class BaseRepository {
     return this.prisma[this.model].create({ data });
   }
 
-  async findById(id) {
-    return this.prisma[this.model].findUnique({ where: { id } });
+  async findById(id, options) {
+    return this.prisma[this.model].findUnique({ where: { id }, ...options });
   }
 
   async findAll(options = {}) {

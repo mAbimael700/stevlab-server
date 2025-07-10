@@ -1,11 +1,22 @@
 const { error } = require("winston");
 const { ResultSchema } = require("./ResultSchema");
+const ResultResponse = require("./dto/ResultResponse");
 
 class ResultService {
   constructor(resultRepository, parameterService, histogramResultService) {
     this.resultRepository = resultRepository;
     this.parameterService = parameterService;
     this.histogramResultService = histogramResultService;
+  }
+
+  async getAll() {
+    const results = await this.resultRepository.findAll({});
+    return results.map((r) => new ResultResponse(r));
+  }
+  
+  async getById() {
+    const results = await this.resultRepository.findById({});
+    return results.map((r) => new ResultResponse(r));
   }
 
   async saveStreamReceivedResult(result, equipmentId) {
@@ -32,7 +43,6 @@ class ResultService {
         });
       }
 
-      
       if (validationResponse.histogramResults) {
         await this.histogramResultService.create(
           validationResponse.data.histogramResults,
@@ -44,11 +54,7 @@ class ResultService {
       const parametersResult = await Promise.allSettled(
         validationResponse.data.parameters.map(
           async (p) =>
-            await this.parameterService.save(
-              p,
-              equipmentId,
-              responseResult.id,
-            )
+            await this.parameterService.save(p, equipmentId, responseResult.id)
         )
       );
 
