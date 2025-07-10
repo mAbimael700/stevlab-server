@@ -1,13 +1,38 @@
 const ParameterRepository = require("./ParameterRepository");
 
 class ParameterService {
-
   /**
-   * 
-   * @param {ParameterRepository} parameterRepository 
+   *
+   * @param {ParameterRepository} parameterRepository
    */
   constructor(parameterRepository) {
     this.parameterRepository = parameterRepository;
+  }
+
+  async getByResultId(resultId) {
+    try {
+      return await this.parameterRepository.findAll({
+        where: { result_id: resultId },
+      });
+    } catch (error) {
+      throw new Error(
+        `Error al consultar los parametros con el resultado #${resultId}: ${error.message}`,
+        error
+      );
+    }
+  }
+
+  async getActiveByResultId(resultId) {
+    try {
+      return await this.parameterRepository.findAll({
+        where: { resultId: resultId, active: true },
+      });
+    } catch (error) {
+      throw new Error(
+        `Error al consultar los parametros con el resultado #${resultId}: ${error.message}`,
+        error
+      );
+    }
   }
 
   /**
@@ -22,10 +47,11 @@ class ParameterService {
       // Validar entrada
       this.validateInput(parameterData, equipmentId, resultId);
 
-      const existingParameters = await this.parameterRepository.findByDescription(
-        resultId,
-        parameterData.description
-      );
+      const existingParameters =
+        await this.parameterRepository.findByDescription(
+          resultId,
+          parameterData.description
+        );
 
       // Caso 1: No hay parámetros existentes con la misma descripción
       if (!existingParameters || existingParameters.length === 0) {
@@ -34,7 +60,7 @@ class ParameterService {
           equipment: { connect: { id: equipmentId } },
           result: { connect: { id: resultId } },
           active: true,
-          created_at: parameterData.created_at || new Date()
+          created_at: parameterData.created_at || new Date(),
         };
 
         return await this.parameterRepository.create(data);
@@ -57,21 +83,25 @@ class ParameterService {
         equipmentId,
         resultId
       );
-
     } catch (error) {
       throw new Error(`Error al guardar parámetro: ${error.message}`);
     }
   }
 
   /**
-  * Maneja parámetros que vienen con fecha de creación
-  * @param {Object} parameterData - Datos del parámetro
-  * @param {Array} existingParameters - Parámetros existentes
-  * @param {string|number} equipmentId - ID del equipo
-  * @param {string|number} resultId - ID del resultado
-  * @returns {Promise<Object>} - Parámetro creado o existente si se ignora
-  */
-  async handleParameterWithDate(parameterData, existingParameters, equipmentId, resultId) {
+   * Maneja parámetros que vienen con fecha de creación
+   * @param {Object} parameterData - Datos del parámetro
+   * @param {Array} existingParameters - Parámetros existentes
+   * @param {string|number} equipmentId - ID del equipo
+   * @param {string|number} resultId - ID del resultado
+   * @returns {Promise<Object>} - Parámetro creado o existente si se ignora
+   */
+  async handleParameterWithDate(
+    parameterData,
+    existingParameters,
+    equipmentId,
+    resultId
+  ) {
     // Encontrar el parámetro más reciente en la BD
     const mostRecentExisting = existingParameters.reduce((latest, current) => {
       if (!latest.created_at) return current;
@@ -94,14 +124,15 @@ class ParameterService {
         ...parameterData,
         equipment: { connect: { id: equipmentId } },
         result: { connect: { id: resultId } },
-        active: false
+        active: false,
       };
 
       return await this.parameterRepository.create(data);
     }
 
     // Determinar si el parámetro recibido es más reciente
-    const isReceivedMoreRecent = !mostRecentDate || receivedDate > mostRecentDate;
+    const isReceivedMoreRecent =
+      !mostRecentDate || receivedDate > mostRecentDate;
 
     // Si el recibido es más reciente, desactivar todos los existentes
     if (isReceivedMoreRecent) {
@@ -113,7 +144,7 @@ class ParameterService {
       ...parameterData,
       equipment: { connect: { id: equipmentId } },
       result: { connect: { id: resultId } },
-      active: isReceivedMoreRecent
+      active: isReceivedMoreRecent,
     };
 
     return await this.parameterRepository.create(data);
@@ -127,10 +158,15 @@ class ParameterService {
    * @param {string|number} resultId - ID del resultado
    * @returns {Promise<Object>} - Parámetro creado o existente si se ignora
    */
-  async handleParameterWithoutDate(parameterData, existingParameters, equipmentId, resultId) {
+  async handleParameterWithoutDate(
+    parameterData,
+    existingParameters,
+    equipmentId,
+    resultId
+  ) {
     // Verificar si algún parámetro existente tiene el mismo valor
     const parameterWithSameValue = existingParameters.find(
-      param => param.value === parameterData.value
+      (param) => param.value === parameterData.value
     );
 
     // Si existe un parámetro con el mismo valor, ignorar el nuevo
@@ -147,7 +183,7 @@ class ParameterService {
       equipment: { connect: { id: equipmentId } },
       result: { connect: { id: resultId } },
       active: true,
-      created_at: new Date()
+      created_at: new Date(),
     };
 
     return await this.parameterRepository.create(data);
@@ -159,7 +195,7 @@ class ParameterService {
    * @returns {Promise<void>}
    */
   async deactivateAllParameters(parameters) {
-    const updatePromises = parameters.map(param =>
+    const updatePromises = parameters.map((param) =>
       this.parameterRepository.update(param.id, { active: false })
     );
 
@@ -286,10 +322,8 @@ class ParameterService {
    */
   async updateValue(resultId, description, newValue, equipmentId) {
     try {
-      const existingParameters = await this.parameterRepository.findByDescription(
-        resultId,
-        description
-      );
+      const existingParameters =
+        await this.parameterRepository.findByDescription(resultId, description);
 
       if (!existingParameters || existingParameters.length === 0) {
         throw new Error("Parámetro no encontrado");
