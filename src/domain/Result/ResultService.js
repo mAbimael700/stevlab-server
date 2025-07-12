@@ -7,16 +7,36 @@ class ResultService {
     this.resultRepository = resultRepository;
     this.parameterService = parameterService;
     this.histogramResultService = histogramResultService;
+    this.includeOptions = {
+      include: {
+        parameters: {
+          where: { active: true },
+          include: {
+            equipment: true,
+            parameterDictionary: {
+              include: {
+                systemParamter: {
+                  include: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    };
   }
 
   async getAll() {
-    const results = await this.resultRepository.findAll({});
-    return results.map((r) => new ResultResponse(r));
+    const results = await this.resultRepository.findAll(this.includeOptions);
+    return results;
   }
-  
-  async getById() {
-    const results = await this.resultRepository.findById({});
-    return results.map((r) => new ResultResponse(r));
+
+  async getById(id) {
+    const result = await this.resultRepository.findById(
+      id,
+      this.includeOptions
+    );
+    return result;
   }
 
   async saveStreamReceivedResult(result, equipmentId) {
