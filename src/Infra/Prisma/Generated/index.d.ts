@@ -11242,7 +11242,7 @@ export namespace Prisma {
     /**
      * The data needed to create a ParameterDictionary.
      */
-    data: XOR<ParameterDictionaryCreateInput, ParameterDictionaryUncheckedCreateInput>
+    data?: XOR<ParameterDictionaryCreateInput, ParameterDictionaryUncheckedCreateInput>
   }
 
   /**
@@ -13498,7 +13498,7 @@ export namespace Prisma {
     /**
      * The data needed to create a SystemParameter.
      */
-    data: XOR<SystemParameterCreateInput, SystemParameterUncheckedCreateInput>
+    data?: XOR<SystemParameterCreateInput, SystemParameterUncheckedCreateInput>
   }
 
   /**
@@ -17474,14 +17474,14 @@ export namespace Prisma {
   }
 
   export type ParameterDictionaryCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     parameter_description?: string | null
     systemParameter?: SystemParameterCreateNestedOneWithoutParameterDictionariesInput
     parameters?: ParameterCreateNestedManyWithoutParameterDictionaryInput
   }
 
   export type ParameterDictionaryUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     system_parameter_id?: bigint | number | null
     parameter_description?: string | null
     parameters?: ParameterUncheckedCreateNestedManyWithoutParameterDictionaryInput
@@ -17502,7 +17502,7 @@ export namespace Prisma {
   }
 
   export type ParameterDictionaryCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     system_parameter_id?: bigint | number | null
     parameter_description?: string | null
   }
@@ -17587,13 +17587,13 @@ export namespace Prisma {
   }
 
   export type SystemParameterCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     value?: string | null
     parameterDictionaries?: ParameterDictionaryCreateNestedManyWithoutSystemParameterInput
   }
 
   export type SystemParameterUncheckedCreateInput = {
-    id: bigint | number
+    id?: bigint | number
     value?: string | null
     parameterDictionaries?: ParameterDictionaryUncheckedCreateNestedManyWithoutSystemParameterInput
   }
@@ -17611,7 +17611,7 @@ export namespace Prisma {
   }
 
   export type SystemParameterCreateManyInput = {
-    id: bigint | number
+    id?: bigint | number
     value?: string | null
   }
 
@@ -20288,13 +20288,13 @@ export namespace Prisma {
   }
 
   export type ParameterDictionaryCreateWithoutParametersInput = {
-    id: bigint | number
+    id?: bigint | number
     parameter_description?: string | null
     systemParameter?: SystemParameterCreateNestedOneWithoutParameterDictionariesInput
   }
 
   export type ParameterDictionaryUncheckedCreateWithoutParametersInput = {
-    id: bigint | number
+    id?: bigint | number
     system_parameter_id?: bigint | number | null
     parameter_description?: string | null
   }
@@ -20628,12 +20628,12 @@ export namespace Prisma {
   }
 
   export type SystemParameterCreateWithoutParameterDictionariesInput = {
-    id: bigint | number
+    id?: bigint | number
     value?: string | null
   }
 
   export type SystemParameterUncheckedCreateWithoutParameterDictionariesInput = {
-    id: bigint | number
+    id?: bigint | number
     value?: string | null
   }
 
@@ -20824,13 +20824,13 @@ export namespace Prisma {
   }
 
   export type ParameterDictionaryCreateWithoutSystemParameterInput = {
-    id: bigint | number
+    id?: bigint | number
     parameter_description?: string | null
     parameters?: ParameterCreateNestedManyWithoutParameterDictionaryInput
   }
 
   export type ParameterDictionaryUncheckedCreateWithoutSystemParameterInput = {
-    id: bigint | number
+    id?: bigint | number
     parameter_description?: string | null
     parameters?: ParameterUncheckedCreateNestedManyWithoutParameterDictionaryInput
   }
@@ -21452,7 +21452,7 @@ export namespace Prisma {
   }
 
   export type ParameterDictionaryCreateManySystemParameterInput = {
-    id: bigint | number
+    id?: bigint | number
     parameter_description?: string | null
   }
 

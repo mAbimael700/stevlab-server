@@ -77,7 +77,7 @@ model Parameter {
   result_id               BigInt?
   equipment_id            BigInt?
   parameter_dictionary_id BigInt?
-  description             String?              @db.VarChar(25)
+  description             String?              @db.VarChar(100)
   value                   String?              @db.VarChar(25)
   unit_measurement        String?              @db.VarChar(10)
   max_range               String?              @db.VarChar(10)
@@ -108,7 +108,7 @@ model Result {
 }
 
 model ParameterDictionary {
-  id                    BigInt           @id
+  id                    BigInt           @id @default(autoincrement())
   system_parameter_id   BigInt?
   parameter_description String?          @db.VarChar(100)
   systemParameter       SystemParameter? @relation(fields: [system_parameter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameter_dictionaries_system_parameter_id_system_paramet")
@@ -132,7 +132,7 @@ model ResultSend {
 }
 
 model SystemParameter {
-  id                    BigInt                @id
+  id                    BigInt                @id @default(autoincrement())
   value                 String?               @db.VarChar(10)
   parameterDictionaries ParameterDictionary[]
 
