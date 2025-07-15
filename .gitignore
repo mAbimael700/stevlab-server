@@ -145,4 +145,4 @@ electron
 electron2
 
 src/infra/Prisma/Generated/
-src/Infra/Prisma/Generated/
+src/infra/Prisma/Generated/

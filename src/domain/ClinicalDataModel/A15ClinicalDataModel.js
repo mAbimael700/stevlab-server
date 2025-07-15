@@ -1,4 +1,4 @@
-const A15BufferParser = require("../../infra/bufferparser/A15/A15BufferParser");
+const A15BufferParser = require("@/infra/bufferparser/A15/A15BufferParser");
 
 class A15ClinicalDataModel {
 

@@ -14,12 +14,12 @@ const BufferDataListener = require("../src/infra/bufferdatahandler/BufferDataLis
 const BufferDataEvents = require("../src/infra/bufferdatahandler/BufferDataEvents");
 
 const ClientConnectionFactory = require("../src/infra/clientconnection/ClientConnectionFactory");
-const EquipmentConnectionManager = require("../src/infra/EquipmentConnectionManager/EquimentConnectionManager");
+const EquipmentConnectionManager = require("../src/infra/equipmentconnectionmanager/EquimentConnectionManager");
 
-const ConnectionValidator = require("../src/infra/connections/tcp/ConnectionValidator");
-const TcpServer = require("../src/infra/tcpServer/TcpServer");
-const TcpInBoundClientFactory = require("../src/infra/connections/tcp/tcpinboundclient/TcpInBoundClientFactory");
-const TcpClientConnectionCoreFactory = require("../src/infra/connections/tcp/TcpClientConnectionCoreFactory");
+const ConnectionValidator = require("../src/infra/connection/tcp/ConnectionValidator");
+const TcpServer = require("../src/infra/tcpserver/TcpServer");
+const TcpInBoundClientFactory = require("../src/infra/connection/tcp/tcpinboundclient/TcpInBoundClientFactory");
+const TcpClientConnectionCoreFactory = require("../src/infra/connection/tcp/TcpClientConnectionCoreFactory");
 
 const equipmentRepository = new EquipmentRepository(prisma);
 const resultRepository = new ResultRepository(prisma)

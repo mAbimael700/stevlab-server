@@ -1,5 +1,5 @@
 const net = require("node:net");
-const ClientConnection = require("../../clientconnection/ClientConnection");
+const ClientConnection = require("@/infra/clientconnection/ClientConnection");
 class TcpClient extends ClientConnection {
   /**
    *

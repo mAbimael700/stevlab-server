@@ -2,7 +2,7 @@ const TcpEventsHandler = require("./TcpEventHandler");
 const { TcpSocketListener } = require("./TcpSocketListener");
 const {
   BufferDataHandler,
-} = require("../../bufferdatahandler/BufferDataHandler");
+} = require("@/infra/bufferdatahandler/BufferDataHandler");
 const EquipmentDto = require("../../../domain/equipment/EquipmentDto");
 
 class TcpClientConnectionCoreFactory {

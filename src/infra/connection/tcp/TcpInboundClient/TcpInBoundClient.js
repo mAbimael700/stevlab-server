@@ -1,6 +1,6 @@
 const { Socket } = require("node:net");
 const { TcpClient } = require("../TcpClient");
-const EquipmentConnectionManager = require("../../../EquipmentConnectionManager/EquimentConnectionManager");
+const EquipmentConnectionManager = require("@/infra/equipmentconnectionmanager/EquimentConnectionManager");
 const { ConnectionValidator } = require("../ConnectionValidator");
 const EquipmentDto = require("../../../../domain/equipment/EquipmentDto");
 const TcpClientConnectionCoreFactory = require("../TcpClientConnectionCoreFactory");

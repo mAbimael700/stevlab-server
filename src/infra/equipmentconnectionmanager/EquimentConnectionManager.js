@@ -1,6 +1,6 @@
 const {
   EquipmentConnection,
-} = require("../equipmentconnection/EquipmentConnection.js");
+} = require("@/infra/equipmentconnection/EquipmentConnection.js");
 const EquipmentSchema = require("../../domain/equipment/EquipmentSchema.js");
 const EquipmentDto = require("../../domain/equipment/EquipmentDto.js");
 

@@ -1,4 +1,4 @@
-const Cm200BufferParser = require("../../infra/bufferparser/cm200/Cm200BufferParser")
+const Cm200BufferParser = require("@/infra/bufferparser/cm200/Cm200BufferParser")
 
 class Cm200ClinicalDataModel {
     static transform(data) {

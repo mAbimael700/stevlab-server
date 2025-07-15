@@ -2,7 +2,7 @@ const { SerialPort } = require("serialport");
 const SerialPortListener = require("./SerialPortListener");
 const SerialEventsHandler = require("./SerialEventsHandler");
 const EquipmentDto = require("../../../domain/equipment/EquipmentDto");
-const { BufferDataHandler } = require("../../bufferdatahandler/BufferDataHandler");
+const { BufferDataHandler } = require("@/infra/bufferdatahandler/BufferDataHandler");
 
 class SerialClientCoreFactory {
   constructor(bufferDataEmitter) {

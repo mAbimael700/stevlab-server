@@ -1,6 +1,6 @@
 const { Client } = require("basic-ftp");
 const { FtpDirectoryFileManager } = require("./FtpDirectoryFileManager");
-const { FtpEventsEmitter } = require("../connections/ftp/FtpEventsEmitter");
+const { FtpEventsEmitter } = require("@/infra/connection/ftp/FtpEventsEmitter");
 
 class FtpDirectoryMonitor {
   /**
