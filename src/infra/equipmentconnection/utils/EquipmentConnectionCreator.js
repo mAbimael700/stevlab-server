@@ -1,3 +1,5 @@
+const EquipmentConnection = require("../EquipmentConnection");
+
 class EquipmentConnectionCreator {
     constructor(clientConnectionFactory) {
         this.clientConnectionFactory = clientConnectionFactory;
