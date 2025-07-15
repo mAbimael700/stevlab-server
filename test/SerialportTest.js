@@ -2,7 +2,7 @@ const ConnectionValidator = require("../src/infra/connection/tcp/ConnectionValid
 
 const EquipmentRepository = require("../src/domain/Equipment/EquipmentRepository");
 const EquipmentService = require("../src/domain/Equipment/EquipmentService");
-const EquipmentConnectionManager = require("../src/infra/equipmentconnectionmanager/EquimentConnectionManager");
+const EquipmentConnectionManager = require("../src/infra/equipmentconnection/manager/EquipmentConnectionManager");
 const prisma = require("../src/infra/prismaclient/PrismaClient");
 const BufferDataEmitter = require("../src/infra/bufferdatahandler/BufferDataEmitter");
 const BufferDataListener = require("../src/infra/bufferdatahandler/BufferDataListener");

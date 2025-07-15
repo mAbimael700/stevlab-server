@@ -30,4 +30,4 @@ class EquipmentConnection {
   }
 }
 
-module.exports = { EquipmentConnection };
+module.exports = EquipmentConnection;
