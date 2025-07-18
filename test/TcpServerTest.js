@@ -1,10 +1,10 @@
 const prisma = require("../src/infra/prismaclient/PrismaClient");
 const EquipmentRepository = require("../src/domain/equipment/EquipmentRepository");
-const ResultRepository = require("../src/domain/result/ResultRepository");
+const ResultRepository = require("../src/domain/result/repository/ResultRepository");
 const ParameterRepository = require("../src/domain/parameter/ParameterRepository");
 
 const EquipmentService = require("../src/domain/equipment/EquipmentService");
-const ResultService = require("../src/domain/result/ResultService");
+const ResultService = require("../src/domain/result/service/ResultService");
 const ParameterService = require("../src/domain/parameter/ParameterService");
 const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
 

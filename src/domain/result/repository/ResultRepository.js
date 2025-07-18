@@ -1,5 +1,4 @@
-const { PrismaClient } = require("@/infra/Prisma/Generated");
-const BaseRepository = require("../repository/BaseRepositories");
+const BaseRepository = require("../../repository/BaseRepositories");
 
 class ResultRepository extends BaseRepository {
   /**
@@ -28,10 +27,9 @@ class ResultRepository extends BaseRepository {
    * @returns {Promise<boolean>}
    */
   async findByFolio(folio) {
-    const result = await this.prisma.result.findFirst({
-      where: { folio },
+    return await this.prisma.result.findFirst({
+      where: {folio},
     });
-    return result;
   }
 
   async updateLastModifiedAt(id, date) {
