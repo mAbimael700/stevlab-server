@@ -1,0 +1,11 @@
+// src/types/result.types.js
+
+/**
+ * @typedef {import("@/infra/prisma/generated").Parameter} Parameter
+ * @typedef {import("@/infra/prisma/generated").Equipment} Equipment
+ * @typedef {import("@/infra/prisma/generated").ParameterDictionary} ParameterDictionary
+ * @typedef {import("@/infra/prisma/generated").SystemParameter} SystemParameter
+ *
+ * @typedef {Parameter & { equipment: Equipment, parameterDictionary: ParameterDictionary & {systemParameter: SystemParameter}}[]
+ * } ParametersWithEquipmentAndParameterDictionaryAndSystemParameter
+ */
