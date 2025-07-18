@@ -9,7 +9,7 @@ datasource db {
 }
 
 model CommunicationProfiles {
-  id                String             @id @db.VarChar(10)
+  id                String             @id @db.VarChar(20)
   checksum_regex    String?            @db.VarChar(50)
   type              String?            @db.VarChar(20)
   equipmentProfiles EquipmentProfile[]
@@ -30,7 +30,7 @@ model DirectoryHistorial {
 
 model EquipmentProfile {
   id                    BigInt                 @id
-  communication_profile String?                @db.VarChar(10)
+  communication_profile String?                @db.VarChar(20)
   name                  String?                @db.VarChar(25)
   active                Boolean?
   communication_type    String?                @db.VarChar(25)
