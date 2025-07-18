@@ -1,6 +1,4 @@
-const {error} = require("winston");
 const {ResultSchema} = require("../ResultSchema");
-const ResultResponse = require("../dto/ResultResponse");
 
 class ResultService {
     constructor(resultRepository, parameterService, histogramResultService) {
@@ -14,7 +12,7 @@ class ResultService {
      * @return {Promise<ResultWithParametersAndEquipment[]>}
      * */
     async getAll() {
-        return await this.resultRepository.findAll(this.buildIncludeOptions(true));
+        return await this.resultRepository.findAllWithIncludeOptions();
     }
 
     /**
@@ -24,32 +22,19 @@ class ResultService {
      * @return {Promise<ResultWithParametersAndEquipment[]>}
      */
     async getById(id, activeOnly = true) {
-        return await this.resultRepository.findById(
-            id,
+        return await this.resultRepository.findById(id,
             this.buildIncludeOptions(activeOnly)
         );
     }
 
-    /**
-     *
-     * @param folio {string}
-     * @param activeOnly {boolean}
-     * @return {Promise<ResultWithParametersAndEquipment[]>}
-     */
-    async getByFolio(folio, activeOnly = true) {
-        return await this.resultRepository.findAll({
-            where: {folio: folio},
-            ...this.buildIncludeOptions(activeOnly)
-        })
-    }
 
     /**
      *
      * @param folio {string}
      * @return {Promise<ResultWithParametersAndEquipment[]>}
      */
-    async getByFolioWithHistorial(folio) {
-        return await this.getByFolio(folio, false);
+    async getByFolio(folio) {
+        return await this.resultRepository.findByFolioWithHistorial(folio);
     }
 
     async saveStreamReceivedResult(result, equipmentId) {
