@@ -1,9 +1,9 @@
-const A15ClinicalDataModel = require("./A15ClinicalDataModel");
-const Cm200ClinicalDataModel = require("./Cm200ClinicalDataModel");
-const FujifilmClinicalDataModel = require("./FujifilmClinicalDataModel");
-const Hl7ClinicalDataModel = require("./Hl7ClinicalDataModel");
-const IClinicalDataModel = require("./IClinicalDataModel");
-const XmlClinicalDataModel = require("./XmlClinicalDataModel");
+const A15ClinicalDataModel = require("../model/A15ClinicalDataModel");
+const Cm200ClinicalDataModel = require("../model/Cm200ClinicalDataModel");
+const FujifilmClinicalDataModel = require("../model/FujifilmClinicalDataModel");
+const Hl7ClinicalDataModel = require("../model/Hl7ClinicalDataModel");
+const IClinicalDataModel = require("../model/IClinicalDataModel");
+const XmlClinicalDataModel = require("../model/XmlClinicalDataModel");
 
 class ClinicalDataModelFactory {
   constructor() {
@@ -17,7 +17,7 @@ class ClinicalDataModelFactory {
   registerCoreParsers() {
     this.register("HL7", Hl7ClinicalDataModel);
     this.register("XML", XmlClinicalDataModel);
-    this.register("FJT1", FujifilmClinicalDataModel);
+    this.register("FJD-1", FujifilmClinicalDataModel);
     this.register("A15", A15ClinicalDataModel);
     this.register("CM200", Cm200ClinicalDataModel);
     /*this.register("SPRU120", SpU120BufferParser);
