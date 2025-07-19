@@ -14,8 +14,8 @@ class ExpressServer {
     // Inyección de dependencias para los routers
     this.routers = {
       resultRouter: dependencies.resultRouter,
+      resultSenderRouter: dependencies.resultSenderRouter,
       equipmentRouter: dependencies.equipmentRouter,
-      communicationRouter: dependencies.communicationRouter,
     };
 
     // Configuración por defecto
@@ -52,7 +52,7 @@ class ExpressServer {
     // Configurar rutas de la API
     this.app.use("/api/equipments", routers.equipmentRouter);
     this.app.use("/api/results", routers.resultRouter);
-    this.app.use("/api/communication", routers.communicationRouter);
+    this.app.use("/api/results/sends", routers.resultSenderRouter);
   }
 
   /**
@@ -75,7 +75,7 @@ class ExpressServer {
     const requiredRouters = [
       "resultRouter",
       "equipmentRouter",
-      "communicationRouter",
+      "resultSenderRouter",
     ];
 
     const missingRouters = requiredRouters.filter(
