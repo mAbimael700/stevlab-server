@@ -41,7 +41,7 @@ class ParameterRepository extends BaseRepository {
      * @return {Promise<ParametersWithEquipmentAndParameterDictionaryAndSystemParameter[]>}
      */
     async findByResultId(resultId) {
-        return this.prisma.parameter.findMany({
+        return this.prisma.parameter.findFirst({
             where: {result_id: resultId},
             ...this.includeOptions
         });
