@@ -83,10 +83,7 @@ class ResultService {
                 new Date()
             );
         } catch (error) {
-            throw new Error(
-                `Ocurrió un error al guardar los resultados ${error.message}`,
-                error
-            );
+            throw new Error(`Ocurrió un error al guardar los resultados ${error.message}`);
         }
     }
 

@@ -1,6 +1,6 @@
 const { exec } = require("node:child_process");
 const os = require("os");
-const EquipmentDto = require("../../../domain/equipment/EquipmentDto");
+const EquipmentDto = require("../../../domain/equipment/dto/EquipmentDto");
 class ConnectionValidator {
   constructor(equipmentService) {
     this.equipmentService = equipmentService;

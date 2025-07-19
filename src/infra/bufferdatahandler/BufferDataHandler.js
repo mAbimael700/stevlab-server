@@ -1,7 +1,7 @@
 const {
   BufferStreamProcessor,
 } = require("@/infra/bufferstreammanagment/BufferStreamProcessor");
-const EquipmentDto = require("../../domain/equipment/EquipmentDto");
+const EquipmentDto = require("../../domain/equipment/dto/EquipmentDto");
 
 class BufferDataHandler {
   /**

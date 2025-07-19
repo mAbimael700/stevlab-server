@@ -1,5 +1,4 @@
-const { PrismaClient } = require("@/infra/Prisma/Generated");
-const BaseRepository = require("../repository/BaseRepositories");
+const BaseRepository = require("../../repository/BaseRepositories");
 
 class EquipmentRepository extends BaseRepository {
   /**

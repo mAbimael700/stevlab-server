@@ -1,3 +1,5 @@
+const EquipmentSchema = require("@/domain/equipment/schema/EquipmentSchema");
+
 class EquipmentConnectionLoader {
     constructor(equipmentService) {
         this.equipmentService = equipmentService;

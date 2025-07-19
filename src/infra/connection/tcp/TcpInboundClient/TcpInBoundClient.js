@@ -2,7 +2,7 @@ const { Socket } = require("node:net");
 const { TcpClient } = require("../TcpClient");
 const EquipmentConnectionManager = require("@/infra/equipmentconnection/manager/EquipmentConnectionManager");
 const { ConnectionValidator } = require("../ConnectionValidator");
-const EquipmentDto = require("../../../../domain/equipment/EquipmentDto");
+const EquipmentDto = require("../../../../domain/equipment/dto/EquipmentDto");
 const TcpClientConnectionCoreFactory = require("../TcpClientConnectionCoreFactory");
 
 class TcpInBoundClient extends TcpClient {

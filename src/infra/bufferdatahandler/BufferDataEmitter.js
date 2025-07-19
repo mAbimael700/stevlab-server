@@ -1,5 +1,5 @@
 const { EventEmitter } = require("node:events");
-const EquipmentDto = require("../../domain/equipment/EquipmentDto");
+const EquipmentDto = require("../../domain/equipment/dto/EquipmentDto");
 
 class BufferDataEmitter extends EventEmitter {
   constructor() {

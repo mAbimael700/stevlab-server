@@ -1,8 +1,6 @@
-const ParameterRepository = require("@/domain/parameter/repository/ParameterRepository");
 const ParameterValidationService = require("@/domain/parameter/service/ParameterValidationService");
 const ParameterVersioningService = require("@/domain/parameter/service/ParameterVersioningService");
 const ParameterDataFactory = require("@/domain/parameter/factory/ParameterDataFactory");
-const ParameterDictionaryService = require("@/domain/parameterdictionary/service/ParameterDictionaryService");
 
 class ParameterService {
     constructor(dependencies) {
@@ -12,10 +10,7 @@ class ParameterService {
         // Servicios especializados
         this.validationService = new ParameterValidationService();
         this.versioningService = new ParameterVersioningService(this.parameterRepository);
-        this.dictionaryService = new ParameterDictionaryService(
-            this.parameterRepository,
-            this.parameterDictionaryRepository
-        );
+        this.dictionaryService = dependencies.dictionaryService;
 
         this.includeOptions = {
             include: {

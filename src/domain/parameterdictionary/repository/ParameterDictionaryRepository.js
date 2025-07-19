@@ -1,4 +1,4 @@
-import BaseRepository from "@/domain/repository/BaseRepositories";
+const BaseRepository = require("@/domain/repository/BaseRepositories");
 
 class ParameterDictionaryRepository extends BaseRepository {
     constructor(prisma) {

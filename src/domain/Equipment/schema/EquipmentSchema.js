@@ -1,5 +1,5 @@
 const { z } = require("zod");
-const EquipmentProfileSchema = require("../equipmentprofile/EquipmentProfileSchema");
+const EquipmentProfileSchema = require("../../equipmentprofile/EquipmentProfileSchema");
 
 class EquipmentSchema {
   static schema = z

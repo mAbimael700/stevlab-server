@@ -32,7 +32,7 @@ class ParameterDictionaryService {
             }
 
             const parameterDictionary = await this.parameterDictionaryRepository
-                .findByParameterDescription(parameter.parameter_description);
+                .findByParameterDescription(parameter.description);
 
             if (parameterDictionary) {
                 await this.parameterRepository.update(parameterId, {
