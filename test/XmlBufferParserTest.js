@@ -1,5 +1,5 @@
 const { XMLParser } = require("fast-xml-parser");
-const XMLBufferParser = require("../src/Infra/BufferParser/XML/XMLBufferParser");
+const XMLBufferParser = require("../src/infra/bufferparser/XML/XMLBufferParser");
 
 const XMLmsg = `
 <!--:Begin:Chksum:1:-->

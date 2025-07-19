@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/infra/Prisma/Generated"
+  output   = "../src/infra/prisma/generated"
 }
 
 datasource db {
@@ -9,7 +9,7 @@ datasource db {
 }
 
 model CommunicationProfiles {
-  id                String             @id @db.VarChar(10)
+  id                String             @id @db.VarChar(20)
   checksum_regex    String?            @db.VarChar(50)
   type              String?            @db.VarChar(20)
   equipmentProfiles EquipmentProfile[]
@@ -29,8 +29,8 @@ model DirectoryHistorial {
 }
 
 model EquipmentProfile {
-  id                    BigInt                 @id 
-  communication_profile String?                @db.VarChar(10)
+  id                    BigInt                 @id
+  communication_profile String?                @db.VarChar(20)
   name                  String?                @db.VarChar(25)
   active                Boolean?
   communication_type    String?                @db.VarChar(25)
@@ -108,7 +108,7 @@ model Result {
 }
 
 model ParameterDictionary {
-  id                    BigInt           @id 
+  id                    BigInt           @id @default(autoincrement())
   system_parameter_id   BigInt?
   parameter_description String?          @db.VarChar(100)
   systemParameter       SystemParameter? @relation(fields: [system_parameter_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parameter_dictionaries_system_parameter_id_system_paramet")
@@ -132,7 +132,7 @@ model ResultSend {
 }
 
 model SystemParameter {
-  id                    BigInt                @id
+  id                    BigInt                @id @default(autoincrement())
   value                 String?               @db.VarChar(10)
   parameterDictionaries ParameterDictionary[]
 

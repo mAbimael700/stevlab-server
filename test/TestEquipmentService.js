@@ -1,6 +1,6 @@
-const EquipmentRepository = require("../src/domain/Equipment/EquipmentRepository");
-const EquipmentService = require("../src/domain/Equipment/EquipmentService");
-const prisma = require("../src/Infra/PrismaClient/PrismaClient");
+const EquipmentRepository = require("../src/domain/equipment/repository/EquipmentRepository");
+const EquipmentService = require("../src/domain/equipment/service/EquipmentService");
+const prisma = require("../src/infra/prismaclient/PrismaClient");
 const repository = new EquipmentRepository(prisma);
 const service = new EquipmentService(repository);
 

@@ -95,7 +95,7 @@ const XMLmsg = `
 <p><n>RBC</n><v>8.03</v><l>3.50</l><h>5.50</h></p>
 <p><n>MCV</n><v>91.5</v><l>75.0</l><h>100.0</h></p>
 <p><n>HCT</n><v>64.3</v><l>35.0</l><h>55.0</h></p>
-<p><n>MCH</n><v>30.0</v><l>25.5</l><h>35.0</h></p>
+<p><n>MCH</n><v>32.0</v><l>25.5</l><h>35.0</h></p>
 <p><n>MCHC</n><v>32.8</v><l>31.0</l><h>38.0</h></p>
 <p><n>RDWR</n><v>12.1</v><l>11.0</l><h>16.5</h></p>
 <p><n>RDWA</n><v>52.3</v><l>30.0</l><h>150.0</h></p>
@@ -139,7 +139,7 @@ port.open((err) => {
       }
       console.log("Enviado:", mensaje.trim());
     });
-  }, 5000); // 15000 ms = 15 s
+  }, 5000); // 15,000 ms = 15 s
 });
 
 // Opcional: escuchar errores del puerto
