@@ -6,5 +6,6 @@
     <file url="file://$PROJECT_DIR$/resources/db/scripts/equipment_profiles/create-equipment-profiles.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/resources/db/scripts/parameter_dictionaries/insert_parameter_dictionaries.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/resources/db/scripts/system_parameters/insert_system_parameters.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/resources/scripts/migrations/custom-seed.sql" dialect="GenericSQL" />
   </component>
 </project>

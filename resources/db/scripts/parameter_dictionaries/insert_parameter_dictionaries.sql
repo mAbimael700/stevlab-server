@@ -2,7 +2,7 @@
 
 -- CM200
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('ALB/GLO', 1),
   ('BIL IND', 2),
@@ -44,7 +44,7 @@ INSERT INTO public.parameter_dictionaries (parameter_description, system_paramet
 
 -- A15
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('AST', 37),
   ('ALT', 38),
@@ -130,7 +130,7 @@ INSERT INTO public.parameter_dictionaries (parameter_description, system_paramet
 
 -- CONTROLAB
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('UREA', 35),
   ('Triglycerides', 34),
@@ -145,7 +145,7 @@ INSERT INTO public.parameter_dictionaries (parameter_description, system_paramet
 
 -- DYMIND
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('WBC', 106),
   ('LYM%', 107),
@@ -169,7 +169,7 @@ INSERT INTO public.parameter_dictionaries (parameter_description, system_paramet
 
 -- FULLJIFILM_NX600_DICTIONARIO
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('Ca', 48),
   ('K', 124),
@@ -203,7 +203,7 @@ INSERT INTO public.parameter_dictionaries (parameter_description, system_paramet
 
 -- HEMATOLOGY
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('WBC', 106),
   ('LYM%', 107),
@@ -235,7 +235,7 @@ INSERT INTO public.parameter_dictionaries (parameter_description, system_paramet
 
 -- MINDRAY_BS120
 
-INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES
+INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES
 
   ('GGT PLUS SL', 43),
   ('ALB SL', 55),

@@ -1,6 +1,6 @@
 -- Insert system_parameters
 
-INSERT INTO public.system_parameters (id, value) VALUES
+INSERT INTO "system_parameters" ("id", "value") VALUES
 
   (1, 'QSALGLO'),
   (2, 'BILD2'),

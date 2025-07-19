@@ -36,7 +36,7 @@ for (const dict of Object.values(dictionaries)) {
 // Paso 2: Generar SQL para system_parameters
 const systemParametersOutput = [];
 systemParametersOutput.push("-- Insert system_parameters");
-systemParametersOutput.push("INSERT INTO public.system_parameters (id, value) VALUES");
+systemParametersOutput.push('INSERT INTO "system_parameters" ("id", "value") VALUES');
 systemParametersOutput.push(
     [...valueToId.entries()]
         .map(([value, id]) => `  (${id}, '${value}')`)
@@ -56,7 +56,7 @@ for (const [dictName, dict] of Object.entries(dictionaries)) {
     }
     if (rows.length > 0) {
         parameterDictionariesOutput.push(`-- ${dictName}`);
-        parameterDictionariesOutput.push("INSERT INTO public.parameter_dictionaries (parameter_description, system_parameter_id) VALUES");
+        parameterDictionariesOutput.push('INSERT INTO "parameter_dictionaries" ("parameter_description", "system_parameter_id") VALUES');
         parameterDictionariesOutput.push(rows.join(",\n") + ";\n");
     }
 }
