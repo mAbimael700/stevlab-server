@@ -5,9 +5,11 @@ const EquipmentConnectionRepository = require("../repository/EquipmentConnection
 
 class EquipmentConnectionManager {
 
-    constructor(equipmentService, clientConnectionFactory) {
+    constructor(dependencies) {
+        const { equipmentService, clientConnectionFactory } = dependencies || {};
+
         this.connectionRepository = new EquipmentConnectionRepository();
-        this.equipmentLoader = new EquipmentConnectionLoader (equipmentService);
+        this.equipmentLoader = new EquipmentConnectionLoader(equipmentService);
         this.connectionCreator = new EquipmentConnectionCreator(clientConnectionFactory);
     }
 
@@ -38,7 +40,8 @@ class EquipmentConnectionManager {
         // Procesar equipos en paralelo con control de errores
         const promises = equipments.map(async (equipment) => {
             try {
-                const connection = await this.connectionCreator.create(equipment);
+                const connection = await this.connectionCreator
+                    .create(equipment);
                 this.connectionRepository.store(equipment.id, connection);
                 results.successful.push(equipment.id);
             } catch (error) {
