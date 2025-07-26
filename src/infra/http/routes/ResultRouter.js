@@ -35,7 +35,8 @@ class ResultRouter {
     
     this.router.get("/:resultId", this.controller.getById);
 
-    this.router.get("/:resultId/parameters", this.controller.getResultParametersByResultId);
+    this.router.get("/:resultId/parameters", this.controller.getResultParameters);
+    this.router.get("/:resultId/parameters/:description", this.controller.getResultParameterHistory);
     this.router.post("/:resultId/parameters/:parameterId", this.controller.setResultParameterActive);
     this.router.delete("/:resultId/parameters/:parameterId", this.controller.setResultParameterInactive);
   }

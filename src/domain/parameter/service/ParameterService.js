@@ -12,17 +12,6 @@ class ParameterService {
         this.versioningService = new ParameterVersioningService(this.parameterRepository);
         this.dictionaryService = dependencies.dictionaryService;
 
-        this.includeOptions = {
-            include: {
-                parameterDictionary: {
-                    include: {
-                        systemParameter: {
-                            include: true,
-                        },
-                    },
-                },
-            }
-        };
     }
 
     async getByResultId(resultId) {
@@ -34,6 +23,11 @@ class ParameterService {
         }
     }
 
+    /**
+     *
+     * @param resultId
+     * @return {Promise<ParametersWithEquipmentAndParameterDictionaryAndSystemParameter[]>}
+     */
     async getActiveByResultId(resultId) {
         try {
             this.validationService.validateRequiredField(resultId, 'El ID del resultado');
@@ -50,10 +44,11 @@ class ParameterService {
             this.validationService.validateIds(equipmentId, resultId);
 
             // Buscar parámetros existentes
-            const existingParameters = await this.parameterRepository.findByResultIdAndDescription(
-                resultId,
-                parameterData.description
-            );
+            const existingParameters = await this.parameterRepository
+                .findByResultIdAndDescription(
+                    resultId,
+                    parameterData.description
+                );
 
             // Determinar acción de versionado
             const versioningAction = this.versioningService.determineVersioningAction(
@@ -75,21 +70,33 @@ class ParameterService {
         }
     }
 
-    async executeVersioningAction(action, parameterData, equipmentId, resultId, existingParameters) {
+    async executeVersioningAction(
+        action,
+        parameterData,
+        equipmentId,
+        resultId,
+        existingParameters) {
         switch (action.action) {
             case 'IGNORE':
                 return action.existingParameter;
 
             case 'CREATE_INACTIVE':
-                return await this.createParameter(parameterData, equipmentId, resultId, {active: false});
+                return await this.createParameter(
+                    parameterData,
+                    equipmentId,
+                    resultId,
+                    {active: false});
 
             case 'CREATE_NEW':
                 if (action.deactivateExisting) {
-                    await this.versioningService.deactivateParameters(existingParameters);
+                    await this.versioningService
+                        .deactivateParameters(existingParameters);
                 }
-                return await this.createParameter(parameterData, equipmentId, resultId, {
-                    active: action.shouldBeActive
-                });
+                return await this.createParameter(
+                    parameterData,
+                    equipmentId,
+                    resultId,
+                    {active: action.shouldBeActive});
 
             default:
                 throw new Error(`Acción de versionado no reconocida: ${action.action}`);
@@ -105,7 +112,8 @@ class ParameterService {
         );
 
         const newParameter = await this.parameterRepository.create(data);
-        await this.dictionaryService.updateParameterDictionaryReference(newParameter.id);
+        await this.dictionaryService
+            .updateParameterDictionaryReference(newParameter.id);
 
         return newParameter;
     }
@@ -113,7 +121,8 @@ class ParameterService {
     async findActiveByResult(resultId) {
         try {
             this.validationService.validateRequiredField(resultId, 'El ID del resultado');
-            return await this.parameterRepository.findByResultAndActive(resultId, true);
+            return await this.parameterRepository
+                .findByResultAndActive(resultId, true);
         } catch (error) {
             throw new Error(`Error al buscar parámetros activos: ${error.message}`);
         }
@@ -124,10 +133,11 @@ class ParameterService {
             this.validationService.validateRequiredField(resultId, 'El ID del resultado');
             this.validationService.validateRequiredField(description, 'La descripción');
 
-            const parameters = await this.parameterRepository.findByResultIdAndDescription(
-                resultId,
-                description
-            );
+            const parameters = await this.parameterRepository
+                .findByResultIdAndDescription(
+                    resultId,
+                    description
+                );
 
             return this.sortParametersByDate(parameters);
         } catch (error) {
@@ -153,16 +163,47 @@ class ParameterService {
         }
     }
 
+    async activate(parameterId) {
+        try {
+            this.validationService.validateRequiredField(parameterId, 'El ID del parámetro');
+
+            const parameter = this.parameterRepository.findById(parameterId);
+
+            if (!parameter) {
+                throw new Error("Parametro no encontrado")
+            }
+
+            if (parameter.active) {
+                return parameter;
+            }
+
+            const parameterHistorial = this.getParameterHistory(
+                parameter.result_id,
+                parameter.description);
+
+            if (parameterHistorial.length > 0) {
+                await Promise.all(parameterHistorial.map(async (p) => {
+                    await this.parameterRepository.update(p.id, {active: false});
+                }))
+            }
+
+            return await this.parameterRepository.update(parameterId, {active: true});
+        } catch (error) {
+            throw new Error(`Error al activar parámetro: ${error.message}`);
+        }
+    }
+
     async updateValue(resultId, description, newValue, equipmentId) {
         try {
             this.validationService.validateRequiredField(resultId, 'El ID del resultado');
             this.validationService.validateRequiredField(description, 'La descripción');
             this.validationService.validateRequiredField(equipmentId, 'El ID del equipo');
 
-            const existingParameters = await this.parameterRepository.findByResultIdAndDescription(
-                resultId,
-                description
-            );
+            const existingParameters = await this.parameterRepository
+                .findByResultIdAndDescription(
+                    resultId,
+                    description
+                );
 
             if (!existingParameters || existingParameters.length === 0) {
                 throw new Error("Parámetro no encontrado");

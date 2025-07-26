@@ -1,4 +1,4 @@
-const { Router } = require("express");
+const {Router} = require("express");
 
 class ResultSenderRouter {
     constructor(dependencies = {}) {
@@ -29,9 +29,13 @@ class ResultSenderRouter {
      * Configura las rutas relacionadas con dispositivos
      */
     setupResultRoutes() {
+        this.router.get('/', this.controller.getAll)
         this.router.get("/latest", this.controller.getLatest);
-        this.router.get("/:resultId", this.controller.getSendsByResultId);
-        this.router.post("/:resultId", this.controller.sendResultById);
+        this.router.get("/:resultSendId", this.controller.getBySendResultId);
+
+        this.router.get('/results/:folio', this.controller.getByFolio);
+        this.router.get('/results/:resultId', this.controller.getByResultId);
+        this.router.post("/results/:resultId", this.controller.sendResultById);
     }
 
     /**
@@ -53,4 +57,4 @@ class ResultSenderRouter {
     }
 }
 
-module.exports = ResultRouter;
+module.exports = ResultSenderRouter;

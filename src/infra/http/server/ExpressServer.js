@@ -52,7 +52,7 @@ class ExpressServer {
     // Configurar rutas de la API
     this.app.use("/api/equipments", routers.equipmentRouter);
     this.app.use("/api/results", routers.resultRouter);
-    this.app.use("/api/results/sends", routers.resultSenderRouter);
+    this.app.use("/api/sends", routers.resultSenderRouter);
   }
 
   /**
@@ -61,11 +61,6 @@ class ExpressServer {
   setupStaticFiles() {
     // Sirve los archivos estáticos desde la carpeta build/dist
     this.app.use(express.static(this.config.staticPath));
-
-    // Captura todas las rutas y redirige a index.html para que React Router DOM maneje el enrutamiento
-    this.app.get("*", (req, res) => {
-      res.sendFile(this.config.indexPath);
-    });
   }
 
   /**
@@ -116,6 +111,7 @@ class ExpressServer {
 
       return this.server;
     } catch (error) {
+      console.error(error)
       throw new Error(`Failed to initialize server: ${error.message}`);
     }
   }

@@ -12,21 +12,17 @@ class ResultService {
      * @return {Promise<ResultWithParametersAndEquipment[]>}
      * */
     async getAll() {
-        return await this.resultRepository.findAllWithIncludeOptions();
+        return await this.resultRepository.findAll();
     }
 
     /**
      *
      * @param id {bigint}
-     * @param activeOnly {boolean}
-     * @return {Promise<ResultWithParametersAndEquipment[]>}
+     * @return {Promise<Result[]>}
      */
-    async getById(id, activeOnly = true) {
-        return await this.resultRepository.findById(id,
-            this.buildIncludeOptions(activeOnly)
-        );
+    async getById(id) {
+        return await this.resultRepository.findById(id);
     }
-
 
     /**
      *
@@ -59,7 +55,7 @@ class ResultService {
                 });
             }
 
-            if (validationResponse.histogramResults) {
+            if (validationResponse.data.histogramResults) {
                 await this.histogramResultService.create(
                     validationResponse.data.histogramResults,
                     responseResult.id,
@@ -69,12 +65,16 @@ class ResultService {
 
             const parametersResult = await Promise.allSettled(
                 validationResponse.data.parameters.map(
-                    async (p) =>
-                        await this.parameterService.save(p, equipmentId, responseResult.id)
+                    async (parameter) =>
+                        await this.parameterService.save(
+                            parameter,
+                            equipmentId,
+                            responseResult.id)
                 )
             );
 
-            if (parametersResult.some((pr) => pr.status === "rejected")) {
+            if (parametersResult.some(
+                (pr) => pr.status === "rejected")) {
                 console.error("Parametros no subidos de forma completa");
             }
 
@@ -82,35 +82,12 @@ class ResultService {
                 responseResult.id,
                 new Date()
             );
+
         } catch (error) {
             throw new Error(`Ocurrió un error al guardar los resultados ${error.message}`);
         }
     }
 
-
-    buildIncludeOptions(activeOnly = false) {
-        const includeOptions = {
-            include: {
-                parameters: {
-                    include: {
-                        equipment: true,
-                        parameterDictionary: {
-                            include: {
-                                systemParamater: {
-                                    include: true,
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        };
-
-        if (activeOnly) {
-            includeOptions.include.parameters.where = {active: true};
-        }
-        return includeOptions;
-    }
 }
 
 module.exports = ResultService;

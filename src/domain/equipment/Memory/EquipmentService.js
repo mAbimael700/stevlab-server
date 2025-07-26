@@ -2,7 +2,7 @@ const { initializeEquipmentManager } = require("../../../middlewares/equipment/e
 const {
   getEquipments,
 } = require("../../../middlewares/equipment/equipment-helpers");
-const EquipmentProfileConfigurationService = require("../../EquipmentProfile/Memory/EquipmentProfileConfigurationService");
+const EquipmentProfileConfigurationService = require("@/domain/equipmentprofile/Memory/EquipmentProfileConfigurationService");
 
 class EquipmentService {
   constructor() {

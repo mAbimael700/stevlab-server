@@ -3,7 +3,7 @@ const EquipmentSchema = require("@/domain/equipment/schema/EquipmentSchema");
 class EquipmentController {
     /**
      *
-     * @param {IEquipmentService} equipmentService
+     * @param dependencies
      */
     constructor(dependencies = {}) {
 
@@ -17,11 +17,11 @@ class EquipmentController {
         try {
             const equipments = await this.equipmentService.getAll();
             return res.status(200).json({
-                content: equipments,
+                content: equipments
             });
         } catch (error) {
             return res.status(500).json({
-                message: "Hubo un error al consultar todos los equipos.",
+                message: "Hubo un error al consultar todos los equipos " + error.message,
             });
         }
     }
@@ -30,11 +30,11 @@ class EquipmentController {
         try {
             const data = req.body;
 
-            const result = EquipmentSchema.validate(data);
+            const result = EquipmentSchema.validateCreation(data);
 
             if (result.success) {
                 const newEquipment = await this.equipmentService.save(result.data);
-                return res.status(201).json(new EquipmentResponse(newEquipment));
+                return res.status(201).json(newEquipment);
             }
 
             return res.status(403)

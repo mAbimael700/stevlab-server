@@ -36,12 +36,15 @@ class EquipmentService {
         return null;
     }
 
-    async create(data) {
+    async save(data) {
         const equipmentProfile = await this.equipmentProfileRepository
             .findById(data.equipmentProfileId);
 
         if (equipmentProfile) {
-            return await this.equipmentRepository.create(data);
+
+            await this.validateConfiguration(equipmentProfile, data);
+
+            return this.equipmentRepository.create(data);
         }
 
         throw new Error("Equipment profile does not exist");
@@ -75,9 +78,39 @@ class EquipmentService {
 
     async updateLastConnection(equipmentId, lastConnection) {
         const result = this.getById(equipmentId);
+    }
 
-        if (result) {
-            re
+    async validateConfiguration(equipmentProfile, data) {
+        const {macAddress, ipAddress, port, baudRate, remoteDirectory} = data.equipmentConfiguration;
+
+        switch (equipmentProfile.communication_type) {
+            case 'TcpInbound':
+                if (!(macAddress && ipAddress)) {
+                    throw new Error("IP address and port are required");
+                }
+                break;
+
+            case 'TcpOutbound':
+                if (!(macAddress && ipAddress && port)) {
+                    throw new Error("IP address, port and macAddress are required");
+                }
+                break;
+
+            case 'Serial':
+                if (!baudRate) {
+                    throw new Error("Baud rate is required");
+                }
+                break;
+
+            case 'Ftp':
+                if (!(ipAddress && port && remoteDirectory)) {
+                    throw new Error("IP address, port and remote directory are required");
+                }
+                break;
+
+            default:
+                throw new Error("Invalid communication type: " + equipmentProfile.communication_type)
+
         }
     }
 }
