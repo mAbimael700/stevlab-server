@@ -1,4 +1,7 @@
 const EquipmentSchema = require("@/domain/equipment/schema/EquipmentSchema");
+const EquipmentProfileResponse = require("@/domain/equipmentprofile/dto/EquipmentProfileResponse");
+const {z} = require("zod");
+const IdNumberValidator = require("@/infra/http/validators/IdNumberValidator");
 
 class EquipmentController {
     /**
@@ -9,6 +12,7 @@ class EquipmentController {
 
         this.equipmentService = dependencies.equipmentService;
         this.rawResultsService = dependencies.rawResultsService
+        this.equipmentProfileService = dependencies.equipmentProfileService;
 
         this.configureController();
     }
@@ -47,9 +51,14 @@ class EquipmentController {
         }
     }
 
+
     async getById(req, res) {
         try {
             const {id} = req.params;
+
+            if (!IdNumberValidator.validate(id))
+                return res.status(400).json({error: 'Invalid ID'});
+
             const equipment = await this.equipmentService.getById(id);
 
             if (equipment) {
@@ -72,6 +81,24 @@ class EquipmentController {
             const result = await this.equipmentService.updateById(id);
             return res.status(200);
         } catch (error) {
+            return res.status(403).json({
+                error: error.message,
+                cause: error.cause,
+            });
+        }
+    }
+
+
+    async getEquipmentProfiles(req, res) {
+        try {
+            const equipmentProfiles = await this.equipmentProfileService.getAll();
+
+            return res.status(200).json(
+                {
+                    content: equipmentProfiles.map(ep => new EquipmentProfileResponse(ep))
+                })
+        } catch (error) {
+            console.log(error)
             return res.status(403).json({
                 error: error.message,
                 cause: error.cause,
@@ -128,6 +155,7 @@ class EquipmentController {
         this.save = this.save.bind(this);
         this.getById = this.getById.bind(this);
         this.updateById = this.updateById.bind(this)
+        this.getEquipmentProfiles = this.getEquipmentProfiles.bind(this);
         this.deactivateById = this.deactivateById.bind(this);
         this.getRawResultsByEquipmentId = this.getRawResultsByEquipmentId.bind(this)
         this.getLatestRawResultsByEquipmentId = this.getLatestRawResultsByEquipmentId.bind(this)

@@ -1,4 +1,4 @@
-const {ResultSchema} = require("../ResultSchema");
+const {ResultSchema} = require("../schema/ResultSchema");
 
 class ResultService {
     constructor(resultRepository, parameterService, histogramResultService) {

@@ -8,6 +8,7 @@ class EquipmentService {
     constructor(dependencies) {
         this.equipmentRepository = dependencies.equipmentRepository;
         this.equipmentProfileRepository = dependencies.equipmentRepository;
+        this.equipmentConfigurationRepository = dependencies.equipmentConfigurationRepository;
     }
 
     async getAll() {
@@ -41,14 +42,24 @@ class EquipmentService {
             .findById(data.equipmentProfileId);
 
         if (equipmentProfile) {
-
             await this.validateConfiguration(equipmentProfile, data);
 
-            return this.equipmentRepository.create(data);
+            const equipment = await this.equipmentRepository.create({
+                name: data.name,
+                equipment_profile_id: data.equipmentProfileId,
+            });
+
+            await this.equipmentConfigurationRepository
+                .create({
+                    equipment_id: equipment.id,
+                    ...data.equipmentConfiguration
+                });
+
+
+            return await this.getById(equipment.id)
         }
 
         throw new Error("Equipment profile does not exist");
-
     }
 
     async findByIpAddress(ipAddress) {
@@ -80,8 +91,20 @@ class EquipmentService {
         const result = this.getById(equipmentId);
     }
 
+    /**
+     *
+     * @param equipmentProfile
+     * @param data
+     * @returns {Promise<void>}
+     */
     async validateConfiguration(equipmentProfile, data) {
-        const {macAddress, ipAddress, port, baudRate, remoteDirectory} = data.equipmentConfiguration;
+        const {
+            macAddress,
+            ipAddress,
+            port,
+            baudRate,
+            remoteDirectory
+        } = data.equipmentConfiguration;
 
         switch (equipmentProfile.communication_type) {
             case 'TcpInbound':

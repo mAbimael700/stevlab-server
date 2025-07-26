@@ -23,6 +23,7 @@ const HistogramResultService = require("../../src/domain/histogramresult/Histogr
 const ParameterDictionaryService = require("../../src/domain/parameterdictionary/service/ParameterDictionaryService");
 const EquipmentRouter = require("../../src/infra/http/routes/EquipmentRouter");
 const ResultSenderRouter = require("../../src/infra/http/routes/ResultSenderRouter");
+const EquipmentProfileService = require("../../src/domain/equipmentprofile/service/EquipmentProfileService");
 
 //Repositorios
 const equipmentRepository = new EquipmentRepository(prisma);
@@ -59,6 +60,10 @@ const equipmentService = new EquipmentService({
     equipmentProfileRepository
 });
 
+const equipmentProfileService = new EquipmentProfileService({
+    equipmentProfileRepository,
+})
+
 const resultSenderService = {};
 
 //Controladores
@@ -70,6 +75,7 @@ const resultController = new ResultController({
 
 const equipmentController = new EquipmentController({
     equipmentService,
+    equipmentProfileService
 });
 
 const resultSenderController = new ResultSenderController({

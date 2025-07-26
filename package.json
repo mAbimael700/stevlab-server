@@ -1,5 +1,5 @@
 {
-  "name": "stevlab-lis-server",
+  "name": "lis-server",
   "version": "1.0.0",
   "description": "A LIS Server for laboratory equipments for clinical areas",
   "main": "main.js",
@@ -23,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.8.2",
+    "axios": "1.11.0",
     "basic-ftp": "5.0.5",
     "bl": "6.0.16",
     "cheerio": "^1.0.0",

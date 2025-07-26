@@ -30,10 +30,10 @@ class EquipmentRouter {
    */
   setupEquipmentRoutes() {
     // Rutas de dispositivos
+    this.router.get("/profiles", this.controller.getEquipmentProfiles);
     this.router.get("/", this.controller.getAll);
     this.router.post("/", this.controller.save);
-    
-    
+
     this.router.get("/:id", this.controller.getById);
     this.router.patch("/:id", this.controller.updateById);
     this.router.delete("/:id", this.controller.deactivateById);

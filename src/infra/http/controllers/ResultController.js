@@ -1,5 +1,6 @@
 const ResultResponse = require("@/domain/result/dto/ResultResponse");
 const ParameterResponse = require("@/domain/parameter/dto/ParameterResponse");
+const IdNumberValidator = require("@/infra/http/validators/IdNumberValidator");
 
 class ResultController {
     /**
@@ -7,7 +8,7 @@ class ResultController {
      * @param dependencies
      */
     constructor(dependencies = {}) {
-        this.resultService = dependencies.resultSendService;
+        this.resultService = dependencies.resultService;
         this.parameterService = dependencies.parameterService
         this.configureController();
     }
@@ -19,6 +20,7 @@ class ResultController {
                 content: results.map(result => new ResultResponse(result)),
             });
         } catch (error) {
+            console.log(error)
             return res.status(error.code ?? 500).json({
                 message: error.message ?? "Hubo un error al consultar todos los resultados.",
             });
@@ -42,6 +44,10 @@ class ResultController {
     async getById(req, res) {
         try {
             const {resultId} = req.params;
+
+            if (!IdNumberValidator.validate(resultId))
+                return res.status(400).json({error: 'Invalid ID'});
+
             const result = await this.resultService.getById(resultId);
 
             if (!result) {
@@ -61,6 +67,10 @@ class ResultController {
     async getResultParameters(req, res) {
         try {
             const {resultId} = req.params;
+
+            if (!IdNumberValidator.validate(resultId))
+                return res.status(400).json({error: 'Invalid ID'});
+
             const parameters = await this.parameterService
                 .getActiveByResultId(resultId);
 
@@ -79,6 +89,9 @@ class ResultController {
     async getResultParameterHistory(req, res) {
         try {
             const {resultId, description} = req.params;
+
+            if (!IdNumberValidator.validate(resultId))
+                return res.status(400).json({error: 'Invalid ID'});
 
             const parameters = await this.parameterService
                 .getParameterHistory(resultId, description);
@@ -99,6 +112,10 @@ class ResultController {
     async setResultParameterActive(req, res) {
         try {
             const {parameterId} = req.params;
+
+            if (!IdNumberValidator.validate(parameterId))
+                return res.status(400).json({error: 'Invalid ID'});
+
             await this.parameterService.activate(parameterId);
 
             return res.status(200);
@@ -112,6 +129,10 @@ class ResultController {
     async setResultParameterInactive(req, res) {
         try {
             const {parameterId} = req.params;
+
+            if (!IdNumberValidator.validate(parameterId))
+                return res.status(400).json({error: 'Invalid ID'});
+
             await this.parameterService.deactivate(parameterId);
 
             return res.status(200);

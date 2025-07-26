@@ -1,9 +1,9 @@
 class ResultResponse {
     /**
-     * @param {import("@/infra/Prisma/Generated").Result} result
+     * @param {import("@/infra/prisma/generated").Result} result
      */
     constructor(result) {
-        this.id = result.id;
+        this.id = Number(result.id);
         this.createdAt = result.created_at;
         this.folio = result.folio;
         this.sampleId = result.sample_id;
