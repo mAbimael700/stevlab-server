@@ -45,7 +45,7 @@ class ParameterRepository extends BaseRepository {
      * @param resultId
      * @return {Promise<ParametersWithEquipmentAndParameterDictionaryAndSystemParameter[]>}
      */
-    async findActiveByResultId(resultId) {
+    async findByResultIdAndActive(resultId) {
         return this.prisma.parameter.findMany({
             where: {result_id: resultId, active: true},
             ...this.includeOptions

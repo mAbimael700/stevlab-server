@@ -41,7 +41,7 @@ class CommunicationRouter {
     this.router.post("/equipments", this.controller.inicialitzeAllEquipmentConnections);
     this.router.delete("/equipments", this.controller.closeAllEquipmentConnections);
     
-    this.router.get("/equipments/profiles", this.controller.getEquipmentProfiles);
+
     
     this.router.get("/equipments/:id", this.controller.getById);
     this.router.post("/equipments/:id", this.controller.inicializeEquipmentConnectionById);

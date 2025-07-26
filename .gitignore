@@ -144,5 +144,5 @@ dist3/
 electron
 electron2
 
-src/infra/Prisma/Generated/
-src/infra/Prisma/Generated/
+src/infra/prisma/generated/
+src/infra/prisma/generated/

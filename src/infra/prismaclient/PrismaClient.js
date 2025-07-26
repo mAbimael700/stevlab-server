@@ -1,5 +1,5 @@
 // src/prismaClient.js
-const { PrismaClient } = require("../prisma/generated");
+const { PrismaClient } = require("@/infra/prisma/generated");
 
 const prisma = new PrismaClient({
   log: ["query", "info", "warn", "error"],

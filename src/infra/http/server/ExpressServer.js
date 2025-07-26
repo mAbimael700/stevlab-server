@@ -133,8 +133,7 @@ class ExpressServer {
         }
 
         console.log(
-          `Servidor Web Socket escuchando en el puerto ${this.port}`,
-          `Servidor HTTP accessible http://localhost:${this.port}/`
+          `HTTP Server accessible http://localhost:${this.port}/`
         );
 
         resolve(this.server);

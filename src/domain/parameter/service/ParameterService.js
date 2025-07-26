@@ -31,7 +31,7 @@ class ParameterService {
     async getActiveByResultId(resultId) {
         try {
             this.validationService.validateRequiredField(resultId, 'El ID del resultado');
-            return await this.parameterRepository.findActiveByResultId(resultId);
+            return await this.parameterRepository.findByResultIdAndActive(resultId);
         } catch (error) {
             throw new Error(`Error al consultar los parámetros activos con el resultado #${resultId}: ${error.message}`);
         }
@@ -116,16 +116,6 @@ class ParameterService {
             .updateParameterDictionaryReference(newParameter.id);
 
         return newParameter;
-    }
-
-    async findActiveByResult(resultId) {
-        try {
-            this.validationService.validateRequiredField(resultId, 'El ID del resultado');
-            return await this.parameterRepository
-                .findByResultAndActive(resultId, true);
-        } catch (error) {
-            throw new Error(`Error al buscar parámetros activos: ${error.message}`);
-        }
     }
 
     async getParameterHistory(resultId, description) {

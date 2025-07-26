@@ -18,3 +18,5 @@ class ResultSendRequest {
     });
   }
 }
+
+module.exports = ResultSendRequest;

@@ -23,6 +23,10 @@ const HistogramResultService = require("../../src/domain/histogramresult/Histogr
 const ParameterDictionaryService = require("../../src/domain/parameterdictionary/service/ParameterDictionaryService");
 const EquipmentRouter = require("../../src/infra/http/routes/EquipmentRouter");
 const ResultSenderRouter = require("../../src/infra/http/routes/ResultSenderRouter");
+const EquipmentProfileService = require("../../src/domain/equipmentprofile/service/EquipmentProfileService");
+const ResultSendRepository = require("../../src/domain/resultsend/repository/ResultSendRepository");
+const ResultSenderService = require("../../src/infra/resultsender/service/ResultSenderService");
+const ResultSendService = require("../../src/domain/resultsend/service/ResultSendService");
 
 //Repositorios
 const equipmentRepository = new EquipmentRepository(prisma);
@@ -31,6 +35,7 @@ const resultRepository = new ResultRepository(prisma)
 const parameterRepository = new ParameterRepository(prisma)
 const parameterDictionaryRepository = new ParameterDictionaryRepository(prisma)
 const histogramRepository = new HistogramResultService(prisma)
+const resultSendRepository = new ResultSendRepository(prisma)
 
 //Servicios
 const dictionaryService = new ParameterDictionaryService({
@@ -59,7 +64,18 @@ const equipmentService = new EquipmentService({
     equipmentProfileRepository
 });
 
-const resultSenderService = {};
+const equipmentProfileService = new EquipmentProfileService({
+    equipmentProfileRepository,
+})
+
+const resultSendService = new ResultSendService({
+    resultSendRepository
+})
+
+const resultSenderService = new ResultSenderService({
+    resultSendService,
+    resultService
+});
 
 //Controladores
 
@@ -70,6 +86,7 @@ const resultController = new ResultController({
 
 const equipmentController = new EquipmentController({
     equipmentService,
+    equipmentProfileService
 });
 
 const resultSenderController = new ResultSenderController({

@@ -40,19 +40,29 @@ class ResultRepository extends BaseRepository {
     async findByFolioWithHistorial(folio) {
         return this.prisma.result.findFirst({
             where: {folio},
-            ...this.buildIncludeOptions(false)
+            ...this.buildIncludeOptions()
         });
     }
+
+    /**
+     * Verifica si existe un resultado con el folio especificado
+     * @param {bigint} id
+     * @returns {Promise<import("@/infra/prisma/generated").Result | undefined>}
+     */
+    async findByIdWithParameters(id) {
+        return this.findById(id, this.buildIncludeOptions({activeOnly: true}));
+    }
+
 
     async updateLastModifiedAt(id, date) {
         await this.update(id, {last_modified_at: date});
     }
 
     async findAllWithIncludeOptions() {
-        return this.findAll(this.buildIncludeOptions(true))
+        return this.findAll(this.buildIncludeOptions({activeOnly: true}))
     }
 
-    buildIncludeOptions(activeOnly = false) {
+    buildIncludeOptions({activeOnly = false}) {
         const includeOptions = {
             include: {
                 parameters: {
@@ -73,6 +83,7 @@ class ResultRepository extends BaseRepository {
         if (activeOnly) {
             includeOptions.include.parameters.where = {active: true};
         }
+
         return includeOptions;
     }
 }
