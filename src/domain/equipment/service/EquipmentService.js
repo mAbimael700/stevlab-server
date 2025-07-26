@@ -20,7 +20,7 @@ class EquipmentService {
             return equipments.map((e) => new EquipmentDto(e));
         }
 
-        return null;
+        return [];
     }
 
     /**

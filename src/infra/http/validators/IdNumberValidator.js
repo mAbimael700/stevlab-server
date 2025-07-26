@@ -3,7 +3,7 @@ const idSchema = z.union([z.number(), z.bigint()]);
 
 class IdNumberValidator {
     static validate(id) {
-        return idSchema.safeParse(id).success;
+        return idSchema.safeParse(Number(id)).success;
     }
 }
 

@@ -33,7 +33,6 @@ class ResultSenderRouter {
         this.router.get("/latest", this.controller.getLatest);
         this.router.get("/:resultSendId", this.controller.getBySendResultId);
 
-        this.router.get('/results/:folio', this.controller.getByFolio);
         this.router.get('/results/:resultId', this.controller.getByResultId);
         this.router.post("/results/:resultId", this.controller.sendResultById);
     }

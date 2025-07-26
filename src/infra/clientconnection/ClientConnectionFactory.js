@@ -5,173 +5,248 @@ const TcpOutBoundClient = require("@/infra/connection/tcp/TcpOutBoundClient");
 const TcpClientConnectionCoreFactory = require("@/infra/connection/tcp/TcpClientConnectionCoreFactory");
 const SerialClientCoreFactory = require("@/infra/connection/serial/SerialClientCoreFactory");
 
+class FtpClientCoreFactory {
+    constructor(bufferDataEmitter) {
+        
+    }
+
+}
+
+/**
+ * Factory para crear diferentes tipos de clientes de conexión
+ */
 class ClientConnectionFactory {
-  constructor(bufferDataEmitter) {
+    constructor(bufferDataEmitter) {
+        this.bufferDataEmitter = bufferDataEmitter;
+        this.clientConfigs = new Map();
+        this.coreFactories = new Map();
+
+        this._initializeCoreFactories();
+        this._registerClientTypes();
+    }
+
     /**
-     * @type {Map<string, {clientClass: ClientOutBoundConnection, clientCoreFactory: Function} | null>}
+     * Inicializa los core factories disponibles
+     * @private
      */
-    this.clientConnections = new Map();
-
-    // Inicializar dependency factories
-    this.clientCoreFactories = {
-      tcp: new TcpClientConnectionCoreFactory(bufferDataEmitter),
-      serial: new SerialClientCoreFactory(bufferDataEmitter),
-      //ftp: new FtpClientCoreFactory(), // Asumiendo que existe
-    };
-
-    this.registerClientConnections();
-  }
-
-  registerClientConnections() {
-    // TcpInbound se maneja por TcpServer, por eso es null
-    this.register("TcpInbound", null);
-
-    // Registro con clase y dependency factory
-    this.register("TcpOutbound", {
-      clientClass: TcpOutBoundClient,
-      clientCoreFactory: () => this.clientCoreFactories.tcp,
-    });
-
-    this.register("Serial", {
-      clientClass: SerialClient,
-      clientCoreFactory: () => this.clientCoreFactories.serial,
-    });
-
-    this.register("Ftp", {
-      clientClass: FtpClient,
-      clientCoreFactory: () => this.clientCoreFactories.ftp,
-    });
-  }
-
-  /**
-   * Registra un tipo de cliente con su dependency factory
-   * @param {string} type
-   * @param {Object|null} config - {clientClass: Function, dependencyFactory: Function} o null
-   * @returns {ClientConnectionFactory}
-   */
-  register(type, config) {
-    if (
-      config !== null &&
-      (!config.clientClass || typeof config.clientClass !== "function")
-    ) {
-      throw new Error(
-        `La configuración para ${type} debe tener una clientClass válida`
-      );
+    _initializeCoreFactories() {
+        this.coreFactories.set('tcp', new TcpClientConnectionCoreFactory(this.bufferDataEmitter));
+        this.coreFactories.set('serial', new SerialClientCoreFactory(this.bufferDataEmitter));
+        this.coreFactories.set('ftp', new FtpClientCoreFactory(this.bufferDataEmitter));
     }
 
-    this.clientConnections.set(type, config);
-    return this; // Method chaining
-  }
+    /**
+     * Registra todos los tipos de cliente soportados
+     * @private
+     */
+    _registerClientTypes() {
+        // Tipos especiales que no requieren instanciación
+        this.register("TcpInbound", {
+            special: true,
+            reason: "Manejado por TcpServer"
+        });
 
-  get supportedTypes() {
-    return Array.from(this.clientConnections.keys());
-  }
+        // Clientes regulares - todos requieren equipo
+        this.register("TcpOutbound", {
+            clientClass: TcpOutBoundClient,
+            coreFactoryKey: 'tcp'
+        });
 
-  /**
-   * Crea una instancia de cliente basada en el tipo
-   * @param {string} type - Tipo de conexión
-   * @param {Object} equipment - Datos del equipo (opcional para algunos tipos)
-   * @returns {ClientOutBoundConnection | null}
-   */
-  create(type, equipment = null) {
-    if (!this.clientConnections.has(type)) {
-      throw new Error(
-        `Tipo de cliente de conexión no soportado: ${type}. Tipos soportados: ${this.supportedTypes.join(
-          ", "
-        )}`
-      );
+        this.register("Serial", {
+            clientClass: SerialClient,
+            coreFactoryKey: 'serial'
+        });
+
+        this.register("Ftp", {
+            clientClass: FtpClient,
+            coreFactoryKey: 'ftp'
+        });
     }
 
-    const config = this.clientConnections.get(type);
+    /**
+     * Registra un tipo de cliente
+     * @param {string} type - Tipo de cliente
+     * @param {Object} config - Configuración del cliente
+     * @returns {ClientConnectionFactory}
+     */
+    register(type, config) {
+        if (!type || typeof type !== 'string') {
+            throw new Error('El tipo de cliente debe ser un string válido');
+        }
 
-    // Casos especiales que retornan null (como TcpInbound)
-    if (!config) {
-      return null;
+        // Validar configuraciones especiales
+        if (config.special) {
+            this.clientConfigs.set(type, config);
+            return this;
+        }
+
+        // Validar configuraciones regulares
+        if (!config.clientClass || typeof config.clientClass !== 'function') {
+            throw new Error(`La configuración para ${type} debe tener una clientClass válida`);
+        }
+
+        if (config.coreFactoryKey && !this.coreFactories.has(config.coreFactoryKey)) {
+            throw new Error(`Core factory '${config.coreFactoryKey}' no encontrado para ${type}`);
+        }
+
+        this.clientConfigs.set(type, config);
+
+        return this;
     }
 
-    const { clientClass, clientCoreFactory } = config;
+    /**
+     * Crea una instancia de cliente
+     * @param {string} type - Tipo de conexión
+     * @param {Object} equipment - Datos del equipo
+     * @returns {ClientOutBoundConnection | null}
+     */
+    create(type, equipment = null) {
+        const config = this._validateAndGetConfig(type, equipment);
 
-    try {
-      // Si el cliente requiere equipment, verificar que se proporcione
-      if (this._requiresEquipment(type) && !equipment) {
-        throw new Error(`El tipo de cliente ${type} requiere datos del equipo`);
-      }
+        if (config.special) {
+            return null;
+        }
 
-      // Crear instancia con o sin dependency factory
-      if (clientCoreFactory) {
-        const factory = clientCoreFactory();
-        return equipment
-          ? new clientClass(equipment, factory)
-          : new clientClass(factory);
-      } else {
-        return equipment ? new clientClass(equipment) : new clientClass();
-      }
-    } catch (error) {
-      throw new Error(
-        `Error al crear cliente ${type.toLocaleLowerCase()}: ${error.message}`
-      );
-    }
-  }
+        try {
+            const coreFactory = config.coreFactoryKey ?
+                this.coreFactories.get(config.coreFactoryKey) : null;
 
-  /**
-   * Crea y conecta una instancia de cliente
-   * @param {string} type
-   * @param {Object} equipment
-   * @returns {Promise<ClientOutBoundConnection | null>}
-   */
-  async createAndConnect(type, equipment = null) {
-    const client = this.create(type, equipment);
+            return coreFactory ?
+                new config.clientClass(equipment, coreFactory) :
+                new config.clientClass(equipment);
 
-    if (!client) {
-      return null;
+        } catch (error) {
+            throw new ClientCreationError(type, error);
+        }
     }
 
-    // Si el cliente tiene método connect, llamarlo
-    if (typeof client.connect === "function") {
-      await client.connect();
+    /**
+     * Crea y conecta una instancia de cliente
+     * @param {string} type
+     * @param {Object} equipment
+     * @returns {Promise<ClientOutBoundConnection | null>}
+     */
+    async createAndConnect(type, equipment = null) {
+        const client = this.create(type, equipment);
+
+        if (!client) {
+            return null;
+        }
+
+        if (typeof client.connect === 'function') {
+            try {
+                await client.connect();
+            } catch (error) {
+                throw new ClientConnectionError(type, error);
+            }
+        }
+
+        return client;
     }
 
-    return client;
-  }
+    /**
+     * Valida parámetros y obtiene configuración
+     * @private
+     * @param {string} type
+     * @param {Object} equipment
+     * @returns {Object}
+     */
+    _validateAndGetConfig(type, equipment) {
+        if (!this.isSupported(type)) {
+            throw new UnsupportedClientTypeError(type, this.supportedTypes);
+        }
 
-  /**
-   * Verifica si un tipo de cliente requiere datos del equipo
-   * @private
-   * @param {string} type
-   * @returns {boolean}
-   */
-  _requiresEquipment(type) {
-    const typesRequiringEquipment = ["TcpOutbound", "Serial", "Ftp"];
-    return typesRequiringEquipment.includes(type);
-  }
+        const config = this.clientConfigs.get(type);
 
-  /**
-   * Verifica si un tipo de cliente está soportado
-   * @param {string} type
-   * @returns {boolean}
-   */
-  isSupported(type) {
-    return this.clientConnections.has(type);
-  }
+        // Todos los clientes regulares requieren equipo
+        if (!config.special && !equipment) {
+            throw new MissingEquipmentError(type);
+        }
 
-  /**
-   * Obtiene información sobre un tipo de cliente
-   * @param {string} type
-   * @returns {Object}
-   */
-  getClientInfo(type) {
-    if (!this.isSupported(type)) {
-      return null;
+        return config;
     }
 
-    const config = this.clientConnections.get(type);
-    return {
-      type,
-      supported: true,
-      hasConfig: config !== null,
-      requiresEquipment: this._requiresEquipment(type),
-    };
-  }
+    /**
+     * Obtiene tipos soportados
+     * @returns {string[]}
+     */
+    get supportedTypes() {
+        return Array.from(this.clientConfigs.keys());
+    }
+
+    /**
+     * Verifica si un tipo está soportado
+     * @param {string} type
+     * @returns {boolean}
+     */
+    isSupported(type) {
+        return this.clientConfigs.has(type);
+    }
+
+    /**
+     * Obtiene información sobre un tipo de cliente
+     * @param {string} type
+     * @returns {Object|null}
+     */
+    getClientInfo(type) {
+        if (!this.isSupported(type)) {
+            return null;
+        }
+
+        const config = this.clientConfigs.get(type);
+        return {
+            type,
+            supported: true,
+            isSpecial: !!config.special,
+            requiresEquipment: !config.special, // Todos los clientes regulares requieren equipo
+            hasCoreFactory: !!config.coreFactoryKey,
+            reason: config.reason || null
+        };
+    }
+
+    /**
+     * Lista todos los clientes con su información
+     * @returns {Object[]}
+     */
+    listAllClients() {
+        return this.supportedTypes.map(type => this.getClientInfo(type));
+    }
+}
+
+// Errores específicos para mejor debugging
+class ClientFactoryError extends Error {
+    constructor(message, type = null) {
+        super(message);
+        this.name = this.constructor.name;
+        this.clientType = type;
+    }
+}
+
+class UnsupportedClientTypeError extends ClientFactoryError {
+    constructor(type, supportedTypes) {
+        super(`Tipo de cliente no soportado: ${type}. Tipos disponibles: ${supportedTypes.join(', ')}`);
+        this.supportedTypes = supportedTypes;
+    }
+}
+
+class MissingEquipmentError extends ClientFactoryError {
+    constructor(type) {
+        super(`El cliente ${type} requiere datos del equipo`);
+    }
+}
+
+class ClientCreationError extends ClientFactoryError {
+    constructor(type, originalError) {
+        super(`Error al crear cliente ${type}: ${originalError.message}`);
+        this.originalError = originalError;
+    }
+}
+
+class ClientConnectionError extends ClientFactoryError {
+    constructor(type, originalError) {
+        super(`Error al conectar cliente ${type}: ${originalError.message}`);
+        this.originalError = originalError;
+    }
 }
 
 module.exports = ClientConnectionFactory;

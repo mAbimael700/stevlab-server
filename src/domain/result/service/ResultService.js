@@ -30,7 +30,11 @@ class ResultService {
      * @return {Promise<ResultWithParametersAndEquipment[]>}
      */
     async getByFolio(folio) {
-        return await this.resultRepository.findByFolioWithHistorial(folio);
+        return await this.resultRepository.findByFolio(folio);
+    }
+
+    async getByIdWithParameters(id) {
+        return await this.resultRepository.findByIdWithParameters(id)
     }
 
     async saveStreamReceivedResult(result, equipmentId) {
