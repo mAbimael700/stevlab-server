@@ -7,9 +7,7 @@ class ParameterRepository extends BaseRepository {
             include: {
                 parameterDictionary: {
                     include: {
-                        systemParamater: {
-                            include: true,
-                        },
+                        systemParameter: {include: true}
                     },
                 },
             }
@@ -25,13 +23,8 @@ class ParameterRepository extends BaseRepository {
      */
     async findByResultIdAndDescription(resultId, description) {
         return this.prisma.parameter.findMany({
-            where: {
-                result_id: resultId,
-                description: description
-            },
-            orderBy: {
-                created_at: 'desc'
-            }
+            where: {result_id: resultId, description},
+            orderBy: {created_at: 'desc'}
         });
     }
 

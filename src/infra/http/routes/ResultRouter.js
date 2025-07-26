@@ -31,15 +31,14 @@ class ResultRouter {
   setupResultRoutes() {
     // Rutas de dispositivos
     this.router.get("/", this.controller.getAll);
-    this.router.get("/lastest", this.controller.getLatest);
+    this.router.get("/latest", this.controller.getLatest);
     
     this.router.get("/:resultId", this.controller.getById);
 
-    this.router.get("/:resultId/parameters", this.controller.getResultParametersByResultId);
+    this.router.get("/:resultId/parameters", this.controller.getResultParameters);
+    this.router.get("/:resultId/parameters/:description", this.controller.getResultParameterHistory);
     this.router.post("/:resultId/parameters/:parameterId", this.controller.setResultParameterActive);
     this.router.delete("/:resultId/parameters/:parameterId", this.controller.setResultParameterInactive);
-
-    this.router.post("/:resultId/send", this.controller.sendResultById);
   }
 
   /**

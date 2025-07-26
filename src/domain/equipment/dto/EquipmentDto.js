@@ -1,5 +1,5 @@
-const EquipmentConfigurationDto = require("../../equipmentconfiguration/EquipmentConfigurationDto")
-const EquipmentProfileDto = require("../../equipmentprofile/EquipmentProfileDto")
+const EquipmentConfigurationDto = require("@/domain/equipmentconfiguration/dto/EquipmentConfigurationDto")
+const EquipmentProfileDto = require("@/domain/equipmentprofile/dto/EquipmentProfileDto")
 
 class EquipmentDto {
 
@@ -8,7 +8,7 @@ class EquipmentDto {
      * @param {Object} equipment 
      */
     constructor(equipment) {
-        this.id = equipment.id
+        this.id = Number(equipment.id)
         this.name = equipment.name
         this.createdAt = equipment.created_at
         this.modifiedAt = equipment.modified_at

@@ -1,5 +1,5 @@
 const { z } = require("zod")
-const CommunicationProfileSchema = require("../communicationprofile/CommunicationProfileSchema")
+const CommunicationProfileSchema = require("../../CommunicationProfile/CommunicationProfileSchema")
 
 class EquipmentProfileSchema {
 
