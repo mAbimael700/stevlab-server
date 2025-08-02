@@ -47,7 +47,6 @@ class ConnectionValidator {
       return foundEquipment;
 
     } catch (error) {
-
       throw error;
     }
   }
@@ -124,7 +123,7 @@ class ConnectionValidator {
           !iface.internal &&
           interfaceName.toLowerCase().includes("wi-fi")
         ) {
-          return iface.mac.toUpperCase().replace(/:/g, "");
+          return iface.mac.toUpperCase().replace(/:/g, "-");
         }
       }
     }

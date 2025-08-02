@@ -4,7 +4,7 @@ const CommunicationProfileSchema = require("../../CommunicationProfile/Communica
 class EquipmentProfileSchema {
 
     static schema = z.object({
-        id: z.bigint(),
+        id: z.union([z.number(), z.bigint()]),
         communicationType: z.enum(["TcpInbound", "TcpOutbound", "Serial", "Ftp"]),
         name: z.string(),
         active: z.boolean(),

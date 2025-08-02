@@ -1,5 +1,5 @@
 const { SerialPort, ReadlineParser } = require("serialport");
-const SerialEventsHandler = require("./SerialEventsHandler");
+const SerialEventsHandler = require("../events/SerialEventsHandler");
 
 class SerialPortListener {
   /**

@@ -118,15 +118,15 @@ model ParameterDictionary {
 }
 
 model ResultSend {
-  id        BigInt    @id @default(autoincrement())
-  result_id BigInt?
-  send_by   BigInt?
-  send_at   DateTime? @db.Timestamp(6)
-  status    String?   @db.VarChar(20)
-  payload   Json?     @db.Json
-  response  Json?     @db.Json
-  result    Result?   @relation(fields: [result_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_result_id_results_id")
-  user      User?     @relation(fields: [send_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_send_by_users_id")
+  id           BigInt    @id @default(autoincrement())
+  result_folio BigInt?
+  send_by      BigInt?
+  send_at      DateTime? @db.Timestamp(6)
+  status       String?   @db.VarChar(20)
+  payload      Json?     @db.Json
+  response     Json?     @db.Json
+  result       Result?   @relation(fields: [result_folio], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_result_folio_results_folio")
+  user         User?     @relation(fields: [send_by], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_sends_send_by_users_id")
 
   @@map("result_sends")
 }
@@ -157,7 +157,7 @@ model EquipmentConfiguration {
   mac_address      String? @db.VarChar(17)
   remote_directory String? @db.VarChar(500)
 
-  // Relación con Equipment
+  // Relación con equipment
   equipment Equipment @relation(fields: [equipment_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   // Definición de clave primaria compuesta (solo equipment_id en este caso)

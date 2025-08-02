@@ -1,4 +1,4 @@
-const ConnectionValidator = require("../src/infra/connection/tcp/ConnectionValidator");
+const ConnectionValidator = require("../src/infra/connection/tcp/validator/ConnectionValidator");
 
 const EquipmentRepository = require("../src/domain/equipment/repository/EquipmentRepository");
 const EquipmentService = require("../src/domain/equipment/service/EquipmentService");
@@ -12,8 +12,8 @@ const ResultRepository = require("../src/domain/result/repository/ResultReposito
 const ParameterRepository = require("../src/domain/parameter/repository/ParameterRepository");
 const ParameterService = require("../src/domain/parameter/service/ParameterService");
 const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
-const SerialClientCoreFactory = require("../src/infra/connection/serial/SerialClientCoreFactory");
-const ClientConnectionFactory = require("../src/infra/clientconnection/ClientConnectionFactory");
+const SerialClientCoreFactory = require("../src/infra/connection/serial/factory/SerialClientCoreFactory");
+const ClientConnectionFactory = require("../src/infra/clientconnection/factory/ClientConnectionFactory");
 
 const equipmentRepository = new EquipmentRepository(prisma);
 const resultRepository = new ResultRepository(prisma);

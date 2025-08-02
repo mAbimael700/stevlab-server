@@ -27,6 +27,4 @@ class ClientConnection {
 
 
 
-module.exports =
-  ClientConnection
-  ;
+module.exports = ClientConnection;

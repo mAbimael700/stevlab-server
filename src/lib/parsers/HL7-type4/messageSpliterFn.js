@@ -42,7 +42,7 @@ function generateHl7Ack(
   receptor = "BS-120",
   status = "AA"
 ) {
-  const timestamp = generateAckDate(); // Formato HL7
+  const timestamp = generateAckDate(); // F   ormato HL7
   const mshSegment = `MSH|^~\\&|||${emisor}|${receptor}|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||`;
   const msaSegment = `MSA|${status}|${messageId}|Message accepted|||0|`;
 

@@ -10,6 +10,7 @@ class ResultController {
     constructor(dependencies = {}) {
         this.resultService = dependencies.resultService;
         this.parameterService = dependencies.parameterService
+
         this.configureController();
     }
 
@@ -102,6 +103,7 @@ class ResultController {
                         .map(p => new ParameterResponse(p))
             });
         } catch (error) {
+            console.log(error)
             return res.status(error.code ?? 403).json({
                 message: error.message,
             });
@@ -149,6 +151,7 @@ class ResultController {
         this.getById = this.getById.bind(this);
         this.getLatest = this.getLatest.bind(this);
         this.getResultParameters = this.getResultParameters.bind(this)
+        this.getResultParameterHistory = this.getResultParameterHistory.bind(this)
         this.setResultParameterActive = this.setResultParameterActive.bind(this)
         this.setResultParameterInactive = this.setResultParameterInactive.bind(this)
     }

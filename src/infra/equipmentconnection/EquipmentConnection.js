@@ -1,12 +1,12 @@
-const ClientConnection = require("@/infra/clientconnection/ClientConnection.js");
+const ClientConnection = require("@/infra/clientconnection/entity/ClientConnection");
 const EquipmentDto = require("@/domain/equipment/dto/EquipmentDto.js");
-const ClientOutBoundConnection = require("@/infra/clientconnection/ClientOutBoundConnection.js");
+const ClientOutBoundConnection = require("@/infra/clientconnection/entity/ClientOutBoundConnection.js");
 
 class EquipmentConnection {
   /**
    *
    * @param {EquipmentDto} equipment
-   * @param {ClientConnection | ClientOutBoundConnection| null} clientConnection
+   * @param {ClientConnection | ClientOutBoundConnection | null} clientConnection
    */
   constructor(equipment, clientConnection = null) {
     if (!equipment) {

@@ -1,9 +1,8 @@
-const ClientOutBoundConnection = require("./ClientOutBoundConnection");
 const FtpClient = require("@/infra/connection/ftp/FtpClient");
-const SerialClient = require("@/infra/connection/serial/SerialClient");
-const TcpOutBoundClient = require("@/infra/connection/tcp/TcpOutBoundClient");
-const TcpClientConnectionCoreFactory = require("@/infra/connection/tcp/TcpClientConnectionCoreFactory");
-const SerialClientCoreFactory = require("@/infra/connection/serial/SerialClientCoreFactory");
+const SerialClient = require("@/infra/connection/serial/client/SerialClient");
+const TcpOutBoundClient = require("@/infra/connection/tcp/outbound/client/TcpOutBoundClient");
+const TcpClientConnectionCoreFactory = require("@/infra/connection/tcp/factory/TcpClientConnectionCoreFactory");
+const SerialClientCoreFactory = require("@/infra/connection/serial/factory/SerialClientCoreFactory");
 
 class FtpClientCoreFactory {
     constructor(bufferDataEmitter) {

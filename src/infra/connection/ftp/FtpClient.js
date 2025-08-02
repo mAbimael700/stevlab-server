@@ -4,7 +4,7 @@ const { FtpEventsListener } = require("./FtpEventListener");
 const { FtpEventsHandler } = require("./FtpEventsHandler");
 const { FtpDirectoryMonitor } = require("@/infra/ftpdirectorymonitor/FtpDirectoryMonitor");
 const { FtpDirectoryFileManager } = require("@/infra/ftpdirectorymonitor/FtpDirectoryFileManager");
-const ClientOutBoundConnection = require("@/infra/clientconnection/ClientOutBoundConnection");
+const ClientOutBoundConnection = require("@/infra/clientconnection/entity/ClientOutBoundConnection");
 
 class FtpClient extends ClientOutBoundConnection {
   constructor(equipment) {

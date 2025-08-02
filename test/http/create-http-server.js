@@ -27,6 +27,7 @@ const EquipmentProfileService = require("../../src/domain/equipmentprofile/servi
 const ResultSendRepository = require("../../src/domain/resultsend/repository/ResultSendRepository");
 const ResultSenderService = require("../../src/infra/resultsender/service/ResultSenderService");
 const ResultSendService = require("../../src/domain/resultsend/service/ResultSendService");
+const EquipmentConfigurationRepository = require("../../src/domain/equipmentconfiguration/repository/EquipmentConfigurationRepository");
 
 //Repositorios
 const equipmentRepository = new EquipmentRepository(prisma);
@@ -36,6 +37,8 @@ const parameterRepository = new ParameterRepository(prisma)
 const parameterDictionaryRepository = new ParameterDictionaryRepository(prisma)
 const histogramRepository = new HistogramResultService(prisma)
 const resultSendRepository = new ResultSendRepository(prisma)
+const equipmentConfigurationRepository = new EquipmentConfigurationRepository(prisma);
+
 
 //Servicios
 const dictionaryService = new ParameterDictionaryService({
@@ -59,8 +62,10 @@ const resultService = new ResultService(
 )
 
 
+
 const equipmentService = new EquipmentService({
     equipmentRepository,
+    equipmentConfigurationRepository,
     equipmentProfileRepository
 });
 
@@ -108,7 +113,7 @@ const resultSenderRouter = new ResultSenderRouter({
 }).getRouter()
 
 //Servidores
-ExpressServer.createAndStart(3000, {
+ExpressServer.createAndStart(4000, {
     resultRouter,
     resultSenderRouter,
     equipmentRouter

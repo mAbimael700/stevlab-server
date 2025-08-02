@@ -21,22 +21,43 @@ class ParameterVersioningService {
     }
 
     handleParameterWithDate(incomingParameter, existingParameters) {
-        const mostRecent = this.findMostRecentParameter(existingParameters);
         const incomingVersion = new ParameterVersion(incomingParameter.created_at, incomingParameter.value);
-        const mostRecentVersion = new ParameterVersion(mostRecent.created_at, mostRecent.value);
 
-        if (incomingVersion.isSameTimestamp(mostRecentVersion)) {
-            if (incomingVersion.hasSameValue(mostRecentVersion)) {
-                return { action: 'IGNORE', existingParameter: mostRecent };
-            }
-            return { action: 'CREATE_INACTIVE', shouldBeActive: false };
+        // SOLUCIÓN: Buscar parámetro con misma fecha Y mismo valor
+        const exactMatch = this.findParameterWithSameDateAndValue(incomingVersion, existingParameters);
+
+        if (exactMatch) {
+            console.log('🚫 IGNORAR - Encontrado parámetro exacto (misma fecha y valor)');
+            return {
+                action: 'IGNORE',
+                existingParameter: exactMatch,
+                reason: 'EXACT_MATCH_FOUND'
+            };
         }
 
+        // Buscar parámetros con la misma fecha (pero diferente valor)
+        const parametersWithSameDate = this.findParametersWithSameDate(incomingVersion, existingParameters);
+
+        if (parametersWithSameDate.length > 0) {
+            console.log('⚠️ CREAR INACTIVO - Misma fecha, diferente valor');
+            return {
+                action: 'CREATE_INACTIVE',
+                shouldBeActive: false,
+                reason: 'SAME_TIMESTAMP_DIFFERENT_VALUE'
+            };
+        }
+
+        // No hay parámetros con la misma fecha, comparar con el más reciente
+        const mostRecent = this.findMostRecentParameter(existingParameters);
+        const mostRecentVersion = new ParameterVersion(mostRecent.created_at, mostRecent.value);
+
         const isNewerThanExisting = incomingVersion.isNewerThan(mostRecentVersion);
+
         return {
             action: 'CREATE_NEW',
             shouldBeActive: isNewerThanExisting,
-            deactivateExisting: isNewerThanExisting
+            deactivateExisting: isNewerThanExisting,
+            reason: isNewerThanExisting ? 'NEWER_TIMESTAMP' : 'OLDER_TIMESTAMP'
         };
     }
 
@@ -69,6 +90,27 @@ class ParameterVersioningService {
             this.parameterRepository.update(param.id, { active: false })
         );
         await Promise.all(updatePromises);
+    }
+
+    /**
+     * Busca un parámetro que tenga exactamente la misma fecha Y el mismo valor
+     */
+    findParameterWithSameDateAndValue(incomingVersion, existingParameters) {
+        return existingParameters.find(param => {
+            const paramVersion = new ParameterVersion(param.created_at, param.value);
+            return incomingVersion.isSameTimestamp(paramVersion) &&
+                incomingVersion.hasSameValue(paramVersion);
+        });
+    }
+
+    /**
+     * Busca todos los parámetros que tengan la misma fecha (independientemente del valor)
+     */
+    findParametersWithSameDate(incomingVersion, existingParameters) {
+        return existingParameters.filter(param => {
+            const paramVersion = new ParameterVersion(param.created_at, param.value);
+            return incomingVersion.isSameTimestamp(paramVersion);
+        });
     }
 }
 

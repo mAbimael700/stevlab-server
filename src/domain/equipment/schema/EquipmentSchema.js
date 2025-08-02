@@ -5,7 +5,7 @@ const EquipmentConfigurationSchema = require("@/domain/equipmentconfiguration/sc
 class EquipmentSchema {
     static schema = z
         .object({
-            id: z.bigint().optional(),
+            id: z.union([z.number(), z.bigint()]),
             name: z.string(),
             createdAt: z.date().nullable().optional(),
             modifiedAt: z.date().nullable().optional(),
@@ -41,8 +41,14 @@ class EquipmentSchema {
 
     static creationSchema = z.object({
         name: z.string(),
-        equipmentProfile: z.number().int(),
+        equipmentProfile: z.number().int().transform(v=>BigInt(v)),
         equipmentConfiguration: EquipmentConfigurationSchema.schema,
+    });
+
+    static updateSchema = z.object({
+        name: z.string().optional(),
+        equipmentProfile: z.number().int().transform(v=>BigInt(v)).optional(),
+        equipmentConfiguration: EquipmentConfigurationSchema.schema.partial().optional(),
     });
 
     static validate(equipment) {
@@ -51,6 +57,14 @@ class EquipmentSchema {
 
     static validateCreation(data) {
         return this.creationSchema.safeParse(data);
+    }
+
+    static validateUpdate(data) {
+        return this.updateSchema.safeParse(data);
+    }
+
+    static validatePartialCreation(data) {
+        return this.creationSchema.partial().safeParse(data);
     }
 }
 

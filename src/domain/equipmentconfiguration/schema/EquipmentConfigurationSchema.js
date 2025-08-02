@@ -17,6 +17,10 @@ class EquipmentConfigurationSchema {
             .nullable().optional(),
         remoteDirectory: z.string().nullable().optional(),
     })
+
+    static validatePartial(data) {
+        return this.schema.partial().safeParse(data);
+    }
 }
 
 module.exports = EquipmentConfigurationSchema

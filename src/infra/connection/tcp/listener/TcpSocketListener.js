@@ -1,5 +1,5 @@
 const { Socket } = require("node:net");
-const TcpEventsHandler = require("./TcpEventHandler");
+const TcpEventsHandler = require("../events/TcpEventHandler");
 
 class TcpSocketListener {
   /**

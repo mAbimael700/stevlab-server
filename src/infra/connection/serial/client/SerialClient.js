@@ -1,6 +1,6 @@
-const ClientOutBoundConnection = require("@/infra/clientconnection/ClientOutBoundConnection");
+const ClientOutBoundConnection = require("@/infra/clientconnection/entity/ClientOutBoundConnection");
 const EquipmentDto = require("@/domain/equipment/dto/EquipmentDto");
-const SerialClientCoreFactory = require("./SerialClientCoreFactory");
+const SerialClientCoreFactory = require("../factory/SerialClientCoreFactory");
 
 class SerialClient extends ClientOutBoundConnection {
   /**
@@ -22,7 +22,7 @@ class SerialClient extends ClientOutBoundConnection {
       this.equipment,
       this.dataHandler
     );
-    this.serialPortListener = this.clientCoreFactory.createPortListener(
+    this.clientCoreFactory.createPortListener(
       this.client,
       this.eventsHandler
     ).setup();

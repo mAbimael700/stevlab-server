@@ -4,7 +4,8 @@ class ParameterResponse {
      * @param {ParametersWithEquipmentAndParameterDictionaryAndSystemParameter} parameter
      */
     constructor(parameter) {
-        this.id = parameter.id
+
+        this.id = Number(parameter.id),
         this.description = parameter.description
         this.active = parameter.active
         this.createdAt = parameter.created_at
@@ -14,9 +15,12 @@ class ParameterResponse {
         this.maxRange = parameter.max_range
         this.minRange = parameter.min_range
         this.equipment = {
-            id: parameter.equipment.id,
+            id: Number(parameter.equipment.id),
             name: parameter.equipment.name,
         }
+        this.dictionary = parameter
+            .parameterDictionary
+            .systemParameter.value
     }
 }
 

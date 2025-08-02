@@ -2,6 +2,7 @@ const EquipmentSchema = require("@/domain/equipment/schema/EquipmentSchema");
 const EquipmentProfileResponse = require("@/domain/equipmentprofile/dto/EquipmentProfileResponse");
 const {z} = require("zod");
 const IdNumberValidator = require("@/infra/http/validators/IdNumberValidator");
+const EquipmentDto = require("@/domain/equipment/dto/EquipmentDto");
 
 class EquipmentController {
     /**
@@ -38,12 +39,13 @@ class EquipmentController {
 
             if (result.success) {
                 const newEquipment = await this.equipmentService.save(result.data);
-                return res.status(201).json(newEquipment);
+                return res.status(201).json(new EquipmentDto(newEquipment));
             }
 
-            return res.status(403)
+            return res.status(403).json({error: result.error.errors})
 
         } catch (error) {
+            console.log(error)
             return res.status(403).json({
                 error: error.message,
                 cause: error.cause,
@@ -59,14 +61,15 @@ class EquipmentController {
             if (!IdNumberValidator.validate(id))
                 return res.status(400).json({error: 'Invalid ID'});
 
-            const equipment = await this.equipmentService.getById(id);
+            const equipment = await this.equipmentService.getById(id, {includeRelations: true});
 
             if (equipment) {
                 return res.status(200).json(equipment);
             }
 
-            return res.status(404)
+            return res.status(404).json({})
         } catch (error) {
+            console.log(error)
             return res.status(404).json({
                 message: "No se encontró el equipo con esa Id",
             });
@@ -75,11 +78,22 @@ class EquipmentController {
 
 
     async updateById(req, res) {
-        const {id} = req.params;
-
         try {
-            const result = await this.equipmentService.updateById(id);
-            return res.status(200);
+            const {id} = req.params;
+            const data = req.body;
+
+            if (!IdNumberValidator.validate(id))
+                return res.status(400).json({error: 'Invalid ID'});
+
+            const result = EquipmentSchema
+                .validatePartialCreation(data);
+
+            if (!result.success) {
+                return res.status(403).json({error: result.error.errors})
+            }
+
+            const updatedEquipment = await this.equipmentService.updateById(id, data);
+            return res.status(200).json(updatedEquipment);
         } catch (error) {
             return res.status(403).json({
                 error: error.message,

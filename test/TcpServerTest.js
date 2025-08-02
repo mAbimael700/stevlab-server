@@ -16,13 +16,13 @@ const BufferDataEmitter = require("../src/infra/bufferdatahandler/BufferDataEmit
 const BufferDataListener = require("../src/infra/bufferdatahandler/BufferDataListener");
 const BufferDataEvents = require("../src/infra/bufferdatahandler/BufferDataEvents");
 
-const ClientConnectionFactory = require("../src/infra/clientconnection/ClientConnectionFactory");
+const ClientConnectionFactory = require("../src/infra/clientconnection/factory/ClientConnectionFactory");
 const EquipmentConnectionManager = require("../src/infra/equipmentconnection/manager/EquipmentConnectionManager");
 
-const ConnectionValidator = require("../src/infra/connection/tcp/ConnectionValidator");
+const ConnectionValidator = require("../src/infra/connection/tcp/validator/ConnectionValidator");
 const TcpServer = require("../src/infra/tcpserver/TcpServer");
-const TcpInBoundClientFactory = require("../src/infra/connection/tcp/tcpinboundclient/TcpInBoundClientFactory");
-const TcpClientConnectionCoreFactory = require("../src/infra/connection/tcp/TcpClientConnectionCoreFactory");
+const TcpInBoundClientFactory = require("../src/infra/connection/tcp/inbound/factory/TcpInBoundClientFactory");
+const TcpClientConnectionCoreFactory = require("../src/infra/connection/tcp/factory/TcpClientConnectionCoreFactory");
 
 const equipmentRepository = new EquipmentRepository(prisma);
 const equipmentProfileRepository = new EquipmentProfileRepository(prisma);
@@ -63,11 +63,9 @@ const tcpConnectionValidator = new ConnectionValidator(equipmentService);
 
 const tcpServer = new TcpServer(
     3000,
-    new TcpInBoundClientFactory(
-        tcpConnectionValidator,
-        equipmentConnectionManager,
-        tcpConnectionCoreFactory
-    )
+    new TcpInBoundClientFactory(tcpConnectionCoreFactory),
+    tcpConnectionValidator,
+    equipmentConnectionManager
 );
 
 /** Estos son los servicios principales de mi aplicación,
@@ -76,5 +74,6 @@ const tcpServer = new TcpServer(
  *  servidor websocket con inyección de dependencias de emisores y receptores y estos de servicios
  */
 new BufferDataListener(bufferDataEmitter, bufferDataEvents).setup()
-equipmentConnectionManager.initialize()
-tcpServer.listen();
+equipmentConnectionManager.initialize().then(() =>
+    tcpServer.listen()
+)

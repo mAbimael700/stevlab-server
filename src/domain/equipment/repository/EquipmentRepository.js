@@ -31,7 +31,7 @@ class EquipmentRepository extends BaseRepository {
     return equipments;
   }
 
-  async findById({ includeRelations = false }) {
+  async findById(id, { includeRelations = false } = {}) {
     const options = {};
 
     if (includeRelations) {
@@ -44,8 +44,7 @@ class EquipmentRepository extends BaseRepository {
         equipmentConfiguration: true,
       };
     }
-    const equipment = await super.findById(options);
-    return equipment;
+    return await super.findById(id, options);
   }
 
   // Función para buscar por MAC Address

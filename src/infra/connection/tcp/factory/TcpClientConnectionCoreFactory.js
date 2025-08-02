@@ -1,5 +1,5 @@
-const TcpEventsHandler = require("./TcpEventHandler");
-const { TcpSocketListener } = require("./TcpSocketListener");
+const TcpEventsHandler = require("../events/TcpEventHandler");
+const { TcpSocketListener } = require("../listener/TcpSocketListener");
 const {
   BufferDataHandler,
 } = require("@/infra/bufferdatahandler/BufferDataHandler");
