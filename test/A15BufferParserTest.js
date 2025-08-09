@@ -1,5 +1,5 @@
 const A15ClinicalDataModel = require("../src/domain/clinicaldatamodel/model/A15ClinicalDataModel");
-const A15BufferParser = require("../src/infra/bufferparser/A15/A15BufferParser");
+const A15BufferParser = require("../src/infra/bufferresultparser/A15/A15BufferParser");
 
 const rawData = `
 24030101000334 GLUCOSE SER 142 mg/dL 01/03/2024 14:15:29

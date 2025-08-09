@@ -1,9 +1,10 @@
 const BufferList = require("bl");
-const BufferStreamHandler = require("./BufferStreamHandler");
+const BufferStreamHandler = require("../handler/BufferStreamHandler");
 const BufferValidator = require("@/infra/bufferstreammanagment/utils/BufferValidator");
 const BufferStats = require("@/infra/bufferstreammanagment/utils/BufferStats");
 const BufferCleanupManager = require("@/infra/bufferstreammanagment/utils/BufferCleanupManager");
 const BufferMessageExtractor = require("@/infra/bufferstreammanagment/utils/BufferMessageExtractor");
+const BufferErrorHandler = require("@/infra/bufferstreammanagment/utils/BufferErrorHandler");
 
 
 class BufferStreamProcessor {

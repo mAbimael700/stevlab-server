@@ -63,8 +63,7 @@ class Hl7BufferParser {
         const mshSegment = `MSH|^~\\&|||${emisor}|${receptor}|${timestamp}||ACK^R01|${messageId}|P|2.3.1||||0||ASCII|||`;
         const msaSegment = `MSA|${status}|${messageId}|${message}|||0|`;
 
-        const ackMessage = `\x0B${mshSegment}\r${msaSegment}\r\x1C\x0D`;
-        return ackMessage;
+        return `\x0B${mshSegment}\r${msaSegment}\r\x1C\x0D`;
     }
 
 

@@ -1,4 +1,4 @@
-import ClientFactoryError from "@/infra/clientconnection/exceptions/ClientFactoryError";
+const ClientFactoryError = require("@/infra/clientconnection/exceptions/ClientFactoryError");
 
 class ClientConnectionError extends ClientFactoryError {
     constructor(type, originalError) {

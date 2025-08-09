@@ -40,6 +40,7 @@ class Hl7Message {
     return mshSegment ? mshSegment.getMessageControlId() : null;
   }
 
+
   getMessageControlHeader() {
     const mshSegment = this.getSegment("MSH").fields;
 
@@ -56,13 +57,12 @@ class Hl7Message {
   getPersonalInformation() {
     const fields = this.getSegment("PID").fields;
 
-    const pidSegment = {
+    return {
       setId: fields.at(1),
       patientId: fields.at(3),
       patientName: fields.at(11),
       administrativeSex: fields.at(8),
     };
-    return pidSegment;
   }
 
   /**
@@ -93,7 +93,7 @@ class Hl7Message {
   getOrderObservationRequestInformation() {
     const fields = this.getSegment("OBR").fields;
 
-    const obrSegment = {
+    return {
       setId: fields.at(1),
       fillerOrderNumber: fields.at(3),
       placeOrderNumber: fields.at(2),
@@ -103,7 +103,6 @@ class Hl7Message {
       specimenReceivedDateTime: fields.at(14),
       specimenResource: fields.at(15),
     };
-    return obrSegment;
   }
 
   // Genera la estructura detallada que solicitas

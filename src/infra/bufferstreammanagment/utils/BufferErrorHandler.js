@@ -15,3 +15,5 @@ class BufferErrorHandler {
         }
     }
 }
+
+module.exports = BufferErrorHandler;

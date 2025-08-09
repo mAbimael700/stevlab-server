@@ -13,7 +13,7 @@ class SerialClient extends ClientOutBoundConnection {
     this.equipment = equipment;
     this.clientCoreFactory = clientCoreFactory;
 
-    // Crear dependencias usando el factory
+    // Crear dependencias usando el core
     this.client = this.clientCoreFactory.createSerialPort(this.equipment);
     this.dataHandler =
       this.clientCoreFactory.createBufferDataHandler(equipment);

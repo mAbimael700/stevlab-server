@@ -833,7 +833,7 @@ declare type Document_2 = ReadonlyDeep_2<{
 }>;
 
 /**
- * A generic driver adapter factory that allows the user to instantiate a
+ * A generic driver adapter core that allows the user to instantiate a
  * driver adapter. The query and result types are specific to the adapter.
  */
 declare interface DriverAdapterFactory<Query, Result> extends AdapterInfo {

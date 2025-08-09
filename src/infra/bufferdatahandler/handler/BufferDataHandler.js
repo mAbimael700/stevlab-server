@@ -1,7 +1,6 @@
 const
     BufferStreamProcessor
-        = require("@/infra/bufferstreammanagment/BufferStreamProcessor");
-const EquipmentDto = require("@/domain/equipment/dto/EquipmentDto");
+        = require("@/infra/bufferstreammanagment/processor/BufferStreamProcessor");
 
 class BufferDataHandler {
     /**
@@ -20,13 +19,17 @@ class BufferDataHandler {
     /**
      *
      * @param {Buffer} data
+     * @return {string[] | null }
      */
     processBufferData(data) {
         try {
-            const filteredData = data.toString().replace(/\x02/g, "");
+            const filteredData = data.toString()
+                .replace(/\x02/g, "");
 
             if (filteredData.trim()) {
+
                 const bufferMessages = this.bufferStreamProcessor.process(data);
+
                 if (bufferMessages) {
 
                     bufferMessages.forEach((bm) =>
@@ -34,15 +37,15 @@ class BufferDataHandler {
                             equipment: this.equipment,
                             message: bm,
                         })
-                    ); // Emitimos solo los mensajes procesados
+                    );
+
+                    return bufferMessages;
                 }
             }
-        } catch (error) {
-            /* this.emit("error", {
-              equipment: this.equipment,
-              error: new Error(`Error procesando datos: ${error.message}`),
-            }); */
 
+            // No hay resultados procesados
+            return null;
+        } catch (error) {
             throw new Error(`Error procesando datos: ${error.message}`, error);
         }
     }

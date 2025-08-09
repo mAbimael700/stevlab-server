@@ -1,13 +1,15 @@
 const { SerialPort } = require("serialport");
-const EquipmentDto = require("@/domain/equipment/dto/EquipmentDto");
 
 class SerialEventsHandler {
   /**
    *
    * @param {SerialPort<Buffer>} serialPort
    * @param {EquipmentDto} equipment
+   * @param {BufferDataHandler} dataHandler
    */
-  constructor(serialPort, equipment, dataHandler) {
+  constructor(serialPort,
+              equipment,
+              dataHandler) {
     this.port = equipment.equipmentConfiguration.port
     this.serialPort = serialPort;
     this.equipment = equipment;

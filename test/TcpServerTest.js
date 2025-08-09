@@ -12,9 +12,9 @@ const ParameterService = require("../src/domain/parameter/service/ParameterServi
 const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
 const ParameterDictionaryService = require("@/domain/parameterdictionary/service/ParameterDictionaryService");
 
-const BufferDataEmitter = require("../src/infra/bufferdatahandler/BufferDataEmitter");
-const BufferDataListener = require("../src/infra/bufferdatahandler/BufferDataListener");
-const BufferDataEvents = require("../src/infra/bufferdatahandler/BufferDataEvents");
+const BufferDataEmitter = require("../src/infra/bufferdatahandler/emitter/BufferDataEmitter");
+const BufferDataListener = require("../src/infra/bufferdatahandler/listener/BufferDataListener");
+const BufferDataEvents = require("../src/infra/bufferdatahandler/events/BufferDataEvents");
 
 const ClientConnectionFactory = require("../src/infra/clientconnection/factory/ClientConnectionFactory");
 const EquipmentConnectionManager = require("../src/infra/equipmentconnection/manager/EquipmentConnectionManager");
@@ -22,7 +22,7 @@ const EquipmentConnectionManager = require("../src/infra/equipmentconnection/man
 const ConnectionValidator = require("../src/infra/tcpserver/service/ConnectionValidatorService");
 const TcpServer = require("../src/infra/tcpserver/server/TcpServer");
 const TcpInBoundClientFactory = require("../src/infra/connection/tcp/inbound/factory/TcpInBoundClientFactory");
-const TcpClientConnectionCoreFactory = require("../src/infra/connection/tcp/factory/TcpClientConnectionCoreFactory");
+const TcpClientFactory = require("../src/infra/connection/tcp/factory/TcpClientFactory");
 
 const equipmentRepository = new EquipmentRepository(prisma);
 const equipmentProfileRepository = new EquipmentProfileRepository(prisma);
@@ -58,12 +58,11 @@ const equipmentConnectionManager = new EquipmentConnectionManager(
         clientConnectionFactory
     })
 
-const tcpConnectionCoreFactory = new TcpClientConnectionCoreFactory(bufferDataEmitter);
 const tcpConnectionValidator = new ConnectionValidator(equipmentService);
 
 const tcpServer = new TcpServer(
     3000,
-    new TcpInBoundClientFactory(tcpConnectionCoreFactory),
+    new TcpInBoundClientFactory(bufferDataEmitter),
     tcpConnectionValidator,
     equipmentConnectionManager
 );

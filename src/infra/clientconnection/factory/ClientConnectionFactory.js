@@ -1,7 +1,7 @@
 const FtpClient = require("@/infra/connection/ftp/FtpClient");
 const SerialClient = require("@/infra/connection/serial/client/SerialClient");
 const TcpOutBoundClient = require("@/infra/connection/tcp/outbound/client/TcpOutBoundClient");
-const TcpClientConnectionCoreFactory = require("@/infra/connection/tcp/factory/TcpClientConnectionCoreFactory");
+const TcpClientFactory = require("@/infra/connection/tcp/factory/TcpClientFactory");
 const SerialClientCoreFactory = require("@/infra/connection/serial/factory/SerialClientCoreFactory");
 const FtpClientCoreFactory = require("@/infra/connection/ftp/factory/FtpClientCoreFactory");
 const ClientCreationError = require("@/infra/clientconnection/exceptions/ClientCreationError");
@@ -28,7 +28,7 @@ class ClientConnectionFactory {
      * @private
      */
     _initializeCoreFactories() {
-        this.coreFactories.set('tcp', new TcpClientConnectionCoreFactory(this.bufferDataEmitter));
+        this.coreFactories.set('tcp', new TcpClientFactory(this.bufferDataEmitter));
         this.coreFactories.set('serial', new SerialClientCoreFactory(this.bufferDataEmitter));
         this.coreFactories.set('ftp', new FtpClientCoreFactory(this.bufferDataEmitter));
     }

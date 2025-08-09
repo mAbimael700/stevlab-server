@@ -1,4 +1,4 @@
-const FujifilmNX600BufferParser = require("@/infra/bufferparser/fujifilmnx600/FujifilmNX600BufferParser");
+const FujifilmNX600BufferParser = require("@/infra/bufferresultparser/fujifilmnx600/FujifilmNX600BufferParser");
 const IClinicalDataModel = require("./IClinicalDataModel");
 
 class FujifilmClinicalDataModel extends IClinicalDataModel {

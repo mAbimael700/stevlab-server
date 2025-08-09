@@ -1,5 +1,5 @@
 const { parse } = require("date-fns");
-const Hl7ParserFactory = require("@/infra/bufferparser/hl7v2/Hl7ParserFactory");
+const Hl7ParserFactory = require("@/infra/bufferresultparser/hl7v2/Hl7ParserFactory");
 const IClinicalDataModel = require("./IClinicalDataModel");
 
 class Hl7ClinicalDataModel extends IClinicalDataModel {
