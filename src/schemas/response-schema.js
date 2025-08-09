@@ -43,7 +43,7 @@ const resultSchema = z.object({
   id: z.string().min(1),
   folio: z.string(), // Marcar como optional
   nombre_paciente: z.any().optional(),
-  sexo: z.enum(["O", "F", "M", ""]).optional().default("O"),
+  sexo: z.string().optional().default("O"),
   hora: z.string().optional(),
   fecha: z.date().optional().default(new Date()),
   parametros: z.array(parameterSchema),

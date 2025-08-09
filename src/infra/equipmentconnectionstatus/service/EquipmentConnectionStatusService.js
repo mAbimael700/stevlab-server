@@ -2,9 +2,9 @@ class EquipmentConnectionStatusService {
     constructor(dependencies = {}) {
 
         this.equipmentService = dependencies.equipmentService
-        this.websocketEmitter = dependencies.websocketEmitter
+        this.emitter = dependencies.emitter
 
-        this.emitToChannel = this.websocketEmitter.emitToChannel
+        this.emitToChannel = this.emitter.emitToChannel
     }
 
 
@@ -15,8 +15,9 @@ class EquipmentConnectionStatusService {
 
 
     /**
-     * 
-     * @param {"connected" | "disconnected" | "closed" | "connecting"} newStatus 
+     *
+     * @param {number | bigint} equipmentId
+     * @param {"connected" | "disconnected" | "closed" | "connecting"} newStatus
      */
     async connectionStatus(equipmentId, newStatus) {
         const { status, name, id } = await this.equipmentService.updateConnectionStatus(equipmentId, newStatus)

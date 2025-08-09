@@ -1,4 +1,4 @@
-const CommunicationProfileDto = require("../../CommunicationProfile/CommunicationProfileDto");
+const CommunicationProfileDto = require("@/domain/communicationprofile/CommunicationProfileDto");
 
 class EquipmentProfileDto {
   constructor(equipmentProfile) {

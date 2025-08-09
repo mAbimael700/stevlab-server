@@ -96,6 +96,20 @@ class EquipmentService {
         return null;
     }
 
+    async findByIpAndMacAddress(ipAddress, macAddress) {
+        const result = await this.equipmentRepository.findByIpAddressAndMacAddress(
+            ipAddress,
+            macAddress, {
+                includeRelations: true,
+            });
+
+        if (result) {
+            return new EquipmentDto(result);
+        }
+
+        return null;
+    }
+
 
     async updateLastConnection(equipmentId, lastConnection) {
         const result = this.getById(equipmentId);

@@ -1,105 +1,108 @@
-const BaseRepository = require("../../repository/BaseRepositories");
+const BaseRepository = require("@/domain/repository/BaseRepositories");
 
 class EquipmentRepository extends BaseRepository {
-  /**
-   *
-   * @param {PrismaClient} prisma
-   */
-  constructor(prisma) {
-    super("Equipment", prisma);
-  }
-
-  async findAll({ includeRelations = false }) {
-    const options = {
-      where: {
-        active: true,
-      },
-    };
-
-    if (includeRelations) {
-      options.include = {
-        equipmentProfile: {
-          include: {
-            communicationProfile: true, // Incluir la relación anidada
-          },
-        },
-        equipmentConfiguration: true,
-      };
+    /**
+     *
+     * @param {PrismaClient} prisma
+     */
+    constructor(prisma) {
+        super("Equipment", prisma);
     }
 
-    const equipments = await super.findAll(options);
-    return equipments;
-  }
-
-  async findById(id, { includeRelations = false } = {}) {
-    const options = {};
-
-    if (includeRelations) {
-      options.include = {
-        equipmentProfile: {
-          include: {
-            communicationProfile: true, // Incluir la relación anidada
-          },
-        },
-        equipmentConfiguration: true,
-      };
-    }
-    return await super.findById(id, options);
-  }
-
-  // Función para buscar por MAC Address
-  async findByMacAddress(macAddress, { includeRelations = false } = {}) {
-    const options = {
-      where: {
-        equipmentConfiguration: {
-          some: {
-            mac_address: macAddress,
-          },
-        },
-      },
-    };
-
-    if (includeRelations) {
-      options.include = {
-        equipmentProfile: {
-          include: {
-            communicationProfile: true, // Incluir la relación anidada
-          },
-        },
-        equipmentConfiguration: true,
-      };
+    /**
+     * Get common include options for queries
+     * @private
+     */
+    #getIncludeOptions() {
+        return {
+            equipmentProfile: {
+                include: {
+                    communicationProfile: true,
+                },
+            },
+            equipmentConfiguration: true,
+        };
     }
 
-    const equipment = await this.prisma.equipment.findFirst(options);
-    return equipment;
-  }
+    /**
+     * Build query options with optional relations
+     * @private
+     * @param {Object} baseOptions - Base query options
+     * @param {boolean} includeRelations - Whether to include relations
+     * @returns {Object} Complete query options
+     */
+    #buildOptions(baseOptions, includeRelations) {
+        const options = {...baseOptions};
 
-  // Función para buscar por IP Address
-  async findByIpAddress(ipAddress, { includeRelations = false } = {}) {
-    const options = {
-      where: {
-        equipmentConfiguration: {
-          some: {
-            ip_address: ipAddress,
-          },
-        },
-      },
-    };
+        if (includeRelations) {
+            options.include = this.#getIncludeOptions();
+        }
 
-    if (includeRelations) {
-      options.include = {
-        equipmentProfile: {
-          include: {
-            communicationProfile: true, // Incluir la relación anidada
-          },
-        },
-        equipmentConfiguration: true,
-      };
+        return options;
     }
 
-    const equipment = await this.prisma.equipment.findFirst(options);
-    return equipment;
-  }
+    async findAll({includeRelations = false} = {}) {
+        const baseOptions = {
+            where: {
+                active: true,
+            },
+        };
+
+        return await super.findAll(this.#buildOptions(baseOptions, includeRelations));
+    }
+
+    async findById(id, {includeRelations = false} = {}) {
+        return await super.findById(id, this.#buildOptions({}, includeRelations));
+    }
+
+    async findByIpAddressAndMacAddress(ip, mac, {includeRelations = false} = {}) {
+        const baseOptions = {
+            where: {
+                equipmentConfiguration: {
+                    some: {
+                        ip_address: ip,
+                        mac_address: mac,
+                    },
+                },
+            },
+        };
+
+        return this.prisma.equipment.findFirst(
+            this.#buildOptions(baseOptions, includeRelations)
+        );
+    }
+
+    async findByMacAddress(macAddress, {includeRelations = false} = {}) {
+        const baseOptions = {
+            where: {
+                equipmentConfiguration: {
+                    some: {
+                        mac_address: macAddress,
+                    },
+                },
+            },
+        };
+
+        return this.prisma.equipment.findFirst(
+            this.#buildOptions(baseOptions, includeRelations)
+        );
+    }
+
+    async findByIpAddress(ipAddress, {includeRelations = false} = {}) {
+        const baseOptions = {
+            where: {
+                equipmentConfiguration: {
+                    some: {
+                        ip_address: ipAddress,
+                    },
+                },
+            },
+        };
+
+        return this.prisma.equipment.findFirst(
+            this.#buildOptions(baseOptions, includeRelations)
+        );
+    }
 }
 
 module.exports = EquipmentRepository;

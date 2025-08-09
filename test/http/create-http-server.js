@@ -6,7 +6,7 @@ const EquipmentController = require("../../src/infra/http/controllers/EquipmentC
 const ResultSenderController = require("../../src/infra/http/controllers/ResultSenderController");
 const ResultController = require("../../src/infra/http/controllers/ResultController");
 
-const prisma = require("../../src/infra/prismaclient/PrismaClient");
+const prisma = require("../../src/infra/prisma/client/PrismaClient");
 
 const ResultRouter = require("../../src/infra/http/routes/ResultRouter");
 

@@ -5,16 +5,16 @@ class TcpServer {
      *
      * @param {number} port
      * @param {TcpInBoundClientFactory} clientFactory
-     * @param {ConnectionValidator} connectionValidator
+     * @param {ConnectionValidatorService} connectionValidatorService
      * @param {EquipmentConnectionManager} equipmentConnectionManager
      */
     constructor(port = 3000,
                 clientFactory,
-                connectionValidator,
+                connectionValidatorService,
                 equipmentConnectionManager) {
         this.port = port;
         this.clientFactory = clientFactory;
-        this.connectionValidator = connectionValidator;
+        this.connectionValidatorService = connectionValidatorService;
         this.equipmentConnectionManager = equipmentConnectionManager;
         this.server = null;
         this.options = {
@@ -76,7 +76,7 @@ class TcpServer {
      */
     async validateConnection(socket) {
         try {
-            return await this.connectionValidator.validate(socket.remoteAddress);
+            return await this.connectionValidatorService.validateConnection(socket.remoteAddress);
         } catch (error) {
             console.log(error)
             socket.destroy();

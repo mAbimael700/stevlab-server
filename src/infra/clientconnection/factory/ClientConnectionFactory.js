@@ -3,13 +3,12 @@ const SerialClient = require("@/infra/connection/serial/client/SerialClient");
 const TcpOutBoundClient = require("@/infra/connection/tcp/outbound/client/TcpOutBoundClient");
 const TcpClientConnectionCoreFactory = require("@/infra/connection/tcp/factory/TcpClientConnectionCoreFactory");
 const SerialClientCoreFactory = require("@/infra/connection/serial/factory/SerialClientCoreFactory");
+const FtpClientCoreFactory = require("@/infra/connection/ftp/factory/FtpClientCoreFactory");
+const ClientCreationError = require("@/infra/clientconnection/exceptions/ClientCreationError");
+const ClientConnectionError = require("@/infra/clientconnection/exceptions/ClientConnectionError");
+const UnsupportedClientTypeError = require("@/infra/clientconnection/exceptions/UnsupportedClientTypeError");
+const MissingEquipmentError = require("@/infra/clientconnection/exceptions/MissingEquipmentError");
 
-class FtpClientCoreFactory {
-    constructor(bufferDataEmitter) {
-        
-    }
-
-}
 
 /**
  * Factory para crear diferentes tipos de clientes de conexión
@@ -212,40 +211,5 @@ class ClientConnectionFactory {
     }
 }
 
-// Errores específicos para mejor debugging
-class ClientFactoryError extends Error {
-    constructor(message, type = null) {
-        super(message);
-        this.name = this.constructor.name;
-        this.clientType = type;
-    }
-}
-
-class UnsupportedClientTypeError extends ClientFactoryError {
-    constructor(type, supportedTypes) {
-        super(`Tipo de cliente no soportado: ${type}. Tipos disponibles: ${supportedTypes.join(', ')}`);
-        this.supportedTypes = supportedTypes;
-    }
-}
-
-class MissingEquipmentError extends ClientFactoryError {
-    constructor(type) {
-        super(`El cliente ${type} requiere datos del equipo`);
-    }
-}
-
-class ClientCreationError extends ClientFactoryError {
-    constructor(type, originalError) {
-        super(`Error al crear cliente ${type}: ${originalError.message}`);
-        this.originalError = originalError;
-    }
-}
-
-class ClientConnectionError extends ClientFactoryError {
-    constructor(type, originalError) {
-        super(`Error al conectar cliente ${type}: ${originalError.message}`);
-        this.originalError = originalError;
-    }
-}
 
 module.exports = ClientConnectionFactory;
