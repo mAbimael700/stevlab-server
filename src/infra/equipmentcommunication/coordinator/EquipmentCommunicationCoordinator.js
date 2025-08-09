@@ -23,10 +23,10 @@ class CommunicationCoordinator {
     }
 
     _createHandshakeService() {
-        if (!this.equipment.communicationConfig.handshake) {
+        if (!this.equipment.equipmentProfile.handshake) {
             return null;
         }
-        return this.handshakeFactory.createService(this.equipment.communicationConfig.handshake);
+        return this.handshakeFactory.createService(this.equipment.equipmentProfile.handshake);
     }
 
     _createAckService() {

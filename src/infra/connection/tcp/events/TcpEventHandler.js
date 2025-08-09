@@ -15,8 +15,8 @@ class TcpEventsHandler {
         this.socket = socket;
         this.equipment = equipment;
         this.dataHandler = dataHandler;
-        this.ipAddress = equipment.equipmentConfiguration.ipAddress;
-        this.port = equipment.equipmentConfiguration.port;
+        this.ipAddress = socket.remoteAddress ?? equipment.equipmentConfiguration.ipAddress;
+        this.port = socket.remotePort ?? equipment.equipmentConfiguration.port;
 
         this.communicationCoordinator = new CommunicationCoordinator(socket, equipment);
     }
