@@ -1,5 +1,3 @@
-const ConnectionValidator = require("../src/infra/connection/tcp/validator/ConnectionValidator");
-
 const EquipmentRepository = require("../src/domain/equipment/repository/EquipmentRepository");
 const EquipmentService = require("../src/domain/equipment/service/EquipmentService");
 const EquipmentConnectionManager = require("../src/infra/equipmentconnection/manager/EquipmentConnectionManager");
@@ -24,27 +22,33 @@ const equipmentService = new EquipmentService(equipmentRepository);
 const parameterService = new ParameterService(parameterRepository);
 const histogramService = new HistogramResultService(histogramRepository);
 const resultService = new ResultService(
-  resultRepository,
-  parameterService,
-  histogramService
+    resultRepository,
+    parameterService,
+    histogramService
 );
 
 const bufferDataEmitter = BufferDataEmitter.getInstance();
 const bufferDataEvents = new BufferDataEvents(resultService);
 
 const bufferDataListener = new BufferDataListener(
-  bufferDataEmitter,
-  bufferDataEvents
-).setup();
+    bufferDataEmitter,
+    bufferDataEvents
+);
 
-const clientConnectionFactory = new ClientConnectionFactory(bufferDataEmitter);
+bufferDataListener.setup();
 
-new EquipmentConnectionManager(equipmentService, clientConnectionFactory)
-  .initialize()
-  .then(() => {
-    console.log("Equipos inicializados...");
-  })
-  .catch((e) => {
-    console.log("Error al inicializar los equipos", e);
-    throw new Error(e);
-  });
+const clientConnectionFactory =
+    new ClientConnectionFactory(bufferDataEmitter);
+
+new EquipmentConnectionManager(
+    equipmentService,
+    clientConnectionFactory
+)
+    .initialize()
+    .then(() => {
+        console.log("Equipos inicializados...");
+    })
+    .catch((e) => {
+        console.log("Error al inicializar los equipos", e);
+        throw new Error(e);
+    });

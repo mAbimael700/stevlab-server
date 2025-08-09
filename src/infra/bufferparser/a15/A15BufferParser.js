@@ -21,10 +21,10 @@ class A15BufferParser {
             if (!parsedLine) return;
 
             const sampleResult = this.sampleResults.get(parsedLine.sampleId)
+
             if (sampleResult) {
                 if (!this.isDuplicate(sampleResult.tests, parsedLine)) {
                     sampleResult.tests.push(parsedLine)
-
 
                     // Actualizar dateTime en tiempo real
                     if (parsedLine.dateTime.getTime() > sampleResult.dateTime.getTime()) {
