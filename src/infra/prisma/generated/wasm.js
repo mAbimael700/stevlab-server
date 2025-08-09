@@ -140,11 +140,8 @@ exports.Prisma.EquipmentProfileScalarFieldEnum = {
   name: 'name',
   active: 'active',
   communication_type: 'communication_type',
-  requires_ack: 'requires_ack',
-  requires_handshake: 'requires_handshake',
-  ack_trigger: 'ack_trigger',
-  handshake_type: 'handshake_type',
-  ack_type: 'ack_type'
+  handshake: 'handshake',
+  ack: 'ack'
 };
 
 exports.Prisma.EquipmentScalarFieldEnum = {

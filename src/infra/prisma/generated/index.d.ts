@@ -4325,11 +4325,8 @@ export namespace Prisma {
     name: string | null
     active: boolean | null
     communication_type: string | null
-    requires_ack: boolean | null
-    requires_handshake: boolean | null
-    ack_trigger: string | null
-    handshake_type: string | null
-    ack_type: string | null
+    handshake: string | null
+    ack: string | null
   }
 
   export type EquipmentProfileMaxAggregateOutputType = {
@@ -4338,11 +4335,8 @@ export namespace Prisma {
     name: string | null
     active: boolean | null
     communication_type: string | null
-    requires_ack: boolean | null
-    requires_handshake: boolean | null
-    ack_trigger: string | null
-    handshake_type: string | null
-    ack_type: string | null
+    handshake: string | null
+    ack: string | null
   }
 
   export type EquipmentProfileCountAggregateOutputType = {
@@ -4351,11 +4345,8 @@ export namespace Prisma {
     name: number
     active: number
     communication_type: number
-    requires_ack: number
-    requires_handshake: number
-    ack_trigger: number
-    handshake_type: number
-    ack_type: number
+    handshake: number
+    ack: number
     _all: number
   }
 
@@ -4374,11 +4365,8 @@ export namespace Prisma {
     name?: true
     active?: true
     communication_type?: true
-    requires_ack?: true
-    requires_handshake?: true
-    ack_trigger?: true
-    handshake_type?: true
-    ack_type?: true
+    handshake?: true
+    ack?: true
   }
 
   export type EquipmentProfileMaxAggregateInputType = {
@@ -4387,11 +4375,8 @@ export namespace Prisma {
     name?: true
     active?: true
     communication_type?: true
-    requires_ack?: true
-    requires_handshake?: true
-    ack_trigger?: true
-    handshake_type?: true
-    ack_type?: true
+    handshake?: true
+    ack?: true
   }
 
   export type EquipmentProfileCountAggregateInputType = {
@@ -4400,11 +4385,8 @@ export namespace Prisma {
     name?: true
     active?: true
     communication_type?: true
-    requires_ack?: true
-    requires_handshake?: true
-    ack_trigger?: true
-    handshake_type?: true
-    ack_type?: true
+    handshake?: true
+    ack?: true
     _all?: true
   }
 
@@ -4500,11 +4482,8 @@ export namespace Prisma {
     name: string | null
     active: boolean | null
     communication_type: string | null
-    requires_ack: boolean | null
-    requires_handshake: boolean | null
-    ack_trigger: string | null
-    handshake_type: string | null
-    ack_type: string | null
+    handshake: string | null
+    ack: string | null
     _count: EquipmentProfileCountAggregateOutputType | null
     _avg: EquipmentProfileAvgAggregateOutputType | null
     _sum: EquipmentProfileSumAggregateOutputType | null
@@ -4532,11 +4511,8 @@ export namespace Prisma {
     name?: boolean
     active?: boolean
     communication_type?: boolean
-    requires_ack?: boolean
-    requires_handshake?: boolean
-    ack_trigger?: boolean
-    handshake_type?: boolean
-    ack_type?: boolean
+    handshake?: boolean
+    ack?: boolean
     communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
     equipments?: boolean | EquipmentProfile$equipmentsArgs<ExtArgs>
     _count?: boolean | EquipmentProfileCountOutputTypeDefaultArgs<ExtArgs>
@@ -4548,11 +4524,8 @@ export namespace Prisma {
     name?: boolean
     active?: boolean
     communication_type?: boolean
-    requires_ack?: boolean
-    requires_handshake?: boolean
-    ack_trigger?: boolean
-    handshake_type?: boolean
-    ack_type?: boolean
+    handshake?: boolean
+    ack?: boolean
     communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
   }, ExtArgs["result"]["equipmentProfile"]>
 
@@ -4562,11 +4535,8 @@ export namespace Prisma {
     name?: boolean
     active?: boolean
     communication_type?: boolean
-    requires_ack?: boolean
-    requires_handshake?: boolean
-    ack_trigger?: boolean
-    handshake_type?: boolean
-    ack_type?: boolean
+    handshake?: boolean
+    ack?: boolean
     communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
   }, ExtArgs["result"]["equipmentProfile"]>
 
@@ -4576,14 +4546,11 @@ export namespace Prisma {
     name?: boolean
     active?: boolean
     communication_type?: boolean
-    requires_ack?: boolean
-    requires_handshake?: boolean
-    ack_trigger?: boolean
-    handshake_type?: boolean
-    ack_type?: boolean
+    handshake?: boolean
+    ack?: boolean
   }
 
-  export type EquipmentProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "communication_profile" | "name" | "active" | "communication_type" | "requires_ack" | "requires_handshake" | "ack_trigger" | "handshake_type" | "ack_type", ExtArgs["result"]["equipmentProfile"]>
+  export type EquipmentProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "communication_profile" | "name" | "active" | "communication_type" | "handshake" | "ack", ExtArgs["result"]["equipmentProfile"]>
   export type EquipmentProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     communicationProfile?: boolean | EquipmentProfile$communicationProfileArgs<ExtArgs>
     equipments?: boolean | EquipmentProfile$equipmentsArgs<ExtArgs>
@@ -4608,11 +4575,8 @@ export namespace Prisma {
       name: string | null
       active: boolean | null
       communication_type: string | null
-      requires_ack: boolean | null
-      requires_handshake: boolean | null
-      ack_trigger: string | null
-      handshake_type: string | null
-      ack_type: string | null
+      handshake: string | null
+      ack: string | null
     }, ExtArgs["result"]["equipmentProfile"]>
     composites: {}
   }
@@ -5043,11 +5007,8 @@ export namespace Prisma {
     readonly name: FieldRef<"EquipmentProfile", 'String'>
     readonly active: FieldRef<"EquipmentProfile", 'Boolean'>
     readonly communication_type: FieldRef<"EquipmentProfile", 'String'>
-    readonly requires_ack: FieldRef<"EquipmentProfile", 'Boolean'>
-    readonly requires_handshake: FieldRef<"EquipmentProfile", 'Boolean'>
-    readonly ack_trigger: FieldRef<"EquipmentProfile", 'String'>
-    readonly handshake_type: FieldRef<"EquipmentProfile", 'String'>
-    readonly ack_type: FieldRef<"EquipmentProfile", 'String'>
+    readonly handshake: FieldRef<"EquipmentProfile", 'String'>
+    readonly ack: FieldRef<"EquipmentProfile", 'String'>
   }
     
 
@@ -16030,11 +15991,8 @@ export namespace Prisma {
     name: 'name',
     active: 'active',
     communication_type: 'communication_type',
-    requires_ack: 'requires_ack',
-    requires_handshake: 'requires_handshake',
-    ack_trigger: 'ack_trigger',
-    handshake_type: 'handshake_type',
-    ack_type: 'ack_type'
+    handshake: 'handshake',
+    ack: 'ack'
   };
 
   export type EquipmentProfileScalarFieldEnum = (typeof EquipmentProfileScalarFieldEnum)[keyof typeof EquipmentProfileScalarFieldEnum]
@@ -16399,11 +16357,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"EquipmentProfile"> | string | null
     active?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
     communication_type?: StringNullableFilter<"EquipmentProfile"> | string | null
-    requires_ack?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
-    requires_handshake?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
-    ack_trigger?: StringNullableFilter<"EquipmentProfile"> | string | null
-    handshake_type?: StringNullableFilter<"EquipmentProfile"> | string | null
-    ack_type?: StringNullableFilter<"EquipmentProfile"> | string | null
+    handshake?: StringNullableFilter<"EquipmentProfile"> | string | null
+    ack?: StringNullableFilter<"EquipmentProfile"> | string | null
     communicationProfile?: XOR<CommunicationProfilesNullableScalarRelationFilter, CommunicationProfilesWhereInput> | null
     equipments?: EquipmentListRelationFilter
   }
@@ -16414,11 +16369,8 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     active?: SortOrderInput | SortOrder
     communication_type?: SortOrderInput | SortOrder
-    requires_ack?: SortOrderInput | SortOrder
-    requires_handshake?: SortOrderInput | SortOrder
-    ack_trigger?: SortOrderInput | SortOrder
-    handshake_type?: SortOrderInput | SortOrder
-    ack_type?: SortOrderInput | SortOrder
+    handshake?: SortOrderInput | SortOrder
+    ack?: SortOrderInput | SortOrder
     communicationProfile?: CommunicationProfilesOrderByWithRelationInput
     equipments?: EquipmentOrderByRelationAggregateInput
   }
@@ -16432,11 +16384,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"EquipmentProfile"> | string | null
     active?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
     communication_type?: StringNullableFilter<"EquipmentProfile"> | string | null
-    requires_ack?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
-    requires_handshake?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
-    ack_trigger?: StringNullableFilter<"EquipmentProfile"> | string | null
-    handshake_type?: StringNullableFilter<"EquipmentProfile"> | string | null
-    ack_type?: StringNullableFilter<"EquipmentProfile"> | string | null
+    handshake?: StringNullableFilter<"EquipmentProfile"> | string | null
+    ack?: StringNullableFilter<"EquipmentProfile"> | string | null
     communicationProfile?: XOR<CommunicationProfilesNullableScalarRelationFilter, CommunicationProfilesWhereInput> | null
     equipments?: EquipmentListRelationFilter
   }, "id">
@@ -16447,11 +16396,8 @@ export namespace Prisma {
     name?: SortOrderInput | SortOrder
     active?: SortOrderInput | SortOrder
     communication_type?: SortOrderInput | SortOrder
-    requires_ack?: SortOrderInput | SortOrder
-    requires_handshake?: SortOrderInput | SortOrder
-    ack_trigger?: SortOrderInput | SortOrder
-    handshake_type?: SortOrderInput | SortOrder
-    ack_type?: SortOrderInput | SortOrder
+    handshake?: SortOrderInput | SortOrder
+    ack?: SortOrderInput | SortOrder
     _count?: EquipmentProfileCountOrderByAggregateInput
     _avg?: EquipmentProfileAvgOrderByAggregateInput
     _max?: EquipmentProfileMaxOrderByAggregateInput
@@ -16468,11 +16414,8 @@ export namespace Prisma {
     name?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
     active?: BoolNullableWithAggregatesFilter<"EquipmentProfile"> | boolean | null
     communication_type?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
-    requires_ack?: BoolNullableWithAggregatesFilter<"EquipmentProfile"> | boolean | null
-    requires_handshake?: BoolNullableWithAggregatesFilter<"EquipmentProfile"> | boolean | null
-    ack_trigger?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
-    handshake_type?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
-    ack_type?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
+    handshake?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
+    ack?: StringNullableWithAggregatesFilter<"EquipmentProfile"> | string | null
   }
 
   export type EquipmentWhereInput = {
@@ -17178,11 +17121,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
     communicationProfile?: CommunicationProfilesCreateNestedOneWithoutEquipmentProfilesInput
     equipments?: EquipmentCreateNestedManyWithoutEquipmentProfileInput
   }
@@ -17193,11 +17133,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
     equipments?: EquipmentUncheckedCreateNestedManyWithoutEquipmentProfileInput
   }
 
@@ -17206,11 +17143,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
     communicationProfile?: CommunicationProfilesUpdateOneWithoutEquipmentProfilesNestedInput
     equipments?: EquipmentUpdateManyWithoutEquipmentProfileNestedInput
   }
@@ -17221,11 +17155,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
     equipments?: EquipmentUncheckedUpdateManyWithoutEquipmentProfileNestedInput
   }
 
@@ -17235,11 +17166,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
   }
 
   export type EquipmentProfileUpdateManyMutationInput = {
@@ -17247,11 +17175,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentProfileUncheckedUpdateManyInput = {
@@ -17260,11 +17185,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentCreateInput = {
@@ -18110,11 +18032,8 @@ export namespace Prisma {
     name?: SortOrder
     active?: SortOrder
     communication_type?: SortOrder
-    requires_ack?: SortOrder
-    requires_handshake?: SortOrder
-    ack_trigger?: SortOrder
-    handshake_type?: SortOrder
-    ack_type?: SortOrder
+    handshake?: SortOrder
+    ack?: SortOrder
   }
 
   export type EquipmentProfileAvgOrderByAggregateInput = {
@@ -18127,11 +18046,8 @@ export namespace Prisma {
     name?: SortOrder
     active?: SortOrder
     communication_type?: SortOrder
-    requires_ack?: SortOrder
-    requires_handshake?: SortOrder
-    ack_trigger?: SortOrder
-    handshake_type?: SortOrder
-    ack_type?: SortOrder
+    handshake?: SortOrder
+    ack?: SortOrder
   }
 
   export type EquipmentProfileMinOrderByAggregateInput = {
@@ -18140,11 +18056,8 @@ export namespace Prisma {
     name?: SortOrder
     active?: SortOrder
     communication_type?: SortOrder
-    requires_ack?: SortOrder
-    requires_handshake?: SortOrder
-    ack_trigger?: SortOrder
-    handshake_type?: SortOrder
-    ack_type?: SortOrder
+    handshake?: SortOrder
+    ack?: SortOrder
   }
 
   export type EquipmentProfileSumOrderByAggregateInput = {
@@ -19756,11 +19669,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
     equipments?: EquipmentCreateNestedManyWithoutEquipmentProfileInput
   }
 
@@ -19769,11 +19679,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
     equipments?: EquipmentUncheckedCreateNestedManyWithoutEquipmentProfileInput
   }
 
@@ -19812,11 +19719,8 @@ export namespace Prisma {
     name?: StringNullableFilter<"EquipmentProfile"> | string | null
     active?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
     communication_type?: StringNullableFilter<"EquipmentProfile"> | string | null
-    requires_ack?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
-    requires_handshake?: BoolNullableFilter<"EquipmentProfile"> | boolean | null
-    ack_trigger?: StringNullableFilter<"EquipmentProfile"> | string | null
-    handshake_type?: StringNullableFilter<"EquipmentProfile"> | string | null
-    ack_type?: StringNullableFilter<"EquipmentProfile"> | string | null
+    handshake?: StringNullableFilter<"EquipmentProfile"> | string | null
+    ack?: StringNullableFilter<"EquipmentProfile"> | string | null
   }
 
   export type EquipmentCreateWithoutDirectoryHistorialsInput = {
@@ -20028,11 +19932,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
     communicationProfile?: CommunicationProfilesCreateNestedOneWithoutEquipmentProfilesInput
   }
 
@@ -20042,11 +19943,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
   }
 
   export type EquipmentProfileCreateOrConnectWithoutEquipmentsInput = {
@@ -20187,11 +20085,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
     communicationProfile?: CommunicationProfilesUpdateOneWithoutEquipmentProfilesNestedInput
   }
 
@@ -20201,11 +20096,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ParameterUpsertWithWhereUniqueWithoutEquipmentInput = {
@@ -21234,11 +21126,8 @@ export namespace Prisma {
     name?: string | null
     active?: boolean | null
     communication_type?: string | null
-    requires_ack?: boolean | null
-    requires_handshake?: boolean | null
-    ack_trigger?: string | null
-    handshake_type?: string | null
-    ack_type?: string | null
+    handshake?: string | null
+    ack?: string | null
   }
 
   export type EquipmentProfileUpdateWithoutCommunicationProfileInput = {
@@ -21246,11 +21135,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
     equipments?: EquipmentUpdateManyWithoutEquipmentProfileNestedInput
   }
 
@@ -21259,11 +21145,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
     equipments?: EquipmentUncheckedUpdateManyWithoutEquipmentProfileNestedInput
   }
 
@@ -21272,11 +21155,8 @@ export namespace Prisma {
     name?: NullableStringFieldUpdateOperationsInput | string | null
     active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     communication_type?: NullableStringFieldUpdateOperationsInput | string | null
-    requires_ack?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    requires_handshake?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    ack_trigger?: NullableStringFieldUpdateOperationsInput | string | null
-    handshake_type?: NullableStringFieldUpdateOperationsInput | string | null
-    ack_type?: NullableStringFieldUpdateOperationsInput | string | null
+    handshake?: NullableStringFieldUpdateOperationsInput | string | null
+    ack?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EquipmentCreateManyEquipmentProfileInput = {

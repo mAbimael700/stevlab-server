@@ -1,9 +1,9 @@
 class IResultAckService {
     /**
      *
-     * @param {string} message
+     * @param {string|Buffer} message
      * @param {Object} config
-     * @returns {string}
+     * @returns {string|Buffer}
      */
     generateAck(message, config) {
         throw new Error("generateAck method not implemented")

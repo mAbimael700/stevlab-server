@@ -9,11 +9,8 @@ class EquipmentProfileDto {
             equipmentProfile.communicationProfile
         );
         this.active = equipmentProfile.active;
-        this.requiresAck = equipmentProfile.requires_ack ?? false
-        this.requiresHandshake = equipmentProfile.requires_handshake ?? false
-        this.ackTrigger = equipmentProfile.ack_trigger
-        this.handshakeType = equipmentProfile.handshake_type
-        this.ackType = equipmentProfile.ack_type
+        this.handshake= equipmentProfile.handshake
+        this.ack = equipmentProfile.ack
     }
 }
 

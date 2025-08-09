@@ -15,7 +15,7 @@ class CommunicationCoordinator {
         this.ackFactory = new ResultAckFactory();
 
         // Estados de comunicación
-        this.handshakeCompleted = !equipment.equipmentProfile.requiresHandshake;
+        this.handshakeCompleted = !equipment.equipmentProfile.handshake;
 
         // Servicios activos
         this.handshakeService = this._createHandshakeService();
@@ -23,33 +23,59 @@ class CommunicationCoordinator {
     }
 
     _createHandshakeService() {
-        if (!this.equipment.equipmentProfile.requiresHandshake) {
+        if (!this.equipment.communicationConfig.handshake) {
             return null;
         }
-        return this.handshakeFactory
-            .createService(this.equipment.equipmentProfile.handshakeType);
+        return this.handshakeFactory.createService(this.equipment.communicationConfig.handshake);
     }
 
     _createAckService() {
-        if (!this.equipment.equipmentProfile.requiresAck) {
+        if (!this.equipment.equipmentProfile.ack) {
             return null;
         }
-        return this.ackFactory
-            .createService(this.equipment.equipmentProfile.ackType);
+
+        // Extraer el tipo base del ACK (sin el sufijo del trigger)
+        const ackType = this._extractAckType(this.equipment.equipmentProfile.ack);
+        return this.ackFactory.createService(ackType);
+    }
+
+    /**
+     * Extrae el tipo de ACK base del string de configuración
+     * @param {string} ackConfig - Configuración del ACK (ej: 'HL7-COMPLETE-1', 'ASTM-1')
+     * @returns {string} - Tipo base (ej: 'HL7-1', 'ASTM-1')
+     */
+    _extractAckType(ackConfig) {
+        // Si contiene '-COMPLETE-', removerlo para obtener el tipo base
+        return ackConfig.replace('-COMPLETE', '');
+    }
+
+    /**
+     * Determina el trigger del ACK basándose en la configuración
+     * @returns {string} - 'ON_MESSAGE' o 'ON_COMPLETE_RESULT'
+     */
+    _getAckTrigger() {
+        if (!this.equipment.equipmentProfile.ack) {
+            return null;
+        }
+
+        // Si contiene '-COMPLETE-', entonces es ON_COMPLETE_RESULT
+        return this.equipment.equipmentProfile.ack.includes('-COMPLETE-')
+            ? 'ON_COMPLETE_RESULT'
+            : 'ON_MESSAGE';
     }
 
     /**
      * Inicia el handshake si es requerido
      */
     async initiateHandshake() {
-        if (!this.equipment.equipmentProfile
-            .requiresHandshake || this.handshakeCompleted) {
+        if (!this.equipment.equipmentProfile.handshake || this.handshakeCompleted) {
             return true;
         }
 
         try {
-            const handshakeRequest = this.handshakeService
-                .generateHandshakeRequest(this.equipment.equipmentConfiguration);
+            const handshakeRequest = this.handshakeService.generateHandshakeRequest(
+                this.equipment.equipmentConfiguration
+            );
 
             this.client.write(handshakeRequest);
             console.log(`Handshake iniciado para equipo ${this.equipment.name}`);
@@ -66,7 +92,7 @@ class CommunicationCoordinator {
      * @returns {boolean} - True si se completó el handshake, false si aún está en proceso
      */
     processHandshakeResponse(data) {
-        if (!this.equipment.equipmentProfile.requiresHandshake || this.handshakeCompleted) {
+        if (!this.equipment.equipmentProfile.handshake || this.handshakeCompleted) {
             return true;
         }
 
@@ -80,10 +106,9 @@ class CommunicationCoordinator {
                 this.handshakeCompleted = true;
 
                 // Enviar confirmación si es necesaria
-                const confirmation = this.handshakeService
-                    .generateHandshakeConfirmation(
-                        this.equipment.equipmentConfiguration
-                    );
+                const confirmation = this.handshakeService.generateHandshakeConfirmation(
+                    this.equipment.equipmentConfiguration
+                );
 
                 if (confirmation) {
                     this.client.write(confirmation);
@@ -126,18 +151,18 @@ class CommunicationCoordinator {
     }
 
     /**
-     * Procesa los resultados del BufferDataHandler y envía ACK si es necesario
+     * Procesa los resultados del BufferDataHandler y envía ACKs si es necesario
      * @param {Array} processedResults - Array de resultados procesados por BufferDataHandler
      * @param {Buffer|string} originalData - Datos originales recibidos
      */
     handleProcessedResults(processedResults, originalData) {
-        if (!this.equipment.equipmentProfile.requiresAck) {
+        if (!this.equipment.equipmentProfile.ack) {
             return;
         }
 
         // Solo enviar ACK si hay resultados procesados
         if (processedResults && processedResults.length > 0) {
-            const trigger = this.equipment.equipmentProfile.ackTrigger;
+            const trigger = this._getAckTrigger();
 
             if (trigger === 'ON_MESSAGE') {
                 // Enviar un ACK por cada chunk de datos que produjo resultados
@@ -169,7 +194,7 @@ class CommunicationCoordinator {
      * Resetea el estado de comunicación
      */
     reset() {
-        this.handshakeCompleted = !this.equipment.equipmentProfile.requiresHandshake;
+        this.handshakeCompleted = !this.equipment.equipmentProfile.handshake;
     }
 }
 

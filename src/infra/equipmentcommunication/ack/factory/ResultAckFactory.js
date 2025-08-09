@@ -4,7 +4,7 @@ const AstmResultAckServiceV1 = require("@/infra/equipmentcommunication/ack/astm/
 class ResultAckFactory {
     constructor() {
         /**
-         * @type {Map<string, IClinicalDataModel> }
+         * @type {Map<string, typeof IResultAckService> }
          */
         this.ackServices = new Map();
         this.registerAckServices();
