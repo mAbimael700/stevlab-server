@@ -1,5 +1,5 @@
 require('module-alias/register');
-const prisma = require("../src/infra/prismaclient/PrismaClient");
+const prisma = require("../src/infra/prisma/client/PrismaClient");
 const EquipmentRepository = require("../src/domain/equipment/repository/EquipmentRepository");
 const ResultRepository = require("../src/domain/result/repository/ResultRepository");
 const ParameterRepository = require("../src/domain/parameter/repository/ParameterRepository");
@@ -19,8 +19,8 @@ const BufferDataEvents = require("../src/infra/bufferdatahandler/BufferDataEvent
 const ClientConnectionFactory = require("../src/infra/clientconnection/factory/ClientConnectionFactory");
 const EquipmentConnectionManager = require("../src/infra/equipmentconnection/manager/EquipmentConnectionManager");
 
-const ConnectionValidator = require("../src/infra/connection/tcp/validator/ConnectionValidator");
-const TcpServer = require("../src/infra/tcpserver/TcpServer");
+const ConnectionValidator = require("../src/infra/tcpserver/service/ConnectionValidatorService");
+const TcpServer = require("../src/infra/tcpserver/server/TcpServer");
 const TcpInBoundClientFactory = require("../src/infra/connection/tcp/inbound/factory/TcpInBoundClientFactory");
 const TcpClientConnectionCoreFactory = require("../src/infra/connection/tcp/factory/TcpClientConnectionCoreFactory");
 
