@@ -29,13 +29,20 @@ model DirectoryHistorial {
 }
 
 model EquipmentProfile {
-  id                    BigInt                 @id
-  communication_profile String?                @db.VarChar(20)
-  name                  String?                @db.VarChar(25)
+  id                    BigInt   @id
+  communication_profile String?  @db.VarChar(20)
+  name                  String?  @db.VarChar(25)
   active                Boolean?
-  communication_type    String?                @db.VarChar(25)
-  communicationProfile  CommunicationProfiles? @relation(fields: [communication_profile], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipment_profiles_communication_profile_communication_pr")
-  equipments            Equipment[]
+  communication_type    String?  @db.VarChar(25)
+
+  requires_ack       Boolean? @default(false)
+  requires_handshake Boolean? @default(false)
+  ack_trigger        String?  @db.VarChar(50)
+  handshake_type     String?  @db.VarChar(50)
+  ack_type           String?  @db.VarChar(50)
+
+  communicationProfile CommunicationProfiles? @relation(fields: [communication_profile], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_equipment_profiles_communication_profile_communication_pr")
+  equipments           Equipment[]
 
   @@map("equipment_profiles")
 }
