@@ -7,9 +7,9 @@ class ResultController {
      *
      * @param dependencies
      */
-    constructor(dependencies = {}) {
-        this.resultService = dependencies.resultService;
-        this.parameterService = dependencies.parameterService
+    constructor({resultService, parameterService}) {
+        this.resultService = resultService;
+        this.parameterService = parameterService
 
         this.configureController();
     }

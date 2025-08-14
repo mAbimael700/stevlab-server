@@ -5,8 +5,8 @@ class ResultSenderController {
      *
      * @param dependencies
      */
-    constructor(dependencies = {}) {
-        this.resultSenderService = dependencies.resultSenderService;
+    constructor({resultSenderService}) {
+        this.resultSenderService = resultSenderService;
         this.configureController();
     }
 

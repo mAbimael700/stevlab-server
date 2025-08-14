@@ -9,11 +9,11 @@ class EquipmentController {
      *
      * @param dependencies
      */
-    constructor(dependencies = {}) {
+    constructor({equipmentService, rawResultsService, equipmentProfileService}) {
 
-        this.equipmentService = dependencies.equipmentService;
-        this.rawResultsService = dependencies.rawResultsService
-        this.equipmentProfileService = dependencies.equipmentProfileService;
+        this.equipmentService = equipmentService;
+        this.rawResultsService = rawResultsService
+        this.equipmentProfileService = equipmentProfileService;
 
         this.configureController();
     }
