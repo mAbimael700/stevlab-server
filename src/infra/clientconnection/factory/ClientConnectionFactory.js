@@ -14,7 +14,7 @@ const MissingEquipmentError = require("@/infra/clientconnection/exceptions/Missi
  * Factory para crear diferentes tipos de clientes de conexión
  */
 class ClientConnectionFactory {
-    constructor(bufferDataEmitter) {
+    constructor({bufferDataEmitter}) {
         this.bufferDataEmitter = bufferDataEmitter;
         this.clientConfigs = new Map();
         this.coreFactories = new Map();

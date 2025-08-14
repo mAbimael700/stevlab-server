@@ -5,7 +5,7 @@ class TcpInBoundClientFactory extends TcpClientFactory {
     /**
      * @param {BufferDataEmitter} bufferDataEmitter
      */
-    constructor(bufferDataEmitter = null) {
+    constructor({bufferDataEmitter = null}) {
         super(bufferDataEmitter);
     }
 

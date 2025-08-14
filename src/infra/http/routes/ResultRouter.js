@@ -1,9 +1,9 @@
 const { Router } = require("express");
 
 class ResultRouter {
-  constructor(dependencies = {}) {
+  constructor({resultController}) {
     this.router = Router();
-    this.controller = dependencies.resultController;
+    this.controller = resultController;
 
     this.validateDependencies();
     this.setupRoutes();

@@ -5,9 +5,7 @@ const EquipmentConnectionRepository = require("../repository/EquipmentConnection
 
 class EquipmentConnectionManager {
 
-    constructor(dependencies) {
-        const { equipmentService, clientConnectionFactory } = dependencies || {};
-
+    constructor({equipmentService, clientConnectionFactory}) {
         this.connectionRepository = new EquipmentConnectionRepository();
         this.equipmentLoader = new EquipmentConnectionLoader(equipmentService);
         this.connectionCreator = new EquipmentConnectionCreator(clientConnectionFactory);

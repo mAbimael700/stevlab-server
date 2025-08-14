@@ -1,5 +1,5 @@
 class BufferDataListener {
-  constructor(bufferDataEmitter, bufferDataEvents) {
+  constructor({bufferDataEmitter, bufferDataEvents}) {
     this.dataEmitter = bufferDataEmitter;
     this.eventsHandler = bufferDataEvents;
     this._bindHandlers()

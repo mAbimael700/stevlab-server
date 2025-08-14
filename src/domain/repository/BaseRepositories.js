@@ -4,7 +4,7 @@ class BaseRepository {
      * @param {string} modelName
      * @param {PrismaClient} prisma
      */
-    constructor(modelName, prisma) {
+    constructor(modelName, {prisma}) {
         this.model = modelName;
         this.prisma = prisma;
     }

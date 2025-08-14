@@ -8,10 +8,12 @@ class TcpServer {
      * @param {ConnectionValidatorService} connectionValidatorService
      * @param {EquipmentConnectionManager} equipmentConnectionManager
      */
-    constructor(port = 3000,
-                clientFactory,
-                connectionValidatorService,
-                equipmentConnectionManager) {
+    constructor({
+                    port = 3000,
+                    clientFactory,
+                    connectionValidatorService,
+                    equipmentConnectionManager
+                }) {
         this.port = port;
         this.clientFactory = clientFactory;
         this.connectionValidatorService = connectionValidatorService;

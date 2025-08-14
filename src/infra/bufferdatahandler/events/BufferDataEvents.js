@@ -1,7 +1,7 @@
 const ClinicalDataModelFactory = require("@/domain/clinicaldatamodel/factory/ClinicalDataModelFactory");
 
 class BufferDataEvents {
-  constructor(resultService) {
+  constructor({resultService}) {
     this.resultService = resultService;
   }
 

@@ -1,5 +1,5 @@
 class HistogramResultService {
-    constructor(histogramResultRepository) {
+    constructor({histogramResultRepository}) {
         this.histogramResultRepository = histogramResultRepository
     }
 
