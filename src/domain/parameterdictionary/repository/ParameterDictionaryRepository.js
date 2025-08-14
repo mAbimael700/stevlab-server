@@ -1,7 +1,7 @@
 const BaseRepository = require("@/domain/repository/BaseRepositories");
 
 class ParameterDictionaryRepository extends BaseRepository {
-    constructor(prisma) {
+    constructor({prisma}) {
         super("ParameterDictionary", prisma);
     }
 

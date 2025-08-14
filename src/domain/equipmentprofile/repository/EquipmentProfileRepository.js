@@ -1,7 +1,7 @@
 const BaseRepository = require("@/domain/repository/BaseRepositories");
 
 class EquipmentProfileRepository extends BaseRepository {
-    constructor(prisma) {
+    constructor({prisma}) {
         super("EquipmentProfile", prisma);
         this.includeOptions = {
             include: {communicationProfile: true}

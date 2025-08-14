@@ -1,7 +1,7 @@
 const BaseRepository = require("../../repository/BaseRepositories");
 
 class ParameterRepository extends BaseRepository {
-    constructor(prisma) {
+    constructor({prisma}) {
         super("Parameter", prisma)
         this.includeOptions = {
             include: {

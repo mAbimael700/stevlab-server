@@ -5,7 +5,7 @@ class ResultRepository extends BaseRepository {
      *
      * @param {PrismaClient} prisma
      */
-    constructor(prisma) {
+    constructor({prisma}) {
         super("Result", prisma);
     }
 

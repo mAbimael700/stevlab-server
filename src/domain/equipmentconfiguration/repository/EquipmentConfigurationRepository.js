@@ -2,7 +2,7 @@ const BaseRepository = require("@/domain/repository/BaseRepositories");
 
 class EquipmentConfigurationRepository extends BaseRepository {
 
-    constructor(prisma) {
+    constructor({prisma}) {
         super("EquipmentConfiguration", prisma);
     }
 
