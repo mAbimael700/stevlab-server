@@ -1,6 +1,6 @@
 class EquipmentProfileService {
-    constructor(dependencies) {
-        this.equipmentProfileRepository = dependencies.equipmentProfileRepository;
+    constructor({equipmentProfileRepository}) {
+        this.equipmentProfileRepository = equipmentProfileRepository;
     }
 
     async getAll(){

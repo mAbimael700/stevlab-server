@@ -1,8 +1,8 @@
 class ParameterDictionaryService {
-    constructor(dependencies) {
-        this.parameterRepository = dependencies.parameterRepository;
-        this.parameterDictionaryRepository = dependencies.parameterDictionaryRepository;
-        this.systemParameterRepository = dependencies.systemParameterRepository;
+    constructor({parameterRepository, parameterDictionaryRepository, systemParameterRepository}) {
+        this.parameterRepository = parameterRepository;
+        this.parameterDictionaryRepository = parameterDictionaryRepository;
+        this.systemParameterRepository = systemParameterRepository;
 
     }
 
@@ -19,7 +19,7 @@ class ParameterDictionaryService {
         const existsBySystemParameterId = await this.systemParameterRepository.existsBySystemParameterId(systemParameterId);
 
         if (!existsBySystemParameterId) {
-            return  this.parameterDictionaryRepository.create(description, systemParameterId);
+            return this.parameterDictionaryRepository.create(description, systemParameterId);
         }
     }
 

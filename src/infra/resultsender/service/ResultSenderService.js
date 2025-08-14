@@ -3,9 +3,9 @@ const apiResultSenderService = require("@/infra/resultsender/http/service/ApiRes
 
 class ResultSenderService {
 
-    constructor(dependencies = {}) {
-        this.resultSendService = dependencies.resultSendService;
-        this.resultService = dependencies.resultService
+    constructor({resultSendService, resultService}) {
+        this.resultSendService = resultSendService;
+        this.resultService = resultService
         this.client = apiResultSenderService
     }
 

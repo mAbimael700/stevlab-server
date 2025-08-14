@@ -1,6 +1,6 @@
 class ResultSendService {
-    constructor(dependencies) {
-        this.resultSendRepository = dependencies.resultSendRepository;
+    constructor({resultSendRepository}) {
+        this.resultSendRepository = resultSendRepository;
     }
 
     async saveSuccessful(data) {

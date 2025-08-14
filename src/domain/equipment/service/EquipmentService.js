@@ -5,10 +5,10 @@ class EquipmentService {
      *
      * @param {Object} dependencies
      */
-    constructor(dependencies) {
-        this.equipmentRepository = dependencies.equipmentRepository;
-        this.equipmentProfileRepository = dependencies.equipmentProfileRepository;
-        this.equipmentConfigurationRepository = dependencies.equipmentConfigurationRepository;
+    constructor({equipmentRepository, equipmentProfileRepository, equipmentConfigurationRepository,}) {
+        this.equipmentRepository = equipmentRepository;
+        this.equipmentProfileRepository = equipmentProfileRepository;
+        this.equipmentConfigurationRepository = equipmentConfigurationRepository;
     }
 
     async getAll() {

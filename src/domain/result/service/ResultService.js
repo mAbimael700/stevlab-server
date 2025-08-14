@@ -1,7 +1,7 @@
 const {ResultSchema} = require("../schema/ResultSchema");
 
 class ResultService {
-    constructor(resultRepository, parameterService, histogramResultService) {
+    constructor({resultRepository, parameterService, histogramResultService}) {
         this.resultRepository = resultRepository;
         this.parameterService = parameterService;
         this.histogramResultService = histogramResultService;

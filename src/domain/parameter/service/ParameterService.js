@@ -3,14 +3,14 @@ const ParameterVersioningService = require("@/domain/parameter/service/Parameter
 const ParameterDataFactory = require("@/domain/parameter/factory/ParameterDataFactory");
 
 class ParameterService {
-    constructor(dependencies) {
-        this.parameterRepository = dependencies.parameterRepository;
-        this.parameterDictionaryRepository = dependencies.parameterDictionaryRepository;
+    constructor({parameterRepository, parameterDictionaryRepository, dictionaryService}) {
+        this.parameterRepository = parameterRepository;
+        this.parameterDictionaryRepository = parameterDictionaryRepository;
 
         // Servicios especializados
         this.validationService = new ParameterValidationService();
         this.versioningService = new ParameterVersioningService(this.parameterRepository);
-        this.dictionaryService = dependencies.dictionaryService;
+        this.dictionaryService = dictionaryService;
 
     }
 
