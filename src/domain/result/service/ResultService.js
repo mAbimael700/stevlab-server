@@ -39,36 +39,30 @@ class ResultService {
 
     async saveStreamReceivedResult(result, equipmentId) {
         try {
-            const validationResponse = ResultSchema.safeValidate(result);
-
-            if (!validationResponse.success) {
-                throw new Error(`Result send is not valid`);
-            }
-
             let responseResult = await this.resultRepository.findByFolio(
-                validationResponse.data.folio
+                result.folio
             );
 
             if (!responseResult) {
                 responseResult = await this.resultRepository.create({
-                    created_at: validationResponse.data.created_at,
-                    folio: validationResponse.data.folio,
-                    sample_id: validationResponse.data.sample_id,
+                    created_at: result.created_at,
+                    folio: result.folio,
+                    sample_id: result.sample_id,
                     last_modified_at: new Date(),
                     active: true,
                 });
             }
 
-            if (validationResponse.data.histogramResults) {
+            if (result.histogramResults) {
                 await this.histogramResultService.create(
-                    validationResponse.data.histogramResults,
+                    result.histogramResults,
                     responseResult.id,
                     equipmentId
                 );
             }
 
             const parametersResult = await Promise.allSettled(
-                validationResponse.data.parameters.map(
+                result.parameters.map(
                     async (parameter) =>
                         await this.parameterService.save(
                             parameter,
@@ -88,6 +82,7 @@ class ResultService {
             );
 
         } catch (error) {
+            console.log(error)
             throw new Error(`Ocurrió un error al guardar los resultados ${error.message}`);
         }
     }

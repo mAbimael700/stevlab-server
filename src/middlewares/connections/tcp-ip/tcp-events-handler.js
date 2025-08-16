@@ -16,7 +16,8 @@ const { BufferList } = require("bl/BufferList");
  */
 function handleDataEvent(socket, data, device, parsingData, bufferList) {
   try {
-    const filteredData = data.toString().replace(/\x02/g, "");
+    const filteredData = data.toString()
+        .replace(/\x02/g, "");
 
     // Verificar si el chunk filtrado tiene datos útiles antes de imprimir
     if (filteredData.trim()) {

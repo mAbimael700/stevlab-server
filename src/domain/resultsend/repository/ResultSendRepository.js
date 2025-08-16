@@ -2,7 +2,7 @@ const BaseRepository = require("@/domain/repository/BaseRepositories");
 
 class ResultSendRepository extends BaseRepository {
     constructor({prisma}) {
-        super("ResultSend", prisma);
+        super("ResultSend", {prisma});
     }
 
     async findByResultId(resultId) {

@@ -24,12 +24,12 @@ const TcpServer = require("../src/infra/tcpserver/server/TcpServer");
 const TcpInBoundClientFactory = require("../src/infra/connection/tcp/inbound/factory/TcpInBoundClientFactory");
 const TcpClientFactory = require("../src/infra/connection/tcp/factory/TcpClientFactory");
 
-const equipmentRepository = new EquipmentRepository(prisma);
-const equipmentProfileRepository = new EquipmentProfileRepository(prisma);
-const resultRepository = new ResultRepository(prisma)
-const parameterRepository = new ParameterRepository(prisma)
-const parameterDictionaryRepository = new ParameterDictionaryRepository(prisma)
-const histogramRepository = new HistogramResultService(prisma)
+const equipmentRepository = new EquipmentRepository({prisma});
+const equipmentProfileRepository = new EquipmentProfileRepository({prisma});
+const resultRepository = new ResultRepository({prisma})
+const parameterRepository = new ParameterRepository({prisma})
+const parameterDictionaryRepository = new ParameterDictionaryRepository({prisma})
+const histogramRepository = new HistogramResultService({prisma})
 
 const dictionaryService = new ParameterDictionaryService({
     parameterRepository,
@@ -44,27 +44,35 @@ const parameterService = new ParameterService({
     parameterDictionaryRepository,
     dictionaryService
 })
-const histogramService = new HistogramResultService(histogramRepository)
-const resultService = new ResultService(resultRepository, parameterService, histogramService)
+const histogramService = new HistogramResultService({histogramRepository})
+const resultService = new ResultService(
+    {
+        resultRepository,
+        parameterService,
+        histogramService
+    }
+)
 
 
 const bufferDataEmitter = BufferDataEmitter.getInstance();
-const bufferDataEvents = new BufferDataEvents(resultService)
+const bufferDataEvents = new BufferDataEvents({resultService})
 
-const clientConnectionFactory = new ClientConnectionFactory(bufferDataEmitter)
+const clientConnectionFactory = new ClientConnectionFactory({bufferDataEmitter})
 const equipmentConnectionManager = new EquipmentConnectionManager(
     {
         equipmentService,
         clientConnectionFactory
     })
 
-const tcpConnectionValidator = new ConnectionValidator(equipmentService);
+const tcpConnectionValidator = new ConnectionValidator({equipmentService});
 
 const tcpServer = new TcpServer(
-    3000,
-    new TcpInBoundClientFactory(bufferDataEmitter),
-    tcpConnectionValidator,
-    equipmentConnectionManager
+    {
+        port: 3000,
+        clientFactory: new TcpInBoundClientFactory(bufferDataEmitter),
+        connectionValidatorService: tcpConnectionValidator,
+        equipmentConnectionManager
+    }
 );
 
 /** Estos son los servicios principales de mi aplicación,
@@ -72,7 +80,7 @@ const tcpServer = new TcpServer(
  *  un servidor http con controladores e inyectado servicios,
  *  servidor websocket con inyección de dependencias de emisores y receptores y estos de servicios
  */
-new BufferDataListener(bufferDataEmitter, bufferDataEvents).setup()
+new BufferDataListener({bufferDataEmitter, bufferDataEvents}).setup()
 equipmentConnectionManager.initialize().then(() =>
     tcpServer.listen()
 )
