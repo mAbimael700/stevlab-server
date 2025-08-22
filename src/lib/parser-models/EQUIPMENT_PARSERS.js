@@ -37,6 +37,7 @@ function parsingDataHL7(
 
 // Configuración centralizada de parsers
 const equipmentsParsers = {
+
   FUJIFILM_DRICHEM_NX600: { parser: type1, CHAR_DELIMITER: "\x03" },
   CONTROLAB: parsingDataHL7(CONTROLAB),
   FINECARE_PLUS: parsingDataHL7(FINECARE),

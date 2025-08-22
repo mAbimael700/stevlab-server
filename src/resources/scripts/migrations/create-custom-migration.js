@@ -1,12 +1,12 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 // ⚙️ Configura aquí tu SQL y nombre de migración
 const MIGRATION_NAME = process.argv[2] || 'custom-seed';
 const SQL_CONTENT = fs.readFileSync(path.join(__dirname, 'custom-seed.sql'), 'utf-8');
 
 const timestamp = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14);
-const migrationFolder = path.join(__dirname, '..', '..', '..',
+const migrationFolder = path.join(__dirname, '..', '..', '..', '..',
         'prisma', 'migrations', `${timestamp}_${MIGRATION_NAME}`
     )
 ;
