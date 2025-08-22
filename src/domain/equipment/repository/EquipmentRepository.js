@@ -6,7 +6,7 @@ class EquipmentRepository extends BaseRepository {
      * @param {PrismaClient} prisma
      */
     constructor({prisma}) {
-        super("Equipment", prisma);
+        super("Equipment", {prisma});
     }
 
     /**

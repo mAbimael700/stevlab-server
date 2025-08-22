@@ -28,7 +28,10 @@ let lastMessageTime = null;
  * @param {BufferList} bufferList
  *
  */
-async function dataEvent(socket, data, parsingData, bufferList) {
+async function dataEvent(socket,
+                         data,
+                         parsingData,
+                         bufferList) {
   try {
     // Verifica el tamaño del paquete
     if (data.length > MAX_DATA_SIZE) {
@@ -39,6 +42,7 @@ async function dataEvent(socket, data, parsingData, bufferList) {
     }
 
     lastMessageTime = Date.now(); // Actualiza el tiempo del último mensaje
+
     bufferList.append(data); // Acumula los datos recibidos
 
     const { sendsBySingleParameter, ackMessageFunction } = parsingData;

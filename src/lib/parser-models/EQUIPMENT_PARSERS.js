@@ -14,22 +14,22 @@ const {
   SpU120BufferParser,
 } = require("../parsers/SpU120BufferParser/SpU120BufferParser");
 
-const CHAR_DELIMITER = "\\x1C";
 
 // Función genérica para parsers que usan type4
 const createType4Parser =
   (dictionary, options = {}) =>
-  (hl7Message) =>
-    type4(hl7Message, dictionary, options);
+    (hl7Message) =>
+      type4(hl7Message, dictionary, options);
 
-function parsingDataHL7(
+
+  function parsingDataHL7(
   dictionary = HEMATOLOGY,
   options = {},
   sendsBySingleParameter = false
 ) {
   return {
     parser: createType4Parser(dictionary, options),
-    CHAR_DELIMITER,
+    CHAR_DELIMITER: "\\x1C", // Carácter de finalización de mensaje HL7
     sendsBySingleParameter,
     ackMessageFunction: generateHl7Ack,
   };
@@ -48,9 +48,7 @@ const equipmentsParsers = {
   DYMIND: parsingDataHL7(),
   MINDRAY_BS120: parsingDataHL7(
     MINDRAY_BS120,
-    {
-      positions: { OBR: { folio: 2 } },
-    },
+    { positions: { OBR: { folio: 2 } } },
     true
   ),
   VITROS_350: {

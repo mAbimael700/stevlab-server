@@ -20,6 +20,7 @@ class EquipmentConnectionManager {
             const equipments = await this.equipmentLoader.loadAll();
             return await this.createConnections(equipments);
         } catch (error) {
+            console.log(error)
             throw new Error(`Error during initialization: ${error.message}`);
         }
     }
