@@ -2,8 +2,8 @@ const MacAddressResolver = require("@/infra/network/utils/MacAddressResolver");
 const IpAddressNormalizer = require("@/infra/network/utils/IpAddressNormalizer");
 
 class ConnectionValidatorService {
-    constructor({equipmenQueryService}) {
-        this.equipmentService = equipmenQueryService;
+    constructor({equipmentQueryService}) {
+        this.equipmentService = equipmentQueryService;
         this.macAddressResolver = new MacAddressResolver();
         this.ipNormalizer = new IpAddressNormalizer();
     }
