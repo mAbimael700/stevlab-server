@@ -12,7 +12,7 @@ class ResultAckFactory {
 
     registerAckServices() {
         this.register("HL7-1", Hl7ResultAckStrategyServiceV1);
-        this.register("ASTM-ACK-1", AstmResultAckServiceV1);
+        this.register("ASTM-1", AstmResultAckServiceV1);
     }
 
     register(type, ParserClass) {
