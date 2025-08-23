@@ -1,7 +1,7 @@
 const HandshakeFactory = require("@/infra/equipmentcommunication/handshake/factory/HandshakeFactory");
 const ResultAckFactory = require("@/infra/equipmentcommunication/ack/factory/ResultAckFactory");
 const { SerialPort } = require("serialport");
-const { Socket } = require("net");
+const { Socket } = require("node:net");
 
 class CommunicationCoordinator {
   /**

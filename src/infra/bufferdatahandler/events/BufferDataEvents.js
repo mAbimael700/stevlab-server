@@ -1,4 +1,4 @@
-const ClinicalDataModelFactory = require("@/domain/clinicaldatamodel/factory/ClinicalDataModelFactory");
+const ClinicalDataModelFactory = require("@/infra/clinicaldatamodel/factory/ClinicalDataModelFactory");
 const {ResultSchema} = require("@/domain/result/schema/ResultSchema");
 
 class BufferDataEvents {

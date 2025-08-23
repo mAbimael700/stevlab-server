@@ -1,8 +1,6 @@
 const TcpEventsHandler = require("@/infra/connection/tcp/events/TcpEventHandler");
-const { TcpSocketListener } = require("@/infra/connection/tcp/listener/TcpSocketListener");
-const {
-    BufferDataHandler,
-} = require("@/infra/bufferdatahandler/handler/BufferDataHandler");
+const {TcpSocketListener} = require("@/infra/connection/tcp/listener/TcpSocketListener");
+const {BufferDataHandler} = require("@/infra/bufferdatahandler/handler/BufferDataHandler");
 
 class TcpClientFactory {
     constructor(bufferDataEmitter = null) {

@@ -1,4 +1,4 @@
-const A15ClinicalDataModel = require("../src/domain/clinicaldatamodel/model/A15ClinicalDataModel");
+const A15ClinicalDataModel = require("../src/infra/clinicaldatamodel/model/A15ClinicalDataModel");
 const A15BufferParser = require("../src/infra/bufferresultparser/A15/A15BufferParser");
 
 const rawData = `

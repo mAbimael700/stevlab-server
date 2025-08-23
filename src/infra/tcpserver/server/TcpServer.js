@@ -5,7 +5,7 @@ class TcpServer {
      *
      * @param {number} port
      * @param {TcpInBoundClientFactory} clientFactory
-     * @param {TcpConnectionValidatorService} tcpConnectionValidatorService
+     * @param {ConnectionValidatorService} tcpConnectionValidatorService
      * @param {EquipmentConnectionManager} equipmentConnectionManager
      */
     constructor({

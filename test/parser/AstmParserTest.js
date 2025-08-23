@@ -1,7 +1,7 @@
 
 // Tu data ASTM
 const ASTMParser = require("../../src/infra/bufferresultparser/astm/ASTMParser");
-const AstmClinicalDataModel = require("../../src/domain/clinicaldatamodel/model/AstmClinicalDataModel");
+const AstmClinicalDataModel = require("../../src/infra/clinicaldatamodel/model/AstmClinicalDataModel");
 const astmData = `
 H|\\^&|||ARCHITECT^9.55^F3454100244^H1P1O1R1C1Q1L1|||||||P|1|20250808133200
 P|1||||GOMEZ^MARCELINA|||F

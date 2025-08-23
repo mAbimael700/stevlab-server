@@ -17,10 +17,15 @@ class EquipmentConnectionCreator {
                 equipment
             );
 
+            if (clientConnection.connect) {
+                await clientConnection.connect();
+            }
+
             return new EquipmentConnection(
                 equipment,
                 clientConnection
             );
+
         } catch (error) {
             throw new Error(`Error creating connection for equipment ${equipment.id}: ${error.message}`);
         }

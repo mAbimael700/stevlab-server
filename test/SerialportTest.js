@@ -9,7 +9,7 @@ const ResultService = require("../src/domain/result/service/ResultService");
 const ResultRepository = require("../src/domain/result/repository/ResultRepository");
 const ParameterRepository = require("../src/domain/parameter/repository/ParameterRepository");
 const ParameterService = require("../src/domain/parameter/service/ParameterService");
-const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
+const HistogramResultService = require("../src/domain/histogramresult/service/HistogramResultService");
 const SerialClientCoreFactory = require("../src/infra/connection/serial/factory/SerialClientCoreFactory");
 const ClientConnectionFactory = require("../src/infra/clientconnection/factory/ClientConnectionFactory");
 

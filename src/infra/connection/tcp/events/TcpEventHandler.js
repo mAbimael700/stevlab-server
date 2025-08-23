@@ -71,7 +71,7 @@ class TcpEventsHandler {
   }
 
   close() {
-    console.log(`Conexión cerrada para equipo ${this.equipment.name}`);
+    console.warn(`Conexión cerrada para equipo ${this.equipment.name}`);
 
     // Reset del coordinador al cerrar conexión
     this.communicationService.reset();

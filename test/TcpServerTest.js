@@ -9,7 +9,7 @@ const EquipmentProfileRepository = require("@/domain/equipmentprofile/repository
 const EquipmentService = require("../src/domain/equipment/service/EquipmentService");
 const ResultService = require("../src/domain/result/service/ResultService");
 const ParameterService = require("../src/domain/parameter/service/ParameterService");
-const HistogramResultService = require("../src/domain/histogramresult/HistogramResultService");
+const HistogramResultService = require("../src/domain/histogramresult/service/HistogramResultService");
 const ParameterDictionaryService = require("@/domain/parameterdictionary/service/ParameterDictionaryService");
 
 const BufferDataEmitter = require("../src/infra/bufferdatahandler/emitter/BufferDataEmitter");

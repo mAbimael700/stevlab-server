@@ -48,7 +48,6 @@ class TcpOutBoundClient extends TcpClient {
                 this.client.connect({host, port});
             });
         } catch (error) {
-            console.log(error);
             throw new Error(
                 `Hubo un error al conectarse con el equipo: ${error.message}`
             );

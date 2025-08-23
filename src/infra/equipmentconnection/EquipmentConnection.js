@@ -1,7 +1,3 @@
-const ClientConnection = require("@/infra/clientconnection/entity/ClientConnection");
-const EquipmentDto = require("@/domain/equipment/dto/EquipmentDto.js");
-const ClientOutBoundConnection = require("@/infra/clientconnection/entity/ClientOutBoundConnection.js");
-
 class EquipmentConnection {
   /**
    *
@@ -15,10 +11,6 @@ class EquipmentConnection {
 
     this.equipment = equipment;
     this.clientConnection = clientConnection;
-
-    if (clientConnection) {
-      clientConnection?.connect();
-    }
   }
 
   /**

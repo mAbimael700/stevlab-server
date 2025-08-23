@@ -101,7 +101,7 @@ class DependencyRegister {
         )
         .scoped(),
       histogramResultRepository: awilix
-        .asClass(require("@/domain/histogramresult/HistogramResultRepository"))
+        .asClass(require("@/domain/histogramresult/repository/HistogramResultRepository"))
         .scoped(),
     });
   }
@@ -120,7 +120,7 @@ class DependencyRegister {
   _registerLocalServices() {
     this.container.register({
       histogramService: awilix
-        .asClass(require("@/domain/histogramresult/HistogramResultService"))
+        .asClass(require("@/domain/histogramresult/service/HistogramResultService"))
         .singleton(),
       parameterDictionaryService: awilix
         .asClass(
@@ -153,7 +153,7 @@ class DependencyRegister {
         )
         .singleton(),
       histogramResultService: awilix
-        .asClass(require("@/domain/histogramresult/HistogramResultService"))
+        .asClass(require("@/domain/histogramresult/service/HistogramResultService"))
         .singleton(),
 
         // Services that use repositories from local implementations
@@ -219,14 +219,12 @@ class DependencyRegister {
         .singleton(),
       io: awilix
         .asFunction((cradle) => {
-          const io = cradle.websocketConnectionManager.getIo();
-          return io;
+          return cradle.websocketConnectionManager.getIo();
         })
         .singleton(),
       websocketEmitter: awilix
         .asFunction((cradle) => {
-          const emitter = cradle.websocketConnectionManager.getEmitter();
-          return emitter;
+          return cradle.websocketConnectionManager.getEmitter();
         })
         .singleton(),
     });
