@@ -1,4 +1,4 @@
-class ResultRemoteService {
+class ResultSavingService {
   constructor({ httpResultRepository }) {
     this.resultRepository = httpResultRepository;
   }
@@ -15,4 +15,4 @@ class ResultRemoteService {
   }
 }
 
-module.exports = ResultRemoteService;
+module.exports = ResultSavingService;

@@ -155,6 +155,8 @@ class DependencyRegister {
       histogramResultService: awilix
         .asClass(require("@/domain/histogramresult/HistogramResultService"))
         .singleton(),
+
+        // Services that use repositories from local implementations
       resultSavingService: awilix
         .asClass(require("@/domain/result/service/ResultSavingService"))
         .singleton(),
@@ -164,6 +166,7 @@ class DependencyRegister {
     });
   }
 
+  
   _registerRemoteServices() {
     this.container.register({
       resultSavingService: awilix
