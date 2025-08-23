@@ -12,6 +12,7 @@ class ProfileConfigurationManager {
             database: true,
             httpServer: true,
             tcpServer: true,
+            websocketServer: true,
             equipmentManager: true,
             repositories: 'local',
             services: 'local'
@@ -21,6 +22,7 @@ class ProfileConfigurationManager {
             database: true,
             httpServer: true,
             tcpServer: false,
+            websocketServer: false,
             equipmentManager: false,
             repositories: 'local',
             services: 'local'
@@ -30,6 +32,7 @@ class ProfileConfigurationManager {
             database: false,
             httpServer: false,
             tcpServer: true,
+            websocketServer: true,
             equipmentManager: true,
             repositories: 'remote',
             services: 'remote',
@@ -40,14 +43,12 @@ class ProfileConfigurationManager {
             database: false,
             httpServer: false,
             tcpServer: false,
+            websocketServer: false,
             equipmentManager: false,
             repositories: 'local',
             services: 'local'
         }));
     }
-
-
-
 
     getConfiguration(profile) {
         if (!this.configurations.has(profile)) {

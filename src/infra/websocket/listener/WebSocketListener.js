@@ -1,5 +1,5 @@
 class WebSocketListener {
-    constructor(io, handlerService) {
+    constructor({io, handlerService}) {
         this.io = io;
         this.handlerService = handlerService;
         this.setupListeners();

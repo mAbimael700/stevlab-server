@@ -37,7 +37,7 @@ class ResultService {
         return await this.resultRepository.findByIdWithParameters(id)
     }
 
-    async saveStreamReceivedResult(result, equipmentId) {
+    async save(result, equipmentId) {
         try {
             let responseResult = await this.resultRepository.findByFolio(
                 result.folio

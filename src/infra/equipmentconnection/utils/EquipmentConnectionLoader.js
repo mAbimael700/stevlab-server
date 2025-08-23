@@ -14,7 +14,6 @@ class EquipmentConnectionLoader {
             const equipments = await this.equipmentService.getAll();
             return this.validateEquipments(equipments);
         } catch (error) {
-            console.log(error)
             throw new Error(`Error loading equipments: ${error.message}`);
         }
     }

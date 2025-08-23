@@ -38,8 +38,8 @@ class EquipmentRouter {
         this.router.patch("/:id", this.controller.updateById);
         this.router.delete("/:id", this.controller.deactivateById);
 
-        this.router.get("/:id/results/raw", this.controller.getRawResultsByEquipmentId);
-        this.router.get("/:id/results/raw/lastest", this.controller.getLatestRawResultsByEquipmentId);
+        /* this.router.get("/:id/results/raw", this.controller.getRawResultsByEquipmentId);
+        this.router.get("/:id/results/raw/lastest", this.controller.getLatestRawResultsByEquipmentId); */
     }
 
     /**

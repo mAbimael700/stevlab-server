@@ -5,18 +5,18 @@ class TcpServer {
      *
      * @param {number} port
      * @param {TcpInBoundClientFactory} clientFactory
-     * @param {ConnectionValidatorService} connectionValidatorService
+     * @param {TcpConnectionValidatorService} tcpConnectionValidatorService
      * @param {EquipmentConnectionManager} equipmentConnectionManager
      */
     constructor({
                     port = 3000,
                     clientFactory,
-                    connectionValidatorService,
+                    tcpConnectionValidatorService,
                     equipmentConnectionManager
                 }) {
         this.port = port;
         this.clientFactory = clientFactory;
-        this.connectionValidatorService = connectionValidatorService;
+        this.connectionValidatorService = tcpConnectionValidatorService;
         this.equipmentConnectionManager = equipmentConnectionManager;
         this.server = null;
         this.options = {
@@ -80,7 +80,6 @@ class TcpServer {
         try {
             return await this.connectionValidatorService.validateConnection(socket.remoteAddress);
         } catch (error) {
-            console.log(error)
             socket.destroy();
             throw new Error(`Falló la validación de conexión: ${error.message}`);
         }

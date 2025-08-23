@@ -1,27 +1,46 @@
 class EquipmentConnectionStatusService {
-    constructor(dependencies = {}) {
+  constructor({ equipmentService, websocketEmitter }) {
+    this.equipmentService = equipmentService;
+    this.emitter = websocketEmitter;
+  }
 
-        this.equipmentService = dependencies.equipmentService
-        this.emitter = dependencies.emitter
+  async updatelastConnection(equipmentId, timestamp) {
+    const { lastConnection, name, id } =
+      await this.equipmentService.updateLastConnection(equipmentId, timestamp);
 
-        this.emitToChannel = this.emitter.emitToChannel
-    }
+    this._emitToEquipmentStatusChannel("last-connection", {
+      lastConnection,
+      name,
+      id,
+    });
+  }
 
+  /**
+   *
+   * @param {number | bigint} equipmentId
+   * @param {"connected" | "disconnected" | "closed" | "connecting"} newStatus
+   */
+  async connectionStatus(equipmentId, newStatus) {
+    const { status, name, id } =
+      await this.equipmentService.updateConnectionStatus(
+        equipmentId,
+        newStatus
+      );
+    this._emitToEquipmentStatusChannel("connection-status", {
+      status,
+      name,
+      id,
+    });
+  }
 
-    async updatelastConnection(equipmentId, timestamp) {
-        const { lastConnection, name, id } = await this.equipmentService.updateLastConnection(equipmentId, timestamp)
-        this.emitToChannel("equipment-status", "last-connection", { lastConnection, name, id })
-    }
-
-
-    /**
-     *
-     * @param {number | bigint} equipmentId
-     * @param {"connected" | "disconnected" | "closed" | "connecting"} newStatus
-     */
-    async connectionStatus(equipmentId, newStatus) {
-        const { status, name, id } = await this.equipmentService.updateConnectionStatus(equipmentId, newStatus)
-        this.emitToChannel("equipment-status", "connection-status", { status, name, id })
-    }
-
+  /**
+   *
+   * @param {'connection-status' | 'last-connection'} event
+   * @param {*} data
+   */
+  _emitToEquipmentStatusChannel(event, data) {
+    this.emitter.emitToChannel("equipment-status", event, data);
+  }
 }
+
+module.exports = EquipmentConnectionStatusService;

@@ -1,6 +1,6 @@
 class NotificationService {
-  constructor(emitter) {
-    this.emitter = emitter;
+  constructor({websocketEmitter}) {
+    this.emitter = websocketEmitter;
   }
 
   /**

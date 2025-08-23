@@ -9,11 +9,13 @@ class EquipmentController {
      *
      * @param dependencies
      */
-    constructor({equipmentService, rawResultsService, equipmentProfileService}) {
+    constructor({equipmentService, 
+        //rawResultsService, 
+        equipmentProfileService}) {
 
         this.equipmentService = equipmentService;
-        this.rawResultsService = rawResultsService
         this.equipmentProfileService = equipmentProfileService;
+        //this.rawResultsService = rawResultsService
 
         this.configureController();
     }
@@ -135,7 +137,7 @@ class EquipmentController {
     }
 
 
-    async getRawResultsByEquipmentId(req, res) {
+/*     async getRawResultsByEquipmentId(req, res) {
         try {
             const {id} = req.params
             const rawResults = await this.rawResultsService.getByEquipmentId(id);
@@ -162,7 +164,7 @@ class EquipmentController {
                 message: "Hubo un error al consultar todos los equipos.",
             });
         }
-    }
+    } */
 
     configureController() {
         this.getAll = this.getAll.bind(this);
@@ -171,8 +173,8 @@ class EquipmentController {
         this.updateById = this.updateById.bind(this)
         this.getEquipmentProfiles = this.getEquipmentProfiles.bind(this);
         this.deactivateById = this.deactivateById.bind(this);
-        this.getRawResultsByEquipmentId = this.getRawResultsByEquipmentId.bind(this)
-        this.getLatestRawResultsByEquipmentId = this.getLatestRawResultsByEquipmentId.bind(this)
+       /*  this.getRawResultsByEquipmentId = this.getRawResultsByEquipmentId.bind(this)
+        this.getLatestRawResultsByEquipmentId = this.getLatestRawResultsByEquipmentId.bind(this) */
     }
 }
 

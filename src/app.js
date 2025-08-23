@@ -1,4 +1,6 @@
+require('module-alias/register');
 const ApplicationInitializer = require("@/app/core/ApplicationInitializer");
+const DeploymentProfiles = require('@/app/config/DeploymentProfiles');
 
 class Application {
     constructor() {
